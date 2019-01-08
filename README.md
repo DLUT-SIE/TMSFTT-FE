@@ -1,4 +1,5 @@
 # TMSFTT
+[![Build Status](https://travis-ci.org/DLUT-SIE/TMSFTT-FE.svg?branch=dev)](https://travis-ci.org/DLUT-SIE/TMSFTT-FE)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.1.
 
