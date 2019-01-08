@@ -1,5 +1,6 @@
 # TMSFTT
 [![Build Status](https://travis-ci.org/DLUT-SIE/TMSFTT-FE.svg?branch=dev)](https://travis-ci.org/DLUT-SIE/TMSFTT-FE)
+[![Coverage Status](https://coveralls.io/repos/github/DLUT-SIE/TMSFTT-FE/badge.svg?branch=dev)](https://coveralls.io/github/DLUT-SIE/TMSFTT-FE?branch=dev)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.1.
 
