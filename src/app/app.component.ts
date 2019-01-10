@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+
+import { PlatformService } from './platform.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TMSFTT';
+  constructor(readonly platformService: PlatformService) {}
 }
