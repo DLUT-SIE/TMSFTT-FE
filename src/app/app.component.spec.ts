@@ -1,3 +1,4 @@
+import { Directive, Input } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import {
   MatBadgeModule,
@@ -10,9 +11,11 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { PlatformService } from './platform.service';
+import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
 
 describe('AppComponent', () => {
@@ -21,8 +24,6 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
-        RouterTestingModule,
         MatBadgeModule,
         MatButtonModule,
         MatIconModule,
@@ -30,9 +31,12 @@ describe('AppComponent', () => {
         MatMenuModule,
         MatSidenavModule,
         MatToolbarModule,
+        NoopAnimationsModule,
+        RouterTestingModule,
       ],
       declarations: [
         AppComponent,
+        RouterLinkDirectiveStub,
       ],
       providers: [
         {
@@ -65,5 +69,18 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('span.app-name').textContent).toContain(
       '教学培训管理系统');
+  });
+
+  it('should contain router links to other components', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    const routerLinks = fixture.debugElement
+      .queryAll(By.directive(RouterLinkDirectiveStub))
+      .map(de => de.injector.get(RouterLinkDirectiveStub));
+
+      expect(routerLinks.length).toBe(2);
+      expect(routerLinks[0].linkParams).toBe('/home');
+      expect(routerLinks[1].linkParams).toBe('/training-record-entry');
   });
 });

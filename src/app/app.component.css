@@ -1,12 +1,4 @@
-.fill-remaining-space {
-  /* This fills the remaining space, by using flexbox. 
-   * Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
-}
-
 .container {
-  display: flex;
-  flex-direction: column;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -18,16 +10,7 @@
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
-}
-
-span.app-name {
-  margin-left: 8px;
-}
-
-.sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-  causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
+  padding-right: 0 !important;
 }
 
 .is-mobile .sidenav-container {
@@ -37,9 +20,5 @@ span.app-name {
 }
 
 mat-sidenav-content {
-  padding-left: 1%;
-}
-
-.active-link {
-  color: #1976d2;
+  padding: 1%;
 }
