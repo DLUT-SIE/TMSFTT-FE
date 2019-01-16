@@ -14,7 +14,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { PlatformService } from './platform.service';
+import { PlatformService } from './services/platform.service';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 
 

@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { PlatformService } from './platform.service';
+import { PlatformService } from './services/platform.service';
 
 @Component({
   selector: 'app-root',
