@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { timer, Observable, of as ObservableOf, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth-service';
@@ -47,7 +47,10 @@ export class HTTPAuthService implements AuthService {
         this.isAuthenticated = true;
         return true;
       }),
-      catchError(() => ObservableOf(false)),
+      catchError(() => {
+        this.isAuthenticated = false;
+        return ObservableOf(false);
+      }),
     );
   }
 
@@ -64,7 +67,11 @@ export class HTTPAuthService implements AuthService {
   verifyJWT(): Observable<boolean> {
     return this.sendJWT(environment.JWT_VERIFY_URL).pipe(
       map(() => true),
-      catchError(() => ObservableOf(false)),
+      tap(() => this.isAuthenticated = true),
+      catchError(() => {
+        this.isAuthenticated = false;
+        return ObservableOf(false);
+      }),
     );
   }
 
@@ -74,9 +81,13 @@ export class HTTPAuthService implements AuthService {
       map(data => {
         const token = data['token'];
         localStorage.setItem(environment.JWT_KEY, token);
+        this.isAuthenticated = true;
         return true;
       }),
-      catchError(() => ObservableOf(false)),
+      catchError(() => {
+        this.isAuthenticated = false;
+        return ObservableOf(false);
+      }),
     );
   }
 }

@@ -12,6 +12,7 @@ import { STORAGE_SERVICE, StorageService } from '../storage/storage-service';
   providedIn: 'root'
 })
 export class LocalAuthService implements AuthService {
+  isAuthenticated = false;
 
   constructor(
     private readonly windowService: WindowService,
@@ -32,6 +33,7 @@ export class LocalAuthService implements AuthService {
           return false;
         }
         this.storageService.setItem(environment.JWT_KEY, 'test-jwt');
+        this.isAuthenticated = true;
         return true;
       }));
   }
@@ -40,8 +42,10 @@ export class LocalAuthService implements AuthService {
     return timer(1000).pipe(map(() => {
       const token = this.storageService.getItem(environment.JWT_KEY);
       if (!token || token === 'invalid') {
+        this.isAuthenticated = false;
         return false;
       }
+      this.isAuthenticated = true;
       return true;
     }));
   }

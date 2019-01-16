@@ -91,7 +91,7 @@ describe('LoginComponent', () => {
   });
 
   it('should call retrieveJWT if ticket and serviceURL are presented', () => {
-    queryParamMapGet.and.returnValues('ticket', 'service url');
+    queryParamMapGet.and.returnValues('', 'ticket', 'service url');
     verifyJWT$.next(false);
 
     expect(component.loginStatus).toBe(component.LoginStatus.VERIFYING_CAS_TICKET);
@@ -99,7 +99,7 @@ describe('LoginComponent', () => {
   });
 
   it('should not proceed if ticket is invalid', () => {
-    queryParamMapGet.and.returnValues('invalid', 'service url');
+    queryParamMapGet.and.returnValues('', 'invalid', 'service url');
     verifyJWT$.next(false);
     retrieveJWT$.next(false);
 
@@ -107,13 +107,12 @@ describe('LoginComponent', () => {
   });
 
   it('should redirect if ticket is valid', () => {
-    queryParamMapGet.and.returnValues('key', 'service url');
+    queryParamMapGet.and.returnValues('', 'key', 'service url');
     verifyJWT$.next(false);
     retrieveJWT$.next(true);
 
     expect(component.loginStatus).toBe(component.LoginStatus.REDIRECTING_TO_HOME);
     expect(navigate).toHaveBeenCalledWith(['/home']);
   });
-
 
 });

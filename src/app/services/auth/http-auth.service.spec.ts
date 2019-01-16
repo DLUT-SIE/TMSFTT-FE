@@ -64,6 +64,7 @@ describe('HTTPAuthService', () => {
 
     service.retrieveJWT('ticket', 'service').subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
+      expect(service.isAuthenticated).toBeTruthy();
       expect(setItem).toHaveBeenCalled();
     });
 
@@ -80,6 +81,7 @@ describe('HTTPAuthService', () => {
 
     service.retrieveJWT('ticket', 'service').subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
+      expect(service.isAuthenticated).toBeFalsy();
       expect(setItem).not.toHaveBeenCalled();
     });
 
@@ -95,6 +97,7 @@ describe('HTTPAuthService', () => {
 
     service.verifyJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
+      expect(service.isAuthenticated).toBeTruthy();
     });
 
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
@@ -111,6 +114,7 @@ describe('HTTPAuthService', () => {
 
     service.verifyJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
+      expect(service.isAuthenticated).toBeFalsy();
     });
   });
 
@@ -120,6 +124,7 @@ describe('HTTPAuthService', () => {
 
     service.verifyJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
+      expect(service.isAuthenticated).toBeFalsy();
     });
 
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
@@ -134,6 +139,7 @@ describe('HTTPAuthService', () => {
 
     service.refreshJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
+      expect(service.isAuthenticated).toBeTruthy();
     });
 
     const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
@@ -150,6 +156,7 @@ describe('HTTPAuthService', () => {
 
     service.refreshJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
+      expect(service.isAuthenticated).toBeFalsy();
     });
   });
 
@@ -159,6 +166,7 @@ describe('HTTPAuthService', () => {
 
     service.refreshJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
+      expect(service.isAuthenticated).toBeFalsy();
     });
 
     const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);

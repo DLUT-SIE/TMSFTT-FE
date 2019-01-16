@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginStatus = LoginStatus.VERIFYING_JWT;
 
   private readonly destroyed = new Subject();
+  private nextURL: string;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -37,9 +38,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.verifyJWT().pipe(
       takeUntil(this.destroyed),
       map((isValidJWT: boolean) => {
+        const snapshot = this.activatedRoute.snapshot;
+        this.nextURL = snapshot.queryParamMap.get('next') || '/home';
         if (isValidJWT) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
-          this.router.navigate(['/home']);
+          this.router.navigate([this.nextURL]);
           return false;
         }
         return true;
@@ -80,7 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         return;
       }
       this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
-      this.router.navigate(['/home']);
+      this.router.navigate([this.nextURL]);
     });
   }
 
