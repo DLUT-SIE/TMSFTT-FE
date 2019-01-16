@@ -1,6 +1,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 
+/** PlatformService provides platform-specific services. */
 @Injectable({
   providedIn: 'root'
 })
