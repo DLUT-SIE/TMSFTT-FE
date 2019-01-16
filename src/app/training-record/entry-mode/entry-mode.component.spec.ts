@@ -3,13 +3,13 @@ import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-import { TrainingRecordEntryModeComponent } from './training-record-entry-mode.component';
-import { RouterLinkDirectiveStub } from '../../testing/router-link-directive-stub';
+import { EntryModeComponent } from './entry-mode.component';
+import { RouterLinkDirectiveStub } from '../../../testing/router-link-directive-stub';
 
 
-describe('TrainingRecordEntryModeComponent', () => {
-  let component: TrainingRecordEntryModeComponent;
-  let fixture: ComponentFixture<TrainingRecordEntryModeComponent>;
+describe('EntryModeComponent', () => {
+  let component: EntryModeComponent;
+  let fixture: ComponentFixture<EntryModeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('TrainingRecordEntryModeComponent', () => {
         RouterTestingModule,
       ],
       declarations: [
-        TrainingRecordEntryModeComponent,
+        EntryModeComponent,
         RouterLinkDirectiveStub,
       ]
     })
@@ -26,7 +26,7 @@ describe('TrainingRecordEntryModeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TrainingRecordEntryModeComponent);
+    fixture = TestBed.createComponent(EntryModeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -43,9 +43,8 @@ describe('TrainingRecordEntryModeComponent', () => {
       .map(de => de.injector.get(RouterLinkDirectiveStub));
 
       expect(routerLinks.length).toBe(2);
-      expect(routerLinks[0].linkParams).toBe(
-        '/training-record-entry/entry-form');
-      expect(routerLinks[1].linkParams).toBe(
-        '/training-record-entry/batch-submit');
+      expect(routerLinks[0].linkParams).toBe('./record-form');
+      expect(routerLinks[1].linkParams).toBe('./batch-submit');
   });
 });
+

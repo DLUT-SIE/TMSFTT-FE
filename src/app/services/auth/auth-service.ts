@@ -3,6 +3,8 @@ import { InjectionToken } from '@angular/core';
 
 /** This interface declares required methods for an authentication service. */
 export interface AuthService {
+    /** Indicate whether the current user is authenticated. */
+    isAuthenticated: boolean;
     /**
      * Login user before retrieving JWT. This method will redirect user to
      * CAS authentication page.

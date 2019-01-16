@@ -23,8 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { TrainingRecordEntryModeComponent } from './training-record-entry-mode/training-record-entry-mode.component';
 import { LoginComponent } from './login/login.component';
+import { TrainingRecordModule } from './training-record/training-record.module';
 import { ServicesModule } from './services/services.module';
 
 
@@ -33,11 +33,9 @@ import { ServicesModule } from './services/services.module';
     AppComponent,
     HomeComponent,
     PageNotFoundComponent,
-    TrainingRecordEntryModeComponent,
     LoginComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,
@@ -59,7 +57,9 @@ import { ServicesModule } from './services/services.module';
     MatSidenavModule,
     MatToolbarModule,
 
+    TrainingRecordModule,
     ServicesModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

@@ -81,6 +81,6 @@ describe('AppComponent', () => {
 
       expect(routerLinks.length).toBe(2);
       expect(routerLinks[0].linkParams).toBe('/home');
-      expect(routerLinks[1].linkParams).toBe('/training-record-entry');
+      expect(routerLinks[1].linkParams).toBe('/training-record/entry/entry-mode');
   });
 });
