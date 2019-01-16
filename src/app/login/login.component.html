@@ -1,0 +1,16 @@
+<div class="container" fxFlex="row" fxLayoutAlign="center">
+<mat-card>
+  <mat-card-title>{{ loginStatus }}</mat-card-title>
+  <mat-card-content>
+    <ng-container *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET; else unfinishedProgress">
+      <mat-progress-bar color="warn" mode="determinate" value="100"></mat-progress-bar>
+    </ng-container>
+    <ng-template #unfinishedProgress>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-template>
+  </mat-card-content>
+  <mat-card-actions fxLayoutAlign="center">
+    <button mat-raised-button color="warn" *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET" i18n>尝试重新认证</button>
+  </mat-card-actions>
+</mat-card>
+</div>
