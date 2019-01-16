@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+/** WindowService wraps window. */
 @Injectable({
   providedIn: 'root'
 })

@@ -13,6 +13,10 @@ export enum LoginStatus {
   REDIRECTING_TO_HOME = '正重定向到主页...',
 }
 
+/**
+ * LoginComponent presents status message for CAS authentication and JWT
+ * authentication to users.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -80,6 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  /** Unsubscribe all subscriptions. */
   ngOnDestroy() {
     this.destroyed.next();
   }
