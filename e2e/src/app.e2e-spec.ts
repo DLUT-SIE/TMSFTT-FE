@@ -1,5 +1,6 @@
 import { AppPage, setMobilePlatForm, setDesktopPlatForm } from './app.po';
 import { browser, element, by } from 'protractor';
+import { environment } from '../../src/environments/environment';
 
 describe('App(Mobile)', () => {
   let page: AppPage;
@@ -36,12 +37,12 @@ describe('App(Desktop)', () => {
     expect(browser.getCurrentUrl()).toEndWith('/home');
   });
 
-  it('should navigate to TrainingRecordModeComponent', () => {
+  it('should navigate to EntryModeComponent of TrainingRecordModule', () => {
     page.navigateTo();
-    element(by.css('a[routerLink="/training-record-entry"]')).click();
+    element(by.css('a[routerLink="/training-record/entry/entry-mode"]')).click();
     browser.waitForAngular();
 
     expect(browser.getCurrentUrl()).toEndWith(
-      '/training-record-entry/entry-mode');
+      '/training-record/entry/entry-mode');
   });
 });
