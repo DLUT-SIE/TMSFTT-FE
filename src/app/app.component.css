@@ -19,6 +19,9 @@
   flex: 1 0 auto;
 }
 
-mat-sidenav-content {
-  padding: 1%;
+.margin-wrapper {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 2vh;
+  margin-bottom: 15vh;
 }

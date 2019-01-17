@@ -1,4 +1,3 @@
-import { Directive, Input } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import {
   MatBadgeModule,

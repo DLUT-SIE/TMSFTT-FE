@@ -43,8 +43,8 @@ describe('EntryModeComponent', () => {
       .map(de => de.injector.get(RouterLinkDirectiveStub));
 
       expect(routerLinks.length).toBe(2);
-      expect(routerLinks[0].linkParams).toBe('./record-form');
-      expect(routerLinks[1].linkParams).toBe('./batch-submit');
+      expect(routerLinks[0].linkParams).toBe('../record-form');
+      expect(routerLinks[1].linkParams).toBe('../batch-submit');
   });
 });
 
