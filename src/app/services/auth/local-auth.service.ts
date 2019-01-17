@@ -20,14 +20,14 @@ export class LocalAuthService implements AuthService {
   ) { }
 
   login() {
-    return timer(1000).subscribe(() => {
+    return timer(100).subscribe(() => {
       const url = `${environment.SERVICE_URL}?ticket=123&service_url=123`;
       this.windowService.redirect(url);
     });
   }
 
   retrieveJWT(ticket: string, serviceURL: string): Observable<boolean> {
-    return timer(1000).pipe(
+    return timer(100).pipe(
       map(() => {
         if (ticket === 'invalid') {
           return false;
@@ -39,7 +39,7 @@ export class LocalAuthService implements AuthService {
   }
 
   private obtainJWT() {
-    return timer(1000).pipe(map(() => {
+    return timer(100).pipe(map(() => {
       const token = this.storageService.getItem(environment.JWT_KEY);
       if (!token || token === 'invalid') {
         this.isAuthenticated = false;

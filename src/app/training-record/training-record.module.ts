@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatNativeDateModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { TrainingRecordRoutingModule } from './training-record-routing.module';
 import { EntryModeComponent } from './entry-mode/entry-mode.component';
@@ -19,7 +29,16 @@ import { BatchSubmitComponent } from './batch-submit/batch-submit.component';
   imports: [
     CommonModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
+    MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule,
+
     TrainingRecordRoutingModule
   ],
   bootstrap: [TrainingRecordComponent],
