@@ -25,9 +25,7 @@ export class RecordFormComponent implements OnInit {
     content: [''],
     summary: [''],
     feedback: [''],
-    files: this.fb.array([
-      this.fb.control(null),
-    ]),
+    files: this.fb.array([]),
   });
 
   attachments: File[] = [];
