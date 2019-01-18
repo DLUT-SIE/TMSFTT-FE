@@ -24,7 +24,7 @@ const routes: Routes = [
             component: BatchSubmitComponent,
           },
           {
-            path: 'entry-mode',
+            path: '',
             component: EntryModeComponent,
           }
         ]

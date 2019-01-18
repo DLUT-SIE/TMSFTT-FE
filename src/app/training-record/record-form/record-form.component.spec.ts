@@ -80,10 +80,12 @@ describe('RecordFormComponent', () => {
     component.addFile();
     component.addFile();
 
-    expect(component.files.length).toBe(3);
+    expect(component.files.length).toBe(2);
   });
 
   it('should skip when no file added.', () => {
+    component.addFile();
+    fixture.detectChanges();
     const fileInput = fixture.debugElement.query(By.css('input[type="file"]'));
     fileInput.triggerEventHandler('change', {
       target: {
@@ -94,6 +96,8 @@ describe('RecordFormComponent', () => {
   });
 
   it('should call onFileAdd when button is clicked.', () => {
+    component.addFile();
+    fixture.detectChanges();
     const fileInput = fixture.debugElement.query(By.css('input[type="file"]'));
     spyOn(component, 'onFileAdd');
     fileInput.triggerEventHandler('change', {});
@@ -102,6 +106,8 @@ describe('RecordFormComponent', () => {
   });
 
   it('should attach file to attachments when file added.', () => {
+    component.addFile();
+    fixture.detectChanges();
     const fileInput = fixture.debugElement.query(By.css('input[type="file"]'));
     fileInput.triggerEventHandler('change', {
       target: {
@@ -121,7 +127,7 @@ describe('RecordFormComponent', () => {
 
     component.onFileRemove(1);
 
-    expect(component.files.length).toBe(3);
+    expect(component.files.length).toBe(2);
     expect(component.attachments.length).toBe(2);
     expect(component.attachments[0].name).toBe('file0');
     expect(component.attachments[1].name).toBe('file2');
