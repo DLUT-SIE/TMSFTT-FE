@@ -9,6 +9,8 @@ import { HTTPAuthService } from './auth/http-auth.service';
 import { LocalAuthService } from './auth/local-auth.service';
 import { STORAGE_SERVICE } from './storage/storage-service';
 import { AUTH_SERVICE } from './auth/auth-service';
+import { RecordService } from './training-record/record.service';
+import { EventService } from './training-event/event.service';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { AUTH_SERVICE } from './auth/auth-service';
   providers: [
     PlatformService,
     WindowService,
+    EventService,
+    RecordService,
     {
       provide: STORAGE_SERVICE,
       useClass: LocalStorageService,

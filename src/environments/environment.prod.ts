@@ -8,4 +8,8 @@ export const environment: Environment = {
   CAS_LOGIN_URL: 'not-set',
   CAS_VERIFY_URL: 'not-set',
   SERVICE_URL: 'not-set',
+  WHITE_LIST_DOMAINS: [],
+  RECORD_SERVICE_URL: 'not-set',
+  RECORD_CONTENT_SERVICE_URL: 'not-set',
+  RECORD_ATTACHMENT_SERVICE_URL: 'not-set',
 };

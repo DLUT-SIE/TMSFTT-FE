@@ -27,6 +27,11 @@ export interface Environment {
   CAS_VERIFY_URL: string;
   /** The URL that should be used to receive the CAS ticket. */
   SERVICE_URL: string;
+  /** The authorization header will be set for requests to these domains. */
+  WHITE_LIST_DOMAINS: string[];
+  RECORD_SERVICE_URL: string;
+  RECORD_CONTENT_SERVICE_URL: string;
+  RECORD_ATTACHMENT_SERVICE_URL: string;
 }
 
 export const environment: Environment = {
@@ -37,6 +42,10 @@ export const environment: Environment = {
   CAS_LOGIN_URL: 'http://localhost:8000/mock-cas/login/',
   CAS_VERIFY_URL: 'http://localhost:8000/api/auth/login/',
   SERVICE_URL: 'http://localhost:4200/auth/login/',
+  WHITE_LIST_DOMAINS: ['localhost:4200', 'localhost:8000'],
+  RECORD_SERVICE_URL: 'http://localhost:8000/api/training-record/records/',
+  RECORD_CONTENT_SERVICE_URL: 'http://localhost:8000/api/training-record/contents/',
+  RECORD_ATTACHMENT_SERVICE_URL: 'http://localhost:8000/api/training-record/attachments/',
 };
 
 /*
