@@ -43,6 +43,7 @@ import { ServicesModule } from './services/services.module';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem(environment.JWT_KEY),
+        whitelistedDomains: environment.WHITE_LIST_DOMAINS,
       }
     }),
     MatBadgeModule,
