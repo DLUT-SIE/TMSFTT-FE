@@ -14,8 +14,6 @@ describe('LoginComponent', () => {
   let navigate: jasmine.Spy;
   let login: jasmine.Spy;
   let retrieveJWT: jasmine.Spy;
-  let verifyJWT: jasmine.Spy;
-  let refreshJWT: jasmine.Spy;
   const queryParamMapGet = jasmine.createSpy();
   const retrieveJWT$ = new Subject<boolean>();
   const verifyJWT$ = new Subject<boolean>();
@@ -26,8 +24,8 @@ describe('LoginComponent', () => {
     const authService = jasmine.createSpyObj('AuthService',
       ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT']);
     login = authService.login;
-    verifyJWT = authService.verifyJWT.and.returnValue(verifyJWT$);
-    refreshJWT = authService.refreshJWT.and.returnValue(refreshJWT$);
+    authService.verifyJWT.and.returnValue(verifyJWT$);
+    authService.refreshJWT.and.returnValue(refreshJWT$);
     retrieveJWT = authService.retrieveJWT.and.returnValue(retrieveJWT$);
 
     TestBed.configureTestingModule({

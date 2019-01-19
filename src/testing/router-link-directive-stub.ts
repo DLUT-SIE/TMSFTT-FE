@@ -6,7 +6,10 @@ import { Directive, Input } from '@angular/core';
   selector: '[routerLink]',
 })
 export class RouterLinkDirectiveStub {
+  /** The link params. */
   @Input('routerLink') linkParams: {};
+
+  /** Stub navigateTo method. */
   navigatedTo: {} = null;
 }
 

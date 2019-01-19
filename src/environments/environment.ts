@@ -32,6 +32,7 @@ export interface Environment {
   RECORD_SERVICE_URL: string;
   RECORD_CONTENT_SERVICE_URL: string;
   RECORD_ATTACHMENT_SERVICE_URL: string;
+  OFF_CAMPUS_EVENT_SERVICE_URL: string;
 }
 
 export const environment: Environment = {
@@ -46,6 +47,7 @@ export const environment: Environment = {
   RECORD_SERVICE_URL: 'http://localhost:8000/api/training-record/records/',
   RECORD_CONTENT_SERVICE_URL: 'http://localhost:8000/api/training-record/record-contents/',
   RECORD_ATTACHMENT_SERVICE_URL: 'http://localhost:8000/api/training-record/record-attachments/',
+  OFF_CAMPUS_EVENT_SERVICE_URL: 'http://localhost:8000/api/training-event/off-campus-events/',
 };
 
 /*

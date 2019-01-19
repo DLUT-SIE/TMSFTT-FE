@@ -28,6 +28,7 @@ import { TrainingRecordModule } from './training-record/training-record.module';
 import { ServicesModule } from './services/services.module';
 
 
+/** Describe how our app looks. */
 @NgModule({
   declarations: [
     AppComponent,

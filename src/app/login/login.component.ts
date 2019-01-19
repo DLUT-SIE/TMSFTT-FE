@@ -5,7 +5,7 @@ import { AuthService, AUTH_SERVICE } from '../services/auth/auth-service';
 import { switchMap, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-export enum LoginStatus {
+enum LoginStatus {
   VERIFYING_JWT = '正在检查您的登录状态...',
   REDIRECTING_TO_CAS = '正重定向到统一认证服务...',
   VERIFYING_CAS_TICKET = '正在检查您的登录凭证..',
@@ -23,7 +23,9 @@ export enum LoginStatus {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  /** Make enum visible in template. */
   LoginStatus = LoginStatus;
+  /** Current login status. */
   loginStatus = LoginStatus.VERIFYING_JWT;
 
   private readonly destroyed = new Subject();
