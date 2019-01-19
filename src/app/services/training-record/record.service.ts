@@ -14,6 +14,7 @@ export enum ContentType {
 
 /** This interface is a mapping to the definition of RecordContent on server. */
 export interface RecordContent {
+  record?: number;
   /** The type of this content. */
   content_type: ContentType;
   /** The value of thie content. */
@@ -64,6 +65,10 @@ export class RecordService {
 
   private createContents(recordID: number, contents: RecordContent[]) {
     // If no contents, skip this step.
+    contents = contents.map((val) => {
+      val.record = recordID;
+      return val;
+    });
     if (contents.length === 0) return observableOf(recordID);
     return this.http.post(environment.RECORD_CONTENT_SERVICE_URL,
       contents).pipe(map(() => recordID));
@@ -72,8 +77,15 @@ export class RecordService {
   private createAttachments(recordID: number, attachments: File[]) {
     // If not attachments, skip this step.
     if (attachments.length === 0) return observableOf(recordID);
-    return this.http.post(environment.RECORD_ATTACHMENT_SERVICE_URL,
-      attachments).pipe(map(() => recordID));
+    return observableOf(attachments).pipe(
+      mergeMap((_attachments: File[]) => forkJoin(
+        attachments.map((attachment: File) => {
+        const formData = new FormData();
+        formData.set('record', recordID.toString());
+        formData.set('path', attachment, attachment.name);
+        return this.http.post(environment.RECORD_ATTACHMENT_SERVICE_URL, formData);
+      }))),
+      map(() => recordID));
   }
 
   /**
@@ -91,6 +103,7 @@ export class RecordService {
    */
   createRecord(record: Record, contents: RecordContent[],
     attachments: File[]): Observable<number | null> {
+    let recordID = -1;
     if (contents.length === 0 && attachments.length === 0) {
       record.status = RecordStatus.STATUS_SUBMITTED;
       return this.http.post(environment.RECORD_SERVICE_URL, record).pipe(
@@ -103,18 +116,26 @@ export class RecordService {
       switchMap((_record: Record) => {
         // After an record is retrieved, create contents and attachments
         // in parallel.
+        recordID = _record.id;
         return forkJoin(
-          this.createContents(_record.id, contents),
-          this.createAttachments(_record.id, attachments),
-        ).pipe(map(() => _record.id));
+          this.createContents(recordID, contents),
+          this.createAttachments(recordID, attachments),
+        ).pipe(map(() => null));
       }),
-      switchMap((recordID: number) => {
+      switchMap(() => {
         // Update status of record to SUBMITTED.
-        return this.http.patch(environment.RECORD_SERVICE_URL + recordID, {
+        return this.http.patch(environment.RECORD_SERVICE_URL + recordID + '/', {
           status: RecordStatus.STATUS_SUBMITTED,
         }).pipe(map(() => recordID));
       }),
-      catchError(() => observableOf(null)),
+      // If we encountered any errors, delete record if exists.
+      catchError(() => {
+        if (recordID === -1) return observableOf(null);
+        return this.http.delete(environment.RECORD_SERVICE_URL + recordID + '/').pipe(
+          map(() => null),
+          catchError(() => observableOf(null)),
+          );
+      }),
     );
   }
 }
