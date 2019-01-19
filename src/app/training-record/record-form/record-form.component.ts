@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { RecordService, Record, RecordContent, ContentType, RecordStatus } from '../../services/training-record/record.service';
+import { RecordContent, ContentType } from '../../services/training-record/record-content.service';
+import { RecordService, Record, RecordStatus } from '../../services/training-record/record.service';
 import { OffCampusEvent } from '../../services/training-event/event.service';
 
 interface FileChangeEvent extends Event {
@@ -16,6 +17,7 @@ interface FileChangeEvent extends Event {
   styleUrls: ['./record-form.component.css']
 })
 export class RecordFormComponent implements OnInit {
+  /** Use FormBuilder to build our form to collect Record data. */
   recordForm = this.fb.group({
     name: ['', Validators.required],
     time: ['', Validators.required],
@@ -28,6 +30,7 @@ export class RecordFormComponent implements OnInit {
     files: this.fb.array([]),
   });
 
+  /** The attachments to be uploaded. */
   attachments: File[] = [];
 
   constructor(
@@ -39,26 +42,32 @@ export class RecordFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  /** Access the name field of the form. */
   get name() {
     return this.recordForm.get('name');
   }
 
+  /** Access the time field of the form. */
   get time() {
     return this.recordForm.get('time');
   }
 
+  /** Access the location field of the form. */
   get location() {
     return this.recordForm.get('location');
   }
 
+  /** Access the numHours field of the form. */
   get numHours() {
     return this.recordForm.get('numHours');
   }
 
+  /** Access the numParticipants field of the form. */
   get numParticipants() {
     return this.recordForm.get('numParticipants');
   }
 
+  /** Access the files field of the form. */
   get files() {
     return this.recordForm.get('files') as FormArray;
   }
@@ -104,9 +113,9 @@ export class RecordFormComponent implements OnInit {
       },
     ].filter((val) => val.content !== '');
     this.recordService.createRecord(record, contents, this.attachments).subscribe(
-      (recordID: number | null) => {
-        if (recordID) {
-          this.router.navigate(['../record-detail/', recordID]);
+      (_record: Record | null) => {
+        if (_record !== null) {
+          this.router.navigate(['../record-detail/', _record.id]);
           return;
         }
         // TODO(youchen): Notify user that the process failed.

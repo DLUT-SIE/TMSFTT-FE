@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AUTH_SERVICE, AuthService } from '../services/auth/auth-service';
 
+/** AuthGuard requires authenticated access. */
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +14,7 @@ export class AuthGuard implements CanActivate {
     private readonly router: Router,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService) { }
 
+  /** Only if user is authenticated, then the component can be activated. */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {

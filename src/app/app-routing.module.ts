@@ -32,6 +32,7 @@ const routes: Routes = [
   },
 ];
 
+/** Export routings. */
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),

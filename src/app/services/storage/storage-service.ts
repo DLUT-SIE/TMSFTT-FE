@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 /** A interface that defines what a storage should be like. */
 export interface StorageService {

@@ -8,7 +8,6 @@ import { STORAGE_SERVICE } from '../storage/storage-service';
 describe('LocalAuthService', () => {
   let redirect: jasmine.Spy;
   let getItem: jasmine.Spy;
-  let setItem: jasmine.Spy;
 
   beforeEach(() => {
     const windowService = jasmine.createSpyObj('WindowService', ['redirect']);
@@ -33,7 +32,6 @@ describe('LocalAuthService', () => {
     });
 
     getItem = storageService.getItem;
-    setItem = storageService.setItem;
   });
 
   it('should be created', () => {

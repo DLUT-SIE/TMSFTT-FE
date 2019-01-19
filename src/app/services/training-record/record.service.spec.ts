@@ -1,17 +1,50 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { of as observableOf } from 'rxjs';
 
-import { RecordService, RecordStatus, ContentType } from './record.service';
-import { environment } from 'src/environments/environment';
+import { Record, RecordService, RecordStatus } from './record.service';
+import { ContentType, RecordContentService } from './record-content.service';
+import { environment } from '../../../environments/environment';
+import { OffCampusEvent, EventService } from '../training-event/event.service';
+import { RecordAttachmentService } from './record-attachment.service';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
+  let createOffCampusEvent: jasmine.Spy;
+  let deleteOffCampusEvent: jasmine.Spy;
+  let createRecordContents: jasmine.Spy;
+  let createRecordAttachments: jasmine.Spy;
 
   beforeEach(() => {
+    createOffCampusEvent = jasmine.createSpy();
+    deleteOffCampusEvent = jasmine.createSpy();
+    createRecordContents = jasmine.createSpy();
+    createRecordAttachments = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
       ],
+      providers: [
+        {
+          provide: EventService,
+          useValue: {
+            createOffCampusEvent,
+            deleteOffCampusEvent,
+          }
+        },
+        {
+          provide: RecordContentService,
+          useValue: {
+            createRecordContents,
+          },
+        },
+        {
+          provide: RecordAttachmentService,
+          useValue: {
+            createRecordAttachments,
+          }
+        }
+      ]
     });
 
     httpTestingController = TestBed.get(HttpTestingController);
@@ -26,16 +59,44 @@ describe('RecordService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create directly if not contents and no attachments', () => {
+  it('should create directly(CampusEvent)', () => {
     const service: RecordService = TestBed.get(RecordService);
 
     service.createRecord({
-      campus_event: null,
+      campus_event: 1,
       off_campus_event: null,
       status: RecordStatus.STATUS_SUBMITTED,
-    }, [], []).subscribe((recordID: number|null) => {
-      expect(recordID).not.toBeNull();
+    }, [], []).subscribe((record: Record|null) => {
+      expect(record).not.toBeNull();
     });
+
+    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+
+    expect(req.request.method).toEqual('POST');
+    req.flush({ id: 123 });
+  });
+
+  it('should create directly if no contents and no attachments', () => {
+    const service: RecordService = TestBed.get(RecordService);
+    const offCampusEvent: OffCampusEvent = {
+      name: 'title',
+      time: '2018-12-31',
+      location: 'location',
+      num_hours: 2,
+      num_participants: 20,
+    };
+
+    createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
+
+    service.createRecord({
+      campus_event: null,
+      off_campus_event: offCampusEvent,
+      status: RecordStatus.STATUS_SUBMITTED,
+    }, [], []).subscribe((record: Record|null) => {
+      expect(record).not.toBeNull();
+    });
+
+    expect(createOffCampusEvent).toHaveBeenCalled();
 
     const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
 
@@ -48,16 +109,31 @@ describe('RecordService', () => {
     });
   });
 
-  it('should return null if creation failed', () => {
+  it('should return null if creation failed.', () => {
     const service: RecordService = TestBed.get(RecordService);
+    const offCampusEvent: OffCampusEvent = {
+      name: 'title',
+      time: '2018-12-31',
+      location: 'location',
+      num_hours: 2,
+      num_participants: 20,
+    };
+
+    createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
+    deleteOffCampusEvent.and.returnValue(observableOf(null));
 
     service.createRecord({
       campus_event: null,
-      off_campus_event: null,
+      off_campus_event: offCampusEvent,
       status: RecordStatus.STATUS_SUBMITTED,
-    }, [], []).subscribe((recordID: number|null) => {
-      expect(recordID).toBeNull();
+    }, [{
+      content: '',
+      content_type: ContentType.CONTENT_TYPE_CONTENT,
+    }], []).subscribe((record: Record|null) => {
+      expect(record).toBeNull();
     });
+
+    expect(createOffCampusEvent).toHaveBeenCalled();
 
     const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
 
@@ -66,48 +142,75 @@ describe('RecordService', () => {
       status: 400,
       statusText: '',
     });
+
+    expect(deleteOffCampusEvent).toHaveBeenCalled();
   });
 
-  it('should return null if creation failed(before contents and attachments are created).', () => {
+  it('should return null if creation failed(after PRESUMIT).', () => {
     const service: RecordService = TestBed.get(RecordService);
+    const deleteRecord = spyOn(service, 'deleteRecord');
+    const id = 123;
+
+    createRecordContents.and.returnValue(observableOf(null));
+    createRecordAttachments.and.returnValue(observableOf(null));
+    deleteRecord.and.returnValue(observableOf(null));
 
     service.createRecord({
-      campus_event: null,
+      campus_event: 1,
       off_campus_event: null,
       status: RecordStatus.STATUS_SUBMITTED,
     }, [{
       content: '',
       content_type: ContentType.CONTENT_TYPE_CONTENT,
-    }], []).subscribe((recordID: number|null) => {
-      expect(recordID).toBeNull();
+    }], []).subscribe((record: Record|null) => {
+      expect(record).toBeNull();
     });
 
     const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({}, {
+    req.flush({ id });
+
+    const patchReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    expect(patchReq.request.method).toEqual('PATCH');
+    patchReq.flush({}, {
       status: 400,
       statusText: '',
-    });
+    }),
+
+    expect(deleteRecord).toHaveBeenCalled();
   });
 
-  it('should send 5 requests to create Record with 1 contents and 2 attachments.', () => {
+  it('should create Record with contents and attachments.', () => {
     const service: RecordService = TestBed.get(RecordService);
     const file = new File([''], 'file');
     const id = 123;
+    const offCampusEvent: OffCampusEvent = {
+      name: 'title',
+      time: '2018-12-31',
+      location: 'location',
+      num_hours: 2,
+      num_participants: 20,
+    };
+
+    createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
+    createRecordContents.and.returnValue(observableOf(null));
+    createRecordAttachments.and.returnValue(observableOf(null));
 
     service.createRecord({
       campus_event: null,
-      off_campus_event: null,
+      off_campus_event: offCampusEvent,
       status: RecordStatus.STATUS_SUBMITTED,
     }, [
       {
         content: 'abc',
         content_type: ContentType.CONTENT_TYPE_CONTENT,
       }
-    ], [ file, file ]).subscribe((recordID: number|null) => {
-      expect(recordID).toBe(id);
+    ], [ file, file ]).subscribe((record: Record|null) => {
+      expect(record.id).toEqual(id);
     });
+
+    expect(createOffCampusEvent).toHaveBeenCalled();
 
     const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
     expect(createReq.request.method).toEqual('POST');
@@ -118,38 +221,49 @@ describe('RecordService', () => {
       status: RecordStatus.STATUS_SUBMITTED,
     });
 
-    const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
-    expect(contentsReq.request.method).toEqual('POST');
-    contentsReq.flush({});
-
-    const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
-    expect(attachmentsReq.length).toBe(2);
-    expect(attachmentsReq[0].request.method).toEqual('POST');
-    expect(attachmentsReq[1].request.method).toEqual('POST');
-    attachmentsReq[0].flush({});
-    attachmentsReq[1].flush({});
+    expect(createRecordContents).toHaveBeenCalled();
+    expect(createRecordAttachments).toHaveBeenCalled();
 
     const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
     expect(updateReq.request.method).toBe('PATCH');
-    updateReq.flush({});
+    updateReq.flush({
+      id,
+    });
   });
 
-  it('should send 3 requests to create Record with 1 contents.', () => {
+  it('should ignore error during cleanup.', () => {
     const service: RecordService = TestBed.get(RecordService);
+    const deleteRecord = spyOn(service, 'deleteRecord');
+    const file = new File([''], 'file');
     const id = 123;
+    const offCampusEvent: OffCampusEvent = {
+      name: 'title',
+      time: '2018-12-31',
+      location: 'location',
+      num_hours: 2,
+      num_participants: 20,
+    };
+
+    createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
+    deleteOffCampusEvent.and.returnValue(observableOf(null));
+    createRecordContents.and.returnValue(observableOf(null));
+    createRecordAttachments.and.returnValue(observableOf(null));
+    deleteRecord.and.throwError('Error');
 
     service.createRecord({
       campus_event: null,
-      off_campus_event: null,
+      off_campus_event: offCampusEvent,
       status: RecordStatus.STATUS_SUBMITTED,
     }, [
       {
         content: 'abc',
         content_type: ContentType.CONTENT_TYPE_CONTENT,
       }
-    ], []).subscribe((recordID: number|null) => {
-      expect(recordID).toBe(id);
+    ], [ file, file ]).subscribe((record: Record|null) => {
+      expect(record).toBeNull();
     });
+
+    expect(createOffCampusEvent).toHaveBeenCalled();
 
     const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
     expect(createReq.request.method).toEqual('POST');
@@ -160,86 +274,8 @@ describe('RecordService', () => {
       status: RecordStatus.STATUS_SUBMITTED,
     });
 
-    const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
-    expect(contentsReq.request.method).toEqual('POST');
-    contentsReq.flush({});
-
-    const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
-    expect(updateReq.request.method).toBe('PATCH');
-    updateReq.flush({});
-  });
-
-  it('should send 4 requests to create Record with 2 attachments.', () => {
-    const service: RecordService = TestBed.get(RecordService);
-    const file = new File([''], 'file');
-    const id = 123;
-
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [], [ file, file ]).subscribe((recordID: number|null) => {
-      expect(recordID).toBe(id);
-    });
-
-    const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
-    expect(createReq.request.method).toEqual('POST');
-    createReq.flush({
-      id,
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    });
-
-    const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
-    expect(attachmentsReq.length).toBe(2);
-    expect(attachmentsReq[0].request.method).toEqual('POST');
-    expect(attachmentsReq[1].request.method).toEqual('POST');
-    attachmentsReq[0].flush({});
-    attachmentsReq[1].flush({});
-
-    const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
-    expect(updateReq.request.method).toBe('PATCH');
-    updateReq.flush({});
-  });
-
-  it('should return null if creation failed(attachments and contents are provided)', () => {
-    const service: RecordService = TestBed.get(RecordService);
-    const file = new File([''], 'file');
-    const id = 1;
-
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }
-    ], [ file, file ]).subscribe((recordID: number|null) => {
-      expect(recordID).toBeNull();
-    });
-
-    const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
-    expect(createReq.request.method).toEqual('POST');
-    createReq.flush({
-      id,
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_PRESUBMIT,
-    });
-
-    const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
-    expect(contentsReq.request.method).toEqual('POST');
-    contentsReq.flush({});
-
-    const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
-    expect(attachmentsReq.length).toBe(2);
-    expect(attachmentsReq[0].request.method).toEqual('POST');
-    expect(attachmentsReq[1].request.method).toEqual('POST');
-    attachmentsReq[0].flush({});
-    attachmentsReq[1].flush({});
+    expect(createRecordContents).toHaveBeenCalled();
+    expect(createRecordAttachments).toHaveBeenCalled();
 
     const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
     expect(updateReq.request.method).toBe('PATCH');
@@ -248,63 +284,19 @@ describe('RecordService', () => {
       statusText: '',
     });
 
-    const deleteReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
-    expect(deleteReq.request.method).toBe('DELETE');
-    deleteReq.flush({});
+    expect(deleteRecord).toHaveBeenCalled();
   });
 
-  it('should return null if creation failed(attachments and contents are provided, delete failed)',
-  () => {
+
+  it('should delete record', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const file = new File([''], 'file');
-    const id = 1;
+    const id = 123;
 
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }
-    ], [ file, file ]).subscribe((recordID: number|null) => {
-      expect(recordID).toBeNull();
-    });
+    service.deleteRecord(id).subscribe();
 
-    const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
-    expect(createReq.request.method).toEqual('POST');
-    createReq.flush({
-      id,
-      campus_event: null,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_PRESUBMIT,
-    });
-
-    const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
-    expect(contentsReq.request.method).toEqual('POST');
-    contentsReq.flush({});
-
-    const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
-    expect(attachmentsReq.length).toBe(2);
-    expect(attachmentsReq[0].request.method).toEqual('POST');
-    expect(attachmentsReq[1].request.method).toEqual('POST');
-    attachmentsReq[0].flush({});
-    attachmentsReq[1].flush({});
-
-    const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
-    expect(updateReq.request.method).toBe('PATCH');
-    updateReq.flush({}, {
-      status: 400,
-      statusText: '',
-    });
-
-    const deleteReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
-    expect(deleteReq.request.method).toBe('DELETE');
-    deleteReq.flush({}, {
-      status: 400,
-      statusText: '',
-    });
+    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    expect(req.request.method).toBe('DELETE');
+    req.flush({});
   });
 
 });

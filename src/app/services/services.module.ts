@@ -10,6 +10,8 @@ import { LocalAuthService } from './auth/local-auth.service';
 import { STORAGE_SERVICE } from './storage/storage-service';
 import { AUTH_SERVICE } from './auth/auth-service';
 import { RecordService } from './training-record/record.service';
+import { RecordAttachmentService } from './training-record/record-attachment.service';
+import { RecordContentService } from './training-record/record-content.service';
 import { EventService } from './training-event/event.service';
 
 
@@ -23,6 +25,8 @@ import { EventService } from './training-event/event.service';
     WindowService,
     EventService,
     RecordService,
+    RecordContentService,
+    RecordAttachmentService,
     {
       provide: STORAGE_SERVICE,
       useClass: LocalStorageService,

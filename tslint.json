@@ -17,6 +17,18 @@
       ["Boolean", "Use 'boolean' instead."]
     ],
     "class-name": true,
+    "completed-docs":  [
+      true,
+      {
+        "enums": {"visibilities": ["exported"]},
+        "functions": {"visibilities": ["exported"]},
+        "methods": {"locations": "instance", "privacies": ["public", "protected"]},
+        "properties": {
+          "privacies": ["public"],
+          "tags": {"content": {"see": ["#.*"]}, "existence": ["inheritdoc"]}
+        }
+      }
+    ],
     "curly": [true, "ignore-same-line"],
     "deprecation": true,
     "forin": true,

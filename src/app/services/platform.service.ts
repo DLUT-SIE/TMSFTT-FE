@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PlatformService {
+  /** Indicate whether we are rendering on mobile platform. */
   isMobile = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {

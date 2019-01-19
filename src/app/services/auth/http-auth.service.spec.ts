@@ -1,5 +1,4 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 import { TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { environment } from '../../../environments/environment';
@@ -9,7 +8,6 @@ import { STORAGE_SERVICE } from '../storage/storage-service';
 
 
 describe('HTTPAuthService', () => {
-  let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let redirect: jasmine.Spy;
   let getItem: jasmine.Spy;
@@ -35,7 +33,6 @@ describe('HTTPAuthService', () => {
       ]
     });
 
-    httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
     getItem = storageService.getItem;
     setItem = storageService.setItem;
