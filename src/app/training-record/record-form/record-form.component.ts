@@ -20,8 +20,8 @@ export class RecordFormComponent implements OnInit {
     name: ['', Validators.required],
     time: ['', Validators.required],
     location: ['', Validators.required],
-    num_hours: ['', Validators.required],
-    num_participants: ['', Validators.required],
+    numHours: ['', Validators.required],
+    numParticipants: ['', Validators.required],
     content: [''],
     summary: [''],
     feedback: [''],
@@ -52,11 +52,11 @@ export class RecordFormComponent implements OnInit {
   }
 
   get numHours() {
-    return this.recordForm.get('num_hours');
+    return this.recordForm.get('numHours');
   }
 
   get numParticipants() {
-    return this.recordForm.get('num_participants');
+    return this.recordForm.get('numParticipants');
   }
 
   get files() {

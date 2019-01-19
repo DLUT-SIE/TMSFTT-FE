@@ -47,7 +47,7 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>access_time</mat-icon>
           <mat-label i18n>参加学时</mat-label>
-          <input matInput type="number" placeholder="请告诉我们您所参加培训的时长" formControlName="num_hours" i18n-placeholder
+          <input matInput type="number" placeholder="请告诉我们您所参加培训的时长" formControlName="numHours" i18n-placeholder
             required>
           <mat-error *ngIf="numHours.invalid && (numHours.dirty || numHours.touched)">
             <span *ngIf="!!numHours.errors.required" i18n>
@@ -59,7 +59,7 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>people</mat-icon>
           <mat-label i18n>参加人数</mat-label>
-          <input matInput type="number" placeholder="请告诉我们您所参加培训的参加人数" formControlName="num_participants"
+          <input matInput type="number" placeholder="请告诉我们您所参加培训的参加人数" formControlName="numParticipants"
             i18n-placeholder required>
           <mat-error *ngIf="numParticipants.invalid && (numParticipants.dirty || numParticipants.touched)">
             <span *ngIf="!!numParticipants.errors.required" i18n>
