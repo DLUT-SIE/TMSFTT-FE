@@ -7,6 +7,7 @@ import {
   MatMenuModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatDialog,
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,12 +16,15 @@ import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { PlatformService } from './services/platform.service';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
+import { AUTH_SERVICE } from './services/auth/auth-service';
 
 
 describe('AppComponent', () => {
   const mockedPlatformService = { isMobile: false };
+  let dialogOpen: jasmine.Spy;
 
   beforeEach(async(() => {
+    dialogOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         MatBadgeModule,
@@ -42,6 +46,18 @@ describe('AppComponent', () => {
           provide: PlatformService,
           useValue: mockedPlatformService,
         },
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            isAuthenticated: false,
+          },
+        },
+        {
+          provide: MatDialog,
+          useValue: {
+            open: dialogOpen,
+          }
+        }
       ],
     }).compileComponents();
   }));
@@ -81,5 +97,14 @@ describe('AppComponent', () => {
       expect(routerLinks.length).toBe(2);
       expect(routerLinks[0].linkParams).toBe('/home');
       expect(routerLinks[1].linkParams).toBe('/training-record/entry');
+  });
+
+  it('should open notification box', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+
+    app.openNotificationBox();
+
+    expect(dialogOpen).toHaveBeenCalled();
   });
 });

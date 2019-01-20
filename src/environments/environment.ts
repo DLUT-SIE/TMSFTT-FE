@@ -29,10 +29,13 @@ export interface Environment {
   SERVICE_URL: string;
   /** The authorization header will be set for requests to these domains. */
   WHITE_LIST_DOMAINS: string[];
+
+  /** Below are services endpoints. */
   RECORD_SERVICE_URL: string;
   RECORD_CONTENT_SERVICE_URL: string;
   RECORD_ATTACHMENT_SERVICE_URL: string;
   OFF_CAMPUS_EVENT_SERVICE_URL: string;
+  NOTIFICATION_SERVICE_URL: string;
 }
 
 export const environment: Environment = {
@@ -48,6 +51,7 @@ export const environment: Environment = {
   RECORD_CONTENT_SERVICE_URL: 'http://localhost:8000/api/training-record/record-contents/',
   RECORD_ATTACHMENT_SERVICE_URL: 'http://localhost:8000/api/training-record/record-attachments/',
   OFF_CAMPUS_EVENT_SERVICE_URL: 'http://localhost:8000/api/training-event/off-campus-events/',
+  NOTIFICATION_SERVICE_URL: 'http://localhost:8000/api/infra/notifications/',
 };
 
 /*

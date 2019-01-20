@@ -13,4 +13,5 @@ export const environment: Environment = {
   RECORD_CONTENT_SERVICE_URL: 'not-set',
   RECORD_ATTACHMENT_SERVICE_URL: 'not-set',
   OFF_CAMPUS_EVENT_SERVICE_URL: 'not-set',
+  NOTIFICATION_SERVICE_URL: 'not-set',
 };
