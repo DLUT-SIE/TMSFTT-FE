@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { timer, Observable } from 'rxjs';
-import { switchMap, shareReplay } from 'rxjs/operators';
+import { timer, of as observableOf } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
@@ -18,63 +18,30 @@ export interface Notification {
   providedIn: 'root'
 })
 export class NotificationService {
-  /** Dummy notifications */
-  notes: Notification[] = [
-    {
-      time: '2019-01-01',
-      sender: 'David',
-      recipient: 'Sam',
-      content: '这是一则系统发出的通知，且这是一则长度很长的通知，因此我们需要调整该通知\
-      在不同组件下的表示形式以提供较为良好的观感。',
-    },
-    {
-      time: '2019-01-02',
-      sender: 'David',
-      recipient: 'Sam',
-      content: 'This is another notification.'
-    },
-    {
-      time: '2019-01-03',
-      sender: 'David',
-      recipient: 'Sam',
-      content: 'How are you today?'
-    },
-    {
-      time: '2019-01-01',
-      sender: 'David',
-      recipient: 'Sam',
-      content: '这是一则系统发出的通知，且这是一则长度很长的通知，因此我们需要调整该通知\
-      在不同组件下的表示形式以提供较为良好的观感。',
-    },
-    {
-      time: '2019-01-02',
-      sender: 'David',
-      recipient: 'Sam',
-      content: 'This is another notification.'
-    },
-    {
-      time: '2019-01-03',
-      sender: 'David',
-      recipient: 'Sam',
-      content: 'How are you today?'
-    },
-
-  ];
+  /** Latest unread notifications. */
+  unreadNotifications: Notification[] = [];
+  /** Indicate whether unread notifications has been loaded. */
+  unreadNotificationsLoaded = false;
 
   private LIMIT = 20;
   /** How often should we query latest notifications. */
   private REFRESH_INTERVAL = 30 * 1000;
 
-  /** Yield latest unread notifications. */
-  latestUnreadNotifications$: Observable<{}>;
 
   constructor(
     private readonly http: HttpClient,
   ) {
-    this.latestUnreadNotifications$ = timer(0, this.REFRESH_INTERVAL).pipe(
+    timer(0, this.REFRESH_INTERVAL).pipe(
       switchMap(() => this.getNotifications(0, this.LIMIT, false)),
-      shareReplay(1),
-    );
+      map(res => {
+        this.unreadNotifications = res['results'];
+        this.unreadNotificationsLoaded = true;
+      }),
+      catchError(() => {
+        this.unreadNotificationsLoaded = true;
+        return observableOf(null);
+      }),
+    ).subscribe();
   }
 
   getNotifications(offset?: number, limit?: number,

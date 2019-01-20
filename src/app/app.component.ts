@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { PlatformService } from './services/platform.service';
 import { NotificationBoxComponent } from './notification/notification-box/notification-box.component';
 import { AUTH_SERVICE, AuthService } from './services/auth/auth-service';
+import { NotificationService } from './services/notification/notification.service';
 
 /** Root component. */
 @Component({
@@ -14,6 +15,7 @@ import { AUTH_SERVICE, AuthService } from './services/auth/auth-service';
 export class AppComponent {
   constructor(
     readonly platformService: PlatformService,
+    readonly notificationService: NotificationService,
     @Inject(AUTH_SERVICE) readonly authService: AuthService,
     private readonly dialog: MatDialog,
     ) {}

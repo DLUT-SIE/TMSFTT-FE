@@ -1,6 +1,6 @@
 import { TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { of as observableOf } from 'rxjs';
+import { of as observableOf, throwError } from 'rxjs';
 
 import { Notification, NotificationService } from './notification.service';
 import { environment } from '../../../environments/environment';
@@ -61,17 +61,28 @@ describe('NotificationService', () => {
     req.flush({ results: [{}, {}] as Notification[] });
   });
 
+  it('should ignore errors during getting notifications', fakeAsync(() => {
+    const service: NotificationService = TestBed.get(NotificationService);
+    const getNotifications = spyOn(service, 'getNotifications');
+
+    getNotifications.and.returnValue(throwError('error'));
+
+    tick(1000);
+
+    expect(service.unreadNotificationsLoaded).toBeTruthy();
+
+    discardPeriodicTasks();
+  }));
+
   it('should provide latest unread notifications.', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
     const getNotifications = spyOn(service, 'getNotifications');
 
     getNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
 
-    service.latestUnreadNotifications$.subscribe(notes => {
-      expect(notes['results'].length).toBe(2);
-    });
-
     tick(1000);
+
+    expect(service.unreadNotifications.length).toBe(2);
 
     discardPeriodicTasks();
   }));

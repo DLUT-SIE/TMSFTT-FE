@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { PlatformService } from './services/platform.service';
 import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
 import { AUTH_SERVICE } from './services/auth/auth-service';
+import { NotificationService } from './services/notification/notification.service';
 
 
 describe('AppComponent', () => {
@@ -50,6 +51,13 @@ describe('AppComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isAuthenticated: false,
+          },
+        },
+        {
+          provide: NotificationService,
+          useValue: {
+            unreadNotifications: [],
+            unreadNotificationLoaded: false,
           },
         },
         {

@@ -51,29 +51,5 @@ describe('NotificationBoxComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.notificationsLoaded).toBeFalsy();
-  });
-
-  it('should create box cards.', () => {
-    latestUnreadNotifications$.next({
-      results: [
-      {
-        sender: 'sender',
-        recipient: 'recipient',
-        content: 'content',
-        time: '2019-01-01',
-      },
-      {
-        sender: 'sender',
-        recipient: 'recipient',
-        content: 'content',
-        time: '2019-01-01',
-      },
-    ]});
-
-    fixture.detectChanges();
-
-    expect(component.notificationsLoaded).toBeTruthy();
-    expect(component.notifications.length).toBe(2);
   });
 });
