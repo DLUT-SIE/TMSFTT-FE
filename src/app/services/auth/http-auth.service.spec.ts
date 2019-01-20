@@ -69,7 +69,13 @@ describe('HTTPAuthService', () => {
 
     expect(req.request.method).toEqual('POST');
     req.flush({
-      'token': 'token',
+      token: 'token',
+      user: {
+        id: 123,
+        username: 'username',
+        first_name: 'first_name',
+        last_name: 'last_name',
+      },
     });
   }));
 
@@ -85,7 +91,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.CAS_VERIFY_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ 'msg': 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
   }));
 
   it('should return true when verifyJWT succeed', () => {
@@ -101,7 +107,13 @@ describe('HTTPAuthService', () => {
     expect(req.request.method).toEqual('POST');
 
     req.flush({
-      'token': 'token',
+      token: 'token',
+      user: {
+        id: 123,
+        username: 'username',
+        first_name: 'first_name',
+        last_name: 'last_name',
+      },
     });
   });
 
@@ -127,7 +139,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ 'msg': 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
   });
 
   it('should return true when refreshJWT succeed', () => {
@@ -143,7 +155,13 @@ describe('HTTPAuthService', () => {
 
     expect(req.request.method).toEqual('POST');
     req.flush({
-      'token': 'token',
+      token: 'token',
+      user: {
+        id: 123,
+        username: 'username',
+        first_name: 'first_name',
+        last_name: 'last_name',
+      },
     });
   });
 
@@ -169,6 +187,6 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ 'msg': 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
   });
 });

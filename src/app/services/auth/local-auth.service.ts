@@ -13,6 +13,10 @@ import { STORAGE_SERVICE, StorageService } from '../storage/storage-service';
 })
 export class LocalAuthService implements AuthService {
   isAuthenticated = false;
+  userID = null;
+  username = null;
+  firstName = null;
+  lastName = null;
 
   constructor(
     private readonly windowService: WindowService,
@@ -26,14 +30,22 @@ export class LocalAuthService implements AuthService {
     });
   }
 
+  private authenticate() {
+    this.userID = 123;
+    this.username = 'username';
+    this.firstName = 'first_name';
+    this.lastName = 'last_name';
+    this.storageService.setItem(environment.JWT_KEY, 'test-token');
+    this.isAuthenticated = true;
+  }
+
   retrieveJWT(ticket: string, serviceURL: string): Observable<boolean> {
     return timer(100).pipe(
       map(() => {
         if (ticket === 'invalid') {
           return false;
         }
-        this.storageService.setItem(environment.JWT_KEY, 'test-jwt');
-        this.isAuthenticated = true;
+        this.authenticate();
         return true;
       }));
   }
@@ -45,7 +57,7 @@ export class LocalAuthService implements AuthService {
         this.isAuthenticated = false;
         return false;
       }
-      this.isAuthenticated = true;
+      this.authenticate();
       return true;
     }));
   }
