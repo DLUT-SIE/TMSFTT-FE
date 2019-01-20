@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { RecordContent, ContentType } from '../../services/training-record/record-content.service';
-import { RecordService, Record, RecordStatus } from '../../services/training-record/record.service';
+import { RecordService, Record } from '../../services/training-record/record.service';
 import { OffCampusEvent } from '../../services/training-event/event.service';
+import { AuthService, AUTH_SERVICE } from '../../services/auth/auth-service';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -36,6 +37,7 @@ export class RecordFormComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly recordService: RecordService,
   ) { }
 
@@ -86,16 +88,12 @@ export class RecordFormComponent implements OnInit {
 
   onSubmit() {
     const value = this.recordForm.value;
-    const record: Record = {
-      campus_event: null,
-      off_campus_event: {
-        name: value.name,
-        time: value.time,
-        location: value.location,
-        num_hours: value.numHours,
-        num_participants: value.numParticipants,
-      } as OffCampusEvent,
-      status: RecordStatus.STATUS_PRESUBMIT,
+    const offCampusEvent: OffCampusEvent = {
+      name: value.name,
+      time: value.time,
+      location: value.location,
+      num_hours: value.numHours,
+      num_participants: value.numParticipants,
     };
     // We only submit non-empty content.
     const contents: RecordContent[] = [
@@ -112,10 +110,12 @@ export class RecordFormComponent implements OnInit {
         content: value.feedback,
       },
     ].filter((val) => val.content !== '');
-    this.recordService.createRecord(record, contents, this.attachments).subscribe(
-      (_record: Record | null) => {
-        if (_record !== null) {
-          this.router.navigate(['../record-detail/', _record.id]);
+    const attachments: File[] = this.attachments;
+    this.recordService.createOffCampusEventRecord(
+      offCampusEvent, this.authService.userID,
+      contents, attachments).subscribe((record: Record | null) => {
+        if (record !== null) {
+          this.router.navigate(['../record-detail/', record.id]);
           return;
         }
         // TODO(youchen): Notify user that the process failed.

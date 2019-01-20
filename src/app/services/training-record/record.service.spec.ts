@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { of as observableOf } from 'rxjs';
+import { of as observableOf, throwError } from 'rxjs';
 
 import { Record, RecordService, RecordStatus } from './record.service';
 import { ContentType, RecordContentService } from './record-content.service';
@@ -62,13 +62,10 @@ describe('RecordService', () => {
   it('should create directly(CampusEvent)', () => {
     const service: RecordService = TestBed.get(RecordService);
 
-    service.createRecord({
-      campus_event: 1,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [], []).subscribe((record: Record|null) => {
-      expect(record).not.toBeNull();
-    });
+    service.createCampusEventRecord(1, 1, [], []).subscribe(
+      (record: Record | null) => {
+        expect(record).not.toBeNull();
+      });
 
     const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
 
@@ -88,13 +85,10 @@ describe('RecordService', () => {
 
     createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
 
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: offCampusEvent,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [], []).subscribe((record: Record|null) => {
-      expect(record).not.toBeNull();
-    });
+    service.createOffCampusEventRecord(offCampusEvent, 1, [], []).subscribe(
+      (record: Record | null) => {
+        expect(record).not.toBeNull();
+      });
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
@@ -107,6 +101,30 @@ describe('RecordService', () => {
       off_campus_event: null,
       status: RecordStatus.STATUS_SUBMITTED,
     });
+  });
+
+  it('should return null if OffCampusEvent creation failed.', () => {
+    const service: RecordService = TestBed.get(RecordService);
+    const offCampusEvent: OffCampusEvent = {
+      name: 'title',
+      time: '2018-12-31',
+      location: 'location',
+      num_hours: 2,
+      num_participants: 20,
+    };
+
+    createOffCampusEvent.and.returnValue(throwError('error'));
+
+    service.createOffCampusEventRecord(
+      offCampusEvent, 1,
+      [{
+        content: '',
+        content_type: ContentType.CONTENT_TYPE_CONTENT,
+      }], []).subscribe((record: Record | null) => {
+        expect(record).toBeNull();
+      });
+
+    expect(createOffCampusEvent).toHaveBeenCalled();
   });
 
   it('should return null if creation failed.', () => {
@@ -122,16 +140,14 @@ describe('RecordService', () => {
     createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
     deleteOffCampusEvent.and.returnValue(observableOf(null));
 
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: offCampusEvent,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [{
-      content: '',
-      content_type: ContentType.CONTENT_TYPE_CONTENT,
-    }], []).subscribe((record: Record|null) => {
-      expect(record).toBeNull();
-    });
+    service.createOffCampusEventRecord(
+      offCampusEvent, 1,
+      [{
+        content: '',
+        content_type: ContentType.CONTENT_TYPE_CONTENT,
+      }], []).subscribe((record: Record | null) => {
+        expect(record).toBeNull();
+      });
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
@@ -155,16 +171,14 @@ describe('RecordService', () => {
     createRecordAttachments.and.returnValue(observableOf(null));
     deleteRecord.and.returnValue(observableOf(null));
 
-    service.createRecord({
-      campus_event: 1,
-      off_campus_event: null,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [{
-      content: '',
-      content_type: ContentType.CONTENT_TYPE_CONTENT,
-    }], []).subscribe((record: Record|null) => {
-      expect(record).toBeNull();
-    });
+    service.createCampusEventRecord(
+      1, 1,
+      [{
+        content: '',
+        content_type: ContentType.CONTENT_TYPE_CONTENT,
+      }], []).subscribe((record: Record | null) => {
+        expect(record).toBeNull();
+      });
 
     const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
 
@@ -178,7 +192,7 @@ describe('RecordService', () => {
       statusText: '',
     }),
 
-    expect(deleteRecord).toHaveBeenCalled();
+      expect(deleteRecord).toHaveBeenCalled();
   });
 
   it('should create Record with contents and attachments.', () => {
@@ -197,18 +211,20 @@ describe('RecordService', () => {
     createRecordContents.and.returnValue(observableOf(null));
     createRecordAttachments.and.returnValue(observableOf(null));
 
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: offCampusEvent,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }
-    ], [ file, file ]).subscribe((record: Record|null) => {
-      expect(record.id).toEqual(id);
-    });
+    service.createOffCampusEventRecord(
+      offCampusEvent, 1,
+      [
+        {
+          content: 'abc',
+          content_type: ContentType.CONTENT_TYPE_CONTENT,
+        },
+      ],
+      [
+        file,
+        file,
+      ]).subscribe((record: Record | null) => {
+        expect(record.id).toEqual(id);
+      });
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
@@ -250,18 +266,16 @@ describe('RecordService', () => {
     createRecordAttachments.and.returnValue(observableOf(null));
     deleteRecord.and.throwError('Error');
 
-    service.createRecord({
-      campus_event: null,
-      off_campus_event: offCampusEvent,
-      status: RecordStatus.STATUS_SUBMITTED,
-    }, [
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }
-    ], [ file, file ]).subscribe((record: Record|null) => {
-      expect(record).toBeNull();
-    });
+    service.createOffCampusEventRecord(
+      offCampusEvent, 1,
+      [
+        {
+          content: 'abc',
+          content_type: ContentType.CONTENT_TYPE_CONTENT,
+        }
+      ], [file, file]).subscribe((record: Record | null) => {
+        expect(record).toBeNull();
+      });
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 

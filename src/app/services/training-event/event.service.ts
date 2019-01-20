@@ -34,10 +34,12 @@ export class EventService {
     private readonly http: HttpClient,
   ) { }
 
+  /** Create an off-campus event. */
   createOffCampusEvent(event: OffCampusEvent) {
-    return this.http.post(environment.OFF_CAMPUS_EVENT_SERVICE_URL, event);
+    return this.http.post<OffCampusEvent>(environment.OFF_CAMPUS_EVENT_SERVICE_URL, event);
   }
 
+  /** Delete the off-campus event based on eventID. */
   deleteOffCampusEvent(eventID: number) {
     return this.http.delete(environment.OFF_CAMPUS_EVENT_SERVICE_URL + eventID + '/');
   }

@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
-    @Inject(AUTH_SERVICE) private readonly authService: AuthService) { }
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
+  ) { }
 
   ngOnInit() {
     this.authService.verifyJWT().pipe(
