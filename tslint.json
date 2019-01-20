@@ -52,6 +52,7 @@
     "no-unused-expression": true,
     "no-var-keyword": true,
     "object-literal-shorthand": true,
+    "object-literal-key-quotes": [true, "consistent-as-needed"],
     "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
     "prefer-const": true,
     "radix": true,
