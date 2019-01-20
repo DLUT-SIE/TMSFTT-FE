@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-subtitle>由 {{ notification.sender }} 发送于 {{ notification.time }}</mat-card-subtitle>
+  <mat-card-subtitle>由 {{ notification.sender }} 发送于 {{ notification.time | date: 'medium' }}</mat-card-subtitle>
   <mat-card-content>
     {{ notification.content | slice:0:30 }}<ng-container *ngIf="notification.content.length > 30">...</ng-container>
   </mat-card-content>

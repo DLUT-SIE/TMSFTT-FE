@@ -19,8 +19,8 @@ export class NotificationBoxComponent implements OnInit {
 
   ngOnInit() {
     this.notificationService.latestUnreadNotifications$.subscribe(
-      (_notifications: Notification[]) => {
-        this.notifications = _notifications;
+      (res: {}) => {
+        this.notifications = res['results'];
         this.notificationsLoaded = true;
       });
   }
