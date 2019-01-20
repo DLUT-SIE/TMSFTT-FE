@@ -54,20 +54,20 @@ export class LoginComponent implements OnInit, OnDestroy {
       map(() => {
         const snapshot = this.activatedRoute.snapshot;
         const ticket = snapshot.queryParamMap.get('ticket');
-        const serviceURL = snapshot.queryParamMap.get('service_url');
-        if (!ticket || !serviceURL) {
+        const service = snapshot.queryParamMap.get('service');
+        if (!ticket || !service) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_CAS;
           this.authService.login();
           return {
             shouldContinue: false,
             ticket: '',
-            serviceURL: '',
+            service: '',
           };
         }
         return {
           shouldContinue: true,
           ticket,
-          serviceURL,
+          service,
         };
       }),
       // If no ticket or serviceURL, then user will be redirect and no need to proceed.
@@ -76,8 +76,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       switchMap(data => {
         this.loginStatus = LoginStatus.VERIFYING_CAS_TICKET;
         const ticket = data.ticket;
-        const serviceURL = data.serviceURL;
-        return this.authService.retrieveJWT(ticket, serviceURL);
+        const service = data.service;
+        return this.authService.retrieveJWT(ticket, service);
       })
     ).subscribe(isAuthenticated => {
       if (!isAuthenticated) {

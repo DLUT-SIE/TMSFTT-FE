@@ -50,12 +50,9 @@ export class HTTPAuthService implements AuthService {
     this.isAuthenticated = true;
   }
 
-  /** Retrieve the JWT given ticket and serviceURL. */
-  retrieveJWT(ticket: string, serviceURL: string): Observable<boolean> {
-    const payload = {
-      ticket,
-      service_url: serviceURL,
-    };
+  /** Retrieve the JWT given ticket and service. */
+  retrieveJWT(ticket: string, service: string): Observable<boolean> {
+    const payload = { ticket, service };
     return this.http.post(environment.CAS_VERIFY_URL, payload).pipe(
       map(data => {
         this.authenticate(data);
