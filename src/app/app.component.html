@@ -11,24 +11,19 @@
 
     <span fxFlex="1 1 auto"></span>
 
-    <button mat-icon-button [matMenuTriggerFor]="messageBox">
+    <button mat-icon-button (click)="openNotificationBox()">
       <mat-icon matBadge="4" matBadgeColor="accent" matBadgeOverlap="true">chat</mat-icon>
     </button>
 
-    <span *ngIf="!platformService.isMobile"><span i18n>欢迎，</span>Alex</span>
+    <span *ngIf="!platformService.isMobile && authService.isAuthenticated"><span i18n>欢迎，</span>{{ authService.firstName }}</span>
 
-    <button mat-icon-button [matMenuTriggerFor]="options">
+    <button mat-icon-button [matMenuTriggerFor]="settings">
       <mat-icon>more_vert</mat-icon>
     </button>
 
-    <mat-menu #messageBox="matMenu">
-      <button mat-menu-item>A long text is very looooooooong.</button>
-      <button mat-menu-item>Help</button>
-    </mat-menu>
-
-    <mat-menu #options="matMenu">
-      <button mat-menu-item *ngIf="platformService.isMobile" disabled>
-        <mat-icon>person</mat-icon><span i18n>欢迎，</span>Alex
+    <mat-menu #settings="matMenu">
+      <button mat-menu-item *ngIf="platformService.isMobile && authService.isAuthenticated" disabled>
+        <mat-icon>person</mat-icon><span i18n>欢迎，</span>{{ authService.firstName }}
       </button>
       <button mat-menu-item>Settings</button>
       <button mat-menu-item>Help</button>

@@ -26,6 +26,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { TrainingRecordModule } from './training-record/training-record.module';
 import { ServicesModule } from './services/services.module';
+import { NotificationModule } from './notification/notification.module';
 
 
 /** Describe how our app looks. */
@@ -60,6 +61,7 @@ import { ServicesModule } from './services/services.module';
     MatToolbarModule,
 
     TrainingRecordModule,
+    NotificationModule,
     ServicesModule,
     AppRoutingModule,
   ],

@@ -11,6 +11,7 @@ import { RecordService } from './training-record/record.service';
 import { RecordAttachmentService } from './training-record/record-attachment.service';
 import { RecordContentService } from './training-record/record-content.service';
 import { EventService } from './training-event/event.service';
+import { NotificationService } from './notification/notification.service';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { EventService } from './training-event/event.service';
     RecordService,
     RecordContentService,
     RecordAttachmentService,
+    NotificationService,
     {
       provide: STORAGE_SERVICE,
       useClass: LocalStorageService,
