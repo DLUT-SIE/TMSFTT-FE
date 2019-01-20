@@ -36,7 +36,7 @@ describe('NotificationService', () => {
         expect(notifications.length).toEqual(2);
     });
 
-    const url = `${environment.NOTIFICATION_SERVICE_URL}read/?offset=${offset}&limit=${limit}`;
+    const url = `${environment.NOTIFICATION_SERVICE_URL}read-notifications/?offset=${offset}&limit=${limit}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -54,7 +54,7 @@ describe('NotificationService', () => {
         expect(notifications.length).toEqual(2);
     });
 
-    const url = `${environment.NOTIFICATION_SERVICE_URL}unread/?offset=${offset}&limit=${limit}`;
+    const url = `${environment.NOTIFICATION_SERVICE_URL}unread-notifications/?offset=${offset}&limit=${limit}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');

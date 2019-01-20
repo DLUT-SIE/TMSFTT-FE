@@ -86,8 +86,7 @@ export class NotificationService {
       key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
     let url = environment.NOTIFICATION_SERVICE_URL;
     if (readStatus !== undefined) {
-      url += readStatus ? 'read' : 'unread';
-      url += '/';
+      url += readStatus ? 'read-notifications/' : 'unread-notifications/';
     }
     url += '?' + queryParams;
     return this.http.get<Notification[]>(url);
