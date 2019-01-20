@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatBadgeModule,
@@ -17,6 +17,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeZhHans from '@angular/common/locales/zh-Hans';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +29,9 @@ import { LoginComponent } from './login/login.component';
 import { TrainingRecordModule } from './training-record/training-record.module';
 import { ServicesModule } from './services/services.module';
 import { NotificationModule } from './notification/notification.module';
+
+
+registerLocaleData(localeZhHans, 'zh-Hans');
 
 
 /** Describe how our app looks. */
@@ -65,6 +70,7 @@ import { NotificationModule } from './notification/notification.module';
     ServicesModule,
     AppRoutingModule,
   ],
+  providers: [ { provide: LOCALE_ID, useValue: 'zh-Hans' } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,15 +32,15 @@ describe('NotificationService', () => {
     const readStatus = true;
 
     service.getNotifications(offset, limit, readStatus).subscribe(
-      (notifications: Notification[]) => {
-        expect(notifications.length).toEqual(2);
+      (res: {}) => {
+        expect(res['results'].length).toEqual(2);
     });
 
     const url = `${environment.NOTIFICATION_SERVICE_URL}read-notifications/?offset=${offset}&limit=${limit}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush([{}, {}] as Notification[]);
+    req.flush({ results: [{}, {}] as Notification[] });
   });
 
   it('should get unread notifications', () => {
@@ -50,25 +50,25 @@ describe('NotificationService', () => {
     const readStatus = false;
 
     service.getNotifications(offset, limit, readStatus).subscribe(
-      (notifications: Notification[]) => {
-        expect(notifications.length).toEqual(2);
+      (res: {}) => {
+        expect(res['results'].length).toEqual(2);
     });
 
     const url = `${environment.NOTIFICATION_SERVICE_URL}unread-notifications/?offset=${offset}&limit=${limit}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush([{}, {}] as Notification[]);
+    req.flush({ results: [{}, {}] as Notification[] });
   });
 
   it('should provide latest unread notifications.', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
     const getNotifications = spyOn(service, 'getNotifications');
 
-    getNotifications.and.returnValue(observableOf([{}, {}]));
+    getNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
 
     service.latestUnreadNotifications$.subscribe(notes => {
-      expect(notes.length).toBe(2);
+      expect(notes['results'].length).toBe(2);
     });
 
     tick(1000);

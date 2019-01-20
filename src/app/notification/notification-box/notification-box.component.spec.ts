@@ -20,7 +20,7 @@ class TestNotificationBoxCardComponent {
 describe('NotificationBoxComponent', () => {
   let component: NotificationBoxComponent;
   let fixture: ComponentFixture<NotificationBoxComponent>;
-  const latestUnreadNotifications$ = new Subject<Notification[]>();
+  const latestUnreadNotifications$ = new Subject<{}>();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,8 @@ describe('NotificationBoxComponent', () => {
   });
 
   it('should create box cards.', () => {
-    latestUnreadNotifications$.next([
+    latestUnreadNotifications$.next({
+      results: [
       {
         sender: 'sender',
         recipient: 'recipient',
@@ -68,7 +69,7 @@ describe('NotificationBoxComponent', () => {
         content: 'content',
         time: '2019-01-01',
       },
-    ]);
+    ]});
 
     fixture.detectChanges();
 

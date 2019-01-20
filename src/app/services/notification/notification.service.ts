@@ -66,7 +66,7 @@ export class NotificationService {
   private REFRESH_INTERVAL = 30 * 1000;
 
   /** Yield latest unread notifications. */
-  latestUnreadNotifications$: Observable<Notification[]>;
+  latestUnreadNotifications$: Observable<{}>;
 
   constructor(
     private readonly http: HttpClient,
@@ -78,7 +78,7 @@ export class NotificationService {
   }
 
   getNotifications(offset?: number, limit?: number,
-                   readStatus?: boolean): Observable<Notification[]> {
+                   readStatus?: boolean) {
     if (offset === undefined) offset = 0;
     if (limit === undefined) limit = this.LIMIT;
     const paramsObj = { offset, limit };
@@ -89,6 +89,6 @@ export class NotificationService {
       url += readStatus ? 'read-notifications/' : 'unread-notifications/';
     }
     url += '?' + queryParams;
-    return this.http.get<Notification[]>(url);
+    return this.http.get(url);
   }
 }
