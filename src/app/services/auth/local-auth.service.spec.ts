@@ -71,12 +71,17 @@ describe('LocalAuthService', () => {
   it('should return true if verifyJWT succeed.', fakeAsync(() => {
     const service: LocalAuthService = TestBed.get(LocalAuthService);
     getItem.and.returnValue('token');
+    let authenticationSucceedFired = false;
 
     service.verifyJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
     });
+    service.authenticationSucceed.subscribe(() => {
+      authenticationSucceedFired = true;
+    });
 
     tick(1000);
+    expect(authenticationSucceedFired).toBeTruthy();
   }));
 
   it('should return false if verifyJWT with no JWT.', fakeAsync(() => {

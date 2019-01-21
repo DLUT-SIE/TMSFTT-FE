@@ -103,16 +103,22 @@ describe('HTTPAuthService', () => {
   it('should return true when verifyJWT succeed', () => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
     getItem.and.returnValue('tokenefg');
+    let authenticationSucceedFired = false;
 
     service.verifyJWT().subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
       expect(service.isAuthenticated).toBeTruthy();
+    });
+    service.authenticationSucceed.subscribe(() => {
+      authenticationSucceedFired = true;
     });
 
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
     expect(req.request.method).toEqual('POST');
 
     req.flush(dummyResponse);
+
+    expect(authenticationSucceedFired).toBeTruthy();
   });
 
   it('should return false when verifyJWT with no JWT', () => {

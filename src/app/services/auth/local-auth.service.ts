@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, timer } from 'rxjs';
+import { Observable, timer, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -17,6 +17,7 @@ export class LocalAuthService implements AuthService {
   username = null;
   firstName = null;
   lastName = null;
+  authenticationSucceed = new ReplaySubject<void>();
 
   constructor(
     private readonly windowService: WindowService,
@@ -37,6 +38,7 @@ export class LocalAuthService implements AuthService {
     this.lastName = 'last_name';
     this.storageService.setItem(environment.JWT_KEY, 'test-token');
     this.isAuthenticated = true;
+    this.authenticationSucceed.next();
   }
 
   retrieveJWT(ticket: string, serviceURL: string): Observable<boolean> {
