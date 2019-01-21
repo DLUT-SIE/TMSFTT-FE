@@ -2,7 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { EventService } from './event.service';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import {
+  OffCampusEventRequest,
+  OffCampusEventResponse,
+} from 'src/app/interfaces/event';
 
 describe('EventService', () => {
   let httpTestingController: HttpTestingController;
@@ -23,14 +27,20 @@ describe('EventService', () => {
 
     service.createOffCampusEvent({
       name: 'name',
-      time: 'time',
+      time: '2019-01-01',
       location: 'location',
-      num_hours: 5,
-      num_participants: 10,
-    }).subscribe();
+      num_hours: 10,
+      num_participants: 50,
+    } as OffCampusEventRequest).subscribe();
     const req = httpTestingController.expectOne(environment.OFF_CAMPUS_EVENT_SERVICE_URL);
     expect(req.request.method).toEqual('POST');
-    req.flush({});
+    req.flush({
+      name: 'name',
+      time: '2019-01-01',
+      location: 'location',
+      num_hours: 10,
+      num_participants: 50,
+    } as OffCampusEventResponse);
   });
 
   it('should delete OffCampusEvent', () => {

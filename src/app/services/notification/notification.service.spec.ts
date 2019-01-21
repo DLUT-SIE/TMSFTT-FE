@@ -2,11 +2,32 @@ import { TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/te
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of as observableOf, throwError } from 'rxjs';
 
-import { Notification, NotificationService } from './notification.service';
-import { environment } from '../../../environments/environment';
+import { NotificationService } from './notification.service';
+import { environment } from 'src/environments/environment';
+import { PaginatedNotificationResponse } from 'src/app/interfaces/notification';
 
 describe('NotificationService', () => {
   let httpTestingController: HttpTestingController;
+  const dummyResponse: PaginatedNotificationResponse = {
+      count: 100,
+      next: 'next',
+      previous: 'previous',
+      results: [
+        {
+          time: '2019-01-01',
+          sender: 'sender',
+          recipient: 'recipient',
+          content: 'content',
+        },
+        {
+          time: '2019-01-01',
+          sender: 'sender',
+          recipient: 'recipient',
+          content: 'content',
+        },
+      ]
+    };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -32,15 +53,13 @@ describe('NotificationService', () => {
     const readStatus = true;
 
     service.getNotifications(offset, limit, readStatus).subscribe(
-      (res: {}) => {
-        expect(res['results'].length).toEqual(2);
-    });
+      res => { expect(res.results.length).toEqual(2); });
 
     const url = `${environment.NOTIFICATION_SERVICE_URL}read-notifications/?offset=${offset}&limit=${limit}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({ results: [{}, {}] as Notification[] });
+    req.flush(dummyResponse);
   });
 
   it('should get unread notifications', () => {
@@ -58,7 +77,7 @@ describe('NotificationService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({ results: [{}, {}] as Notification[] });
+    req.flush(dummyResponse);
   });
 
   it('should ignore errors during getting notifications', fakeAsync(() => {
@@ -91,14 +110,14 @@ describe('NotificationService', () => {
     const service: NotificationService = TestBed.get(NotificationService);
 
     service.getNotifications().subscribe(
-      (notifications: Notification[]) => {
-        expect(notifications.length).toEqual(2);
+      data => {
+        expect(data.results.length).toEqual(2);
     });
 
     const url = `${environment.NOTIFICATION_SERVICE_URL}?offset=0&limit=20`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush([{}, {}] as Notification[]);
+    req.flush(dummyResponse);
   });
 });

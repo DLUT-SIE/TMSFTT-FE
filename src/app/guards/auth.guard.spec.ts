@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
-import { AUTH_SERVICE } from '../services/auth/auth-service';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 
 describe('AuthGuard', () => {
   let navigate: jasmine.Spy;

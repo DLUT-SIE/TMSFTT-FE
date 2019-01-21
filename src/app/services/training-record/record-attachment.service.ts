@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { RecordAttachmentResponse, RecordAttachmentRequest } from 'src/app/interfaces/record';
 
 /** Export services for RecordAttachment. */
 @Injectable({
@@ -15,16 +16,16 @@ export class RecordAttachmentService {
   ) { }
 
   /** Create single attachment. */
-  createRecordAttachment(recordID: number, file: File) {
-    const formData = new FormData();
-    formData.set('record', recordID.toString());
-    formData.set('path', file, file.name);
-    return this.http.post(environment.RECORD_ATTACHMENT_SERVICE_URL, formData);
+  createRecordAttachment(req: RecordAttachmentRequest) {
+    const data = new FormData();
+    data.set('record', req.record.toString());
+    data.set('path', req.path, req.path.name);
+    return this.http.post<RecordAttachmentResponse>(
+      environment.RECORD_ATTACHMENT_SERVICE_URL, data);
   }
 
   /** Create multiple attachments. */
-  createRecordAttachments(recordID: number, files: File[]) {
-    return forkJoin(files.map((file: File) => this.createRecordAttachment(
-      recordID, file)));
+  createRecordAttachments(reqs: RecordAttachmentRequest[]) {
+    return forkJoin(reqs.map(req => this.createRecordAttachment(req)));
   }
 }

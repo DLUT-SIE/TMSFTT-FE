@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { StorageService } from './storage-service';
+import { StorageService } from 'src/app/interfaces/storage-service';
 
 
 /** LocalStorageService implements StorageService with localStorage. */

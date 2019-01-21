@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
 import { EntryModeComponent } from './entry-mode.component';
-import { RouterLinkDirectiveStub } from '../../../testing/router-link-directive-stub';
+import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
 
 
 describe('EntryModeComponent', () => {

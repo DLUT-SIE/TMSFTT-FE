@@ -2,10 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { RecordContent, ContentType } from '../../services/training-record/record-content.service';
-import { RecordService, Record } from '../../services/training-record/record.service';
-import { OffCampusEvent } from '../../services/training-event/event.service';
-import { AuthService, AUTH_SERVICE } from '../../services/auth/auth-service';
+import { RecordService } from 'src/app/services/training-record/record.service';
+import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { OffCampusEventRequest } from 'src/app/interfaces/event';
+import { RecordContent } from 'src/app/interfaces/record';
+import { ContentType } from 'src/app/enums/content-type.enum';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -88,7 +89,7 @@ export class RecordFormComponent implements OnInit {
 
   onSubmit() {
     const value = this.recordForm.value;
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: value.name,
       time: value.time,
       location: value.location,
@@ -113,7 +114,7 @@ export class RecordFormComponent implements OnInit {
     const attachments: File[] = this.attachments;
     this.recordService.createOffCampusEventRecord(
       offCampusEvent, this.authService.userID,
-      contents, attachments).subscribe((record: Record | null) => {
+      contents, attachments).subscribe(record => {
         if (record !== null) {
           this.router.navigate(['../record-detail/', record.id]);
           return;

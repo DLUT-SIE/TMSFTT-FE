@@ -18,7 +18,7 @@ import { EntryModeComponent } from './entry-mode/entry-mode.component';
 import { TrainingRecordComponent } from './training-record/training-record.component';
 import { RecordFormComponent } from './record-form/record-form.component';
 import { BatchSubmitComponent } from './batch-submit/batch-submit.component';
-import { ServicesModule } from '../services/services.module';
+import { ServicesModule } from 'src/app/services/services.module';
 
 @NgModule({
   declarations: [

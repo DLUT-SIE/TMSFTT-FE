@@ -1,12 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { RecordContentService, RecordContent, ContentType } from './record-content.service';
+import { RecordContentService } from './record-content.service';
+import { RecordContentRequest } from 'src/app/interfaces/record';
 
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { ContentType } from 'src/app/enums/content-type.enum';
 
 describe('RecordContentService', () => {
   let httpTestingController: HttpTestingController;
+  const dummyReq: RecordContentRequest = {
+    record: 1,
+    content_type: ContentType.CONTENT_TYPE_CONTENT,
+    content: 'abc',
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -22,21 +30,7 @@ describe('RecordContentService', () => {
 
   it('should create contents', () => {
     const service: RecordContentService = TestBed.get(RecordContentService);
-    const id = 123;
-    const contents: RecordContent[] = [
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      },
-      {
-        content: 'abc',
-        content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }
-    ];
-
-    service.createRecordContents(id, contents).subscribe(val => {
-      expect(val).not.toBeNull();
-    });
+    service.createRecordContents([dummyReq, dummyReq]).subscribe();
 
     const req = httpTestingController.match(environment.RECORD_CONTENT_SERVICE_URL);
     expect(req.length).toEqual(2);
@@ -48,15 +42,7 @@ describe('RecordContentService', () => {
 
   it('should create content', () => {
     const service: RecordContentService = TestBed.get(RecordContentService);
-    const id = 123;
-    const content: RecordContent = {
-      content: 'abc',
-      content_type: ContentType.CONTENT_TYPE_CONTENT,
-    };
-
-    service.createRecordContent(id, content).subscribe(val => {
-      expect(val).not.toBeNull();
-    });
+    service.createRecordContent(dummyReq).subscribe();
 
     const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
     expect(contentsReq.request.method).toEqual('POST');

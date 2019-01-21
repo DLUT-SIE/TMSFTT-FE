@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { PlatformService } from './services/platform.service';
-import { NotificationBoxComponent } from './notification/notification-box/notification-box.component';
-import { AUTH_SERVICE, AuthService } from './services/auth/auth-service';
+import { NotificationBoxComponent } from './modules/notification/notification-box/notification-box.component';
+import { AUTH_SERVICE, AuthService } from './interfaces/auth-service';
 import { NotificationService } from './services/notification/notification.service';
 
 /** Root component. */

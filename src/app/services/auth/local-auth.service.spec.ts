@@ -2,8 +2,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { LocalAuthService } from './local-auth.service';
-import { WindowService } from '../window.service';
-import { STORAGE_SERVICE } from '../storage/storage-service';
+import { WindowService } from 'src/app/services/window.service';
+import { STORAGE_SERVICE } from 'src/app/interfaces/storage-service';
 
 describe('LocalAuthService', () => {
   let redirect: jasmine.Spy;

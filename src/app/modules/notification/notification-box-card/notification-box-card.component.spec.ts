@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material';
 
 import { NotificationBoxCardComponent } from './notification-box-card.component';
-import { Notification } from '../../services/notification/notification.service';
+import { NotificationResponse } from 'src/app/interfaces/notification';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { Notification } from '../../services/notification/notification.service';
 })
 class TestNotificationBoxCardComponent {
   /** Mock notification */
-  notification: Notification = {
+  notification: NotificationResponse = {
     content: 'content',
     sender: 'sender',
     recipient: 'recipient',

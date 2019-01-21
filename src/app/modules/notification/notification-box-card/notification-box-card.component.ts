@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Notification } from '../../services/notification/notification.service';
+import { NotificationResponse } from 'src/app/interfaces/notification';
 
 /** Used for single Notification in NotificationBox. */
 @Component({
@@ -9,7 +9,7 @@ import { Notification } from '../../services/notification/notification.service';
 })
 export class NotificationBoxCardComponent implements OnInit {
   /** The notification to be displayed. */
-  @Input() notification: Notification;
+  @Input() notification: NotificationResponse;
 
   constructor() { }
 

@@ -18,8 +18,9 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { RecordFormComponent } from './record-form.component';
-import { Record, RecordService } from '../../services/training-record/record.service';
-import { AUTH_SERVICE } from 'src/app/services/auth/auth-service';
+import { RecordService } from 'src/app/services/training-record/record.service';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { RecordResponse } from 'src/app/interfaces/record';
 
 describe('RecordFormComponent', () => {
   // Note: We should create Observable before our each test in certain
@@ -28,7 +29,7 @@ describe('RecordFormComponent', () => {
   // respond to new value. This is not a big deal in unit tests, but we
   // need to make sure that we are aware of the consequences of this
   // behavior, such as codes are marked run multiple times in coverage report.
-  const createOffCampusEventRecord$ = new Subject< Record | null>();
+  const createOffCampusEventRecord$ = new Subject<RecordResponse>();
   let navigate: jasmine.Spy;
   let component: RecordFormComponent;
   let fixture: ComponentFixture<RecordFormComponent>;
@@ -142,7 +143,7 @@ describe('RecordFormComponent', () => {
 
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
-    createOffCampusEventRecord$.next({ id: 123 } as Record);
+    createOffCampusEventRecord$.next({ id: 123 } as RecordResponse);
 
     expect(navigate).toHaveBeenCalledWith(['../record-detail/', 123]);
   });
