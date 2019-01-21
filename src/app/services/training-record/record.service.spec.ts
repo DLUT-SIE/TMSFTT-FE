@@ -2,11 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of as observableOf, throwError } from 'rxjs';
 
-import { Record, RecordService, RecordStatus } from './record.service';
-import { ContentType, RecordContentService } from './record-content.service';
-import { environment } from '../../../environments/environment';
-import { OffCampusEvent, EventService } from '../training-event/event.service';
+import { RecordService } from './record.service';
+import { RecordContentService } from './record-content.service';
+import { environment } from 'src/environments/environment';
+import { EventService } from 'src/app/services/training-event/event.service';
 import { RecordAttachmentService } from './record-attachment.service';
+import { RecordResponse } from 'src/app/interfaces/record';
+import { OffCampusEventRequest } from 'src/app/interfaces/event';
+import { RecordStatus } from 'src/app/enums/record-status.enum';
+import { ContentType } from 'src/app/enums/content-type.enum';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
@@ -63,7 +67,7 @@ describe('RecordService', () => {
     const service: RecordService = TestBed.get(RecordService);
 
     service.createCampusEventRecord(1, 1, [], []).subscribe(
-      (record: Record | null) => {
+      record => {
         expect(record).not.toBeNull();
       });
 
@@ -75,7 +79,7 @@ describe('RecordService', () => {
 
   it('should create directly if no contents and no attachments', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: 'title',
       time: '2018-12-31',
       location: 'location',
@@ -86,7 +90,7 @@ describe('RecordService', () => {
     createOffCampusEvent.and.returnValue(observableOf({ id: 1 }));
 
     service.createOffCampusEventRecord(offCampusEvent, 1, [], []).subscribe(
-      (record: Record | null) => {
+      record => {
         expect(record).not.toBeNull();
       });
 
@@ -97,15 +101,18 @@ describe('RecordService', () => {
     expect(req.request.method).toEqual('POST');
     req.flush({
       id: 123,
+      create_time: '2019-01-01',
+      update_time: '2019-01-01',
       campus_event: null,
-      off_campus_event: null,
+      off_campus_event: 1,
+      user: 1,
       status: RecordStatus.STATUS_SUBMITTED,
-    });
+    } as RecordResponse);
   });
 
   it('should return null if OffCampusEvent creation failed.', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: 'title',
       time: '2018-12-31',
       location: 'location',
@@ -120,7 +127,7 @@ describe('RecordService', () => {
       [{
         content: '',
         content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }], []).subscribe((record: Record | null) => {
+      }], []).subscribe(record => {
         expect(record).toBeNull();
       });
 
@@ -129,7 +136,7 @@ describe('RecordService', () => {
 
   it('should return null if creation failed.', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: 'title',
       time: '2018-12-31',
       location: 'location',
@@ -145,7 +152,7 @@ describe('RecordService', () => {
       [{
         content: '',
         content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }], []).subscribe((record: Record | null) => {
+      }], []).subscribe(record => {
         expect(record).toBeNull();
       });
 
@@ -176,7 +183,7 @@ describe('RecordService', () => {
       [{
         content: '',
         content_type: ContentType.CONTENT_TYPE_CONTENT,
-      }], []).subscribe((record: Record | null) => {
+      }], []).subscribe(record => {
         expect(record).toBeNull();
       });
 
@@ -190,16 +197,16 @@ describe('RecordService', () => {
     patchReq.flush({}, {
       status: 400,
       statusText: '',
-    }),
+    });
 
-      expect(deleteRecord).toHaveBeenCalled();
+    expect(deleteRecord).toHaveBeenCalled();
   });
 
   it('should create Record with contents and attachments.', () => {
     const service: RecordService = TestBed.get(RecordService);
     const file = new File([''], 'file');
     const id = 123;
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: 'title',
       time: '2018-12-31',
       location: 'location',
@@ -222,7 +229,7 @@ describe('RecordService', () => {
       [
         file,
         file,
-      ]).subscribe((record: Record | null) => {
+      ]).subscribe(record => {
         expect(record.id).toEqual(id);
       });
 
@@ -252,7 +259,7 @@ describe('RecordService', () => {
     const deleteRecord = spyOn(service, 'deleteRecord');
     const file = new File([''], 'file');
     const id = 123;
-    const offCampusEvent: OffCampusEvent = {
+    const offCampusEvent: OffCampusEventRequest = {
       name: 'title',
       time: '2018-12-31',
       location: 'location',
@@ -273,7 +280,7 @@ describe('RecordService', () => {
           content: 'abc',
           content_type: ContentType.CONTENT_TYPE_CONTENT,
         }
-      ], [file, file]).subscribe((record: Record | null) => {
+      ], [file, file]).subscribe(record => {
         expect(record).toBeNull();
       });
 

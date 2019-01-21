@@ -3,23 +3,16 @@ import { timer, of as observableOf } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { NotificationResponse, PaginatedNotificationResponse } from 'src/app/interfaces/notification';
 
-
-/** This is a mapping definition of backend server. */
-export interface Notification {
-  time: string;
-  sender: string;
-  recipient: string;
-  content: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
   /** Latest unread notifications. */
-  unreadNotifications: Notification[] = [];
+  unreadNotifications: NotificationResponse[] = [];
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
@@ -34,7 +27,7 @@ export class NotificationService {
     timer(0, this.REFRESH_INTERVAL).pipe(
       switchMap(() => this.getNotifications(0, this.LIMIT, false)),
       map(res => {
-        this.unreadNotifications = res['results'];
+        this.unreadNotifications = res.results;
         this.unreadNotificationsLoaded = true;
       }),
       catchError(() => {
@@ -56,6 +49,6 @@ export class NotificationService {
       url += readStatus ? 'read-notifications/' : 'unread-notifications/';
     }
     url += '?' + queryParams;
-    return this.http.get(url);
+    return this.http.get<PaginatedNotificationResponse>(url);
   }
 }

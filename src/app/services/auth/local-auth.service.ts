@@ -2,10 +2,10 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
-import { AuthService } from './auth-service';
-import { WindowService } from '../window.service';
-import { STORAGE_SERVICE, StorageService } from '../storage/storage-service';
+import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/interfaces/auth-service';
+import { WindowService } from 'src/app/services/window.service';
+import { STORAGE_SERVICE, StorageService } from 'src/app/interfaces/storage-service';
 
 /** LocalAuthService stubs all authentication logic during development. */
 @Injectable({

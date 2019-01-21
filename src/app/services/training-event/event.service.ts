@@ -1,28 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 
-
-/** This interface is a mapping to the definition of CampusEvent on server. */
-export interface CampusEvent {
-  name: string;
-  time: string;
-  location: string;
-  num_hours: number;
-  num_participants: number;
-  num_enrolled: number|null;
-  description: string|null;
-}
-
-/** This interface is a mapping to the definition of OffCampusEvent on server. */
-export interface OffCampusEvent {
-  id?: number;
-  name: string;
-  time: string;
-  location: string;
-  num_hours: number;
-  num_participants: number;
-}
+import { environment } from 'src/environments/environment';
+import {
+  OffCampusEventRequest,
+  OffCampusEventResponse,
+} from 'src/app/interfaces/event';
 
 /** Provide services for Event. */
 @Injectable({
@@ -35,12 +18,14 @@ export class EventService {
   ) { }
 
   /** Create an off-campus event. */
-  createOffCampusEvent(event: OffCampusEvent) {
-    return this.http.post<OffCampusEvent>(environment.OFF_CAMPUS_EVENT_SERVICE_URL, event);
+  createOffCampusEvent(req: OffCampusEventRequest) {
+    return this.http.post<OffCampusEventResponse>(
+      environment.OFF_CAMPUS_EVENT_SERVICE_URL, req);
   }
 
   /** Delete the off-campus event based on eventID. */
   deleteOffCampusEvent(eventID: number) {
-    return this.http.delete(environment.OFF_CAMPUS_EVENT_SERVICE_URL + eventID + '/');
+    return this.http.delete(
+      environment.OFF_CAMPUS_EVENT_SERVICE_URL + eventID + '/');
   }
 }

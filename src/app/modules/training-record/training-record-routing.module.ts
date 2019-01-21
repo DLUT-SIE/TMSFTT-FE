@@ -4,7 +4,7 @@ import { TrainingRecordComponent } from './training-record/training-record.compo
 import { EntryModeComponent } from './entry-mode/entry-mode.component';
 import { RecordFormComponent } from './record-form/record-form.component';
 import { BatchSubmitComponent } from './batch-submit/batch-submit.component';
-import { AuthGuard } from '../guards/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {

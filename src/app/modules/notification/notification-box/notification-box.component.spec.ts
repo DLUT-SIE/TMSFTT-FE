@@ -6,7 +6,7 @@ import {
 import { Subject } from 'rxjs';
 
 import { NotificationBoxComponent } from './notification-box.component';
-import { Notification, NotificationService } from '../../services/notification/notification.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-notification-box-card',

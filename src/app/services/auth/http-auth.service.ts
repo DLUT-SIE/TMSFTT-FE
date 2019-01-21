@@ -3,10 +3,10 @@ import { Injectable, Inject } from '@angular/core';
 import { timer, Observable, of as ObservableOf } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
-import { AuthService } from './auth-service';
-import { WindowService } from '../window.service';
-import { StorageService, STORAGE_SERVICE } from '../storage/storage-service';
+import { environment } from 'src/environments/environment';
+import { JWTResponse, AuthService } from 'src/app/interfaces/auth-service';
+import { WindowService } from 'src/app/services/window.service';
+import { StorageService, STORAGE_SERVICE } from 'src/app/interfaces/storage-service';
 
 
 /** Provide authentication service during the app lifetime. */
@@ -39,13 +39,13 @@ export class HTTPAuthService implements AuthService {
   }
 
   /** Extract necessary information from data and set fields of service. */
-  private authenticate(data: {}) {
-    const token = data['token'];
-    const user = data['user'];
-    this.userID = user['id'];
-    this.username = user['username'];
-    this.firstName = user['first_name'];
-    this.lastName = user['last_name'];
+  private authenticate(response: JWTResponse) {
+    const token = response.token;
+    const user = response.user;
+    this.userID = user.id;
+    this.username = user.username;
+    this.firstName = user.first_name;
+    this.lastName = user.last_name;
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
   }
@@ -53,9 +53,9 @@ export class HTTPAuthService implements AuthService {
   /** Retrieve the JWT given ticket and service. */
   retrieveJWT(ticket: string, service: string): Observable<boolean> {
     const payload = { ticket, service };
-    return this.http.post(environment.CAS_VERIFY_URL, payload).pipe(
-      map(data => {
-        this.authenticate(data);
+    return this.http.post<JWTResponse>(environment.CAS_VERIFY_URL, payload).pipe(
+      map(response => {
+        this.authenticate(response);
         return true;
       }),
       catchError(() => {
@@ -69,9 +69,9 @@ export class HTTPAuthService implements AuthService {
     const token = this.storageService.getItem(environment.JWT_KEY);
     if (!token) return ObservableOf(false);
     const payload = { token };
-    return this.http.post(obtainURL, payload).pipe(
-      map(data => {
-        this.authenticate(data);
+    return this.http.post<JWTResponse>(obtainURL, payload).pipe(
+      map(response => {
+        this.authenticate(response);
         return true;
       }),
       catchError(() => {

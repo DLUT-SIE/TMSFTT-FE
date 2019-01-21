@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AUTH_SERVICE, AuthService } from '../services/auth/auth-service';
+import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
 /** AuthGuard requires authenticated access. */
 @Injectable({

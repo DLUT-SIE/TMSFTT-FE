@@ -5,8 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Subject } from 'rxjs';
 
 import { LoginComponent } from './login.component';
-import { RouterLinkDirectiveStub } from '../../testing/router-link-directive-stub';
-import { AUTH_SERVICE } from '../services/auth/auth-service';
+import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

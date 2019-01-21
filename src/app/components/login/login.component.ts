@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService, AUTH_SERVICE } from '../services/auth/auth-service';
+import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { switchMap, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 

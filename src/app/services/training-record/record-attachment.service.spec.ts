@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RecordAttachmentService } from './record-attachment.service';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { RecordAttachmentRequest } from 'src/app/interfaces/record';
 
 
 describe('RecordAttachmentService', () => {
   let httpTestingController: HttpTestingController;
+  const dummyReq: RecordAttachmentRequest = {
+    record: 1,
+    path: new File([''], 'file'),
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -22,10 +27,8 @@ describe('RecordAttachmentService', () => {
 
   it('should create RecordAttachment', () => {
     const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
-    const id = 123;
-    const file = new File([''], 'file');
 
-    service.createRecordAttachment(id, file).subscribe();
+    service.createRecordAttachment(dummyReq).subscribe();
 
     const req = httpTestingController.expectOne(environment.RECORD_ATTACHMENT_SERVICE_URL);
     expect(req.request.method).toEqual('POST');
@@ -34,11 +37,8 @@ describe('RecordAttachmentService', () => {
 
   it('should create RecordAttachments', () => {
     const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
-    const id = 123;
-    const file = new File([''], 'file');
-    const files = [file, file];
 
-    service.createRecordAttachments(id, files).subscribe();
+    service.createRecordAttachments([dummyReq, dummyReq]).subscribe();
 
     const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
     expect(attachmentsReq.length).toBe(2);

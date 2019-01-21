@@ -38,4 +38,19 @@ export interface AuthService {
     refreshJWT(): Observable<boolean>;
 }
 
+/** RESTful response interface for JWT auth. */
+export interface JWTResponse {
+    token: string;
+    user: {
+        id: number;
+        username: string;
+        last_login: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        is_active: boolean;
+        date_joined: string;
+    };
+}
+
 export const AUTH_SERVICE = new InjectionToken<AuthService>('AuthService');

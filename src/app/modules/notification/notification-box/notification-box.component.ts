@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../../services/notification/notification.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 /** This component should display notifications in a dialog. */
 @Component({

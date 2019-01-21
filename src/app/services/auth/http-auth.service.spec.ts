@@ -1,10 +1,11 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, tick, fakeAsync } from '@angular/core/testing';
 
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+import { JWTResponse } from 'src/app/interfaces/auth-service';
 import { HTTPAuthService } from './http-auth.service';
-import { WindowService } from '../window.service';
-import { STORAGE_SERVICE } from '../storage/storage-service';
+import { WindowService } from 'src/app/services/window.service';
+import { STORAGE_SERVICE } from 'src/app/interfaces/storage-service';
 
 
 describe('HTTPAuthService', () => {
@@ -12,6 +13,19 @@ describe('HTTPAuthService', () => {
   let redirect: jasmine.Spy;
   let getItem: jasmine.Spy;
   let setItem: jasmine.Spy;
+  const dummyResponse: JWTResponse = {
+    token: 'token',
+    user: {
+      id: 123,
+      username: 'username',
+      last_login: '2019-01-01',
+      first_name: 'first_name',
+      last_name: 'last_name',
+      email: 'e@m.com',
+      is_active: true,
+      date_joined: '2019-01-01',
+    },
+  };
 
   beforeEach(() => {
     const windowService = jasmine.createSpyObj(
@@ -20,7 +34,7 @@ describe('HTTPAuthService', () => {
     const storageService = jasmine.createSpyObj(
       'StorageService', ['getItem', 'setItem']);
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
+      imports: [HttpClientTestingModule],
       providers: [
         {
           provide: WindowService,
@@ -68,15 +82,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.CAS_VERIFY_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({
-      token: 'token',
-      user: {
-        id: 123,
-        username: 'username',
-        first_name: 'first_name',
-        last_name: 'last_name',
-      },
-    });
+    req.flush(dummyResponse);
   }));
 
   it('should return false when retriveJWT failed', fakeAsync(() => {
@@ -91,7 +97,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.CAS_VERIFY_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
   }));
 
   it('should return true when verifyJWT succeed', () => {
@@ -106,15 +112,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
     expect(req.request.method).toEqual('POST');
 
-    req.flush({
-      token: 'token',
-      user: {
-        id: 123,
-        username: 'username',
-        first_name: 'first_name',
-        last_name: 'last_name',
-      },
-    });
+    req.flush(dummyResponse);
   });
 
   it('should return false when verifyJWT with no JWT', () => {
@@ -139,7 +137,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
   });
 
   it('should return true when refreshJWT succeed', () => {
@@ -154,15 +152,7 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({
-      token: 'token',
-      user: {
-        id: 123,
-        username: 'username',
-        first_name: 'first_name',
-        last_name: 'last_name',
-      },
-    });
+    req.flush(dummyResponse);
   });
 
   it('should return false when refreshJWT with no JWT', () => {
@@ -187,6 +177,6 @@ describe('HTTPAuthService', () => {
     const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
 
     expect(req.request.method).toEqual('POST');
-    req.flush({ msg: 'invalid' }, { status: 400 , statusText: 'failed' });
+    req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
   });
 });

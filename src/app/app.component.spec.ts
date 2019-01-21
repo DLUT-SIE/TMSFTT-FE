@@ -15,8 +15,8 @@ import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { PlatformService } from './services/platform.service';
-import { RouterLinkDirectiveStub } from '../testing/router-link-directive-stub';
-import { AUTH_SERVICE } from './services/auth/auth-service';
+import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
+import { AUTH_SERVICE } from './interfaces/auth-service';
 import { NotificationService } from './services/notification/notification.service';
 
 
