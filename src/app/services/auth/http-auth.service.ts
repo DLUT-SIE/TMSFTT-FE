@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
-import { timer, Observable, of as ObservableOf } from 'rxjs';
+import { timer, Observable, of as ObservableOf, ReplaySubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -19,6 +19,7 @@ export class HTTPAuthService implements AuthService {
   username = null;
   firstName = null;
   lastName = null;
+  authenticationSucceed = new ReplaySubject<void>();
 
   constructor(
     private readonly http: HttpClient,
@@ -48,6 +49,7 @@ export class HTTPAuthService implements AuthService {
     this.lastName = user.last_name;
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
+    this.authenticationSucceed.next();
   }
 
   /** Retrieve the JWT given ticket and service. */

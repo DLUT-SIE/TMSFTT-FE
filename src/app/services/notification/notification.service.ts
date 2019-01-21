@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { timer, of as observableOf } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { NotificationResponse, PaginatedNotificationResponse } from 'src/app/interfaces/notification';
+import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
 
 @Injectable({
@@ -20,25 +21,28 @@ export class NotificationService {
   /** How often should we query latest notifications. */
   private REFRESH_INTERVAL = 30 * 1000;
 
-
   constructor(
     private readonly http: HttpClient,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) {
-    timer(0, this.REFRESH_INTERVAL).pipe(
-      switchMap(() => this.getNotifications(0, this.LIMIT, false)),
-      map(res => {
-        this.unreadNotifications = res.results;
-        this.unreadNotificationsLoaded = true;
-      }),
-      catchError(() => {
-        this.unreadNotificationsLoaded = true;
-        return observableOf(null);
-      }),
-    ).subscribe();
+    this.authService.authenticationSucceed.subscribe(() => {
+      timer(0, this.REFRESH_INTERVAL).pipe(
+        takeWhile(() => this.authService.isAuthenticated),
+        switchMap(() => this.getNotifications(0, this.LIMIT, false)),
+        map(res => {
+          this.unreadNotifications = res.results;
+          this.unreadNotificationsLoaded = true;
+        }),
+        catchError(() => {
+          this.unreadNotificationsLoaded = true;
+          return observableOf(null);
+        }),
+      ).subscribe();
+    });
   }
 
   getNotifications(offset?: number, limit?: number,
-                   readStatus?: boolean) {
+    readStatus?: boolean) {
     if (offset === undefined) offset = 0;
     if (limit === undefined) limit = this.LIMIT;
     const paramsObj = { offset, limit };

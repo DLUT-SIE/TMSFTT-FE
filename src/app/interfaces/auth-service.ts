@@ -14,6 +14,8 @@ export interface AuthService {
     firstName: string|null;
     /** Lastname for authenticated user. */
     lastName: string|null;
+    /** Notify when authentication succeed. */
+    authenticationSucceed: Observable<void>;
     /**
      * Login user before retrieving JWT. This method will redirect user to
      * CAS authentication page.

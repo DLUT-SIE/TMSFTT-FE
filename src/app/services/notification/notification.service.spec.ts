@@ -1,10 +1,11 @@
 import { TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { of as observableOf, throwError } from 'rxjs';
+import { of as observableOf, throwError, Subject } from 'rxjs';
 
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
 import { PaginatedNotificationResponse } from 'src/app/interfaces/notification';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 
 describe('NotificationService', () => {
   let httpTestingController: HttpTestingController;
@@ -27,12 +28,22 @@ describe('NotificationService', () => {
         },
       ]
     };
+    const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
       ],
+      providers: [
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            authenticationSucceed: authenticationSucceed$,
+            isAuthenticated: true,
+          },
+        },
+      ]
     });
     httpTestingController = TestBed.get(HttpTestingController);
   });
@@ -82,6 +93,7 @@ describe('NotificationService', () => {
 
   it('should ignore errors during getting notifications', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
+    authenticationSucceed$.next();
     const getNotifications = spyOn(service, 'getNotifications');
 
     getNotifications.and.returnValue(throwError('error'));
@@ -95,6 +107,7 @@ describe('NotificationService', () => {
 
   it('should provide latest unread notifications.', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
+    authenticationSucceed$.next();
     const getNotifications = spyOn(service, 'getNotifications');
 
     getNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
