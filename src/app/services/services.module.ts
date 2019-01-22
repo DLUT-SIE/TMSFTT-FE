@@ -12,6 +12,8 @@ import { RecordAttachmentService } from './training-record/record-attachment.ser
 import { RecordContentService } from './training-record/record-content.service';
 import { EventService } from './training-event/event.service';
 import { NotificationService } from './notification/notification.service';
+import { MatPaginatorIntlService } from './mat-paginator-intl.service';
+import { NotificationDetailResolverService } from './notification/notification-detail-resolver.service';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { NotificationService } from './notification/notification.service';
     RecordService,
     RecordContentService,
     RecordAttachmentService,
+    MatPaginatorIntlService,
     NotificationService,
+    NotificationDetailResolverService,
     {
       provide: STORAGE_SERVICE,
       useClass: LocalStorageService,

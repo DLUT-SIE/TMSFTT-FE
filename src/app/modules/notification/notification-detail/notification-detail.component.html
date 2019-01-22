@@ -4,6 +4,5 @@
     {{ notification.content | slice:0:30 }}<ng-container *ngIf="notification.content.length > 30">...</ng-container>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutAlign="end">
-    <a mat-button color="primary" (click)="dialogRef.close()" [routerLink]="['/notifications', notification.id]">阅读</a>
   </mat-card-actions>
 </mat-card>

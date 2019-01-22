@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NotificationResponse } from 'src/app/interfaces/notification';
+import { MatDialogRef } from '@angular/material';
 
 /** Used for single Notification in NotificationBox. */
 @Component({
@@ -10,6 +11,8 @@ import { NotificationResponse } from 'src/app/interfaces/notification';
 export class NotificationBoxCardComponent implements OnInit {
   /** The notification to be displayed. */
   @Input() notification: NotificationResponse;
+  /** The reference of the opened notification box dialog. */
+  @Input() dialogRef: MatDialogRef<NotificationBoxCardComponent>;
 
   constructor() { }
 

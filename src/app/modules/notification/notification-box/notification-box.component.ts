@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 /** This component should display notifications in a dialog. */
@@ -10,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 export class NotificationBoxComponent implements OnInit {
 
   constructor(
+    readonly dialogRef: MatDialogRef<NotificationBoxComponent>,
     readonly notificationService: NotificationService,
   ) { }
 

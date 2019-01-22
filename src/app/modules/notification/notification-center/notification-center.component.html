@@ -1,3 +1,34 @@
-<p>
-  notification-center works!
-</p>
+<div fxLayout="column">
+  <span class="mat-title" i18n fxLayout="row" fxLayoutAlign="center center">通知中心</span>
+  <div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-table [dataSource]="notifications" class="mat-elevation-z8">
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef> 发送时间 </mat-header-cell>
+      <mat-cell *matCellDef="let notification"> {{ notification.time | date }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sender">
+      <mat-header-cell *matHeaderCellDef> 发送者 </mat-header-cell>
+      <mat-cell *matCellDef="let notification"> {{ notification.sender }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="recipient">
+      <mat-header-cell *matHeaderCellDef> 接收者 </mat-header-cell>
+      <mat-cell *matCellDef="let notification"> {{ notification.recipient }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="readStatus">
+      <mat-header-cell *matHeaderCellDef> 阅读状态 </mat-header-cell>
+      <mat-cell *matCellDef="let notification">
+        <span *ngIf="notification.read_time; else unReadStatus"> 已读 </span>
+        <ng-template #unReadStatus>未读</ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateToDetail(row)"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="notificationsLength" [pageSize]="10"></mat-paginator>
+</div>

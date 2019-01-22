@@ -14,4 +14,5 @@ export const environment: Environment = {
   RECORD_ATTACHMENT_SERVICE_URL: 'not-set',
   OFF_CAMPUS_EVENT_SERVICE_URL: 'not-set',
   NOTIFICATION_SERVICE_URL: 'not-set',
+  PAGINATION_SIZE: 10,
 };
