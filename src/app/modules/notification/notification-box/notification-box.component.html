@@ -3,10 +3,11 @@
   <div class="container" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
     <mat-spinner diameter="50" *ngIf="!notificationService.unreadNotificationsLoaded; else notificationsBlock" fxFlexAlign="center"></mat-spinner>
     <ng-template #notificationsBlock>
-      <app-notification-box-card *ngFor="let notification of notificationService.unreadNotifications" [notification]="notification"></app-notification-box-card>
+      <app-notification-box-card *ngFor="let notification of notificationService.unreadNotifications"
+                                 [notification]="notification" [dialogRef]="dialogRef"></app-notification-box-card>
     </ng-template>
   </div>
 </div>
 <div mat-card-actions i18n fxLayout="row" fxLayoutAlign="end">
-  <a mat-button color="primary" routerLink='.'>查看更多...</a>
+  <a mat-button color="primary" (click)="dialogRef.close()" routerLink='/notifications'>查看更多...</a>
 </div>

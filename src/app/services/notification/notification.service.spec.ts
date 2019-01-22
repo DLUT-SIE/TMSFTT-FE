@@ -4,31 +4,27 @@ import { of as observableOf, throwError, Subject } from 'rxjs';
 
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
-import { PaginatedNotificationResponse } from 'src/app/interfaces/notification';
+import { PaginatedNotificationResponse, NotificationResponse } from 'src/app/interfaces/notification';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 
 describe('NotificationService', () => {
   let httpTestingController: HttpTestingController;
+  const dummyNotification: NotificationResponse = {
+    id: 1,
+    time: '2019-01-01',
+    sender: 'sender',
+    recipient: 'recipient',
+    content: 'content',
+    read_time: '2019-01-01',
+  };
+
   const dummyResponse: PaginatedNotificationResponse = {
-      count: 100,
-      next: 'next',
-      previous: 'previous',
-      results: [
-        {
-          time: '2019-01-01',
-          sender: 'sender',
-          recipient: 'recipient',
-          content: 'content',
-        },
-        {
-          time: '2019-01-01',
-          sender: 'sender',
-          recipient: 'recipient',
-          content: 'content',
-        },
-      ]
-    };
-    const authenticationSucceed$ = new Subject<void>();
+    count: 100,
+    next: 'next',
+    previous: 'previous',
+    results: [dummyNotification, dummyNotification],
+  };
+  const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -82,7 +78,7 @@ describe('NotificationService', () => {
     service.getNotifications(offset, limit, readStatus).subscribe(
       (res: {}) => {
         expect(res['results'].length).toEqual(2);
-    });
+      });
 
     const url = `${environment.NOTIFICATION_SERVICE_URL}unread-notifications/?offset=${offset}&limit=${limit}`;
 
@@ -125,12 +121,25 @@ describe('NotificationService', () => {
     service.getNotifications().subscribe(
       data => {
         expect(data.results.length).toEqual(2);
-    });
+      });
 
-    const url = `${environment.NOTIFICATION_SERVICE_URL}?offset=0&limit=20`;
+    const url = `${environment.NOTIFICATION_SERVICE_URL}?offset=0&limit=10`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
     req.flush(dummyResponse);
+  });
+
+  it('should get notification', () => {
+    const service: NotificationService = TestBed.get(NotificationService);
+    const id = 1;
+
+    service.getNotification(id).subscribe();
+
+    const url = `${environment.NOTIFICATION_SERVICE_URL}${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush(dummyNotification);
   });
 });

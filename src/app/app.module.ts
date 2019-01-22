@@ -12,6 +12,7 @@ import {
   MatProgressSpinnerModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatPaginatorIntl,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +30,7 @@ import { LoginComponent } from './components/login/login.component';
 import { TrainingRecordModule } from './modules/training-record/training-record.module';
 import { ServicesModule } from './services/services.module';
 import { NotificationModule } from './modules/notification/notification.module';
+import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 
 
 registerLocaleData(localeZhHans, 'zh-Hans');
@@ -70,7 +72,16 @@ registerLocaleData(localeZhHans, 'zh-Hans');
     ServicesModule,
     AppRoutingModule,
   ],
-  providers: [ { provide: LOCALE_ID, useValue: 'zh-Hans' } ],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'zh-Hans'
+    },
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorIntlService,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

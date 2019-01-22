@@ -22,11 +22,7 @@
       {
         "enums": {"visibilities": ["exported"]},
         "functions": {"visibilities": ["exported"]},
-        "methods": {"locations": "instance", "privacies": ["public", "protected"]},
-        "properties": {
-          "privacies": ["public"],
-          "tags": {"content": {"see": ["#.*"]}, "existence": ["inheritdoc"]}
-        }
+        "methods": {"locations": "instance", "privacies": ["public", "protected"]}
       }
     ],
     "curly": [true, "ignore-same-line"],
