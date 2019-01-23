@@ -1,21 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AdminLayoutComponent } from './modules/layouts/admin-layout/admin-layout.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
+  // Load this module only when user is admin.
   {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [AuthGuard],
+    path: '',
+    component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
+    canLoad: [AdminGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: './modules/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+      }]
   },
   {
     path: 'auth',

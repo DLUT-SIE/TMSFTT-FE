@@ -1,0 +1,30 @@
+<!-- <span mat-dialog-title class="mat-subheading-2" i18n fxLayout="row" fxLayoutAlign="center center">通知中心</span>
+<div mat-dialog-content>
+  <div class="container" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
+    <mat-spinner diameter="50" *ngIf="!notificationService.unreadNotificationsLoaded; else notificationsBlock"
+      fxFlexAlign="center"></mat-spinner>
+    <ng-template #notificationsBlock>
+      <app-notification-box-card *ngFor="let notification of notificationService.unreadNotifications" [notification]="notification"
+        [dialogRef]="dialogRef"></app-notification-box-card>
+    </ng-template>
+  </div>
+</div>-->
+<div mat-dialog-content class="card">
+  <div class="card-header card-header-danger">
+    <h4 class="card-title">通知中心</h4>
+    <p class="card-category">这里显示最近10条您未读的通知</p>
+  </div>
+  <div class="card-body">
+    <div class="container" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
+      <mat-spinner diameter="50" *ngIf="!notificationService.unreadNotificationsLoaded; else notificationsBlock"
+        fxFlexAlign="center"></mat-spinner>
+      <ng-template #notificationsBlock>
+        <app-notification-box-card *ngFor="let notification of notificationService.unreadNotifications" [notification]="notification"
+          [dialogRef]="dialogRef"></app-notification-box-card>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions i18n fxLayout="row" fxLayoutAlign="end">
+  <a mat-button color="primary" (click)="dialogRef.close()" routerLink='/notifications'>查看更多...</a>
+</div>

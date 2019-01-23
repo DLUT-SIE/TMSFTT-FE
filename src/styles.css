@@ -6,6 +6,10 @@ a {
     text-decoration-line: none;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .active-link {
     color: #1976d2 !important;
 }

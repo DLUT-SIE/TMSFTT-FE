@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotificationCenterComponent } from './notification-center/notification-center.component';
+import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
-import { NotificationComponent } from './notification/notification.component';
-import { NotificationDetailComponent } from './notification-detail/notification-detail.component';
-import { NotificationDetailResolverService } from 'src/app/services/notification/notification-detail-resolver.service';
+import { NotificationComponent } from './components/notification/notification.component';
+import { NotificationDetailComponent } from './components/notification-detail/notification-detail.component';
+import { NotificationDetailResolverService } from './services/notification-detail-resolver.service';
 
 const routes: Routes = [
   {

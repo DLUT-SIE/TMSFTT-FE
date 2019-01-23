@@ -1,51 +1,79 @@
-import { TestBed, async } from '@angular/core/testing';
-import {
-  MatBadgeModule,
-  MatButtonModule,
-  MatIconModule,
-  MatListModule,
-  MatMenuModule,
-  MatSidenavModule,
-  MatToolbarModule,
-  MatDialog,
-} from '@angular/material';
+import { Component, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { PlatformService } from './services/platform.service';
 import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
 import { AUTH_SERVICE } from './interfaces/auth-service';
-import { NotificationService } from './services/notification/notification.service';
+import { WindowService } from './services/window.service';
+import { PlatformType } from './enums/platform-type.enum';
 
+@Component({
+  selector: 'app-sidebar',
+  template: '<div class="sidebar-wrapper"></div>',
+})
+class StubAppSideBarComponent { }
 
-describe('AppComponent', () => {
-  const mockedPlatformService = { isMobile: false };
-  let dialogOpen: jasmine.Spy;
+@Component({
+  selector: 'app-navbar',
+  template: '',
+})
+class StubAppNavBarComponent { }
+
+@Component({
+  selector: 'app-footer',
+  template: '',
+})
+class StubAppFooterComponent { }
+
+@Component({
+  selector: 'app-test-app-root',
+  template: `<body><app-root></app-root></body>`,
+})
+class TestAppRootComponent {
+  @ViewChild(AppComponent) app: AppComponent;
+}
+
+describe('AppComponent(Windows)', () => {
+  let testComponent: TestAppRootComponent;
+  let app: AppComponent;
+  let fixture: ComponentFixture<TestAppRootComponent>;
+  let scrollTo: jasmine.Spy;
+  let matchMedia: jasmine.Spy;
+  let events$: Subject<{}>;
+  let platformService: PlatformService;
+  const location$ = new Subject<{}>();
 
   beforeEach(async(() => {
-    dialogOpen = jasmine.createSpy();
+    events$ = new Subject<{}>();
+    scrollTo = jasmine.createSpy();
+    matchMedia = jasmine.createSpy();
+    matchMedia.and.returnValue({ matches: true });
     TestBed.configureTestingModule({
       imports: [
-        MatBadgeModule,
-        MatButtonModule,
-        MatIconModule,
-        MatListModule,
-        MatMenuModule,
-        MatSidenavModule,
-        MatToolbarModule,
         NoopAnimationsModule,
         RouterTestingModule,
       ],
       declarations: [
+        TestAppRootComponent,
         AppComponent,
         RouterLinkDirectiveStub,
+        StubAppSideBarComponent,
+        StubAppNavBarComponent,
+        StubAppFooterComponent,
       ],
       providers: [
         {
           provide: PlatformService,
-          useValue: mockedPlatformService,
+          useValue: {
+            isMobile: false,
+            platformType: PlatformType.WINDOWS,
+          },
         },
         {
           provide: AUTH_SERVICE,
@@ -54,65 +82,108 @@ describe('AppComponent', () => {
           },
         },
         {
-          provide: NotificationService,
+          provide: Location,
+          useValue: location$,
+        },
+        {
+          provide: WindowService,
           useValue: {
-            unreadNotifications: [],
-            unreadNotificationLoaded: false,
+            nativeWindow: {
+              scrollY: 100,
+              scrollTo,
+              matchMedia,
+            }
           },
         },
         {
-          provide: MatDialog,
+          provide: Router,
           useValue: {
-            open: dialogOpen,
+            events: events$,
           }
         }
       ],
     }).compileComponents();
+
+    platformService = TestBed.get(PlatformService);
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestAppRootComponent);
+    testComponent = fixture.componentInstance;
+    app = testComponent.app;
+    fixture.detectChanges();
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+
+    // If we are on WINDOWS.
+    expect(document.body.classList).toContain('perfect-scrollbar-on');
   });
 
-  it('should render long title in desktop platform', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    mockedPlatformService.isMobile = false;
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('span.app-name').textContent).toContain(
-      '大连理工大学专任教师教学培训管理系统');
+  it('should set y scroll to its previous position.', () => {
+    const url = '/a/b/c';
+    const otherUrl = '/a/b';
+    const navigationEndEvent = new NavigationEnd(0, url, url);
+    const navigationStartEvent = new NavigationStart(0, otherUrl);
+    location$.next({ url });
+
+    events$.next(navigationStartEvent);
+
+    events$.next(navigationEndEvent);
+
+    expect(scrollTo).toHaveBeenCalledWith(0, 100);
+
+    events$.next(navigationEndEvent);
+
+    expect(scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
-  it('should render short title in mobile platform', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    mockedPlatformService.isMobile = true;
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('span.app-name').textContent).toContain(
-      '教学培训管理系统');
+  it('should skip if url equals to lastPoppedUrl.', () => {
+    const url = '/a/b/c';
+    const navigationStartEvent = new NavigationStart(0, url);
+    location$.next({ url });
+
+    events$.next(navigationStartEvent);
+    expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('should contain router links to other components', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
-    const routerLinks = fixture.debugElement
-      .queryAll(By.directive(RouterLinkDirectiveStub))
-      .map(de => de.injector.get(RouterLinkDirectiveStub));
-
-      expect(routerLinks.length).toBe(2);
-      expect(routerLinks[0].linkParams).toBe('/home');
-      expect(routerLinks[1].linkParams).toBe('/training-record/entry');
+  it('should skip other navigation events.', () => {
+    events$.next({});
+    expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('should open notification box', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+  it('should reset y position when navigation ended', () => {
+    const url = '/a/b/c';
+    const navigationEndEvent = new NavigationEnd(0, url, url);
 
-    app.openNotificationBox();
+    events$.next(navigationEndEvent);
 
-    expect(dialogOpen).toHaveBeenCalled();
+    const mainPanel = document.querySelector('.main-panel') as HTMLElement;
+    expect(mainPanel).not.toBeNull();
+    expect(mainPanel.scrollTop).toBe(0);
+    const sidebar = document.querySelector('.sidebar .sidebar-wrapper') as HTMLElement;
+    expect(sidebar).not.toBeNull();
+    expect(sidebar.scrollTop).toBe(0);
+  });
+
+  it('should create the app without perfect scrollbar (Mac).', () => {
+    expect(app).toBeTruthy();
+    platformService.platformType = PlatformType.MAC;
+
+    document.body.className = '';
+
+    app.ngOnInit();
+
+    // If we are on Mac.
+    expect(document.body.classList).not.toContain('perfect-scrollbar-on');
+  });
+
+  it('should not update perfect scrollbar (Mac).', () => {
+    expect(app).toBeTruthy();
+    platformService.platformType = PlatformType.MAC;
+
+    app.ngAfterViewInit();
+    // Expect nothing
   });
 });

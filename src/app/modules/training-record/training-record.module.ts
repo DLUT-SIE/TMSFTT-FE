@@ -14,16 +14,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TrainingRecordRoutingModule } from './training-record-routing.module';
-import { EntryModeComponent } from './entry-mode/entry-mode.component';
-import { TrainingRecordComponent } from './training-record/training-record.component';
-import { RecordFormComponent } from './record-form/record-form.component';
-import { BatchSubmitComponent } from './batch-submit/batch-submit.component';
-import { ServicesModule } from 'src/app/services/services.module';
+import { EntryModeComponent } from './components/entry-mode/entry-mode.component';
+import { RecordFormComponent } from './components/record-form/record-form.component';
+import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 
 @NgModule({
   declarations: [
     EntryModeComponent,
-    TrainingRecordComponent,
     RecordFormComponent,
     BatchSubmitComponent,
   ],
@@ -40,9 +37,7 @@ import { ServicesModule } from 'src/app/services/services.module';
     MatNativeDateModule,
     MatSelectModule,
 
-    ServicesModule,
     TrainingRecordRoutingModule
   ],
-  bootstrap: [TrainingRecordComponent],
 })
 export class TrainingRecordModule { }

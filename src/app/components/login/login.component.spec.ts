@@ -76,7 +76,7 @@ describe('LoginComponent', () => {
   it('should redirect to home if JWT is valid', () => {
     verifyJWT$.next(true);
 
-    expect(navigate).toHaveBeenCalledWith(['/home']);
+    expect(navigate).toHaveBeenCalledWith(['/dashboard'], { replaceUrl: true});
     expect(component.loginStatus).toBe(component.LoginStatus.REDIRECTING_TO_HOME);
   });
 
@@ -110,7 +110,6 @@ describe('LoginComponent', () => {
     retrieveJWT$.next(true);
 
     expect(component.loginStatus).toBe(component.LoginStatus.REDIRECTING_TO_HOME);
-    expect(navigate).toHaveBeenCalledWith(['/home']);
+    expect(navigate).toHaveBeenCalledWith(['/dashboard'], { replaceUrl: true });
   });
-
 });
