@@ -12,11 +12,11 @@ import {
 } from '@angular/material';
 
 import { NotificationRoutingModule } from './notification-routing.module';
-import { NotificationCenterComponent } from './notification-center/notification-center.component';
-import { NotificationBoxComponent } from './notification-box/notification-box.component';
-import { NotificationBoxCardComponent } from './notification-box-card/notification-box-card.component';
-import { NotificationComponent } from './notification/notification.component';
-import { NotificationDetailComponent } from './notification-detail/notification-detail.component';
+import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
+import { NotificationBoxComponent } from './components/notification-box/notification-box.component';
+import { NotificationBoxCardComponent } from './components/notification-box-card/notification-box-card.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { NotificationDetailComponent } from './components/notification-detail/notification-detail.component';
 
 @NgModule({
   declarations: [

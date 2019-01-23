@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TrainingRecordComponent } from './training-record/training-record.component';
-import { EntryModeComponent } from './entry-mode/entry-mode.component';
-import { RecordFormComponent } from './record-form/record-form.component';
-import { BatchSubmitComponent } from './batch-submit/batch-submit.component';
+import { EntryModeComponent } from './components/entry-mode/entry-mode.component';
+import { RecordFormComponent } from './components/record-form/record-form.component';
+import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'training-record',
-    component: TrainingRecordComponent,
+    path: '',
     canActivate: [AuthGuard],
     children: [
       {

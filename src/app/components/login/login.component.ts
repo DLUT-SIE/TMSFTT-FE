@@ -42,10 +42,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       takeUntil(this.destroyed),
       map((isValidJWT: boolean) => {
         const snapshot = this.activatedRoute.snapshot;
-        this.nextURL = snapshot.queryParamMap.get('next') || '/home';
+        this.nextURL = snapshot.queryParamMap.get('next') || '/dashboard';
         if (isValidJWT) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
-          this.router.navigate([this.nextURL]);
+          this.router.navigate([this.nextURL], { replaceUrl: true });
           return false;
         }
         return true;
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         return;
       }
       this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
-      this.router.navigate([this.nextURL]);
+      this.router.navigate([this.nextURL], { replaceUrl: true });
     });
   }
 

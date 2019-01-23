@@ -9,4 +9,9 @@ describe('PlatformService', () => {
     const service: WindowService = TestBed.get(WindowService);
     expect(service).toBeTruthy();
   });
+
+  it('should return window object', () => {
+    const service: WindowService = TestBed.get(WindowService);
+    expect(service.nativeWindow).toBe(window);
+  });
 });
