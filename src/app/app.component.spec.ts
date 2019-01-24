@@ -46,7 +46,10 @@ describe('AppComponent(Windows)', () => {
   let scrollTo: jasmine.Spy;
   let matchMedia: jasmine.Spy;
   let events$: Subject<{}>;
-  let platformService: PlatformService;
+  let platformService: {
+    isMobile: boolean,
+    platformType: PlatformType,
+  };
   const location$ = new Subject<{}>();
 
   beforeEach(async(() => {
@@ -169,7 +172,7 @@ describe('AppComponent(Windows)', () => {
 
   it('should create the app without perfect scrollbar (Mac).', () => {
     expect(app).toBeTruthy();
-    spyOnProperty(platformService, 'platformType', 'get').and.returnValue(PlatformType.MAC);
+    platformService.platformType = PlatformType.MAC;
 
     document.body.className = '';
 
@@ -181,7 +184,7 @@ describe('AppComponent(Windows)', () => {
 
   it('should not update perfect scrollbar (Mac).', () => {
     expect(app).toBeTruthy();
-    spyOnProperty(platformService, 'platformType', 'get').and.returnValue(PlatformType.MAC);
+    platformService.platformType = PlatformType.MAC;
 
     app.ngAfterViewInit();
     // Expect nothing
