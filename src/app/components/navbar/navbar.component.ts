@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
 import { RouteInfo } from 'src/app/interfaces/route-info';
-import { ROUTES } from 'src/app/components/sidebar/sidebar.component';
+import { ADMIN_ROUTES, USER_ROUTES } from 'src/app/components/sidebar/sidebar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
@@ -14,7 +14,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    private listTitles: RouteInfo[];
+    listTitles: RouteInfo[] = [];
 
     private shadingLayer: HTMLDivElement = null;
 
@@ -34,7 +34,10 @@ export class NavbarComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.listTitles = ROUTES;
+        this.authService.authenticationSucceed.subscribe(() => {
+            if (this.authService.isAdmin) this.listTitles = ADMIN_ROUTES;
+            else this.listTitles = USER_ROUTES;
+        });
         this.router.events.subscribe((event) => {
             this.closeNavbar();
         });
@@ -75,6 +78,7 @@ export class NavbarComponent implements OnInit {
     /** Display title for current activated route. */
     getTitle() {
         let url = this.location.prepareExternalUrl(this.location.path());
+        // TODO(youchen): Verify intention of below code.
         if (url.charAt(0) === '#') {
             url = url.slice(2);
         }

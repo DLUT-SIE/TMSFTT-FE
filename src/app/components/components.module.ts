@@ -16,6 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PermissionDeniedComponent } from './permission-denied/permission-denied.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     SidebarComponent,
     LoginComponent,
     PageNotFoundComponent,
+    PermissionDeniedComponent,
   ],
   exports: [
     FooterComponent,

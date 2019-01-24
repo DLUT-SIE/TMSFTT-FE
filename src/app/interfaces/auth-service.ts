@@ -6,6 +6,8 @@ import { InjectionToken } from '@angular/core';
 export interface AuthService {
     /** Indicate whether the current user is authenticated. */
     isAuthenticated: boolean;
+    /** Indicate whether the curreent user is administrator. */
+    isAdmin: boolean;
     /** ID for authenticated user. */
     userID: number|null;
     /** Username for authenticated user. */

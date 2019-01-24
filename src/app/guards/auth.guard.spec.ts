@@ -39,11 +39,12 @@ describe('AuthGuard', () => {
 
   it('should not activate if authentication failed', inject([AuthGuard], (guard: AuthGuard) => {
     authService.isAuthenticated = false;
+    const state = { url: '/abc' };
     const canActivate = guard.canActivate(
       {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot);
+      state as RouterStateSnapshot);
 
-    expect(navigate).toHaveBeenCalledWith(['/auth/login']);
+    expect(navigate).toHaveBeenCalledWith(['/auth/login'], { queryParams: { next: '/abc' }});
     expect(canActivate).toBeFalsy();
   }));
 

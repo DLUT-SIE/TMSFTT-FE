@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 
 import { NavbarComponent } from './navbar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
 @Component({
   selector: '<app-test-navbar>',
@@ -25,7 +25,9 @@ describe('NavbarComponent', () => {
   let closeAll: jasmine.Spy;
   let open: jasmine.Spy;
   let prepareExternalUrl: jasmine.Spy;
+  let authService: AuthService;
   const events$ = new Subject<void>();
+  const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(async(() => {
     closeAll = jasmine.createSpy();
@@ -51,7 +53,8 @@ describe('NavbarComponent', () => {
         {
           provide: AUTH_SERVICE,
           useValue: {
-            authenticationSucceed: new Subject<{}>(),
+            authenticationSucceed: authenticationSucceed$,
+            isAdmin: true,
           }
         },
         {
@@ -71,6 +74,8 @@ describe('NavbarComponent', () => {
       ],
     })
     .compileComponents();
+
+    authService = TestBed.get(AUTH_SERVICE);
   }));
 
   beforeEach(() => {
@@ -136,7 +141,9 @@ describe('NavbarComponent', () => {
   }));
 
   it('should get correct title', () => {
-    prepareExternalUrl.and.returnValue('/dashboard');
+    authService.isAdmin = true;
+    authenticationSucceed$.next();
+    prepareExternalUrl.and.returnValue('/admin/dashboard');
 
     const title = component.getTitle();
 
@@ -144,7 +151,9 @@ describe('NavbarComponent', () => {
   });
 
   it('should get correct title(slice url)', () => {
-    prepareExternalUrl.and.returnValue('#x/dashboard');
+    authService.isAdmin = true;
+    authenticationSucceed$.next();
+    prepareExternalUrl.and.returnValue('#x/admin/dashboard');
 
     const title = component.getTitle();
 
@@ -152,11 +161,27 @@ describe('NavbarComponent', () => {
   });
 
   it('should get default title', () => {
+    authService.isAdmin = true;
+    authenticationSucceed$.next();
     prepareExternalUrl.and.returnValue('/not-exist');
 
     const title = component.getTitle();
 
     expect(title).toBe('TMSFTT');
+  });
+
+  it('should load admin ROUTES after authenticated.', () => {
+    authService.isAdmin = true;
+    authenticationSucceed$.next();
+
+    expect(component.listTitles.length).toBe(7);
+  });
+
+  it('should load user ROUTES after authenticated.', () => {
+    authService.isAdmin = false;
+    authenticationSucceed$.next();
+
+    expect(component.listTitles.length).toBe(2);
   });
 
 });

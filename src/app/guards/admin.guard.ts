@@ -1,13 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
-import { CanLoad, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Route, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { AUTH_SERVICE, AuthService } from '../interfaces/auth-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate, CanLoad {
+export class AdminGuard implements CanActivate {
 
   constructor(
     private readonly router: Router,
@@ -15,23 +14,20 @@ export class AdminGuard implements CanActivate, CanLoad {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    state: RouterStateSnapshot) {
     const isAuthenticated = this.authService.isAuthenticated;
+    if (!isAuthenticated) {
+      this.router.navigate(['/auth/login'], {
+        queryParams: {
+          next: state.url,
+        },
+      });
+      return false;
+    }
+    const isAdmin = this.authService.isAdmin;
+    if (isAdmin) return true;
 
-    if (!isAuthenticated) this.router.navigate(['/auth/login']);
-
-    // TODO(youchen): Check whether user is admin.
-
-    return isAuthenticated;
-  }
-
-  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    const isAuthenticated = this.authService.isAuthenticated;
-
-    if (!isAuthenticated) this.router.navigate(['/auth/login']);
-
-    // TODO(youchen): Check whether user is admin.
-
-    return isAuthenticated;
+    this.router.navigate(['/permission-denied']);
+    return false;
   }
 }

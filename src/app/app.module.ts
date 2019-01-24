@@ -20,6 +20,7 @@ import { PlatformService } from './services/platform.service';
 import { WindowService } from './services/window.service';
 import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
+import { UserLayoutComponent } from './modules/layouts/user-layout/user-layout.component';
 
 
 registerLocaleData(localeZhHans, 'zh-Hans');
@@ -30,6 +31,7 @@ registerLocaleData(localeZhHans, 'zh-Hans');
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    UserLayoutComponent,
   ],
   imports: [
     BrowserAnimationsModule,

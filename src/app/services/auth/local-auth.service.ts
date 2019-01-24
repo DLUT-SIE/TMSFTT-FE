@@ -13,6 +13,7 @@ import { STORAGE_SERVICE, StorageService } from 'src/app/interfaces/storage-serv
 })
 export class LocalAuthService implements AuthService {
   isAuthenticated = false;
+  isAdmin = false;
   userID = null;
   username = null;
   firstName = null;
@@ -38,6 +39,7 @@ export class LocalAuthService implements AuthService {
     this.lastName = 'last_name';
     this.storageService.setItem(environment.JWT_KEY, 'test-token');
     this.isAuthenticated = true;
+    this.isAdmin = false;
     this.authenticationSucceed.next();
   }
 

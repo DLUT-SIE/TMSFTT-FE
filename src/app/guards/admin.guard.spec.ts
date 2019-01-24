@@ -8,6 +8,7 @@ describe('AdminGuard', () => {
   let navigate: jasmine.Spy;
   let authService: {
     isAuthenticated: boolean,
+    isAdmin: boolean,
   };
 
   beforeEach(() => {
@@ -19,6 +20,7 @@ describe('AdminGuard', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isAuthenticated: false,
+            isAdmin: false,
           },
         },
         {
@@ -39,14 +41,26 @@ describe('AdminGuard', () => {
     authService.isAuthenticated = false;
     const canActivate = guard.canActivate(
       {} as ActivatedRouteSnapshot,
-      {} as RouterStateSnapshot);
+      { url: '/abc' } as RouterStateSnapshot);
 
-    expect(navigate).toHaveBeenCalledWith(['/auth/login']);
+    expect(navigate).toHaveBeenCalledWith(['/auth/login'], { queryParams: { next: '/abc' }});
     expect(canActivate).toBeFalsy();
   }));
 
-  it('should activate if authentication succeed', inject([AdminGuard], (guard: AdminGuard) => {
+  it('should not activate if authentication succeed but is not admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
+    authService.isAdmin = false;
+    const canActivate = guard.canActivate(
+      {} as ActivatedRouteSnapshot,
+      {} as RouterStateSnapshot);
+
+    expect(navigate).toHaveBeenCalledWith(['/permission-denied']);
+    expect(canActivate).toBeFalsy();
+  }));
+
+  it('should activate if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = true;
+    authService.isAdmin = true;
     const canActivate = guard.canActivate(
       {} as ActivatedRouteSnapshot,
       {} as RouterStateSnapshot);
@@ -54,18 +68,4 @@ describe('AdminGuard', () => {
     expect(canActivate).toBeTruthy();
   }));
 
-  it('should not load if user is not admin.', inject([AdminGuard], (guard: AdminGuard) => {
-    authService.isAuthenticated = false;
-    const canLoad = guard.canLoad({});
-
-    expect(navigate).toHaveBeenCalledWith(['/auth/login']);
-    expect(canLoad).toBeFalsy();
-  }));
-
-  it('should load if user is admin.', inject([AdminGuard], (guard: AdminGuard) => {
-    authService.isAuthenticated = true;
-    const canLoad = guard.canLoad({});
-
-    expect(canLoad).toBeTruthy();
-  }));
 });
