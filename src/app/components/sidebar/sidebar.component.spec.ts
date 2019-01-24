@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { SidebarComponent } from './sidebar.component';
 import { PlatformService } from 'src/app/services/platform.service';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -22,6 +23,12 @@ describe('SidebarComponent', () => {
         SidebarComponent,
       ],
       providers: [
+        {
+          provide: NotificationService,
+          useValue: {
+            unreadNotifications: [],
+          },
+        },
         {
           provide: PlatformService,
           useValue: {

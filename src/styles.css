@@ -13,3 +13,11 @@ a:hover {
 .active-link {
     color: #1976d2 !important;
 }
+
+mat-icon {
+    vertical-align: middle;
+}
+
+.indent-2 {
+    text-indent: 2em;
+}

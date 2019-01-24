@@ -1,13 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Location, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
 
 import { RouteInfo } from 'src/app/interfaces/route-info';
 import { ROUTES } from 'src/app/components/sidebar/sidebar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { NotificationBoxComponent } from 'src/app/modules/notification/components/notification-box/notification-box.component';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
 @Component({
@@ -32,7 +30,6 @@ export class NavbarComponent implements OnInit {
         @Inject(AUTH_SERVICE) readonly authService: AuthService,
         private readonly location: Location,
         private readonly router: Router,
-        private readonly dialog: MatDialog,
         @Inject(DOCUMENT) private readonly document: Document,
     ) { }
 
@@ -40,19 +37,6 @@ export class NavbarComponent implements OnInit {
         this.listTitles = ROUTES;
         this.router.events.subscribe((event) => {
             this.closeNavbar();
-        });
-    }
-
-    /** Open notification box. */
-    openNotificationBox() {
-        this.dialog.closeAll();
-        this.dialog.open(NotificationBoxComponent, {
-            width: '30vw',
-            backdropClass: 'transparent-backdrop',
-            position: {
-                right: '20px',
-                top: '50px',
-            }
         });
     }
 

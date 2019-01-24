@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { PlatformService } from 'src/app/services/platform.service';
 import { RouteInfo } from 'src/app/interfaces/route-info';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
+import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
@@ -23,6 +24,7 @@ export class SidebarComponent implements OnInit {
 
     constructor(
         readonly platformService: PlatformService,
+        readonly notificationService: NotificationService,
         @Inject(AUTH_SERVICE) readonly authService: AuthService,
     ) { }
 

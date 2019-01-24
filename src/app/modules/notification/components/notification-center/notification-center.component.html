@@ -1,34 +1,48 @@
-<div fxLayout="column">
-  <span class="mat-title" i18n fxLayout="row" fxLayoutAlign="center center">通知中心</span>
-  <div class="loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner></mat-spinner>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">通知中心</h4>
+          <p class="card-category">您可以查看所有历史通知记录</p>
+        </div>
+        <div class="card-body">
+          <div class="float-right">
+            <a mat-button color="primary">标记所有为已读</a>
+            <a mat-button color="warn">清空所有通知</a>
+          </div>
+          <div class="loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner></mat-spinner>
+          </div>
+          <div class="table-responsive-lg">
+            <table class="table table-hover text-center">
+              <thead class="text-primary d-flex">
+                <th class="col-2 col-sm-1"></th>
+                <th class="col-10 col-sm-5">内容</th>
+                <th class="col-6 col-sm-3">发送者</th>
+                <th class="col-8 col-sm-3">发送时间</th>
+              </thead>
+              <tbody>
+                <tr class="d-flex" *ngFor="let notification of notifications" (click)="navigateToDetail(notification)">
+                  <td class="col-2 col-sm-1" *ngIf="notification.read_time; else unReadStatus">
+                  </td>
+                  <ng-template #unReadStatus>
+                    <td class="text-danger col-2 col-sm-1">
+                      <mat-icon>
+                        fiber_manual_record
+                      </mat-icon>
+                    </td>
+                  </ng-template>
+                  <td class="col-10 col-sm-5 text-justify">{{ notification.content | slice:0:30 }}...</td>
+                  <td class="col-6 col-sm-3">{{ notification.sender }}</td>
+                  <td class="col-8 col-sm-3">{{ notification.time | date:'y年M月d日 H:mm::ss' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="notificationsLength" [pageSize]="10" [disabled]="isLoadingResults"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <mat-table [dataSource]="notifications" class="mat-elevation-z8">
-    <ng-container matColumnDef="time">
-      <mat-header-cell *matHeaderCellDef> 发送时间 </mat-header-cell>
-      <mat-cell *matCellDef="let notification"> {{ notification.time | date }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="sender">
-      <mat-header-cell *matHeaderCellDef> 发送者 </mat-header-cell>
-      <mat-cell *matCellDef="let notification"> {{ notification.sender }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="recipient">
-      <mat-header-cell *matHeaderCellDef> 接收者 </mat-header-cell>
-      <mat-cell *matCellDef="let notification"> {{ notification.recipient }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="readStatus">
-      <mat-header-cell *matHeaderCellDef> 阅读状态 </mat-header-cell>
-      <mat-cell *matCellDef="let notification">
-        <span *ngIf="notification.read_time; else unReadStatus"> 已读 </span>
-        <ng-template #unReadStatus>未读</ng-template>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateToDetail(row)"></mat-row>
-  </mat-table>
-  <mat-paginator [length]="notificationsLength" [pageSize]="10"></mat-paginator>
 </div>
