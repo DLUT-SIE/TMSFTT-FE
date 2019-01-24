@@ -6,9 +6,6 @@ import { PlatformService } from './platform.service';
 import { PlatformType } from '../enums/platform-type.enum';
 
 describe('PlatformService', () => {
-  const navigator = {
-    platform: '',
-  };
   const stateObservable = new Subject<BreakpointState>();
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,10 +13,6 @@ describe('PlatformService', () => {
         {
           provide: BreakpointObserver,
           useValue: { observe: () => stateObservable },
-        },
-        {
-          provide: Navigator,
-          useValue: navigator,
         },
       ],
     });
@@ -45,22 +38,31 @@ describe('PlatformService', () => {
   });
 
   it('should set platformType to WINDOWS if it\'s on Windows', () => {
-    navigator.platform = 'Windows';
     const service: PlatformService = TestBed.get(PlatformService);
+    const navigator = {
+      platform: 'Windows',
+    };
+    spyOnProperty(service, 'nativeNavigator', 'get').and.returnValue(navigator);
     expect(service).toBeTruthy();
     expect(service.platformType).toEqual(PlatformType.WINDOWS);
   });
 
   it('should set platformType to Mac if it\'s on Mac', () => {
-    navigator.platform = 'Mac OS';
     const service: PlatformService = TestBed.get(PlatformService);
+    const navigator = {
+      platform: 'MAC OS',
+    };
+    spyOnProperty(service, 'nativeNavigator', 'get').and.returnValue(navigator);
     expect(service).toBeTruthy();
     expect(service.platformType).toEqual(PlatformType.MAC);
   });
 
   it('should set platformType to OTHERS if it\'s on unknown platform', () => {
-    navigator.platform = 'Unknown platform';
     const service: PlatformService = TestBed.get(PlatformService);
+    const navigator = {
+      platform: 'Other Platform',
+    };
+    spyOnProperty(service, 'nativeNavigator', 'get').and.returnValue(navigator);
     expect(service).toBeTruthy();
     expect(service.platformType).toEqual(PlatformType.OTHERS);
   });

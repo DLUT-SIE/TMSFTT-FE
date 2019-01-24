@@ -3,7 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
-import { registerLocaleData } from '@angular/common';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
 import localeZhHans from '@angular/common/locales/zh-Hans';
 
 import { environment } from 'src/environments/environment';
@@ -25,6 +25,10 @@ import { UserLayoutComponent } from './modules/layouts/user-layout/user-layout.c
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
+/** How do we get our JWT. */
+export function tokenGetter() {
+  return localStorage.getItem(environment.JWT_KEY);
+}
 
 /** Describe how our app looks. */
 @NgModule({
@@ -39,7 +43,7 @@ registerLocaleData(localeZhHans, 'zh-Hans');
     FlexLayoutModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem(environment.JWT_KEY),
+        tokenGetter,
         whitelistedDomains: environment.WHITE_LIST_DOMAINS,
       }
     }),
@@ -56,10 +60,9 @@ registerLocaleData(localeZhHans, 'zh-Hans');
       useValue: 'zh-Hans'
     },
     {
-      provide: Navigator,
-      useValue: navigator,
+      provide: DOCUMENT,
+      useValue: document,
     },
-
     // App related
     PlatformService,
     WindowService,
@@ -74,10 +77,6 @@ registerLocaleData(localeZhHans, 'zh-Hans');
       /** Use below if you want to mock AuthService during development. */
       // useClass: environment.production ? HTTPAuthService : LocalAuthService,
     },
-    {
-      provide: Document,
-      useValue: document,
-    }
   ],
   bootstrap: [AppComponent]
 })

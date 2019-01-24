@@ -169,7 +169,7 @@ describe('AppComponent(Windows)', () => {
 
   it('should create the app without perfect scrollbar (Mac).', () => {
     expect(app).toBeTruthy();
-    platformService.platformType = PlatformType.MAC;
+    spyOnProperty(platformService, 'platformType', 'get').and.returnValue(PlatformType.MAC);
 
     document.body.className = '';
 
@@ -181,7 +181,7 @@ describe('AppComponent(Windows)', () => {
 
   it('should not update perfect scrollbar (Mac).', () => {
     expect(app).toBeTruthy();
-    platformService.platformType = PlatformType.MAC;
+    spyOnProperty(platformService, 'platformType', 'get').and.returnValue(PlatformType.MAC);
 
     app.ngAfterViewInit();
     // Expect nothing
