@@ -5,12 +5,13 @@ import { Subject } from 'rxjs';
 
 import { SidebarComponent } from './sidebar.component';
 import { PlatformService } from 'src/app/services/platform.service';
-import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
+  let authService: AuthService;
   const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(async(() => {
@@ -39,11 +40,14 @@ describe('SidebarComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             authenticationSucceed: authenticationSucceed$,
+            isAdmin: true,
           },
         },
       ]
     })
     .compileComponents();
+
+    authService = TestBed.get(AUTH_SERVICE);
   }));
 
   beforeEach(() => {
@@ -56,9 +60,17 @@ describe('SidebarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load load ROUTES after authenticated.', () => {
+  it('should load ROUTES after authenticated.', () => {
     authenticationSucceed$.next();
 
-    expect(component.menuItems.length).not.toBe(0);
+    expect(component.menuItems.length).toBe(7);
   });
+
+  it('should load user ROUTES after authenticated.', () => {
+    authService.isAdmin = false;
+    authenticationSucceed$.next();
+
+    expect(component.menuItems.length).toBe(2);
+  });
+
 });

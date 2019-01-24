@@ -15,6 +15,7 @@ import { StorageService, STORAGE_SERVICE } from 'src/app/interfaces/storage-serv
 })
 export class HTTPAuthService implements AuthService {
   isAuthenticated = false;
+  isAdmin = false;
   userID = null;
   username = null;
   firstName = null;
@@ -49,6 +50,8 @@ export class HTTPAuthService implements AuthService {
     this.lastName = user.last_name;
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
+    // TODO(youchen): Check whether user is admin.
+    this.isAdmin = true;
     this.authenticationSucceed.next();
   }
 

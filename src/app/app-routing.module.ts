@@ -5,24 +5,39 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginComponent } from './components/login/login.component';
 import { AdminLayoutComponent } from './modules/layouts/admin-layout/admin-layout.component';
 import { AdminGuard } from './guards/admin.guard';
+import { UserLayoutComponent } from './modules/layouts/user-layout/user-layout.component';
+import { AuthGuard } from './guards/auth.guard';
+import { PermissionDeniedComponent } from './components/permission-denied/permission-denied.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '/dashboard',
     pathMatch: 'full',
   },
-  // Load this module only when user is admin.
+  // Load this module only if user is admin.
   {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [AdminGuard],
-    canLoad: [AdminGuard],
     children: [
       {
         path: '',
         loadChildren: './modules/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-      }]
+      },
+    ]
+  },
+  // Load this module if user is authenticated.
+  {
+    path: '',
+    component: UserLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: './modules/layouts/user-layout/user-layout.module#UserLayoutModule'
+      },
+    ]
   },
   {
     path: 'auth',
@@ -34,6 +49,10 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'permission-denied',
+    component: PermissionDeniedComponent,
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
   },
@@ -42,7 +61,11 @@ const routes: Routes = [
 /** Export routings. */
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes,
+      {
+        enableTracing: true,  // Debug ONLY
+      },
+    ),
   ],
   exports: [RouterModule]
 })
