@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HAMMER_LOADER } from '@angular/platform-browser';
-import { MatProgressSpinnerModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
@@ -30,8 +30,8 @@ describe('NotificationCenterComponent', () => {
         NotificationCenterComponent,
       ],
       imports: [
+        MatIconModule,
         MatProgressSpinnerModule,
-        MatTableModule,
         MatPaginatorModule,
       ],
       providers: [

@@ -92,13 +92,6 @@ describe('NavbarComponent', () => {
     expect(closeNavbar).toHaveBeenCalled();
   });
 
-  it('should open notification box', () => {
-    component.openNotificationBox();
-
-    expect(closeAll).toHaveBeenCalled();
-    expect(open).toHaveBeenCalled();
-  });
-
   it('should open navbar', fakeAsync(() => {
     component.openNavbar();
 
