@@ -140,7 +140,7 @@ describe('NavbarComponent', () => {
 
     const title = component.getTitle();
 
-    expect(title).toBe('Dashboard');
+    expect(title).toBe('首页');
   });
 
   it('should get correct title(slice url)', () => {
@@ -148,7 +148,7 @@ describe('NavbarComponent', () => {
 
     const title = component.getTitle();
 
-    expect(title).toBe('Dashboard');
+    expect(title).toBe('首页');
   });
 
   it('should get default title', () => {
