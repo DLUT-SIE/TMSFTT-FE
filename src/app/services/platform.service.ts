@@ -10,11 +10,9 @@ import { PlatformType } from '../enums/platform-type.enum';
 export class PlatformService {
   /** Indicate whether we are rendering on mobile platform. */
   isMobile = false;
-  platformType: PlatformType = PlatformType.OTHERS;
 
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
-    private readonly navigator: Navigator,
   ) {
     // This should react during the whole lifetime, so we don't need to
     // unsubscribe the subscription.
@@ -27,10 +25,18 @@ export class PlatformService {
         }
       });
 
-      if (this.navigator.platform.indexOf('Win') > -1) {
-        this.platformType = PlatformType.WINDOWS;
-      } else if (this.navigator.platform.toUpperCase().indexOf('MAC') > -1) {
-        this.platformType = PlatformType.MAC;
-      }
+  }
+
+  get nativeNavigator() {
+    return navigator;
+  }
+
+  get platformType() {
+    if (this.nativeNavigator.platform.indexOf('Win') > -1) {
+      return PlatformType.WINDOWS;
+    } else if (this.nativeNavigator.platform.toUpperCase().indexOf('MAC') > -1) {
+      return PlatformType.MAC;
+    }
+    return PlatformType.OTHERS;
   }
 }
