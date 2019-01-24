@@ -2,6 +2,19 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.watermark {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url(./assets/img/dlut-watermark.jpg);
+    background-repeat: repeat;
+    opacity: 0.05;
+    transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+}
+
 a {
     text-decoration-line: none;
 }

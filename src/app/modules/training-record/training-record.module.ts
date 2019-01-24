@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
-  MatCardModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatNativeDateModule,
@@ -29,7 +28,6 @@ import { BatchSubmitComponent } from './components/batch-submit/batch-submit.com
     FlexLayoutModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatDatepickerModule,
     MatIconModule,
     MatInputModule,
