@@ -5,8 +5,8 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
-    { path: '/training-record/entry', title: 'TrainingRecord', icon: 'create', class: '' },
+    { path: '/dashboard', title: '首页', icon: 'dashboard', class: '' },
+    { path: '/training-record/entry', title: '培训记录填报', icon: 'create', class: '' },
     { path: '/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
     { path: '/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
     { path: '/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
