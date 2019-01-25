@@ -75,7 +75,7 @@ export class RecordService {
         // If no additional contents or attachments, we create the Record and return.
         creation$ = creation$.pipe(
           switchMap(() => this.http.post<RecordResponse>(
-            environment.RECORD_SERVICE_URL, req)),
+            `${environment.API_URL}/records/`, req)),
         );
     } else {
       req.status = RecordStatus.STATUS_PRESUBMIT,
@@ -84,7 +84,7 @@ export class RecordService {
         // we update the status to SUBMITTED.
         creation$ = creation$.pipe(
           switchMap(() => this.http.post<RecordResponse>(
-            environment.RECORD_SERVICE_URL, req)),
+            `${environment.API_URL}/records/`, req)),
           switchMap((resp: RecordResponse) => {
             // After an record is retrieved, create contents and attachments
             // in parallel.
@@ -110,7 +110,7 @@ export class RecordService {
           switchMap((resp: RecordResponse) => {
             // Update status of record to SUBMITTED.
             return this.http.patch<RecordResponse>(
-              environment.RECORD_SERVICE_URL + resp.id + '/',
+              `${environment.API_URL}/records/${resp.id}/`,
               {
                 status: RecordStatus.STATUS_SUBMITTED,
               });
@@ -144,6 +144,6 @@ export class RecordService {
 
   /** Delete Record. */
   deleteRecord(recordID: number) {
-    return this.http.delete(environment.RECORD_SERVICE_URL + recordID + '/');
+    return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
   }
 }

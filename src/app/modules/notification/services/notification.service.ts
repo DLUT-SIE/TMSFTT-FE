@@ -44,7 +44,7 @@ export class NotificationService {
 
   getNotification(id: number) {
     return this.http.get<NotificationResponse>(
-      environment.NOTIFICATION_SERVICE_URL + id + '/');
+      `${environment.API_URL}/notifications/${id}/`);
   }
 
   getNotifications(offset?: number, limit?: number,
@@ -54,7 +54,7 @@ export class NotificationService {
     const paramsObj = { offset, limit };
     const queryParams = Object.keys(paramsObj).map(
       key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
-    let url = environment.NOTIFICATION_SERVICE_URL;
+    let url = environment.API_URL + '/notifications/';
     if (readStatus !== undefined) {
       url += readStatus ? 'read/' : 'unread/';
     }

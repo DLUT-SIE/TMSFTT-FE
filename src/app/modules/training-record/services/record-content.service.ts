@@ -18,7 +18,7 @@ export class RecordContentService {
   /** Create single content. */
   createRecordContent(req: RecordContentRequest) {
     return this.http.post<RecordContentResponse>(
-      environment.RECORD_CONTENT_SERVICE_URL, req);
+      `${environment.API_URL}/record-contents/`, req);
   }
 
   /** Create multiple contents. */

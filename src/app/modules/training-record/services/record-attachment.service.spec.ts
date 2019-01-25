@@ -30,7 +30,8 @@ describe('RecordAttachmentService', () => {
 
     service.createRecordAttachment(dummyReq).subscribe();
 
-    const req = httpTestingController.expectOne(environment.RECORD_ATTACHMENT_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/record-attachments/`);
     expect(req.request.method).toEqual('POST');
     req.flush({});
   });
@@ -40,7 +41,8 @@ describe('RecordAttachmentService', () => {
 
     service.createRecordAttachments([dummyReq, dummyReq]).subscribe();
 
-    const attachmentsReq = httpTestingController.match(environment.RECORD_ATTACHMENT_SERVICE_URL);
+    const attachmentsReq = httpTestingController.match(
+      `${environment.API_URL}/record-attachments/`);
     expect(attachmentsReq.length).toBe(2);
     expect(attachmentsReq[0].request.method).toEqual('POST');
     expect(attachmentsReq[1].request.method).toEqual('POST');

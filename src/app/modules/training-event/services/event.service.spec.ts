@@ -32,7 +32,8 @@ describe('EventService', () => {
       num_hours: 10,
       num_participants: 50,
     } as OffCampusEventRequest).subscribe();
-    const req = httpTestingController.expectOne(environment.OFF_CAMPUS_EVENT_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/off-campus-events/`);
     expect(req.request.method).toEqual('POST');
     req.flush({
       name: 'name',
@@ -48,7 +49,8 @@ describe('EventService', () => {
     const id = 5;
 
     service.deleteOffCampusEvent(id).subscribe();
-    const req = httpTestingController.expectOne(environment.OFF_CAMPUS_EVENT_SERVICE_URL + id + '/');
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/off-campus-events/${id}/`);
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
   });

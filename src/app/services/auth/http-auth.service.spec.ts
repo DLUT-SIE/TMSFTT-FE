@@ -79,7 +79,8 @@ describe('HTTPAuthService', () => {
       expect(setItem).toHaveBeenCalled();
     });
 
-    const req = httpTestingController.expectOne(environment.CAS_VERIFY_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/login/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush(dummyResponse);
@@ -94,7 +95,8 @@ describe('HTTPAuthService', () => {
       expect(setItem).not.toHaveBeenCalled();
     });
 
-    const req = httpTestingController.expectOne(environment.CAS_VERIFY_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/login/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
@@ -113,7 +115,8 @@ describe('HTTPAuthService', () => {
       authenticationSucceedFired = true;
     });
 
-    const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/jwt-verify/`);
     expect(req.request.method).toEqual('POST');
 
     req.flush(dummyResponse);
@@ -140,7 +143,8 @@ describe('HTTPAuthService', () => {
       expect(service.isAuthenticated).toBeFalsy();
     });
 
-    const req = httpTestingController.expectOne(environment.JWT_VERIFY_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/jwt-verify/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
@@ -155,7 +159,8 @@ describe('HTTPAuthService', () => {
       expect(service.isAuthenticated).toBeTruthy();
     });
 
-    const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/jwt-refresh/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush(dummyResponse);
@@ -180,7 +185,8 @@ describe('HTTPAuthService', () => {
       expect(service.isAuthenticated).toBeFalsy();
     });
 
-    const req = httpTestingController.expectOne(environment.JWT_REFRESH_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/jwt-refresh/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
