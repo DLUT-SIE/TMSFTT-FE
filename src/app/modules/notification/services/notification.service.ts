@@ -61,4 +61,19 @@ export class NotificationService {
     url += '?' + queryParams;
     return this.http.get<PaginatedNotificationResponse>(url);
   }
+
+  /** Mark all notifications for user as read. */
+  markAllNotificationsAsRead(userID: number) {
+    const action = 'mark-all-notifications-as-read';
+    const url = `${environment.API_URL}/users/${userID}/tasks/${action}/`;
+    return this.http.post(url, {});
+  }
+
+  /** Delete all notifications for user. */
+  deleteAllNotifications(userID: number) {
+    const action = 'delete-all-notifications';
+    const url = `${environment.API_URL}/users/${userID}/tasks/${action}/`;
+    return this.http.post(url, {});
+  }
+
 }

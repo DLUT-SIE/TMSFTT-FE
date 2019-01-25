@@ -142,4 +142,31 @@ describe('NotificationService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(dummyNotification);
   });
+
+  it('should mark notifications as read.', () => {
+    const service: NotificationService = TestBed.get(NotificationService);
+    const id = 1;
+
+    service.markAllNotificationsAsRead(id).subscribe();
+
+    const url = `${environment.API_URL}/users/${id}/tasks/mark-all-notifications-as-read/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
+  it('should delete all notifications.', () => {
+    const service: NotificationService = TestBed.get(NotificationService);
+    const id = 1;
+
+    service.deleteAllNotifications(id).subscribe();
+
+    const url = `${environment.API_URL}/users/${id}/tasks/delete-all-notifications/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
 });
