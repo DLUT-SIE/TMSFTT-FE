@@ -71,7 +71,8 @@ describe('RecordService', () => {
         expect(record).not.toBeNull();
       });
 
-    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ id: 123 });
@@ -96,7 +97,8 @@ describe('RecordService', () => {
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
-    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({
@@ -158,7 +160,8 @@ describe('RecordService', () => {
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
-    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({}, {
@@ -187,12 +190,14 @@ describe('RecordService', () => {
         expect(record).toBeNull();
       });
 
-    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ id });
 
-    const patchReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    const patchReq = httpTestingController.expectOne(
+      `${environment.API_URL}/records/${id}/`);
     expect(patchReq.request.method).toEqual('PATCH');
     patchReq.flush({}, {
       status: 400,
@@ -235,7 +240,8 @@ describe('RecordService', () => {
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
-    const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const createReq = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
     expect(createReq.request.method).toEqual('POST');
     createReq.flush({
       id,
@@ -247,7 +253,8 @@ describe('RecordService', () => {
     expect(createRecordContents).toHaveBeenCalled();
     expect(createRecordAttachments).toHaveBeenCalled();
 
-    const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    const updateReq = httpTestingController.expectOne(
+      `${environment.API_URL}/records/${id}/`);
     expect(updateReq.request.method).toBe('PATCH');
     updateReq.flush({
       id,
@@ -286,7 +293,8 @@ describe('RecordService', () => {
 
     expect(createOffCampusEvent).toHaveBeenCalled();
 
-    const createReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL);
+    const createReq = httpTestingController.expectOne(
+      `${environment.API_URL}/records/`);
     expect(createReq.request.method).toEqual('POST');
     createReq.flush({
       id,
@@ -298,7 +306,8 @@ describe('RecordService', () => {
     expect(createRecordContents).toHaveBeenCalled();
     expect(createRecordAttachments).toHaveBeenCalled();
 
-    const updateReq = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    const updateReq = httpTestingController.expectOne(
+      `${environment.API_URL}/records/${id}/`);
     expect(updateReq.request.method).toBe('PATCH');
     updateReq.flush({}, {
       status: 400,
@@ -315,7 +324,8 @@ describe('RecordService', () => {
 
     service.deleteRecord(id).subscribe();
 
-    const req = httpTestingController.expectOne(environment.RECORD_SERVICE_URL + id + '/');
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/${id}/`);
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });

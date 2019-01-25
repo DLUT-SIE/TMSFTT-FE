@@ -32,7 +32,8 @@ describe('RecordContentService', () => {
     const service: RecordContentService = TestBed.get(RecordContentService);
     service.createRecordContents([dummyReq, dummyReq]).subscribe();
 
-    const req = httpTestingController.match(environment.RECORD_CONTENT_SERVICE_URL);
+    const req = httpTestingController.match(
+      `${environment.API_URL}/record-contents/`);
     expect(req.length).toEqual(2);
     expect(req[0].request.method).toEqual('POST');
     expect(req[1].request.method).toEqual('POST');
@@ -44,7 +45,8 @@ describe('RecordContentService', () => {
     const service: RecordContentService = TestBed.get(RecordContentService);
     service.createRecordContent(dummyReq).subscribe();
 
-    const contentsReq = httpTestingController.expectOne(environment.RECORD_CONTENT_SERVICE_URL);
+    const contentsReq = httpTestingController.expectOne(
+      `${environment.API_URL}/record-contents/`);
     expect(contentsReq.request.method).toEqual('POST');
     contentsReq.flush({});
   });

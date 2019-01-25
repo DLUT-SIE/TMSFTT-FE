@@ -58,7 +58,8 @@ export class HTTPAuthService implements AuthService {
   /** Retrieve the JWT given ticket and service. */
   retrieveJWT(ticket: string, service: string): Observable<boolean> {
     const payload = { ticket, service };
-    return this.http.post<JWTResponse>(environment.CAS_VERIFY_URL, payload).pipe(
+    return this.http.post<JWTResponse>(
+      `${environment.API_URL}/login/`, payload).pipe(
       map(response => {
         this.authenticate(response);
         return true;
@@ -88,11 +89,11 @@ export class HTTPAuthService implements AuthService {
 
   /* Request server to verify the JWT. */
   verifyJWT(): Observable<boolean> {
-    return this.sendJWT(environment.JWT_VERIFY_URL);
+    return this.sendJWT(`${environment.API_URL}/jwt-verify/`);
   }
 
   /* Request server to refresh the JWT. */
   refreshJWT(): Observable<boolean> {
-    return this.sendJWT(environment.JWT_REFRESH_URL);
+    return this.sendJWT(`${environment.API_URL}/jwt-refresh/`);
   }
 }

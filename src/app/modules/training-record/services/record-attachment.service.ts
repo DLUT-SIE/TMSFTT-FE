@@ -21,7 +21,7 @@ export class RecordAttachmentService {
     data.set('record', req.record.toString());
     data.set('path', req.path, req.path.name);
     return this.http.post<RecordAttachmentResponse>(
-      environment.RECORD_ATTACHMENT_SERVICE_URL, data);
+      `${environment.API_URL}/record-attachments/`, data);
   }
 
   /** Create multiple attachments. */

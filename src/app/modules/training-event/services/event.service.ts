@@ -20,12 +20,12 @@ export class EventService {
   /** Create an off-campus event. */
   createOffCampusEvent(req: OffCampusEventRequest) {
     return this.http.post<OffCampusEventResponse>(
-      environment.OFF_CAMPUS_EVENT_SERVICE_URL, req);
+      `${environment.API_URL}/off-campus-events/`, req);
   }
 
   /** Delete the off-campus event based on eventID. */
   deleteOffCampusEvent(eventID: number) {
     return this.http.delete(
-      environment.OFF_CAMPUS_EVENT_SERVICE_URL + eventID + '/');
+      `${environment.API_URL}/off-campus-events/${eventID}/`);
   }
 }
