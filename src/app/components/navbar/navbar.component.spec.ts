@@ -143,7 +143,7 @@ describe('NavbarComponent', () => {
   it('should get correct title', () => {
     authService.isAdmin = true;
     authenticationSucceed$.next();
-    prepareExternalUrl.and.returnValue('/admin/dashboard');
+    prepareExternalUrl.and.returnValue('/dashboard');
 
     const title = component.getTitle();
 
@@ -153,7 +153,7 @@ describe('NavbarComponent', () => {
   it('should get correct title(slice url)', () => {
     authService.isAdmin = true;
     authenticationSucceed$.next();
-    prepareExternalUrl.and.returnValue('#x/admin/dashboard');
+    prepareExternalUrl.and.returnValue('#x/dashboard');
 
     const title = component.getTitle();
 
@@ -168,20 +168,6 @@ describe('NavbarComponent', () => {
     const title = component.getTitle();
 
     expect(title).toBe('TMSFTT');
-  });
-
-  it('should load admin ROUTES after authenticated.', () => {
-    authService.isAdmin = true;
-    authenticationSucceed$.next();
-
-    expect(component.listTitles.length).toBe(7);
-  });
-
-  it('should load user ROUTES after authenticated.', () => {
-    authService.isAdmin = false;
-    authenticationSucceed$.next();
-
-    expect(component.listTitles.length).toBe(2);
   });
 
 });

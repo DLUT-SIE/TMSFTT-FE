@@ -39,8 +39,9 @@ describe('SidebarComponent', () => {
         {
           provide: AUTH_SERVICE,
           useValue: {
+            isAuthenticated: false,
             authenticationSucceed: authenticationSucceed$,
-            isAdmin: true,
+            isAdmin: false,
           },
         },
       ]
@@ -60,17 +61,36 @@ describe('SidebarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load ROUTES after authenticated.', () => {
-    authenticationSucceed$.next();
+  it('should not display regular user nav menu if user is not authenticated.', () => {
+    const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
+    const navMenu = nativeElement.querySelector('.regular-user-nav-menu');
 
-    expect(component.menuItems.length).toBe(7);
+    expect(navMenu).toBeNull();
   });
 
-  it('should load user ROUTES after authenticated.', () => {
-    authService.isAdmin = false;
-    authenticationSucceed$.next();
+  it('should display regular user nav menu if user is authenticated.', () => {
+    authService.isAuthenticated = true;
+    fixture.detectChanges();
+    const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
+    const navMenu = nativeElement.querySelector('.regular-user-nav-menu');
 
-    expect(component.menuItems.length).toBe(2);
+    expect(navMenu).not.toBeNull();
+  });
+
+  it('should not display admin nav menu if user is not admin.', () => {
+    const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
+    const navMenu = nativeElement.querySelector('.admin-nav-menu');
+
+    expect(navMenu).toBeNull();
+  });
+
+  it('should display admin nav menu if user is admin.', () => {
+    authService.isAdmin = true;
+    fixture.detectChanges();
+    const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
+    const navMenu = nativeElement.querySelector('.admin-nav-menu');
+
+    expect(navMenu).not.toBeNull();
   });
 
 });

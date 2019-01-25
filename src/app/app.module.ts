@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotificationModule } from './modules/notification/notification.module';
 import { ComponentsModule } from './components/components.module';
-import { AdminLayoutComponent } from './modules/layouts/admin-layout/admin-layout.component';
 import { HTTPAuthService } from './services/auth/http-auth.service';
 import { STORAGE_SERVICE } from './interfaces/storage-service';
 import { LocalStorageService } from './services/storage/local-storage.service';
@@ -20,7 +19,8 @@ import { PlatformService } from './services/platform.service';
 import { WindowService } from './services/window.service';
 import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
-import { UserLayoutComponent } from './modules/layouts/user-layout/user-layout.component';
+import { AdminComponent } from './modules/roles/admin/admin.component';
+import { RegularUserComponent } from './modules/roles/regular-user/regular-user.component';
 
 
 registerLocaleData(localeZhHans, 'zh-Hans');
@@ -34,8 +34,8 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
-    UserLayoutComponent,
+    AdminComponent,
+    RegularUserComponent,
   ],
   imports: [
     BrowserAnimationsModule,

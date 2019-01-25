@@ -10,7 +10,7 @@ import { NotificationsComponent } from 'src/app/demo/notifications/notifications
 import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
 import { TrainingRecordComponent } from 'src/app/modules/training-record/training-record.component';
 
-export const adminLayoutRoutes: Routes = [
+export const adminRoutes: Routes = [
   {
     path: 'demo',
     children: [
@@ -40,24 +40,10 @@ export const adminLayoutRoutes: Routes = [
       },
     ]
   },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-  },
-  {
-    path: 'training-record',
-    component: TrainingRecordComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: 'src/app/modules/training-record/training-record.module#TrainingRecordModule',
-      },
-    ]
-  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(adminLayoutRoutes)],
+  imports: [RouterModule.forChild(adminRoutes)],
   exports: [RouterModule]
 })
-export class AdminLayoutRoutingModule { }
+export class AdminRoutingModule { }
