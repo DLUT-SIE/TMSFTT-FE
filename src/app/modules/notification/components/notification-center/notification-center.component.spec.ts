@@ -2,17 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { of as observableOf, Subject } from 'rxjs';
 
 import { PaginatedNotificationResponse, NotificationResponse } from 'src/app/interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationCenterComponent } from './notification-center.component';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 
 describe('NotificationCenterComponent', () => {
   let component: NotificationCenterComponent;
   let fixture: ComponentFixture<NotificationCenterComponent>;
-  const getNotifications$ = new Subject<PaginatedNotificationResponse>();
+  let getNotifications$: Subject<PaginatedNotificationResponse>;
   let navigate: jasmine.Spy;
+  let getNotifications: jasmine.Spy;
+  let markAllNotificationsAsRead: jasmine.Spy;
+  let deleteAllNotifications: jasmine.Spy;
   const dummyNotification: NotificationResponse = {
     id: 2,
     time: '2019-01-01',
@@ -25,6 +29,11 @@ describe('NotificationCenterComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
+    getNotifications$ = new Subject<PaginatedNotificationResponse>();
+    getNotifications = jasmine.createSpy();
+    getNotifications.and.returnValue(getNotifications$);
+    markAllNotificationsAsRead = jasmine.createSpy();
+    deleteAllNotifications = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         NotificationCenterComponent,
@@ -35,6 +44,12 @@ describe('NotificationCenterComponent', () => {
         MatPaginatorModule,
       ],
       providers: [
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            userID: 1,
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {},
@@ -48,7 +63,9 @@ describe('NotificationCenterComponent', () => {
         {
           provide: NotificationService,
           useValue: {
-            getNotifications: () => getNotifications$,
+            getNotifications,
+            markAllNotificationsAsRead,
+            deleteAllNotifications,
           }
         },
         {
@@ -93,4 +110,30 @@ describe('NotificationCenterComponent', () => {
     expect(navigate).toHaveBeenCalledWith(
       ['.', dummyNotification.id], { relativeTo: {}});
   });
+
+  it('should mark all notifications as read', () => {
+    const count = 100;
+    const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    getNotifications$.next({ count, results } as PaginatedNotificationResponse);
+    markAllNotificationsAsRead.and.returnValue(observableOf(null));
+
+    component.markAllAsRead();
+
+    expect(markAllNotificationsAsRead).toHaveBeenCalled();
+    expect(getNotifications).toHaveBeenCalledTimes(2);
+  });
+
+  it('should delete all notifications.', () => {
+    const count = 100;
+    const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    getNotifications$.next({ count, results } as PaginatedNotificationResponse);
+    deleteAllNotifications.and.returnValue(observableOf(null));
+
+    component.deleteAll();
+
+    expect(deleteAllNotifications).toHaveBeenCalled();
+    expect(getNotifications).toHaveBeenCalledTimes(2);
+  });
+
+
 });
