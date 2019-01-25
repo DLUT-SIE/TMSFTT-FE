@@ -3,8 +3,7 @@ import { Location, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
-import { RouteInfo } from 'src/app/interfaces/route-info';
-import { ADMIN_ROUTES, USER_ROUTES } from 'src/app/components/sidebar/sidebar.component';
+import { ADMIN_ROUTE_ITEMS, REGULAR_USER_ROUTE_ITEMS } from 'src/app/components/sidebar/sidebar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 
@@ -14,7 +13,8 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    listTitles: RouteInfo[] = [];
+    adminRouteItems = ADMIN_ROUTE_ITEMS;
+    regularUserRouteItems = REGULAR_USER_ROUTE_ITEMS;
 
     private shadingLayer: HTMLDivElement = null;
 
@@ -34,11 +34,7 @@ export class NavbarComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.authService.authenticationSucceed.subscribe(() => {
-            if (this.authService.isAdmin) this.listTitles = ADMIN_ROUTES;
-            else this.listTitles = USER_ROUTES;
-        });
-        this.router.events.subscribe((event) => {
+       this.router.events.subscribe((event) => {
             this.closeNavbar();
         });
     }
@@ -83,7 +79,7 @@ export class NavbarComponent implements OnInit {
             url = url.slice(2);
         }
 
-        for (const item of this.listTitles) {
+        for (const item of this.regularUserRouteItems.concat(this.adminRouteItems)) {
             if (item.path === url) {
                 return item.title;
             }

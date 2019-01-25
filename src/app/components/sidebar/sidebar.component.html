@@ -34,8 +34,22 @@
             </li>
         </ul>
     </div>
-    <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{ menuItem.class }} nav-item">
+    <ul class="nav regular-user-nav-menu" *ngIf="authService.isAuthenticated">
+        <li class="nav-item">
+            <span class="nav-link">导航菜单</span>
+        </li>
+        <li routerLinkActive="active" *ngFor="let menuItem of regularUserRouteItems" class="{{ menuItem.class }} nav-item">
+            <a class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{ menuItem.icon }}</i>
+                <p>{{ menuItem.title }}</p>
+            </a>
+        </li>
+    </ul>
+    <ul class="nav admin-nav-menu" *ngIf="authService.isAdmin">
+        <li class="nav-item">
+            <span class="nav-link">管理员导航菜单</span>
+        </li>
+        <li routerLinkActive="active" *ngFor="let menuItem of adminRouteItems" class="{{ menuItem.class }} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{ menuItem.icon }}</i>
                 <p>{{ menuItem.title }}</p>

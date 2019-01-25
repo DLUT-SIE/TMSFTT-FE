@@ -66,4 +66,10 @@ describe('PlatformService', () => {
     expect(service).toBeTruthy();
     expect(service.platformType).toEqual(PlatformType.OTHERS);
   });
+
+  it('should return same navigator', () => {
+    const service: PlatformService = TestBed.get(PlatformService);
+
+    expect(service.nativeNavigator).toBe(navigator);
+  });
 });
