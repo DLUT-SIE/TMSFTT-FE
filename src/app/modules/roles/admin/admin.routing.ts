@@ -7,8 +7,19 @@ import { TypographyComponent } from 'src/app/demo/typography/typography.componen
 import { IconsComponent } from 'src/app/demo/icons/icons.component';
 import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
 import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
+import { PermissionManagementComponent } from 'src/app/modules/permission-management/permission-management.component';
 
 export const adminRoutes: Routes = [
+  {
+    path: 'permission-management',
+    component: PermissionManagementComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: 'src/app/modules/permission-management/permission-management.module#PermissionManagementModule',
+      },
+    ],
+  },
   {
     path: 'demo',
     children: [

@@ -5,6 +5,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
+    { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
     { path: '/admin/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
     { path: '/admin/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
     { path: '/admin/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
