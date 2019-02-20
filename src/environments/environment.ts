@@ -8,7 +8,7 @@ export const environment: Environment = {
   production: false,
   JWT_KEY: 'ACCESS_TOKEN',
   CAS_LOGIN_URL: 'http://localhost:8000/mock-cas/login/',
-  SERVICE_URL: 'http://localhost:4200/auth/login/',
+  SERVICE_URL: 'http://localhost:8000/auth/login/',
   WHITE_LIST_DOMAINS: ['localhost:4200', 'localhost:8000'],
   API_URL: 'http://localhost:8000/api',
   PAGINATION_SIZE: 10,
