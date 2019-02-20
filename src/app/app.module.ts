@@ -21,6 +21,8 @@ import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
 import { AdminComponent } from './modules/roles/admin/admin.component';
 import { RegularUserComponent } from './modules/roles/regular-user/regular-user.component';
+import { PermissionService } from './services/auth/permission.service';
+import { UserService } from './services/auth/user.service';
 
 
 registerLocaleData(localeZhHans, 'zh-Hans');
@@ -67,6 +69,8 @@ export function tokenGetter() {
     PlatformService,
     WindowService,
     NotificationService,
+    PermissionService,
+    UserService,
     {
       provide: STORAGE_SERVICE,
       useClass: LocalStorageService,
