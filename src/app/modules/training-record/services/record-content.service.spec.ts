@@ -51,4 +51,10 @@ describe('RecordContentService', () => {
     contentsReq.flush({});
   });
 
+  it('should return if no requests.', () => {
+    const service: RecordContentService = TestBed.get(RecordContentService);
+    service.createRecordContents([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { zip, of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RecordAttachmentResponse, RecordAttachmentRequest } from 'src/app/interfaces/record';
@@ -26,6 +26,7 @@ export class RecordAttachmentService {
 
   /** Create multiple attachments. */
   createRecordAttachments(reqs: RecordAttachmentRequest[]) {
-    return forkJoin(reqs.map(req => this.createRecordAttachment(req)));
+    if (reqs.length === 0) return observableOf([]);
+    return zip(...reqs.map(req => this.createRecordAttachment(req)));
   }
 }

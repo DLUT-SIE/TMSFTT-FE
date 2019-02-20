@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, of as observableOf, Observable } from 'rxjs';
+import { of as observableOf, Observable, zip } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -42,7 +42,7 @@ export class RecordService {
         // OffCampusEvent creation failed.
         return observableOf(null);
       }),
-      switchMap((event: OffCampusEventResponse | null) => {
+      switchMap((event: OffCampusEventResponse) => {
         if (event === null) return observableOf(null);
         const req: RecordRequest = {
           off_campus_event: event.id,
@@ -102,7 +102,7 @@ export class RecordService {
                 path: attachment,
               } as RecordAttachmentRequest;
             });
-            return forkJoin(
+            return zip(
               this.contentService.createRecordContents(contentsReqs),
               this.attachmentService.createRecordAttachments(attachmentsReqs),
             ).pipe(map(() => resp));

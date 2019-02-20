@@ -4,15 +4,16 @@ import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@an
 import { ActivatedRoute, Router } from '@angular/router';
 import { of as observableOf, Subject } from 'rxjs';
 
-import { PaginatedNotificationResponse, NotificationResponse } from 'src/app/interfaces/notification';
+import { NotificationResponse } from 'src/app/interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationCenterComponent } from './notification-center.component';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 describe('NotificationCenterComponent', () => {
   let component: NotificationCenterComponent;
   let fixture: ComponentFixture<NotificationCenterComponent>;
-  let getNotifications$: Subject<PaginatedNotificationResponse>;
+  let getNotifications$: Subject<PaginatedResponse<NotificationResponse>>;
   let navigate: jasmine.Spy;
   let getNotifications: jasmine.Spy;
   let markAllNotificationsAsRead: jasmine.Spy;
@@ -29,7 +30,7 @@ describe('NotificationCenterComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getNotifications$ = new Subject<PaginatedNotificationResponse>();
+    getNotifications$ = new Subject<PaginatedResponse<NotificationResponse>>();
     getNotifications = jasmine.createSpy();
     getNotifications.and.returnValue(getNotifications$);
     markAllNotificationsAsRead = jasmine.createSpy();
@@ -89,7 +90,7 @@ describe('NotificationCenterComponent', () => {
   it('should load data', () => {
     const count = 100;
     const results: NotificationResponse[] = [dummyNotification, dummyNotification];
-    getNotifications$.next({ count, results } as PaginatedNotificationResponse);
+    getNotifications$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.notifications).toEqual(results);
@@ -114,7 +115,7 @@ describe('NotificationCenterComponent', () => {
   it('should mark all notifications as read', () => {
     const count = 100;
     const results: NotificationResponse[] = [dummyNotification, dummyNotification];
-    getNotifications$.next({ count, results } as PaginatedNotificationResponse);
+    getNotifications$.next({ count, results, next: '', previous: '' });
     markAllNotificationsAsRead.and.returnValue(observableOf(null));
 
     component.markAllAsRead();
@@ -126,7 +127,7 @@ describe('NotificationCenterComponent', () => {
   it('should delete all notifications.', () => {
     const count = 100;
     const results: NotificationResponse[] = [dummyNotification, dummyNotification];
-    getNotifications$.next({ count, results } as PaginatedNotificationResponse);
+    getNotifications$.next({ count, results, next: '', previous: '' });
     deleteAllNotifications.and.returnValue(observableOf(null));
 
     component.deleteAll();
@@ -134,6 +135,4 @@ describe('NotificationCenterComponent', () => {
     expect(deleteAllNotifications).toHaveBeenCalled();
     expect(getNotifications).toHaveBeenCalledTimes(2);
   });
-
-
 });
