@@ -4,8 +4,9 @@ import { of as observableOf, throwError, Subject } from 'rxjs';
 
 import { NotificationService } from './notification.service';
 import { environment } from 'src/environments/environment';
-import { PaginatedNotificationResponse, NotificationResponse } from 'src/app/interfaces/notification';
+import { NotificationResponse } from 'src/app/interfaces/notification';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 describe('NotificationService', () => {
   let httpTestingController: HttpTestingController;
@@ -18,7 +19,7 @@ describe('NotificationService', () => {
     read_time: '2019-01-01',
   };
 
-  const dummyResponse: PaginatedNotificationResponse = {
+  const dummyResponse: PaginatedResponse<NotificationResponse> = {
     count: 100,
     next: 'next',
     previous: 'previous',

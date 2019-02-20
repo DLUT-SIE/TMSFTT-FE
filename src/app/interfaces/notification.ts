@@ -1,5 +1,3 @@
-import { PaginatedResponse } from './paginated-response';
-
 /** RESTful response interface for Notification. */
 export interface NotificationResponse {
   id: number;
@@ -8,9 +6,4 @@ export interface NotificationResponse {
   recipient: string;
   content: string;
   read_time: string;
-}
-
-/** RESTful paginated response interface for Notification. */
-export interface PaginatedNotificationResponse extends PaginatedResponse {
-  results: NotificationResponse[];
 }

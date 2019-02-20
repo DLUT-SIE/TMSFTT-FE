@@ -49,4 +49,12 @@ describe('RecordAttachmentService', () => {
     attachmentsReq[0].flush({});
     attachmentsReq[1].flush({});
   });
+
+  it('should return if no requests.', () => {
+    const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
+
+    service.createRecordAttachments([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });

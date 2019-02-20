@@ -4,8 +4,9 @@ import { switchMap, map, catchError, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { NotificationResponse, PaginatedNotificationResponse } from 'src/app/interfaces/notification';
+import { NotificationResponse } from 'src/app/interfaces/notification';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
+import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 
 @Injectable({
@@ -59,7 +60,7 @@ export class NotificationService {
       url += readStatus ? 'read/' : 'unread/';
     }
     url += '?' + queryParams;
-    return this.http.get<PaginatedNotificationResponse>(url);
+    return this.http.get<PaginatedResponse<NotificationResponse>>(url);
   }
 
   /** Mark all notifications for user as read. */

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { zip, of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RecordContentRequest, RecordContentResponse } from 'src/app/interfaces/record';
@@ -23,6 +23,7 @@ export class RecordContentService {
 
   /** Create multiple contents. */
   createRecordContents(reqs: RecordContentRequest[]) {
-    return forkJoin(reqs.map(req => this.createRecordContent(req)));
+    if (reqs.length === 0) return observableOf([]);
+    return zip(...reqs.map(req => this.createRecordContent(req)));
   }
 }
