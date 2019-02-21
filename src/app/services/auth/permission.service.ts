@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, zip, throwError } from 'rxjs';
+import { Observable, zip, throwError, of as observableOf } from 'rxjs';
 import { Permission, UserPermission, UserPermissionRequest } from 'src/app/interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -72,6 +72,7 @@ export class PermissionService {
 
   createUserPermissions(reqs: UserPermissionRequest[]) {
     // TODO(youchen): Evaluate the performance cost.
+    if (reqs.length === 0) return observableOf([]);
     return zip(...reqs.map(req => this.createUserPermission(req)));
   }
 
@@ -81,6 +82,7 @@ export class PermissionService {
 
   deleteUserPermissions(permissionIds: number[]) {
     // TODO(youchen): Evaluate the performance cost.
+    if (permissionIds.length === 0) return observableOf([]);
     return zip(...permissionIds.map(id => this.deleteUserPermission(id)));
   }
 }
