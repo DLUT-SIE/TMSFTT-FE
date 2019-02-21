@@ -230,4 +230,20 @@ describe('PermissionService', () => {
       req.flush({});
     });
   });
+
+  it('should return empty list if permissionIds is empty.', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.deleteUserPermissions([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
+
+  it('should return empty list if reqs is empty.', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.createUserPermissions([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });
