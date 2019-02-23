@@ -1,28 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  MatButtonModule,
-  MatFormFieldModule,
-  MatTooltipModule,
-} from '@angular/material';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule, MatFormFieldModule, MatTooltipModule } from '@angular/material';
 
-import { DashboardComponent } from 'src/app/demo/dashboard/dashboard.component';
-import { TrainingRecordComponent } from 'src/app/modules/training-record/training-record.component';
+
 import { RegularUserRoutingModule } from './regular-user.routing.module';
+import { RegularUserComponent } from './regular-user.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
+    RegularUserComponent,
     DashboardComponent,
-    TrainingRecordComponent,
   ],
   imports: [
     CommonModule,
+    RouterModule,
     MatButtonModule,
     MatFormFieldModule,
     MatTooltipModule,
-    CommonModule,
-    RouterModule,
 
     RegularUserRoutingModule
   ],

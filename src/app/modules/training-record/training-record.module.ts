@@ -16,9 +16,11 @@ import { TrainingRecordRoutingModule } from './training-record-routing.module';
 import { EntryModeComponent } from './components/entry-mode/entry-mode.component';
 import { RecordFormComponent } from './components/record-form/record-form.component';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
+import { TrainingRecordComponent } from './training-record.component';
 
 @NgModule({
   declarations: [
+    TrainingRecordComponent,
     EntryModeComponent,
     RecordFormComponent,
     BatchSubmitComponent,

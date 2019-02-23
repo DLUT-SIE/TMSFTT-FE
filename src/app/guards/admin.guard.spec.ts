@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/ro
 
 import { AdminGuard } from './admin.guard';
 import { AUTH_SERVICE } from '../interfaces/auth-service';
+import { Location } from '@angular/common';
 
 describe('AdminGuard', () => {
   let navigate: jasmine.Spy;
@@ -26,14 +27,20 @@ describe('AdminGuard', () => {
         {
           provide: Router,
           useValue: { navigate },
-        }
+        },
+        {
+          provide: Location,
+          useValue: {
+            path: () => '/redirect-url',
+          },
+        },
       ]
     });
 
     authService = TestBed.get(AUTH_SERVICE);
   });
 
-  it('should ...', inject([AdminGuard], (guard: AdminGuard) => {
+  it('should create.', inject([AdminGuard], (guard: AdminGuard) => {
     expect(guard).toBeTruthy();
   }));
 
@@ -68,4 +75,59 @@ describe('AdminGuard', () => {
     expect(canActivate).toBeTruthy();
   }));
 
+  it('should load if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = true;
+    authService.isAdmin = true;
+    const canLoad = guard.canLoad({});
+
+    expect(canLoad).toBeTruthy();
+  }));
+
+  it('should not load if is not admin', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = true;
+    authService.isAdmin = false;
+    const canLoad = guard.canLoad({});
+
+    expect(navigate).toHaveBeenCalledWith(['/permission-denied']);
+    expect(canLoad).toBeFalsy();
+  }));
+
+  it('should not load if autentication failed', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = false;
+    const canLoad = guard.canLoad({});
+
+    expect(navigate).toHaveBeenCalledWith(['/auth/login'], { queryParams: { next: '/redirect-url' }});
+    expect(canLoad).toBeFalsy();
+  }));
+
+  it('should not activate child if authentication failed', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = false;
+    const canActivateChild = guard.canActivateChild(
+      {} as ActivatedRouteSnapshot,
+      { url: '/abc' } as RouterStateSnapshot);
+
+    expect(navigate).toHaveBeenCalledWith(['/auth/login'], { queryParams: { next: '/abc' }});
+    expect(canActivateChild).toBeFalsy();
+  }));
+
+  it('should not activate child if authentication succeed but is not admin', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = true;
+    authService.isAdmin = false;
+    const canActivateChild = guard.canActivateChild(
+      {} as ActivatedRouteSnapshot,
+      {} as RouterStateSnapshot);
+
+    expect(navigate).toHaveBeenCalledWith(['/permission-denied']);
+    expect(canActivateChild).toBeFalsy();
+  }));
+
+  it('should activate child if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
+    authService.isAuthenticated = true;
+    authService.isAdmin = true;
+    const canActivateChild = guard.canActivateChild(
+      {} as ActivatedRouteSnapshot,
+      {} as RouterStateSnapshot);
+
+    expect(canActivateChild).toBeTruthy();
+  }));
 });

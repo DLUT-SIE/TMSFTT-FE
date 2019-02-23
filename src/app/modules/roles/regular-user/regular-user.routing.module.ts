@@ -1,24 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TrainingRecordComponent } from 'src/app/modules/training-record/training-record.component';
-import { DashboardComponent } from 'src/app/demo/dashboard/dashboard.component';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { RegularUserComponent } from './regular-user.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-  },
-  {
-    path: 'training-record',
-    component: TrainingRecordComponent,
+    path: '',
+    component: RegularUserComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
-        loadChildren: 'src/app/modules/training-record/training-record.module#TrainingRecordModule',
-      },
+        canActivateChild: [AuthGuard],
+        children: [
+          {
+            path: 'dashboard',
+            component: DashboardComponent,
+          },
+          {
+            path: 'training-record',
+            loadChildren: 'src/app/modules/training-record/training-record.module#TrainingRecordModule',
+          },
+        ]
+      }
     ]
-  },
+  }
 ];
 
 @NgModule({
