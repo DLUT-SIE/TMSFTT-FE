@@ -19,11 +19,16 @@ import { PlatformService } from './services/platform.service';
 import { WindowService } from './services/window.service';
 import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
-import { AdminComponent } from './modules/roles/admin/admin.component';
-import { RegularUserComponent } from './modules/roles/regular-user/regular-user.component';
 import { PermissionService } from './services/auth/permission.service';
 import { UserService } from './services/auth/user.service';
 
+import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
+import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
+import { TypographyComponent } from 'src/app/demo/typography/typography.component';
+import { IconsComponent } from 'src/app/demo/icons/icons.component';
+import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
+import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
@@ -36,10 +41,21 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent,
-    RegularUserComponent,
+
+    // Demo components
+    UserProfileComponent,
+    TableListComponent,
+    TypographyComponent,
+    IconsComponent,
+    NotificationsComponent,
+    UpgradeComponent,
   ],
   imports: [
+    // TODO(youchen): Remove these demo-required dependencies
+    // Begin demo-required dependencies
+    MatInputModule,
+    MatFormFieldModule,
+    // End demo-required dependencies
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,

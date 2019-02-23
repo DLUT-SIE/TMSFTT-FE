@@ -14,9 +14,11 @@ import {
 import { PermissionManagementRoutingModule } from './permission-management-routing.module';
 import { AccountPermissionComponent } from './components/account-permission/account-permission.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { PermissionManagementComponent } from './permission-management.component';
 
 @NgModule({
   declarations: [
+    PermissionManagementComponent,
     AccountPermissionComponent,
     MenuComponent,
   ],

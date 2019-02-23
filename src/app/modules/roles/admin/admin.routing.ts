@@ -1,53 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
-import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
-import { TypographyComponent } from 'src/app/demo/typography/typography.component';
-import { IconsComponent } from 'src/app/demo/icons/icons.component';
-import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
-import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
-import { PermissionManagementComponent } from 'src/app/modules/permission-management/permission-management.component';
+
+import { AdminGuard } from 'src/app/guards/admin.guard';
+import { AdminComponent } from './admin.component';
 
 export const adminRoutes: Routes = [
   {
-    path: 'permission-management',
-    component: PermissionManagementComponent,
+    path: '',
+    component: AdminComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',
-        loadChildren: 'src/app/modules/permission-management/permission-management.module#PermissionManagementModule',
+        canActivateChild: [AdminGuard],
+        children: [
+          {
+            path: 'permission-management',
+            canLoad: [AdminGuard],
+            loadChildren: 'src/app/modules/permission-management/permission-management.module#PermissionManagementModule',
+          },
+        ],
       },
     ],
-  },
-  {
-    path: 'demo',
-    children: [
-      {
-        path: 'user-profile',
-        component: UserProfileComponent,
-      },
-      {
-        path: 'table-list',
-        component: TableListComponent,
-      },
-      {
-        path: 'typography',
-        component: TypographyComponent,
-      },
-      {
-        path: 'icons',
-        component: IconsComponent,
-      },
-      {
-        path: 'notifications',
-        component: NotificationsComponent,
-      },
-      {
-        path: 'upgrade',
-        component: UpgradeComponent,
-      },
-    ]
   },
 ];
 
