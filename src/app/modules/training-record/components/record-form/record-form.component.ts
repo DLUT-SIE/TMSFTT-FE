@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { RecordService } from '../../services/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { OffCampusEventRequest } from 'src/app/interfaces/event';
-import { RecordContent } from 'src/app/interfaces/record';
+import { RecordContent, RecordRequest } from 'src/app/interfaces/record';
 import { ContentType } from 'src/app/enums/content-type.enum';
+import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -21,14 +23,14 @@ interface FileChangeEvent extends Event {
 export class RecordFormComponent implements OnInit {
   /** Use FormBuilder to build our form to collect Record data. */
   recordForm = this.fb.group({
-    name: ['', Validators.required],
-    time: ['', Validators.required],
-    location: ['', Validators.required],
-    numHours: ['', Validators.required],
-    numParticipants: ['', Validators.required],
-    content: [''],
-    summary: [''],
-    feedback: [''],
+    name: ['', [Validators.required, Validators.maxLength(50)]],
+    time: ['', [Validators.required, Validators.maxLength(30)]],
+    location: ['', [Validators.required, Validators.maxLength(50)]],
+    numHours: ['', [Validators.required]],
+    numParticipants: ['', [Validators.required]],
+    content: ['', [Validators.required, Validators.maxLength(200)]],
+    summary: ['', [Validators.maxLength(200)]],
+    feedback: ['', [Validators.maxLength(200)]],
     files: this.fb.array([]),
   });
 
@@ -38,6 +40,7 @@ export class RecordFormComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    private readonly snackBar: MatSnackBar,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly recordService: RecordService,
   ) { }
@@ -70,6 +73,21 @@ export class RecordFormComponent implements OnInit {
     return this.recordForm.get('numParticipants');
   }
 
+  /** Access the content field of the form. */
+  get content() {
+    return this.recordForm.get('content');
+  }
+
+  /** Access the summary field of the form. */
+  get summary() {
+    return this.recordForm.get('summary');
+  }
+
+  /** Access the feedback field of the form. */
+  get feedback() {
+    return this.recordForm.get('feedback');
+  }
+
   /** Access the files field of the form. */
   get files() {
     return this.recordForm.get('files') as FormArray;
@@ -87,17 +105,9 @@ export class RecordFormComponent implements OnInit {
     this.attachments.splice(i, 1);
   }
 
-  onSubmit() {
+  private buildContents(): RecordContent[] {
     const value = this.recordForm.value;
-    const offCampusEvent: OffCampusEventRequest = {
-      name: value.name,
-      time: value.time,
-      location: value.location,
-      num_hours: value.numHours,
-      num_participants: value.numParticipants,
-    };
-    // We only submit non-empty content.
-    const contents: RecordContent[] = [
+    return [
       {
         content_type: ContentType.CONTENT_TYPE_CONTENT,
         content: value.content,
@@ -111,15 +121,39 @@ export class RecordFormComponent implements OnInit {
         content: value.feedback,
       },
     ].filter((val) => val.content !== '');
-    const attachments: File[] = this.attachments;
-    this.recordService.createOffCampusEventRecord(
-      offCampusEvent, this.authService.userID,
-      contents, attachments).subscribe(record => {
-        if (record !== null) {
-          this.router.navigate(['../record-detail/', record.id]);
-          return;
+  }
+
+  private buildOffCampusEventRequest(): OffCampusEventRequest {
+    const value = this.recordForm.value;
+    return {
+      name: value.name,
+      time: value.time,
+      location: value.location,
+      num_hours: value.numHours,
+      num_participants: value.numParticipants,
+    };
+  }
+
+  onSubmit() {
+    const req: RecordRequest = {
+      off_campus_event:  this.buildOffCampusEventRequest(),
+      user: this.authService.userID,
+      contents: this.buildContents(),
+      attachments: this.attachments,
+    };
+    this.recordService.createOffCampusRecord(req).subscribe(
+      record => {
+        this.router.navigate(['../record-detail/', record.id]);
+      },
+      (error: HttpErrorResponse) => {
+        let message = error.message;
+        if (error.error) {
+          message = '';
+          for (const key of Object.keys(error.error)) {
+            message += error.error[key].join(',') + '。';
+          }
         }
-        // TODO(youchen): Notify user that the process failed.
+        this.snackBar.open(message, '关闭');
       });
   }
 

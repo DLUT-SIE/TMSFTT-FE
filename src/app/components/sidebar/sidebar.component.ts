@@ -6,11 +6,11 @@ import { NotificationService } from 'src/app/modules/notification/services/notif
 
 export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
-    { path: '/admin/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
-    { path: '/admin/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
-    { path: '/admin/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
-    { path: '/admin/demo/icons', title: 'Demo-Icons', icon: 'bubble_chart', class: '' },
-    { path: '/admin/demo/notifications', title: 'Demo-Notifications', icon: 'notifications', class: '' },
+    { path: '/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
+    { path: '/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
+    { path: '/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
+    { path: '/demo/icons', title: 'Demo-Icons', icon: 'bubble_chart', class: '' },
+    { path: '/demo/notifications', title: 'Demo-Notifications', icon: 'notifications', class: '' },
 ];
 
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
