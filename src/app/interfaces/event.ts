@@ -12,6 +12,7 @@ interface OffCampusEvent extends Event {
 
 interface CampusEvent extends Event {
   num_enrolled: number;
+  deadline: string;
   description: string;
 }
 

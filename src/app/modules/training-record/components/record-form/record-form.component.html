@@ -16,6 +16,9 @@
                 <span *ngIf="!!name.errors.required" i18n>
                   您需要提供所参加培训的名称。
                 </span>
+                <span *ngIf="!!name.errors.maxlength" i18n>
+                  参加培训的名称不能超过50个字符。
+                </span>
               </mat-error>
             </mat-form-field>
 
@@ -30,6 +33,9 @@
                 <span *ngIf="!!time.errors.required" i18n>
                   您需要提供您所参加培训的时间。
                 </span>
+                <span *ngIf="!!time.errors.maxlength" i18n>
+                  参加培训的时间不能超过30个字符。
+                </span>
               </mat-error>
             </mat-form-field>
 
@@ -41,6 +47,9 @@
               <mat-error *ngIf="location.invalid && (location.dirty || location.touched)">
                 <span *ngIf="!!location.errors.required" i18n>
                   您需要提供您所参加培训的地点。
+                </span>
+                <span *ngIf="!!location.errors.maxlength" i18n>
+                  参加培训的地点不能超过50个字符。
                 </span>
               </mat-error>
             </mat-form-field>
@@ -72,8 +81,15 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>assignment</mat-icon>
               <mat-label i18n>培训内容</mat-label>
-              <textarea matInput placeholder="请告诉我们您所参加培训的培训内容，您也可以通过上传附件的形式提交该部分内容" formControlName="content"
-                i18n-placeholder></textarea>
+              <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder required></textarea>
+              <mat-error *ngIf="content.invalid && (content.dirty || content.touched)">
+                <span *ngIf="!!content.errors.required" i18n>
+                  您需要提供您所参加培训的培训内容。
+                </span>
+                <span *ngIf="!!content.errors.maxlength" i18n>
+                  参加培训的培训内容不能超过200个字符。
+                </span>
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -81,6 +97,11 @@
               <mat-label i18n>培训总结</mat-label>
               <textarea matInput placeholder="请告诉我们您对本次培训的总结，您也可以通过上传附件的形式提交该部分内容" formControlName="summary"
                 i18n-placeholder></textarea>
+              <mat-error *ngIf="summary.invalid && (summary.dirty || summary.touched)">
+                <span *ngIf="!!summary.errors.maxlength" i18n>
+                  参加培训的培训总结不能超过200个字符。
+                </span>
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -88,19 +109,27 @@
               <mat-label i18n>培训反馈</mat-label>
               <textarea matInput placeholder="请告诉我们您对本次培训的一些意见，您也可以通过上传附件的形式提交该部分内容" formControlName="feedback"
                 i18n-placeholder></textarea>
+              <mat-error *ngIf="feedback.invalid && (feedback.dirty || feedback.touched)">
+                <span *ngIf="!!feedback.errors.maxlength" i18n>
+                  参加培训的培训反馈不能超过200个字符。
+                </span>
+              </mat-error>
             </mat-form-field>
 
             <div formArrayName="files">
               <h3>
                 <span i18n>附件</span>
-                <button mat-button type="button" color="primary" (click)="addFile()" i18n>添加新附件</button>
+                <button mat-button type="button" color="primary" (click)="addFile()" [disabled]="files.length > 2"
+                  i18n>添加新附件</button>
               </h3>
-
+              <p class="text-danger" *ngIf="files.length > 2">您最多能上传3个附件。</p>
               <div *ngFor="let file of files.controls; let i=index">
                 <label><span i18n>文件名:</span>{{ file.value }}</label>
                 <input hidden type="file" #uploadFileInput (change)="onFileAdd($event)" [formControlName]="i" />
-                <button mat-button type="button" *ngIf="!file.value" (click)="uploadFileInput.click()" i18n>选择附件</button>
-                <button mat-button type="button" color="warn" *ngIf="file.value" (click)="onFileRemove(i)" i18n>删除附件</button>
+                <button mat-button type="button" *ngIf="!file.value" (click)="uploadFileInput.click()"
+                  i18n>选择附件</button>
+                <button mat-button type="button" color="warn" *ngIf="file.value" (click)="onFileRemove(i)"
+                  i18n>删除附件</button>
               </div>
             </div>
 

@@ -12,6 +12,7 @@ import {
   MatFormFieldModule,
   MatNativeDateModule,
   MatSelectModule,
+  MatSnackBar,
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -21,6 +22,7 @@ import { RecordFormComponent } from './record-form.component';
 import { RecordService } from '../../services/record.service';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { RecordResponse } from 'src/app/interfaces/record';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('RecordFormComponent', () => {
   // Note: We should create Observable before our each test in certain
@@ -29,13 +31,16 @@ describe('RecordFormComponent', () => {
   // respond to new value. This is not a big deal in unit tests, but we
   // need to make sure that we are aware of the consequences of this
   // behavior, such as codes are marked run multiple times in coverage report.
-  const createOffCampusEventRecord$ = new Subject<RecordResponse>();
+  let createOffCampusRecord$: Subject<RecordResponse>;
   let navigate: jasmine.Spy;
+  let snackBarOpen: jasmine.Spy;
   let component: RecordFormComponent;
   let fixture: ComponentFixture<RecordFormComponent>;
 
   beforeEach(async(() => {
+    createOffCampusRecord$ = new Subject();
     navigate = jasmine.createSpy();
+    snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -55,7 +60,13 @@ describe('RecordFormComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            createOffCampusEventRecord: () => createOffCampusEventRecord$,
+            createOffCampusRecord: () => createOffCampusRecord$,
+          },
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
           },
         },
         {
@@ -143,16 +154,31 @@ describe('RecordFormComponent', () => {
 
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
-    createOffCampusEventRecord$.next({ id: 123 } as RecordResponse);
+    createOffCampusRecord$.next({ id: 123 } as RecordResponse);
 
     expect(navigate).toHaveBeenCalledWith(['../record-detail/', 123]);
   });
 
-  it('should not navigate when creation failed.', () => {
+  it('should display errors when creation failed.', () => {
     component.onSubmit();
-    createOffCampusEventRecord$.next(null);
+    createOffCampusRecord$.error({
+      message: 'Raw error message',
+      error: {
+        attachments_data: ['Invalid number of attachments'],
+      },
+    } as HttpErrorResponse);
 
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid number of attachments。', '关闭');
     expect(navigate).not.toHaveBeenCalled();
   });
 
+  it('should display raw errors when creation failed.', () => {
+    component.onSubmit();
+    createOffCampusRecord$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+    expect(navigate).not.toHaveBeenCalled();
+  });
 });

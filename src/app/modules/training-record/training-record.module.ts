@@ -8,6 +8,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatSelectModule,
+  MatSnackBarModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -35,6 +36,7 @@ import { TrainingRecordComponent } from './training-record.component';
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    MatSnackBarModule,
     MatSelectModule,
 
     TrainingRecordRoutingModule
