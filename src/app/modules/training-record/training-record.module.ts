@@ -9,6 +9,8 @@ import {
   MatInputModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +20,7 @@ import { EntryModeComponent } from './components/entry-mode/entry-mode.component
 import { RecordFormComponent } from './components/record-form/record-form.component';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TrainingRecordComponent } from './training-record.component';
+import { ListViewComponent } from './components/list-view/list-view.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { TrainingRecordComponent } from './training-record.component';
     EntryModeComponent,
     RecordFormComponent,
     BatchSubmitComponent,
+    ListViewComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,8 @@ import { TrainingRecordComponent } from './training-record.component';
     MatNativeDateModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
 
     TrainingRecordRoutingModule
   ],
