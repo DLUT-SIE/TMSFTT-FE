@@ -19,6 +19,7 @@ export interface RecordResponse {
   campus_event: CampusEventResponse | null;
   off_campus_event: OffCampusEventResponse | null;
   attachments: RecordAttachmentResponse[];
+  contents: RecordContentResponse[];
   user: number;
   status: RecordStatus;
 }

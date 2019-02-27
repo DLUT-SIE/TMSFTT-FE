@@ -11,9 +11,6 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 })
 export class RecordService {
 
-  Records: RecordResponse[] = [];
-  RecordsLoaded = false;
-
   constructor(
     private readonly http: HttpClient,
   ) { }

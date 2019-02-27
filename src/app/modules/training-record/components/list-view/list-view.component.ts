@@ -21,11 +21,11 @@ export class ListViewComponent implements OnInit {
     recordsLength = 0;
     /** Indicate data loading status */
     isLoadingResults = true;
-  
+
     pageSize = 5;
-  
+
     private manualRefresh$ = new Subject<PageEvent>();
-  
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
