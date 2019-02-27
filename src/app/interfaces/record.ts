@@ -1,7 +1,7 @@
 import { RecordStatus } from 'src/app/enums/record-status.enum';
 import { ContentType } from 'src/app/enums/content-type.enum';
 import { AttachmentType } from 'src/app/enums/attachment-type.enum';
-import { OffCampusEventRequest } from './event';
+import { OffCampusEventRequest, CampusEventResponse, OffCampusEventResponse } from './event';
 
 /** RESTful request interface for Record. */
 export interface RecordRequest {
@@ -16,8 +16,9 @@ export interface RecordResponse {
   id: number;
   create_time: string;
   update_time: string;
-  campus_event: number | null;
-  off_campus_event: number | null;
+  campus_event: CampusEventResponse | null;
+  off_campus_event: OffCampusEventResponse | null;
+  attachments: RecordAttachmentResponse[];
   user: number;
   status: RecordStatus;
 }

@@ -16,6 +16,7 @@ export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/dashboard', title: '首页', icon: 'dashboard', class: '' },
     { path: '/training-record/entry', title: '培训记录填报', icon: 'create', class: '' },
+    { path: '/training-record/list-view', title: '培训记录列表', icon: 'list', class: '' },
 ];
 
 @Component({
