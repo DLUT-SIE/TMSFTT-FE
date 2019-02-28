@@ -19,13 +19,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TrainingEventRoutingModule } from './training-event-routing.module';
 import { TableListComponent } from './components/table-list/table-list.component';
 import { TrainingEventComponent } from './training-event.component';
-import { DetailComponent } from './components/detail/detail.component';
 
 @NgModule({
   declarations: [
     TrainingEventComponent,
     TableListComponent,
-    DetailComponent,
   ],
   imports: [
     CommonModule,
