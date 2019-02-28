@@ -26,6 +26,11 @@ export interface CampusEventRequest extends CampusEvent {
 /** RESTful response interface for CampusEvent. */
 export interface CampusEventResponse extends CampusEvent {
   id: number;
+  //新增加
+  create_time:string;
+  update_time:string;
+
+
 }
 
 /** RESTful request interface for OffCampusEvent. */

@@ -27,6 +27,10 @@ const routes: Routes = [
             path: 'training-program',
             loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
           },
+          {
+            path: 'training-event',
+            loadChildren: 'src/app/modules/training-event/training-event.module#TrainingEventModule',
+          },
         ]
       }
     ]
