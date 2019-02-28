@@ -1,4 +1,4 @@
-import { Injectable ,Inject} from '@angular/core';
+import { Injectable, Inject} from '@angular/core';
 import { timer, of as observableOf } from 'rxjs';
 import { catchError, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -38,8 +38,6 @@ export class EventService {
  }
 
  getEvent(id: number) {
-  //  alert('已经进入了getEvent');
-  //测试有问题是因为，应该要传入item，但是我传的是event，那肯定读不出来啊！
    return this.http.get<CampusEventResponse>(
      `${environment.API_URL}/campus-events/${id}/`);
  }
