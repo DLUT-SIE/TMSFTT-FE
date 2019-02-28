@@ -16,8 +16,6 @@ describe('TableListComponent', () => {
   let getEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
   let navigate: jasmine.Spy;
   let getEvents: jasmine.Spy;
-  // let markAllNotificationsAsRead: jasmine.Spy;
-  // let deleteAllNotifications: jasmine.Spy;
   const dummyEvent: CampusEventResponse = {
     id: 601,
     create_time: '2019-02-26T15:04:24.232265+08:00',
@@ -38,8 +36,6 @@ describe('TableListComponent', () => {
     getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
     getEvents = jasmine.createSpy();
     getEvents .and.returnValue(getEvents$);
-    // markAllNotificationsAsRead = jasmine.createSpy();
-    // deleteAllNotifications = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         TableListComponent,
@@ -70,8 +66,6 @@ describe('TableListComponent', () => {
           provide: EventService,
           useValue: {
             getEvents,
-            // markAllNotificationsAsRead,
-            // deleteAllNotifications,
           }
         },
         {
@@ -109,13 +103,4 @@ describe('TableListComponent', () => {
     expect(component.events).toEqual([]);
     expect(component.eventlistLength).toEqual(0);
   });
-
-  it('should navigate to detail', () => {
-    component.navigateToDetail(dummyEvent);
-
-    expect(navigate).toHaveBeenCalledWith(
-      ['.', dummyEvent.id], { relativeTo: {}});
-  });
-
-
 });

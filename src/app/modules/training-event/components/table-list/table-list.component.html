@@ -15,7 +15,7 @@
                 <th class="col-8 col-sm-3">地点</th>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let item of events" (click)="navigateToDetail(item)">
+                <tr class="d-flex" *ngFor="let item of events">
                   <td class="col-6 col-sm-3 text-justify">{{ item.id}}</td>
                   <td class="col-10 col-sm-5">{{ item.name }}</td>
                   <td class="col-8 col-sm-3">{{ item.location }}</td>

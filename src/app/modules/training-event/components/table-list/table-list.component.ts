@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { of as observableOf, Subject, merge } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-
 import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService  } from '../../services/event.service';
-// import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
-// import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -27,17 +24,12 @@ export class TableListComponent implements OnInit {
   private manualRefresh$ = new Subject<PageEvent>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    // @Inject(AUTH_SERVICE) private readonly authService: AuthService,
-    // @Inject(AUTH_SERVICE)
     private readonly eventService: EventService,
   ) { }
 
   ngOnInit() {
     merge(this.paginator.page, this.manualRefresh$).pipe(
       switchMap((event: PageEvent) => {
-        // alert("已经进入了switchMap");
         this.isLoadingResults = true;
         const offset = event.pageIndex * event.pageSize;
         return this.eventService.getEvents(offset);
@@ -54,11 +46,6 @@ export class TableListComponent implements OnInit {
     ).subscribe(events => this.events = events);
     this.forceRefresh();
   }
-  navigateToDetail(row: CampusEventResponse) {
-    this.router.navigate(['.', row.id], { relativeTo: this.route });
-  }
-
-
 
   private forceRefresh() {
     this.manualRefresh$.next({
