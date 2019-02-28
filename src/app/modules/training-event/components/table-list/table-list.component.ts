@@ -17,7 +17,7 @@ export class TableListComponent implements OnInit {
   /** The data to be displayed */
   events: CampusEventResponse[] = [];
   /** How to sort the columns */
-  displayedColumns: any[] = ['id','name', 'location'];
+  displayedColumns: string[] = ['id', 'name', 'location'];
   /** The total number of eventlist. */
   eventlistLength = 0;
   /** Indicate data loading status */
@@ -35,25 +35,19 @@ export class TableListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     merge(this.paginator.page, this.manualRefresh$).pipe(
       switchMap((event: PageEvent) => {
         // alert("已经进入了switchMap");
         this.isLoadingResults = true;
         const offset = event.pageIndex * event.pageSize;
-        
         return this.eventService.getEvents(offset);
       }),
       map(data => {
-        // alert("已经出来数据啦!");
-        // 这里已经执行了.
         this.isLoadingResults = false;
         this.eventlistLength = data.count;
         return data.results;
       }),
       catchError((err) => {
-        // alert("出现了加载数据的异常!");
-        //也没有出现加载数据的异常
         this.isLoadingResults = false;
         return observableOf([]);
       }),
@@ -74,7 +68,5 @@ export class TableListComponent implements OnInit {
       length: 0,
     } as PageEvent);
   }
-
- 
 
 }
