@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HAMMER_LOADER } from '@angular/platform-browser';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { Subject } from 'rxjs';
 
@@ -77,10 +76,6 @@ describe('ListViewComponent', () => {
           useValue: {
             getRecords,
           }
-        },
-        {
-          provide: HAMMER_LOADER,
-          useValue: () => new Promise(() => { }),
         },
       ]
     })

@@ -5,69 +5,16 @@ import { throwError, Subject } from 'rxjs';
 import { RecordService } from './record.service';
 
 import { environment } from 'src/environments/environment';
-import { RecordRequest, RecordResponse, RecordAttachmentResponse, RecordContentResponse } from 'src/app/interfaces/record';
+import { RecordRequest } from 'src/app/interfaces/record';
 import { ContentType } from 'src/app/enums/content-type.enum';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
-import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
-import { OffCampusEventResponse } from 'src/app/interfaces/event';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
-  const dummyOffCampusEvent: OffCampusEventResponse = {
-    id: 1,
-    create_time: '2019-02-21T16:40:03.799178+08:00',
-    update_time: '2019-02-21T16:40:03.799197+08:00',
-    name: '一起设计继续名称.',
-    time: '2019-04-04T09:37:23.606866+08:00',
-    location: '拉萨街j座',
-    num_hours: 1.9768268898717425,
-    num_participants: 60
-  };
-  const dummyRecordAttachment: RecordAttachmentResponse = {
-    id: 1,
-    create_time: '2019-02-21T16:40:11.057665+08:00',
-    update_time: '2019-02-21T16:40:11.057681+08:00',
-    attachment_type: 2,
-    path: '/资料/必须/地址/都是.jpg',
-    record: 1
-  };
-  const dummyRecordAttachments: RecordAttachmentResponse[] = [
-    dummyRecordAttachment,
-    dummyRecordAttachment,
-  ];
-  const dummyRecordContent: RecordContentResponse = {
-    id: 2,
-    create_time: '2019-02-21T16:40:07.759937+08:00',
-    update_time: '2019-02-21T16:40:07.759954+08:00',
-    content_type: 0,
-    content: '游戏积分部门精华.\n东西为什然后.留言企业选择主要大学如何.完全可能没有同时留言这个经营.\n然后影响电子成为.会员商品推荐.然后数据信息不断.全国通过来自一切分析.\n网上地址这些详细认为信息自己.',
-    record: 3
-  };
-  const dummyRecordContents: RecordContentResponse[] = [
-    dummyRecordContent,
-    dummyRecordContent,
-  ];
-  const dummyRecord: RecordResponse = {
-    id: 1,
-    create_time: '2019-02-21T16:40:05.769180+08:00',
-    update_time: '2019-02-21T16:40:14.231461+08:00',
-    status: 3,
-    campus_event: null,
-    off_campus_event: dummyOffCampusEvent,
-    attachments: dummyRecordAttachments,
-    contents: dummyRecordContents,
-    user: 127,
-  };
-
-  const dummyResponse: PaginatedResponse<RecordResponse> = {
-    count: 100,
-    next: 'next',
-    previous: 'previous',
-    results: [dummyRecord, dummyRecord],
-  };
-  const authenticationSucceed$ = new Subject<void>();
+  let authenticationSucceed$: Subject<void>;
 
   beforeEach(() => {
+    authenticationSucceed$ = new Subject<void>();
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -154,7 +101,7 @@ describe('RecordService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush(dummyResponse);
+    req.flush({count: 2, results: [{}, {}]});
   });
 
   it('should ignore errors during getting records', fakeAsync(() => {
