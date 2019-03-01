@@ -36,7 +36,7 @@ export class RecordService {
   getRecords(offset?: number, limit?: number) {
     if (offset === undefined) offset = 0;
     if (limit === undefined) limit = environment.PAGINATION_SIZE;
-    const paramsObj = { limit, offset };
+    const paramsObj = { offset, limit };
     const queryParams = Object.keys(paramsObj).map(
       key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
     let url = environment.API_URL + '/records/';
