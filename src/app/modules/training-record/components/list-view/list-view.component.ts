@@ -5,6 +5,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 import { RecordService } from '../../services/record.service';
+import { environment } from 'src/environments/environment';
 
 /** Display a list of Records. */
 @Component({
@@ -22,7 +23,7 @@ export class ListViewComponent implements OnInit {
     /** Indicate data loading status */
     isLoadingResults = true;
 
-    pageSize = 5;
+    pageSize = environment.PAGINATION_SIZE;
 
     private manualRefresh$ = new Subject<PageEvent>();
 
