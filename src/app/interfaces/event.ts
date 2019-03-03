@@ -36,7 +36,8 @@ export interface CampusEventResponse extends CampusEvent {
   location: string;
   num_hours: number;
   num_participants: number;
-  program: number;
+  // program: number;
+  program_detail: string;
 }
 
 /** RESTful request interface for OffCampusEvent. */

@@ -1,6 +1,4 @@
-import { Injectable, Inject} from '@angular/core';
-import { timer, of as observableOf } from 'rxjs';
-import { catchError, takeWhile } from 'rxjs/operators';
+import { Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
@@ -9,7 +7,6 @@ import {
   OffCampusEventRequest,
   OffCampusEventResponse,
 } from 'src/app/interfaces/event';
-import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 /** Provide services for Event. */
@@ -17,33 +14,19 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
   providedIn: 'root'
 })
 export class EventService {
- /** How often should we query latest notifications. */
- private REFRESH_INTERVAL = 30 * 1000;
-
 
 
  constructor(
-   private readonly http: HttpClient,
-   @Inject(AUTH_SERVICE) private readonly authService: AuthService,
- ) {
-   this.authService.authenticationSucceed.subscribe(() => {
-     timer(0, this.REFRESH_INTERVAL).pipe(
-       takeWhile(() => this.authService.isAuthenticated),
-       catchError(() => {
-         return observableOf(null);
-       }),
-     ).subscribe();
-   });
- }
+   private readonly http: HttpClient) {}
 
- getEvent(id: number) {
+  getEvent(id: number) {
    return this.http.get<CampusEventResponse>(
      `${environment.API_URL}/campus-events/${id}/`);
- }
+}
 
- getEvents(offset?: number, limit?: number) {
-   if (offset === undefined) offset = 0;
-   if (limit === undefined) limit = environment.PAGINATION_SIZE;
+   getEvents(offset?: number, limit?: number) {
+   offset = 0;
+   limit = environment.PAGINATION_SIZE;
    const paramsObj = { offset, limit };
    const queryParams = Object.keys(paramsObj).map(
      key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');

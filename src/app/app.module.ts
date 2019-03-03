@@ -21,14 +21,14 @@ import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
 import { PermissionService } from './services/auth/permission.service';
 import { UserService } from './services/auth/user.service';
-
-import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
+import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TypographyComponent } from 'src/app/demo/typography/typography.component';
 import { IconsComponent } from 'src/app/demo/icons/icons.component';
 import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
 import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
+// import { CampusEventListComponent } from './modules/training-event/components/campus-event-list/campus-event-list.component';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 

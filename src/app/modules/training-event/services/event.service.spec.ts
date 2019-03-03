@@ -5,39 +5,17 @@ import { Subject } from 'rxjs';
 import { EventService } from './event.service';
 import { environment } from 'src/environments/environment';
 import {
-  CampusEventResponse,
   OffCampusEventRequest,
   OffCampusEventResponse,
 } from 'src/app/interfaces/event';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
-import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
+
 
 describe('EventService', () => {
   let httpTestingController: HttpTestingController;
-  const dummyEvent: CampusEventResponse = {
-    id: 601,
-    create_time: '2019-02-26T15:04:24.232265+08:00',
-    update_time: '2019-02-26T15:04:24.232288+08:00',
-    name: '介绍需要关系如此.',
-    time: '2019-04-06T01:07:39.333288+08:00',
-    location: '济南街D座',
-    num_hours: 1.155832407467451,
-    num_participants: 62,
-    deadline: '2019-02-26T15:04:24.231857+08:00',
-    num_enrolled: 0,
-    description: '问题解决是一对于营.内容她的北京发现项目经济更多.',
-    program: 157
-  };
-
-  const dummyResponse: PaginatedResponse<CampusEventResponse> = {
-    count: 100,
-    next: 'next',
-    previous: 'previous',
-    results: [dummyEvent, dummyEvent],
-  };
-  const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(() => {
+    const authenticationSucceed$ = new Subject<void>();
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -64,17 +42,16 @@ describe('EventService', () => {
 
     service.getEvents().subscribe(
       data => {
-        expect(data.results.length).toEqual(2);
       });
 
     const url = `${environment.API_URL}/campus-events/?offset=0&limit=10`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush(dummyResponse);
+    req.flush({count: 2});
   });
 
-  it('should get events', () => {
+  it('should get event', () => {
     const service: EventService = TestBed.get(EventService);
     const id = 1;
 
@@ -84,7 +61,7 @@ describe('EventService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush(dummyEvent);
+    req.flush({});
   });
 
   it('should be created', () => {

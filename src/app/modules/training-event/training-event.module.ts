@@ -17,13 +17,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TrainingEventRoutingModule } from './training-event-routing.module';
-import { TableListComponent } from './components/table-list/table-list.component';
+import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { TrainingEventComponent } from './training-event.component';
 
 @NgModule({
   declarations: [
     TrainingEventComponent,
-    TableListComponent,
+    CampusEventListComponent,
   ],
   imports: [
     CommonModule,

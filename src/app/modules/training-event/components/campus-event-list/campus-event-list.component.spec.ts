@@ -1,20 +1,17 @@
-import { TableListComponent } from './table-list.component';
+import { CampusEventListComponent } from './campus-event-list.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HAMMER_LOADER } from '@angular/platform-browser';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CampusEventResponse} from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
-import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 
-describe('TableListComponent', () => {
-  let component: TableListComponent;
-  let fixture: ComponentFixture<TableListComponent>;
+describe('CampusEventListComponent', () => {
+  let component: CampusEventListComponent;
+  let fixture: ComponentFixture<CampusEventListComponent>;
   let getEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
-  let navigate: jasmine.Spy;
   let getEvents: jasmine.Spy;
   const dummyEvent: CampusEventResponse = {
     id: 601,
@@ -28,17 +25,16 @@ describe('TableListComponent', () => {
     deadline: '2019-02-26T15:04:24.231857+08:00',
     num_enrolled: 0,
     description: '问题解决是一对于营.内容她的北京发现项目经济更多.',
-    program: 157
+    program_detail: '计算机',
   };
 
   beforeEach(async(() => {
-    navigate = jasmine.createSpy();
     getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
     getEvents = jasmine.createSpy();
     getEvents .and.returnValue(getEvents$);
     TestBed.configureTestingModule({
       declarations: [
-        TableListComponent,
+        CampusEventListComponent,
       ],
       imports: [
         MatIconModule,
@@ -47,37 +43,21 @@ describe('TableListComponent', () => {
       ],
       providers: [
         {
-          provide: AUTH_SERVICE,
-          useValue: {
-            userID: 1,
-          },
-        },
-        {
           provide: ActivatedRoute,
           useValue: {},
-        },
-        {
-          provide: Router,
-          useValue: {
-            navigate,
-          }
         },
         {
           provide: EventService,
           useValue: {
             getEvents,
           }
-        },
-        {
-          provide: HAMMER_LOADER,
-          useValue: () => new Promise(() => { }),
-        },
+        }
       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableListComponent);
+    fixture = TestBed.createComponent(CampusEventListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
