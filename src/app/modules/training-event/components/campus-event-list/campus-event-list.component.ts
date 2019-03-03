@@ -6,11 +6,11 @@ import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService  } from '../../services/event.service';
 
 @Component({
-  selector: 'app-table-list',
-  templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css']
+  selector: 'app-campus-event-list',
+  templateUrl: './campus-event-list.component.html',
+  styleUrls: ['./campus-event-list.component.css']
 })
-export class TableListComponent implements OnInit {
+export class CampusEventListComponent implements OnInit {
   /** The data to be displayed */
   events: CampusEventResponse[] = [];
   /** How to sort the columns */
@@ -19,8 +19,6 @@ export class TableListComponent implements OnInit {
   eventlistLength = 0;
   /** Indicate data loading status */
   isLoadingResults = true;
-
-  pageSize = 5;
   private manualRefresh$ = new Subject<PageEvent>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -51,7 +49,6 @@ export class TableListComponent implements OnInit {
     this.manualRefresh$.next({
       previousPageIndex: 0,
       pageIndex: 0,
-      pageSize: this.pageSize,
       length: 0,
     } as PageEvent);
   }

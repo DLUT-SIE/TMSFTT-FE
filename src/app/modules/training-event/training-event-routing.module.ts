@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TableListComponent } from './components/table-list/table-list.component';
+import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { TrainingEventComponent } from './training-event.component';
 
@@ -11,11 +11,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'table-list',
+        path: 'events',
         children: [
           {
             path: '',
-            component: TableListComponent,
+            component: CampusEventListComponent,
           }
         ]
       }
