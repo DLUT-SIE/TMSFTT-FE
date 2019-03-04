@@ -17,6 +17,7 @@ export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/dashboard', title: '首页', icon: 'dashboard', class: '' },
     { path: '/training-record/entry', title: '培训记录填报', icon: 'create', class: '' },
     { path: '/training-record/records', title: '培训记录列表', icon: 'list', class: '' },
+    { path: '/training-program/programs', title: '培训项目', icon: 'create', class: '' },
 ];
 
 @Component({
