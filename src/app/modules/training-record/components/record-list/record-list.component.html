@@ -29,10 +29,7 @@
                     <td class="col-8 col-sm-2">{{ record.off_campus_event.location }}</td>
                     <td class="col-8 col-sm-2">{{ record.off_campus_event.num_hours }}</td>
                     <td class="col-8 col-sm-2">{{ record.off_campus_event.num_participants }}</td>
-                    <td *ngIf="record.status === 0" class="col-8 col-sm-2 text-justify">未提交</td>
-                    <td *ngIf="record.status === 1" class="col-8 col-sm-2 text-justify">已提交</td>
-                    <td *ngIf="record.status === 2" class="col-8 col-sm-2 text-justify">院系管理员已审核</td>
-                    <td *ngIf="record.status === 3" class="col-8 col-sm-2 text-justify">学校管理员已审核</td>
+                    <td class="col-8 col-sm-2 text-justify">{{ record.status | recordStatusDisplay }}</td>
                   </ng-template>
                   <ng-template #elseBlock>
                     <td class="col-10 col-sm-2 text-justify">{{ record.campus_event.name }}</td>
@@ -40,10 +37,7 @@
                     <td class="col-8 col-sm-2">{{ record.campus_event.location }}</td>
                     <td class="col-8 col-sm-2">{{ record.campus_event.num_hours }}</td>
                     <td class="col-8 col-sm-2">{{ record.campus_event.num_participants }}</td>
-                    <td *ngIf="record.status === 0" class="col-8 col-sm-2 text-justify">未提交</td>
-                    <td *ngIf="record.status === 1" class="col-8 col-sm-2 text-justify">已提交</td>
-                    <td *ngIf="record.status === 2" class="col-8 col-sm-2 text-justify">院系管理员已审核</td>
-                    <td *ngIf="record.status === 3" class="col-8 col-sm-2 text-justify">学校管理员已审核</td>
+                    <td class="col-8 col-sm-2 text-justify">{{ record.status | recordStatusDisplay }}</td>
                   </ng-template>
                 </tr>
               </tbody>

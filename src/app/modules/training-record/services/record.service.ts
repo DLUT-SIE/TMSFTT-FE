@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RecordRequest, RecordResponse, } from 'src/app/interfaces/record';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
@@ -32,10 +32,9 @@ export class RecordService {
     return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
   }
 
-  /** Get Records. */
   getRecords(offset?: number, limit?: number) {
-    if (offset === undefined) offset = 0;
-    if (limit === undefined) limit = environment.PAGINATION_SIZE;
+    offset = offset || 0;
+    limit = limit || environment.PAGINATION_SIZE;
     const paramsObj = { offset, limit };
     const queryParams = Object.keys(paramsObj).map(
       key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');

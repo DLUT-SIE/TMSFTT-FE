@@ -2,6 +2,8 @@ interface Event {
   name: string;
   time: string;
   location: string;
+  create_time?: string;
+  update_time?: string;
   num_hours: number;
   num_participants: number;
 }
@@ -24,8 +26,6 @@ export interface CampusEventRequest extends CampusEvent {
 /** RESTful response interface for CampusEvent. */
 export interface CampusEventResponse extends CampusEvent {
   id: number;
-  create_time: string;
-  update_time: string;
 }
 
 /** RESTful request interface for OffCampusEvent. */
@@ -36,7 +36,4 @@ export interface OffCampusEventRequest extends OffCampusEvent {
 /** RESTful response interface for OffCampusEvent. */
 export interface OffCampusEventResponse extends OffCampusEvent {
   id: number;
-  create_time: string;
-  update_time: string;
 }
-

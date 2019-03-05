@@ -20,7 +20,8 @@ import { EntryModeComponent } from './components/entry-mode/entry-mode.component
 import { RecordFormComponent } from './components/record-form/record-form.component';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TrainingRecordComponent } from './training-record.component';
-import { ListViewComponent } from './components/list-view/list-view.component';
+import { RecordListComponent } from './components/record-list/record-list.component';
+import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { ListViewComponent } from './components/list-view/list-view.component';
     EntryModeComponent,
     RecordFormComponent,
     BatchSubmitComponent,
-    ListViewComponent,
+    RecordListComponent,
+
+    RecordStatusDisplayPipe,
   ],
   imports: [
     CommonModule,
