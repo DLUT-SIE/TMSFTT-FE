@@ -22,7 +22,7 @@ describe('ProgramsComponent', () => {
     department_detail: {
       id: 2,
       create_time: '2019-3-4',
-      up_time: '2019-3-6',
+      update_time: '2019-3-6',
       name: 'test',
       admins: [],
     },
