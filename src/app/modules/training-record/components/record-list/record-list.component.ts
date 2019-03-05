@@ -9,21 +9,17 @@ import { environment } from 'src/environments/environment';
 
 /** Display a list of Records. */
 @Component({
-  selector: 'app-list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css']
+  selector: 'app-record-list',
+  templateUrl: './record-list.component.html',
+  styleUrls: ['./record-list.component.css']
 })
-export class ListViewComponent implements OnInit {
+export class RecordListComponent implements OnInit {
     /** The data to be displayed */
     records: RecordResponse[] = [];
-    /** How to sort the columns */
-    displayedColumns: string[] = ['program_name', 'time', 'location', 'num_hours', 'num_participants', 'status'];
     /** The total number of records. */
     recordsLength = 0;
     /** Indicate data loading status */
     isLoadingResults = true;
-
-    pageSize = environment.PAGINATION_SIZE;
 
     private manualRefresh$ = new Subject<PageEvent>();
 
@@ -57,7 +53,7 @@ export class ListViewComponent implements OnInit {
     this.manualRefresh$.next({
       previousPageIndex: 0,
       pageIndex: 0,
-      pageSize: this.pageSize,
+      pageSize: environment.PAGINATION_SIZE,
       length: 0,
     } as PageEvent);
   }

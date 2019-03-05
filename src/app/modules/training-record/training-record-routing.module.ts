@@ -5,7 +5,7 @@ import { RecordFormComponent } from './components/record-form/record-form.compon
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { TrainingRecordComponent } from './training-record.component';
-import { ListViewComponent } from './components/list-view/list-view.component';
+import { RecordListComponent } from './components/record-list/record-list.component';
 
 const routes: Routes = [
   {
@@ -32,12 +32,12 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'list-view',
+        path: 'records',
         canActivateChild: [AuthGuard],
         children: [
           {
             path: '',
-            component: ListViewComponent,
+            component: RecordListComponent,
           }
         ]
       }

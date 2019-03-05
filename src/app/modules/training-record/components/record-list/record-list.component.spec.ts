@@ -1,18 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
+import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
-import { ListViewComponent } from './list-view.component';
+import { RecordListComponent } from './record-list.component';
 import { RecordService } from '../../services/record.service';
 import { RecordResponse, RecordAttachmentResponse, RecordContentResponse } from 'src/app/interfaces/record';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 import { OffCampusEventResponse } from 'src/app/interfaces/event';
+import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 describe('ListViewComponent', () => {
-  let component: ListViewComponent;
-  let fixture: ComponentFixture<ListViewComponent>;
+  let component: RecordListComponent;
+  let fixture: ComponentFixture<RecordListComponent>;
   let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
-  let getRecords: jasmine.Spy;
   const dummyOffCampusEvent: OffCampusEventResponse = {
     id: 1,
     create_time: '2019-02-21T16:40:03.799178+08:00',
@@ -61,10 +62,11 @@ describe('ListViewComponent', () => {
 
   beforeEach(async(() => {
     getRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
-    getRecords = jasmine.createSpy();
-    getRecords.and.returnValue(getRecords$);
     TestBed.configureTestingModule({
-      declarations: [ ListViewComponent ],
+      declarations: [
+        RecordListComponent,
+        RecordStatusDisplayPipe,
+      ],
       imports: [
         MatIconModule,
         MatProgressSpinnerModule,
@@ -74,8 +76,12 @@ describe('ListViewComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            getRecords,
+            getRecords: () => getRecords$,
           }
+        },
+        {
+          provide: HAMMER_LOADER,
+          useValue: () => new Promise(() => { }),
         },
       ]
     })
@@ -83,7 +89,7 @@ describe('ListViewComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListViewComponent);
+    fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

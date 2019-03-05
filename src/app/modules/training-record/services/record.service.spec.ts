@@ -1,6 +1,6 @@
-import { TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { throwError, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { RecordService } from './record.service';
 
@@ -91,29 +91,28 @@ describe('RecordService', () => {
 
   it('should get records', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const offset = 0;
-    const limit = 20;
+    const testCase = [
+      [null, null],
+      [0, null],
+      [null, 20],
+      [0, 20],
+    ];
+    for (const args of testCase) {
+      let offset = args[0];
+      let limit = args[1];
 
-    service.getRecords(offset, limit).subscribe(
-      res => { expect(res.results.length).toEqual(2); });
+      service.getRecords(offset, limit).subscribe(
+        res => { expect(res.results.length).toEqual(2); });
 
-    const url = `${environment.API_URL}/records/?offset=${offset}&limit=${limit}`;
+      offset = offset || 0;
+      limit = limit || environment.PAGINATION_SIZE;
+      const url = `${environment.API_URL}/records/?offset=${offset}&limit=${limit}`;
 
-    const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('GET');
-    req.flush({count: 2, results: [{}, {}]});
+      const req = httpTestingController.expectOne(url);
+      expect(req.request.method).toEqual('GET');
+      req.flush({count: 2, results: [{}, {}]});
+    }
+
   });
-
-  it('should ignore errors during getting records', fakeAsync(() => {
-    const service: RecordService = TestBed.get(RecordService);
-    authenticationSucceed$.next();
-    const getRecords = spyOn(service, 'getRecords');
-
-    getRecords.and.returnValue(throwError('error'));
-
-    tick(1000);
-
-    discardPeriodicTasks();
-  }));
 
 });
