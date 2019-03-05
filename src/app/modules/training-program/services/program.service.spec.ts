@@ -49,7 +49,7 @@ describe('ProgramService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({count: 2, results: [], next: "", previous: ""});
+    req.flush({count: 2, results: [], next: '', previous: ''});
   });
 
 
@@ -62,7 +62,7 @@ describe('ProgramService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({count: 2, results: [], next: "", previous: ""});
+    req.flush({count: 2, results: [], next: '', previous: ''});
   });
 
 });

@@ -14,8 +14,6 @@ import { ProgramService} from '../../services/program.service';
 export class ProgramsComponent implements OnInit {
   /** The data to be displayed */
   programs: ProgramDetail[] = [];
-  /** How to sort the columns */
-  displayedColumns: string[] = ['name', 'department'];
   /** The total number of notifications. */
   programsLength = 0;
   /** Indicate data loading status */
