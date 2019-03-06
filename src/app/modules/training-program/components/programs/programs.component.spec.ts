@@ -19,6 +19,8 @@ describe('ProgramsComponent', () => {
   const dummyProgram: Program = {
     id: 1,
     name: 'sender',
+    department: 2,
+    category: 3,
     department_detail: {
       id: 2,
       create_time: '2019-3-4',
