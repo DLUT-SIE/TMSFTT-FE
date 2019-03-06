@@ -1,6 +1,6 @@
 import { Department } from './department';
 import { ProgramCategory } from './program-category';
-export interface ProgramDetail {
+export interface Program {
     id: number;
     department_detail: Department;
     category_detail: ProgramCategory;

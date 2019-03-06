@@ -4,7 +4,7 @@ import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@an
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
-import { ProgramDetail } from 'src/app/interfaces/program';
+import { Program } from 'src/app/interfaces/program';
 import { ProgramService } from '../../services/program.service';
 import { ProgramsComponent } from './programs.component';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
@@ -13,10 +13,10 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 describe('ProgramsComponent', () => {
   let component: ProgramsComponent;
   let fixture: ComponentFixture<ProgramsComponent>;
-  let getPrograms$: Subject<PaginatedResponse<ProgramDetail>>;
+  let getPrograms$: Subject<PaginatedResponse<Program>>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
-  const dummyProgram: ProgramDetail = {
+  const dummyProgram: Program = {
     id: 1,
     name: 'sender',
     department_detail: {
@@ -36,7 +36,7 @@ describe('ProgramsComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getPrograms$ = new Subject<PaginatedResponse<ProgramDetail>>();
+    getPrograms$ = new Subject<PaginatedResponse<Program>>();
     getPrograms = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
     TestBed.configureTestingModule({
@@ -91,7 +91,7 @@ describe('ProgramsComponent', () => {
 
   it('should load data', () => {
     const count = 100;
-    const results: ProgramDetail[] = [dummyProgram, dummyProgram];
+    const results: Program[] = [dummyProgram, dummyProgram];
     getPrograms$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();

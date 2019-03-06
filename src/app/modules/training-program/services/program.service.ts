@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { ProgramDetail } from 'src/app/interfaces/program';
+import { Program } from 'src/app/interfaces/program';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 
@@ -16,6 +16,7 @@ export class ProgramService {
     private readonly http: HttpClient,
   ) { }
 
+  /** get the information of programs from the background. */
   getPrograms(offset?: number, limit?: number) {
     if (offset === undefined) offset = 0;
     if (limit === undefined) limit = environment.PAGINATION_SIZE;
@@ -24,6 +25,6 @@ export class ProgramService {
       key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
     let url = environment.API_URL + '/programs/';
     url += '?' + queryParams;
-    return this.http.get<PaginatedResponse<ProgramDetail>>(url);
+    return this.http.get<PaginatedResponse<Program>>(url);
   }
 }

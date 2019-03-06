@@ -3,7 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material';
 import { of as observableOf, Subject, merge } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
-import { ProgramDetail } from 'src/app/interfaces/program';
+import { Program } from 'src/app/interfaces/program';
 import { ProgramService} from '../../services/program.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ProgramService} from '../../services/program.service';
 })
 export class ProgramsComponent implements OnInit {
   /** The data to be displayed */
-  programs: ProgramDetail[] = [];
+  programs: Program[] = [];
   /** The total number of notifications. */
   programsLength = 0;
   /** Indicate data loading status */
