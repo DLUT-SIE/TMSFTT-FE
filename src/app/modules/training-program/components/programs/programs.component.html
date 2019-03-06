@@ -9,14 +9,13 @@
           <div class="table-responsive-lg">
             <table class="table table-hover text-center">
               <thead class="text-primary d-flex">
-                <th class="col-6 col-sm-3">内容</th>
-                <th class="col-18 col-sm-9">开设单位</th>
+                <th class="col-3 col-sm-3">内容</th>
+                <th class="col-9 col-sm-9">开设单位</th>
               </thead>
               <tbody>
                 <tr class="d-flex" *ngFor="let programdetail of programs">
-                  <td class="col-2 col-sm-1"></td>
-                  <td class="col-4 col-sm-2 text-justify">{{ programdetail.name }}</td>
-                  <td class="col-18 col-sm-9">{{ programdetail.department_detail.name }}</td>
+                  <td class="col-3 col-sm-3">{{ programdetail.name }}</td>
+                  <td class="col-9 col-sm-9">{{ programdetail.department_detail.name }}</td>
                 </tr>
               </tbody>
             </table>

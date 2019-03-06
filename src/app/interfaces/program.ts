@@ -4,6 +4,6 @@ export interface Program {
     id: number;
     department_detail: Department;
     category_detail: ProgramCategory;
-    form: [];
+    form: number[];
     name: string;
 }
