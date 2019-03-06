@@ -3,23 +3,15 @@ import { RecordStatus } from 'src/app/enums/record-status.enum';
 
 @Pipe({ name: 'recordStatusDisplay' })
 export class RecordStatusDisplayPipe implements PipeTransform {
+    map = new Map<RecordStatus, string> (
+        [
+            [RecordStatus.STATUS_PRESUBMIT, '未提交'],
+            [RecordStatus.STATUS_SUBMITTED, '已提交'],
+            [RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED, '院系管理员已审核'],
+            [RecordStatus.STATUS_SCHOOL_ADMIN_REVIEWED, '学校管理员已审核'],
+        ],
+    );
     transform(value: RecordStatus) {
-        switch (value) {
-            case RecordStatus.STATUS_PRESUBMIT: {
-                return '未提交';
-            }
-            case RecordStatus.STATUS_SUBMITTED: {
-                return '已提交';
-            }
-            case RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED: {
-                return '院系管理员已审核';
-            }
-            case RecordStatus.STATUS_SCHOOL_ADMIN_REVIEWED: {
-                return '学校管理员已审核';
-            }
-            default: {
-                return '未知状态';
-            }
-        }
+        return this.map.get(value) || '未知状态';
     }
 }
