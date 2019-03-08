@@ -21,6 +21,8 @@ export class RecordListComponent implements OnInit {
     /** Indicate data loading status */
     isLoadingResults = true;
 
+    readonly pageSize = environment.PAGINATION_SIZE;
+
     private manualRefresh$ = new Subject<PageEvent>();
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,7 +55,7 @@ export class RecordListComponent implements OnInit {
     this.manualRefresh$.next({
       previousPageIndex: 0,
       pageIndex: 0,
-      pageSize: environment.PAGINATION_SIZE,
+      pageSize: this.pageSize,
       length: 0,
     } as PageEvent);
   }
