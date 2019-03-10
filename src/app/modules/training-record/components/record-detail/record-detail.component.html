@@ -98,7 +98,11 @@
                     <div *ngFor="let att of record.attachments">
                       <div *ngIf="att">
                         <a class="text-left">{{ att.path }}</a>
-                        <a><mat-icon class="float-right" color="warn">close</mat-icon></a>
+                        <a class="float-right">
+                          <mat-icon class="float-right" color="warn">
+                            close
+                          </mat-icon>
+                        </a>
                       </div>
                     </div>
                     <span class="border-bottom"></span>

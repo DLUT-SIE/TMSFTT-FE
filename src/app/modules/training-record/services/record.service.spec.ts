@@ -115,4 +115,17 @@ describe('RecordService', () => {
 
   });
 
+  it('should get record', () => {
+    const service: RecordService = TestBed.get(RecordService);
+    const id = 1;
+
+    service.getRecord(id).subscribe();
+
+    const url = `${environment.API_URL}/records/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
 });
