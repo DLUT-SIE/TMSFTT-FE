@@ -32,7 +32,7 @@ export class RecordService {
     return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
   }
 
-  getRecord(id: number){
+  getRecord(id: number) {
     return this.http.get<RecordResponse>(
       `${environment.API_URL}/records/${id}/`);
   }
