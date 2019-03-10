@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { HAMMER_LOADER } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { RecordListComponent } from './record-list.component';
@@ -10,10 +11,11 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 import { OffCampusEventResponse } from 'src/app/interfaces/event';
 import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
-describe('ListViewComponent', () => {
+describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let fixture: ComponentFixture<RecordListComponent>;
   let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
+  let navigate: jasmine.Spy;
   const dummyOffCampusEvent: OffCampusEventResponse = {
     id: 1,
     create_time: '2019-02-21T16:40:03.799178+08:00',
@@ -61,6 +63,7 @@ describe('ListViewComponent', () => {
   };
 
   beforeEach(async(() => {
+    navigate = jasmine.createSpy();
     getRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
     TestBed.configureTestingModule({
       declarations: [
@@ -73,6 +76,16 @@ describe('ListViewComponent', () => {
         MatPaginatorModule,
       ],
       providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate,
+          }
+        },
         {
           provide: RecordService,
           useValue: {
@@ -114,5 +127,12 @@ describe('ListViewComponent', () => {
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.records).toEqual([]);
     expect(component.recordsLength).toEqual(0);
+  });
+
+  it('should navigate to detail', () => {
+    component.navigateToDetail(dummyRecord);
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['.', dummyRecord.id], { relativeTo: {}});
   });
 });
