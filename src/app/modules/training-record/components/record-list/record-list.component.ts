@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { of as observableOf, Subject, merge } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
@@ -28,6 +29,8 @@ export class RecordListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly recordService: RecordService,
   ) { }
 
@@ -49,6 +52,10 @@ export class RecordListComponent implements OnInit {
       }),
     ).subscribe(records => this.records = records);
     this.forceRefresh();
+  }
+
+  navigateToDetail(row: RecordResponse) {
+    this.router.navigate(['.', row.id], { relativeTo: this.route });
   }
 
   private forceRefresh() {

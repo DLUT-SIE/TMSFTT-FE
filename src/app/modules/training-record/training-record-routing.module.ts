@@ -6,6 +6,8 @@ import { BatchSubmitComponent } from './components/batch-submit/batch-submit.com
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { TrainingRecordComponent } from './training-record.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
+import { RecordDetailComponent } from './components/record-detail/record-detail.component';
+import { RecordDetailResolverService } from './services/record-detail-resolver.service';
 
 const routes: Routes = [
   {
@@ -35,6 +37,13 @@ const routes: Routes = [
         path: 'records',
         canActivateChild: [AuthGuard],
         children: [
+          {
+            path: ':id',
+            resolve: {
+              record: RecordDetailResolverService,
+            },
+            component: RecordDetailComponent,
+          },
           {
             path: '',
             component: RecordListComponent,
