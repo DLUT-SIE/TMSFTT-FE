@@ -21,6 +21,7 @@ import { RecordFormComponent } from './components/record-form/record-form.compon
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TrainingRecordComponent } from './training-record.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
+import { RecordDetailComponent } from './components/record-detail/record-detail.component';
 import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 @NgModule({
@@ -32,6 +33,8 @@ import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
     RecordListComponent,
 
     RecordStatusDisplayPipe,
+
+    RecordDetailComponent,
   ],
   imports: [
     CommonModule,
