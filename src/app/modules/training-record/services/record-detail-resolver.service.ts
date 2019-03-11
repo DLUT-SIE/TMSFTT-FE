@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RecordService } from './record.service';
 import { RecordResponse } from 'src/app/interfaces/record';
 
+/** Pre-fetching record data. */
 @Injectable({
   providedIn: 'root'
 })

@@ -32,11 +32,13 @@ export class RecordService {
     return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
   }
 
+  /** Get Record. */
   getRecord(id: number) {
     return this.http.get<RecordResponse>(
       `${environment.API_URL}/records/${id}/`);
   }
 
+  /** Get Records using offset and limit parameters. */
   getRecords(offset?: number, limit?: number) {
     offset = offset || 0;
     limit = limit || environment.PAGINATION_SIZE;
