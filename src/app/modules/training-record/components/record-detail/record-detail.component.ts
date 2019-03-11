@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 
+/** Display a record in detail. */
 @Component({
   selector: 'app-record-detail',
   templateUrl: './record-detail.component.html',
@@ -17,6 +18,7 @@ export class RecordDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    /** The record in this component will subscribe to RecordResponse data returned by route. */
     this.route.data.subscribe((data: { record: RecordResponse}) => {
       this.record = data.record;
     });
