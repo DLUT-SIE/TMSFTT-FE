@@ -28,7 +28,6 @@ import { IconsComponent } from 'src/app/demo/icons/icons.component';
 import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
 import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
-// import { CampusEventListComponent } from './modules/training-event/components/campus-event-list/campus-event-list.component';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 

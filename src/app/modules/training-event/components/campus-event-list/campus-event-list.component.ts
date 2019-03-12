@@ -4,23 +4,26 @@ import { of as observableOf, Subject, merge } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService  } from '../../services/event.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-campus-event-list',
   templateUrl: './campus-event-list.component.html',
   styleUrls: ['./campus-event-list.component.css']
 })
+/** CampusEventListComponent provides campus event list. */
 export class CampusEventListComponent implements OnInit {
   /** The data to be displayed */
   events: CampusEventResponse[] = [];
-  /** How to sort the columns */
-  displayedColumns: string[] = ['id', 'name', 'location'];
   /** The total number of eventlist. */
   eventlistLength = 0;
   /** Indicate data loading status */
   isLoadingResults = true;
+  readonly pageSize = environment.PAGINATION_SIZE;
+
   private manualRefresh$ = new Subject<PageEvent>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private readonly eventService: EventService,
   ) { }
@@ -50,6 +53,7 @@ export class CampusEventListComponent implements OnInit {
       previousPageIndex: 0,
       pageIndex: 0,
       length: 0,
+      pageSize: this.pageSize,
     } as PageEvent);
   }
 

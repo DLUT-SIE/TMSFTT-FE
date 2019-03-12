@@ -25,7 +25,14 @@ describe('CampusEventListComponent', () => {
     deadline: '2019-02-26T15:04:24.231857+08:00',
     num_enrolled: 0,
     description: '问题解决是一对于营.内容她的北京发现项目经济更多.',
-    program_detail: '计算机',
+    program: 157,
+    program_detail: {
+      id: 157,
+      name: '还是不是其中信息.',
+      department: 77,
+      category: 20,
+      form: []
+    },
   };
 
   beforeEach(async(() => {
@@ -49,7 +56,7 @@ describe('CampusEventListComponent', () => {
         {
           provide: EventService,
           useValue: {
-            getEvents,
+            getEvents: () => getEvents$,
           }
         }
       ]
