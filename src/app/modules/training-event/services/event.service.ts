@@ -16,23 +16,23 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 export class EventService {
 
 
- constructor(
-   private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient) {}
 
   getEvent(id: number) {
-   return this.http.get<CampusEventResponse>(
-     `${environment.API_URL}/campus-events/${id}/`);
+    return this.http.get<CampusEventResponse>(
+      `${environment.API_URL}/campus-events/${id}/`);
 }
 
-   getEvents(offset?: number, limit?: number) {
-   offset = 0;
-   limit = environment.PAGINATION_SIZE;
-   const paramsObj = { offset, limit };
-   const queryParams = Object.keys(paramsObj).map(
-     key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
-   let url = environment.API_URL + '/campus-events/';
-   url += '?' + queryParams;
-   return this.http.get<PaginatedResponse<CampusEventResponse>>(url);
+  getEvents(offset?: number, limit?: number) {
+    offset = offset || 0;
+    limit = limit || environment.PAGINATION_SIZE;
+    const paramsObj = { offset, limit };
+    const queryParams = Object.keys(paramsObj).map(
+      key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
+    let url = environment.API_URL + '/campus-events/';
+    url += '?' + queryParams;
+    return this.http.get<PaginatedResponse<CampusEventResponse>>(url);
  }
 
   /** Create an off-campus event. */

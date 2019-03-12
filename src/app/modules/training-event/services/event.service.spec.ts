@@ -40,9 +40,7 @@ describe('EventService', () => {
   it('should use default if no value provided', () => {
     const service: EventService = TestBed.get(EventService);
 
-    service.getEvents().subscribe(
-      data => {
-      });
+    service.getEvents().subscribe();
 
     const url = `${environment.API_URL}/campus-events/?offset=0&limit=10`;
 
