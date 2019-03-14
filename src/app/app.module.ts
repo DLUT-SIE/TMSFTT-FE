@@ -21,6 +21,7 @@ import { MatPaginatorIntlService } from './services/mat-paginator-intl.service';
 import { NotificationService } from './modules/notification/services/notification.service';
 import { PermissionService } from './services/auth/permission.service';
 import { UserService } from './services/auth/user.service';
+
 import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
 import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TypographyComponent } from 'src/app/demo/typography/typography.component';
