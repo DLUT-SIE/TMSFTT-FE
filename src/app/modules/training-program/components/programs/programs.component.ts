@@ -5,6 +5,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { Program } from 'src/app/interfaces/program';
 import { ProgramService} from '../../services/program.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-programs',
@@ -19,7 +20,7 @@ export class ProgramsComponent implements OnInit {
   /** Indicate data loading status */
   isLoadingResults = true;
 
-  pageSize = 5;
+  pageSize = environment.PAGINATION_SIZE;
 
   private manualRefresh$ = new Subject<PageEvent>();
 
