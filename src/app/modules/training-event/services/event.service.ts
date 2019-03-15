@@ -17,7 +17,7 @@ export class EventService {
 
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
   ) { }
 
   getEvent(id: number) {
