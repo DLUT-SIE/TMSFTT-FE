@@ -6,12 +6,12 @@ import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService  } from '../../services/event.service';
 import { environment } from 'src/environments/environment';
 
+/** CampusEventListComponent provides campus event list. */
 @Component({
   selector: 'app-campus-event-list',
   templateUrl: './campus-event-list.component.html',
   styleUrls: ['./campus-event-list.component.css']
 })
-/** CampusEventListComponent provides campus event list. */
 export class CampusEventListComponent implements OnInit {
   /** The data to be displayed */
   events: CampusEventResponse[] = [];

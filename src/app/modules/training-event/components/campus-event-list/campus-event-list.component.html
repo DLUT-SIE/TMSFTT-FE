@@ -9,19 +9,19 @@
           <div class="table-responsive-lg">
             <table class="table table-hover text-center">
               <thead class="text-primary d-flex">
-                <th class="col-6 col-sm-2">名字</th>
-                <th class="col-6 col-sm-2">时间</th>
-                <th class="col-6 col-sm-2">地点</th>
-                <th class="col-6 col-sm-2">总时长</th>
-                <th class="col-6 col-sm-2">参与者人数</th>
+                <th class="col-3 col-sm-3">名字</th>
+                <th class="col-3 col-sm-3">时间</th>
+                <th class="col-2 col-sm-2">地点</th>
+                <th class="col-2 col-sm-2">总时长</th>
+                <th class="col-2 col-sm-2">参与者人数</th>
               </thead>
               <tbody>
                 <tr class="d-flex" *ngFor="let item of events">
-                  <td class="col-6 col-sm-2 text-justify">{{ item.name }}</td>
-                  <td class="col-6 col-sm-2">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
-                  <td class="col-6 col-sm-2">{{ item.location }}</td>
-                  <td class="col-6 col-sm-2">{{ item.num_hours | number:"0.1-1" }} </td>
-                  <td class="col-6 col-sm-2">{{ item.num_participants }}</td>
+                  <td class="col-3 col-sm-3">{{ item.name }}</td>
+                  <td class="col-3 col-sm-3">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
+                  <td class="col-2 col-sm-2">{{ item.location }}</td>
+                  <td class="col-2 col-sm-2">{{ item.num_hours | number:"0.1-1" }} </td>
+                  <td class="col-2 col-sm-2">{{ item.num_participants }}</td>
                 </tr>
               </tbody>
             </table>

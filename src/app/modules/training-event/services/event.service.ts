@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,8 @@ export class EventService {
 
 
   constructor(
-    private readonly http: HttpClient) {}
+    private readonly http: HttpClient
+  ) { }
 
   getEvent(id: number) {
     return this.http.get<CampusEventResponse>(

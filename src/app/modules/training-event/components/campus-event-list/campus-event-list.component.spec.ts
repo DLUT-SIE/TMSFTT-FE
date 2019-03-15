@@ -28,10 +28,21 @@ describe('CampusEventListComponent', () => {
     program: 157,
     program_detail: {
       id: 157,
-      name: '还是不是其中信息.',
+      name: '还是不是其中信息',
       department: 77,
       category: 20,
-      form: []
+      department_detail: {
+        id: 2,
+        create_time: '2019-3-4',
+        update_time: '2019-3-6',
+        name: 'test',
+        admins: [],
+      },
+      category_detail: {
+        id: 3,
+        name: 'test',
+      },
+      form: [],
     },
   };
 
