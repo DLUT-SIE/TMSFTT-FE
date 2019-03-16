@@ -6,13 +6,13 @@ import { of as observableOf, Subject } from 'rxjs';
 
 import { NotificationResponse } from 'src/app/interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
-import { NotificationCenterComponent } from './notification-center.component';
+import { NotificationListComponent } from './notification-list.component';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
-describe('NotificationCenterComponent', () => {
-  let component: NotificationCenterComponent;
-  let fixture: ComponentFixture<NotificationCenterComponent>;
+describe('NotificationListComponent', () => {
+  let component: NotificationListComponent;
+  let fixture: ComponentFixture<NotificationListComponent>;
   let getNotifications$: Subject<PaginatedResponse<NotificationResponse>>;
   let navigate: jasmine.Spy;
   let getNotifications: jasmine.Spy;
@@ -27,7 +27,6 @@ describe('NotificationCenterComponent', () => {
     read_time: '2019-01-01',
   };
 
-
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     getNotifications$ = new Subject<PaginatedResponse<NotificationResponse>>();
@@ -37,7 +36,7 @@ describe('NotificationCenterComponent', () => {
     deleteAllNotifications = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
-        NotificationCenterComponent,
+        NotificationListComponent,
       ],
       imports: [
         MatIconModule,
@@ -78,38 +77,13 @@ describe('NotificationCenterComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificationCenterComponent);
+    fixture = TestBed.createComponent(NotificationListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should load data', () => {
-    const count = 100;
-    const results: NotificationResponse[] = [dummyNotification, dummyNotification];
-    getNotifications$.next({ count, results, next: '', previous: '' });
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.notifications).toEqual(results);
-    expect(component.notificationsLength).toEqual(count);
-  });
-
-  it('should empty data if an error encountered.', () => {
-    getNotifications$.error('error');
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.notifications).toEqual([]);
-    expect(component.notificationsLength).toEqual(0);
-  });
-
-  it('should navigate to detail', () => {
-    component.navigateToDetail(dummyNotification);
-
-    expect(navigate).toHaveBeenCalledWith(
-      ['.', dummyNotification.id], { relativeTo: {}});
   });
 
   it('should mark all notifications as read', () => {

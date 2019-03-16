@@ -3,9 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CampusEventResponse} from 'src/app/interfaces/event';
+import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
+import { HAMMER_LOADER } from '@angular/platform-browser';
 
 
 describe('CampusEventListComponent', () => {
@@ -49,7 +50,7 @@ describe('CampusEventListComponent', () => {
   beforeEach(async(() => {
     getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
     getEvents = jasmine.createSpy();
-    getEvents .and.returnValue(getEvents$);
+    getEvents.and.returnValue(getEvents$);
     TestBed.configureTestingModule({
       declarations: [
         CampusEventListComponent,
@@ -69,7 +70,11 @@ describe('CampusEventListComponent', () => {
           useValue: {
             getEvents: () => getEvents$,
           }
-        }
+        },
+        {
+          provide: HAMMER_LOADER,
+          useValue: () => new Promise(() => { }),
+        },
       ]
     }).compileComponents();
   }));
