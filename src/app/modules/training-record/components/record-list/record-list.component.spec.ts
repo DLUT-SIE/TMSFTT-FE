@@ -10,7 +10,7 @@ import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 import { OffCampusEventResponse } from 'src/app/interfaces/event';
 import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
-describe('ListViewComponent', () => {
+describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let fixture: ComponentFixture<RecordListComponent>;
   let getRecords$: Subject<PaginatedResponse<RecordResponse>>;

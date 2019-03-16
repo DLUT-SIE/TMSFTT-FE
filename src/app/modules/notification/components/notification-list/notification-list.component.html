@@ -23,7 +23,7 @@
                 <th class="col-8 col-sm-3">发送时间</th>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let notification of notifications" (click)="navigateToDetail(notification)">
+                <tr class="d-flex" *ngFor="let notification of results" (click)="navigateToDetail(notification)">
                   <td class="col-2 col-sm-1" *ngIf="notification.read_time; else unReadStatus">
                   </td>
                   <ng-template #unReadStatus>
@@ -39,7 +39,7 @@
                 </tr>
               </tbody>
             </table>
-            <mat-paginator [length]="notificationsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
+            <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
           </div>
         </div>
       </div>
