@@ -105,16 +105,16 @@ describe('CampusEventListComponent', () => {
     getCampusEvents$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.events).toEqual(results);
-    expect(component.eventlistLength).toEqual(count);
+    expect(component.results).toEqual(results);
+    expect(component.resultsLength).toEqual(count);
   });
 
   it('should empty data if an error encountered.', () => {
     getCampusEvents$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.events).toEqual([]);
-    expect(component.eventlistLength).toEqual(0);
+    expect(component.results).toEqual([]);
+    expect(component.resultsLength).toEqual(0);
   });
   it('should navigate to detail', () => {
     component.navigateToDetail(dummyEvent);
