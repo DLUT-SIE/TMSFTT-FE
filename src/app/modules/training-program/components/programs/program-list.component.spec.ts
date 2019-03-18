@@ -6,13 +6,13 @@ import { Subject } from 'rxjs';
 
 import { Program } from 'src/app/interfaces/program';
 import { ProgramService } from '../../services/program.service';
-import { ProgramsComponent } from './programs.component';
+import { ProgramListComponent } from './program-list.component';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 describe('ProgramsComponent', () => {
-  let component: ProgramsComponent;
-  let fixture: ComponentFixture<ProgramsComponent>;
+  let component: ProgramListComponent;
+  let fixture: ComponentFixture<ProgramListComponent>;
   let getPrograms$: Subject<PaginatedResponse<Program>>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
@@ -43,7 +43,7 @@ describe('ProgramsComponent', () => {
     getPrograms.and.returnValue(getPrograms$);
     TestBed.configureTestingModule({
       declarations: [
-        ProgramsComponent,
+        ProgramListComponent,
       ],
       imports: [
         MatIconModule,
@@ -82,7 +82,7 @@ describe('ProgramsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProgramsComponent);
+    fixture = TestBed.createComponent(ProgramListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -107,6 +107,13 @@ describe('ProgramsComponent', () => {
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.programs).toEqual([]);
     expect(component.programsLength).toEqual(0);
+  });
+
+  it('should navigate to detail', () => {
+    component.navigateToDetail(dummyProgram);
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['./', dummyProgram.id], { relativeTo: {}});
   });
 });
 

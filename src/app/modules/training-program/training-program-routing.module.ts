@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProgramsComponent } from './components/programs/programs.component';
+import { ProgramListComponent } from './components/programs/program-list.component';
 import { TrainingProgramComponent } from './training-program.component';
+import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
+import { ProgramDetailResolverService } from './services/program-detail-resolver.service';
 
 import { AuthGuard } from 'src/app/guards/auth.guard';
 
@@ -12,8 +14,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: ':id',
+        resolve: {
+          program: ProgramDetailResolverService,
+        },
+        component: ProgramDetailComponent,
+      },
+      {
         path: '',
-        component: ProgramsComponent,
+        component: ProgramListComponent,
       }
     ]
   }

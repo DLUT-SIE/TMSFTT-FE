@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { of as observableOf, Subject, merge } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
@@ -9,10 +10,10 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-programs',
-  templateUrl: './programs.component.html',
-  styleUrls: ['./programs.component.css']
+  templateUrl: './program-list.component.html',
+  styleUrls: ['./program-list.component.css']
 })
-export class ProgramsComponent implements OnInit {
+export class ProgramListComponent implements OnInit {
   /** The data to be displayed */
   programs: Program[] = [];
   /** The total number of notifications. */
@@ -27,6 +28,8 @@ export class ProgramsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly programService: ProgramService,
   ) { }
 
@@ -48,6 +51,10 @@ export class ProgramsComponent implements OnInit {
       }),
     ).subscribe(programs => this.programs = programs);
     this.forceRefresh();
+  }
+
+  navigateToDetail(row: Program) {
+      this.router.navigate(['./', row.id], { relativeTo: this.route });
   }
 
   private forceRefresh() {
