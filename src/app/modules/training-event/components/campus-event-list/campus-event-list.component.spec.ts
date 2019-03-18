@@ -1,7 +1,7 @@
 import { CampusEventListComponent } from './campus-event-list.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService } from '../../services/event.service';
@@ -12,8 +12,10 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 describe('CampusEventListComponent', () => {
   let component: CampusEventListComponent;
   let fixture: ComponentFixture<CampusEventListComponent>;
-  let getCampusEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
-  let getCampusEvents: jasmine.Spy;
+  let getEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
+  let getEvents: jasmine.Spy;
+  let navigate: jasmine.Spy;
+
   const dummyEvent: CampusEventResponse = {
     id: 601,
     create_time: '2019-02-26T15:04:24.232265+08:00',
@@ -49,9 +51,10 @@ describe('CampusEventListComponent', () => {
   };
 
   beforeEach(async(() => {
-    getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
-    getCampusEvents = jasmine.createSpy();
-    getCampusEvents.and.returnValue(getCampusEvents$);
+    navigate = jasmine.createSpy();
+    getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
+    getEvents = jasmine.createSpy();
+    getEvents.and.returnValue(getEvents$);
     TestBed.configureTestingModule({
       declarations: [
         CampusEventListComponent,
@@ -65,6 +68,12 @@ describe('CampusEventListComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {},
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate,
+          }
         },
         {
           provide: EventService,
@@ -107,4 +116,11 @@ describe('CampusEventListComponent', () => {
     expect(component.events).toEqual([]);
     expect(component.eventlistLength).toEqual(0);
   });
+  it('should navigate to detail', () => {
+    component.navigateToDetail(dummyEvent);
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['.', dummyEvent.id], { relativeTo: {}});
+  });
+
 });

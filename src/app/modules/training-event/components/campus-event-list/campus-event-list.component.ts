@@ -5,6 +5,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { CampusEventResponse } from 'src/app/interfaces/event';
 import { EventService  } from '../../services/event.service';
 import { environment } from 'src/environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
 
 /** CampusEventListComponent provides campus event list. */
 @Component({
@@ -25,6 +26,8 @@ export class CampusEventListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly eventService: EventService,
   ) { }
 
@@ -46,6 +49,9 @@ export class CampusEventListComponent implements OnInit {
       }),
     ).subscribe(events => this.events = events);
     this.forceRefresh();
+  }
+  navigateToDetail(row: CampusEventResponse) {
+    this.router.navigate(['.', row.id], { relativeTo: this.route });
   }
 
   private forceRefresh() {
