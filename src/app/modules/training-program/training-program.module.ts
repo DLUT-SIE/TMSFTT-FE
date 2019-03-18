@@ -15,12 +15,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TrainingProgramRoutingModule } from './training-program-routing.module';
-import { ProgramsComponent } from './components/programs/programs.component';
+import { ProgramListComponent } from './components/programs/program-list.component';
+import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
 import { TrainingProgramComponent } from './training-program.component';
 
 @NgModule({
   declarations: [
-    ProgramsComponent,
+    ProgramListComponent,
+    ProgramDetailComponent,
     TrainingProgramComponent,
   ],
   imports: [

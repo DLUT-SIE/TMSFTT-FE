@@ -52,6 +52,18 @@ describe('ProgramService', () => {
     req.flush({count: 2, results: [], next: '', previous: ''});
   });
 
+  it('should get program', () => {
+    const service: ProgramService = TestBed.get(ProgramService);
+    const id = 1;
+
+    service.getProgram(id).subscribe();
+
+    const url = `${environment.API_URL}/programs/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
 
   it('should use default if no value provided', () => {
     const service: ProgramService = TestBed.get(ProgramService);

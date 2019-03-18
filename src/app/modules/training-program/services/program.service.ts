@@ -27,4 +27,10 @@ export class ProgramService {
     url += '?' + queryParams;
     return this.http.get<PaginatedResponse<Program>>(url);
   }
+
+  /** get the information of one program from the background. */
+  getProgram(id: number) {
+    return this.http.get<Program>(
+      `${environment.API_URL}/programs/${id}/`);
+  }
 }

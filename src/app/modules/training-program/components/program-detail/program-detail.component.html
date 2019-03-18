@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">项目名称： {{ program.name }}</h4>
+          </div>
+          <div class="card-body">
+            <p class="text-primary">开设单位</p>
+            <thead class="text d-flex">
+              <td class="col-3 col-sm-3">单位名称</td>
+              <td class="col-3 col-sm-3">创建时间</td>
+              <td class="col-3 col-sm-3">更新时间</td>
+              <td class="col-3 col-sm-3">管理员</td>
+            </thead>
+            <tbody class="d-flex">
+              <td class="col-3 col-sm-3"> {{ program.department_detail.name }}</td>
+              <td class="col-3 col-sm-3"> {{ program.department_detail.create_time }}</td>
+              <td class="col-3 col-sm-3"> {{ program.department_detail.update_time }}</td>
+              <td class="col-3 col-sm-3"> {{ program.department_detail.admins }}</td>
+            </tbody>
+            <p class="text-primary">培训类别: {{ program.category_detail.name }}</p>
+            <p class="text-primary">培训形式: {{ program.form }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
