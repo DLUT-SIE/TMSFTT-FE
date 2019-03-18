@@ -1,69 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator, PageEvent } from '@angular/material';
-import { of as observableOf, Subject, merge } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { Program } from 'src/app/interfaces/program';
 import { ProgramService} from '../../services/program.service';
-import { environment } from 'src/environments/environment';
+import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
 
 @Component({
-  selector: 'app-programs',
+  selector: 'app-program-list',
   templateUrl: './program-list.component.html',
   styleUrls: ['./program-list.component.css']
 })
-export class ProgramListComponent implements OnInit {
-  /** The data to be displayed */
-  programs: Program[] = [];
-  /** The total number of notifications. */
-  programsLength = 0;
-  /** Indicate data loading status */
-  isLoadingResults = true;
-
-  pageSize = environment.PAGINATION_SIZE;
-
-  private manualRefresh$ = new Subject<PageEvent>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
+export class ProgramListComponent extends GenericListComponent<Program> {
   constructor(
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
+    protected readonly route: ActivatedRoute,
+    protected readonly router: Router,
     private readonly programService: ProgramService,
-  ) { }
-
-  ngOnInit() {
-    merge(this.paginator.page, this.manualRefresh$).pipe(
-      switchMap((event: PageEvent) => {
-        this.isLoadingResults = true;
-        const offset = event.pageIndex * event.pageSize;
-        return this.programService.getPrograms(offset);
-      }),
-      map(data => {
-        this.isLoadingResults = false;
-        this.programsLength = data.count;
-        return data.results;
-      }),
-      catchError((err) => {
-        this.isLoadingResults = false;
-        return observableOf([]);
-      }),
-    ).subscribe(programs => this.programs = programs);
-    this.forceRefresh();
+  ) {
+    super(route, router);
   }
 
-  navigateToDetail(row: Program) {
-      this.router.navigate(['./', row.id], { relativeTo: this.route });
+
+  getResults(offset: number, limit: number) {
+    return this.programService.getPrograms(offset, limit);
   }
 
-  private forceRefresh() {
-    this.manualRefresh$.next({
-      previousPageIndex: 0,
-      pageIndex: 0,
-      pageSize: this.pageSize,
-      length: 0,
-    } as PageEvent);
-  }
 }
 

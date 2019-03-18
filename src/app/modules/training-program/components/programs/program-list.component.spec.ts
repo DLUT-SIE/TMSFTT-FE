@@ -10,30 +10,12 @@ import { ProgramListComponent } from './program-list.component';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
-describe('ProgramsComponent', () => {
+describe('ProgramListComponent', () => {
   let component: ProgramListComponent;
   let fixture: ComponentFixture<ProgramListComponent>;
   let getPrograms$: Subject<PaginatedResponse<Program>>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
-  const dummyProgram: Program = {
-    id: 1,
-    name: 'sender',
-    department: 2,
-    category: 3,
-    department_detail: {
-      id: 2,
-      create_time: '2019-3-4',
-      update_time: '2019-3-6',
-      name: 'test',
-      admins: [],
-    },
-    category_detail: {
-      id: 3,
-      name: 'test',
-    },
-    form: [],
-  };
 
 
   beforeEach(async(() => {
@@ -91,29 +73,5 @@ describe('ProgramsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load data', () => {
-    const count = 100;
-    const results: Program[] = [dummyProgram, dummyProgram];
-    getPrograms$.next({ count, results, next: '', previous: '' });
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.programs).toEqual(results);
-    expect(component.programsLength).toEqual(count);
-  });
-
-  it('should empty data if an error encountered.', () => {
-    getPrograms$.error('error');
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.programs).toEqual([]);
-    expect(component.programsLength).toEqual(0);
-  });
-
-  it('should navigate to detail', () => {
-    component.navigateToDetail(dummyProgram);
-
-    expect(navigate).toHaveBeenCalledWith(
-      ['./', dummyProgram.id], { relativeTo: {}});
-  });
 });
 
