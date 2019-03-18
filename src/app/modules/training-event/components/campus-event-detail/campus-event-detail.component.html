@@ -3,66 +3,100 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-
-          <!--<p class="list-group-item">id:{{ item.id }}</p>-->
-          <!--<p class="list-group-item">-->
-            <!--program_detail:<br/>-->
-            <!--&nbsp;id:{{ item.program_detail.id }}<br/>-->
-            <!--&nbsp;name:{{item.program_detail.name}}<br/>-->
-            <!--&nbsp;department:{{item.program_detail.department}}<br/>-->
-            <!--&nbsp;category:{{item.program_detail.category}}<br/>-->
-            <!--&nbsp;department_datail:<br/>-->
-            <!--&nbsp;&nbsp;id:{{item.program_detail.department_detail.id}}<br/>-->
-            <!--&nbsp;&nbsp;create_time:{{item.program_detail.department_detail.create_time}}<br/>-->
-            <!--&nbsp;&nbsp;update_time:{{item.program_detail.department_detail.update_time}}<br/>-->
-            <!--&nbsp;&nbsp;name:{{item.program_detail.department_detail.name}}<br/>-->
-            <!--&nbsp;&nbsp;admins:{{item.program_detail.department_detail.admins}}<br/>-->
-            <!--&nbsp;category_detail:<br/>-->
-            <!--&nbsp;&nbsp;id:{{item.program_detail.category_detail.id}}<br/>-->
-            <!--&nbsp;&nbsp;name:{{item.program_detail.category_detail.name}}<br/>-->
-          <!--</p>-->
-          <!--<p class="list-group-item">creat_time:{{ item.create_time }}</p>-->
-          <!--<p class="list-group-item">update_time:{{ item.update_time }}</p>-->
-          <!--<p class="list-group-item">name:{{ item.name}}</p>-->
-          <!--<p class="list-group-item">time:{{ item.time }}</p>-->
-          <!--<p class="list-group-item">location:{{ item.location }}</p>-->
-          <!--<p class="list-group-item">num_hours:{{ item.num_hours }}</p>-->
-          <!--<p class="list-group-item">num_participants:{{ item.num_participants }}</p>-->
-          <!--<p class="list-group-item">deadline:{{ item.deadline }}</p>-->
-          <!--<p class="list-group-item">description:{{ item.description }}</p>-->
-          <!--<p class="list-group-item">num_enrolled:{{ item.num_enrolled }}</p>-->
-          <!--<p class="list-group-item">program:{{ item.program }}</p>-->
-          <table class="table">
-            <caption>校内培训活动详情</caption>
+          <table class="table" border="1">
             <thead>
             <tr>
-              <th>字段</th>
+              <th width="600" colspan="3">字段</th>
               <th>详情</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>id</td>
+            <tr >
+              <td colspan="3">id</td>
               <td>{{ item.id }}</td>
             </tr>
             <tr>
-              <td>name</td>
+              <td colspan="3">name</td>
               <td>{{ item.name }}</td>
             </tr>
             <tr>
+              <td colspan="3">time</td>
+              <td>{{ item.time }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">location</td>
+              <td>{{ item.location }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">num_hours</td>
+              <td>{{ item.num_hours }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">num_participants</td>
+              <td>{{ item.num_participants }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">deadline</td>
+              <td>{{ item.deadline }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">num_enrolled</td>
+              <td>{{ item.num_enrolled }}</td>
+            </tr>
+            <tr>
+              <td colspan="3">description</td>
+              <td>{{ item.description }}</td>
+            </tr>
+            <tr>
+              <td rowspan="11">program_detail</td>
+              <td colspan="2">id</td>
+              <td>{{ item.program_detail.id }}</td>
+            </tr>
+            <tr>
+              <td rowspan="5">department_detail</td>
+              <td>id</td>
+              <td>{{ item.program_detail.department_detail.id }}</td>
+            </tr>
+            <tr>
               <td>create_time</td>
-              <td>{{ item.create_time }}</td>
+              <td>{{ item.program_detail.department_detail.create_time }}</td>
             </tr>
             <tr>
               <td>update_time</td>
-              <td>{{ item.update_time }}</td>
+              <td>{{ item.program_detail.department_detail.update_time }}</td>
             </tr>
             <tr>
-              <td>description</td>
-              <td>{{ item.description }}</td>
+              <td>name</td>
+              <td>{{ item.program_detail.department_detail.name }}</td>
+            </tr>
+            <tr>
+              <td>admins</td>
+              <td>{{ item.program_detail.department_detail.admins}}</td>
+            </tr>
+            <tr>
+              <td rowspan="2">category_detail</td>
+              <td>id</td>
+              <td>{{ item.program_detail.category_detail.id }}</td>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>{{ item.program_detail.category_detail.name }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">name</td>
+              <td>{{ item.program_detail.name }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">department</td>
+              <td>{{ item.program_detail.department }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">category</td>
+              <td>{{ item.program_detail.category }}</td>
             </tr>
             </tbody>
           </table>
+
         </div>
       </div>
     </div>
