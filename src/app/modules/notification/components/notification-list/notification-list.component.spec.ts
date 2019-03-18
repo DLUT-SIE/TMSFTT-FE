@@ -18,7 +18,7 @@ describe('NotificationListComponent', () => {
   let getNotifications: jasmine.Spy;
   let markAllNotificationsAsRead: jasmine.Spy;
   let deleteAllNotifications: jasmine.Spy;
-  const dummyNotification: NotificationResponse = {
+  const dummyNotification: NotificationResponse = { 
     id: 2,
     time: '2019-01-01',
     sender: 'sender',
