@@ -22,8 +22,8 @@ import { NotificationService } from './modules/notification/services/notificatio
 import { PermissionService } from './services/auth/permission.service';
 import { UserService } from './services/auth/user.service';
 
-import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
+import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TypographyComponent } from 'src/app/demo/typography/typography.component';
 import { IconsComponent } from 'src/app/demo/icons/icons.component';
 import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';

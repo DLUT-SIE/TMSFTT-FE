@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {
   MatButtonModule,
   MatDatepickerModule,
@@ -9,24 +8,24 @@ import {
   MatIconModule,
   MatInputModule,
   MatSelectModule,
-  MatSnackBarModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TrainingEventRoutingModule } from './training-event-routing.module';
-import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
-import { TrainingEventComponent } from './training-event.component';
+import { TrainingProgramRoutingModule } from './training-program-routing.module';
+import { ProgramsComponent } from './components/programs/programs.component';
+import { TrainingProgramComponent } from './training-program.component';
 
 @NgModule({
   declarations: [
-    TrainingEventComponent,
-    CampusEventListComponent,
+    ProgramsComponent,
+    TrainingProgramComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -35,12 +34,13 @@ import { TrainingEventComponent } from './training-event.component';
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatSnackBarModule,
     MatSelectModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
 
-    TrainingEventRoutingModule
+    TrainingProgramRoutingModule
   ],
+  providers: [
+  ]
 })
-export class TrainingEventModule { }
+export class TrainingProgramModule { }

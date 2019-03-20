@@ -1,3 +1,4 @@
+import { Program } from './program';
 interface Event {
   name: string;
   time: string;
@@ -26,6 +27,8 @@ export interface CampusEventRequest extends CampusEvent {
 /** RESTful response interface for CampusEvent. */
 export interface CampusEventResponse extends CampusEvent {
   id: number;
+  program: number;
+  program_detail: Program;
 }
 
 /** RESTful request interface for OffCampusEvent. */

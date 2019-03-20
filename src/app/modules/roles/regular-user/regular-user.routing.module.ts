@@ -23,6 +23,14 @@ const routes: Routes = [
             path: 'training-record',
             loadChildren: 'src/app/modules/training-record/training-record.module#TrainingRecordModule',
           },
+          {
+            path: 'training-program',
+            loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
+          },
+          {
+            path: 'training-event',
+            loadChildren: 'src/app/modules/training-event/training-event.module#TrainingEventModule',
+          },
         ]
       }
     ]

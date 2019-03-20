@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import {
+  CampusEventResponse,
   OffCampusEventRequest,
   OffCampusEventResponse,
 } from 'src/app/interfaces/event';
+import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
 /** Provide services for Event. */
 @Injectable({
@@ -13,9 +15,26 @@ import {
 })
 export class EventService {
 
+
   constructor(
     private readonly http: HttpClient,
   ) { }
+
+  getEvent(id: number) {
+    return this.http.get<CampusEventResponse>(
+      `${environment.API_URL}/campus-events/${id}/`);
+}
+
+  getEvents(offset?: number, limit?: number) {
+    offset = offset || 0;
+    limit = limit || environment.PAGINATION_SIZE;
+    const paramsObj = { offset, limit };
+    const queryParams = Object.keys(paramsObj).map(
+      key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
+    let url = environment.API_URL + '/campus-events/';
+    url += '?' + queryParams;
+    return this.http.get<PaginatedResponse<CampusEventResponse>>(url);
+ }
 
   /** Create an off-campus event. */
   createOffCampusEvent(req: OffCampusEventRequest) {

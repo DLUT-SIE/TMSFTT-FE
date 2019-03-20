@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
+import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NotificationDetailComponent } from './components/notification-detail/notification-detail.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: NotificationCenterComponent,
+        component: NotificationListComponent,
       }
     ]
   }

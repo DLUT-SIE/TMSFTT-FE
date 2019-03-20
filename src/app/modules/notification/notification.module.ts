@@ -9,13 +9,13 @@ import {
 } from '@angular/material';
 
 import { NotificationRoutingModule } from './notification-routing.module';
-import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
+import { NotificationListComponent } from './components/notification-list/notification-list.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NotificationDetailComponent } from './components/notification-detail/notification-detail.component';
 
 @NgModule({
   declarations: [
-    NotificationCenterComponent,
+    NotificationListComponent,
     NotificationComponent,
     NotificationDetailComponent,
   ],
