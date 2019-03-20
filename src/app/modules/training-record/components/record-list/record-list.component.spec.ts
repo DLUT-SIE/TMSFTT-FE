@@ -16,7 +16,6 @@ describe('RecordListComponent', () => {
   let navigate: jasmine.Spy;
   let fixture: ComponentFixture<RecordListComponent>;
   let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
-  let navigate: jasmine.Spy;
   const dummyOffCampusEvent: OffCampusEventResponse = {
     id: 1,
     create_time: '2019-02-21T16:40:03.799178+08:00',
