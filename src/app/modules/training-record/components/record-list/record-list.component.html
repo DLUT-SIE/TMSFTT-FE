@@ -21,7 +21,7 @@
                 <th class="col-2 col-sm-2">审核状态</th>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let record of records" (click)="navigateToDetail(record)">
+                <tr class="d-flex" *ngFor="let record of results" (click)="navigateToDetail(record)">
                   <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
                   <ng-template #thenBlock>
                     <td class="col-2 col-sm-2">{{ record.off_campus_event.name }}</td>
@@ -42,7 +42,7 @@
                 </tr>
               </tbody>
             </table>
-            <mat-paginator [length]="recordsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
+            <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
           </div>
         </div>
       </div>
