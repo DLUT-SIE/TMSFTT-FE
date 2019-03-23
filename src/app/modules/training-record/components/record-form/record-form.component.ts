@@ -1,14 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { RecordService } from '../../services/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
-import { OffCampusEventRequest } from 'src/app/interfaces/event';
+import { OffCampusEventRequest, OffCampusEventResponse } from 'src/app/interfaces/event';
 import { RecordContent, RecordRequest } from 'src/app/interfaces/record';
 import { ContentType } from 'src/app/enums/content-type.enum';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EventService } from 'src/app/modules/training-event/services/event.service';
+import { Observable } from 'rxjs';
+import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
+import { switchMap, map, debounceTime } from 'rxjs/operators';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -34,6 +38,9 @@ export class RecordFormComponent implements OnInit {
     files: this.fb.array([]),
   });
 
+  @ViewChild(MatAutocomplete) autoComplete: MatAutocomplete;
+  filteredOptions: Observable<OffCampusEventResponse[]>;
+
   /** The attachments to be uploaded. */
   attachments: File[] = [];
 
@@ -43,9 +50,35 @@ export class RecordFormComponent implements OnInit {
     private readonly snackBar: MatSnackBar,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly recordService: RecordService,
+    private readonly eventService: EventService,
   ) { }
 
   ngOnInit() {
+    // Retrieve auto-complete options.
+    this.filteredOptions = this.name.valueChanges.pipe(
+      debounceTime(1000),
+      switchMap(prefix => this._filter(prefix)),
+      map((value: PaginatedResponse<OffCampusEventResponse>) => value.results),
+    );
+
+    // Update form when the auto-complete option is selected.
+    this.autoComplete.optionSelected.subscribe((event: MatAutocompleteSelectedEvent) => {
+      const offCampusEvent = event.option.value as OffCampusEventResponse;
+      this.name.setValue(offCampusEvent.name);
+      this.time.setValue(offCampusEvent.time);
+      this.location.setValue(offCampusEvent.location);
+      this.numHours.setValue(offCampusEvent.num_hours);
+      this.numParticipants.setValue(offCampusEvent.num_participants);
+    });
+  }
+
+  /**
+   * Invoke event service to retrieve filtered off-campus events
+   * based on given name prefix.
+   */
+  private _filter(prefix: string) {
+    const params = new Map<string, {}>([['name__startswith', prefix]]);
+    return this.eventService.getOffCampusEvents({ extraParams: params });
   }
 
   /** Access the name field of the form. */
@@ -136,7 +169,7 @@ export class RecordFormComponent implements OnInit {
 
   onSubmit() {
     const req: RecordRequest = {
-      off_campus_event:  this.buildOffCampusEventRequest(),
+      off_campus_event: this.buildOffCampusEventRequest(),
       user: this.authService.userID,
       contents: this.buildContents(),
       attachments: this.attachments,

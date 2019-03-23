@@ -11,7 +11,13 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>note_add</mat-icon>
               <mat-label i18n>培训名称</mat-label>
-              <input matInput type="text" placeholder="请告诉我们您所参加培训的名称" formControlName="name" i18n-placeholder required>
+              <input matInput type="text" placeholder="请告诉我们您所参加培训的名称" [matAutocomplete]="auto" formControlName="name"
+                i18n-placeholder required>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  <span>培训：{{ option.name }} | 时间：{{ option.time | date:'y年M月d日' }} | 地点：{{ option.location }}</span>
+                </mat-option>
+              </mat-autocomplete>
               <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
                 <span *ngIf="!!name.errors.required" i18n>
                   您需要提供所参加培训的名称。
@@ -81,7 +87,8 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>assignment</mat-icon>
               <mat-label i18n>培训内容</mat-label>
-              <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder required></textarea>
+              <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder
+                required></textarea>
               <mat-error *ngIf="content.invalid && (content.dirty || content.touched)">
                 <span *ngIf="!!content.errors.required" i18n>
                   您需要提供您所参加培训的培训内容。

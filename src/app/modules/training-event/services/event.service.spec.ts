@@ -37,16 +37,28 @@ describe('EventService', () => {
     httpTestingController.verify();
   });
 
-  it('should use default if no value provided', () => {
+  it('should get campus events', () => {
     const service: EventService = TestBed.get(EventService);
 
-    service.getEvents().subscribe();
+    service.getCampusEvents({}).subscribe();
 
-    const url = `${environment.API_URL}/campus-events/?offset=0&limit=10`;
+    const url = `${environment.API_URL}/campus-events/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({count: 2});
+    req.flush({ count: 2 });
+  });
+
+  it('should get off-campus events', () => {
+    const service: EventService = TestBed.get(EventService);
+
+    service.getOffCampusEvents({}).subscribe();
+
+    const url = `${environment.API_URL}/off-campus-events/?limit=10&offset=0`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({ count: 2 });
   });
 
   it('should get event', () => {
@@ -99,5 +111,4 @@ describe('EventService', () => {
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
   });
-
 });

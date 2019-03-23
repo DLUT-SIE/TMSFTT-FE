@@ -33,7 +33,7 @@ export class CampusEventListComponent implements OnInit {
       switchMap((event: PageEvent) => {
         this.isLoadingResults = true;
         const offset = event.pageIndex * event.pageSize;
-        return this.eventService.getEvents(offset);
+        return this.eventService.getCampusEvents({offset});
       }),
       map(data => {
         this.isLoadingResults = false;

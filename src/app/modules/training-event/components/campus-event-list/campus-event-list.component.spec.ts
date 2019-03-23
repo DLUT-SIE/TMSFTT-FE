@@ -12,8 +12,8 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 describe('CampusEventListComponent', () => {
   let component: CampusEventListComponent;
   let fixture: ComponentFixture<CampusEventListComponent>;
-  let getEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
-  let getEvents: jasmine.Spy;
+  let getCampusEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
+  let getCampusEvents: jasmine.Spy;
   const dummyEvent: CampusEventResponse = {
     id: 601,
     create_time: '2019-02-26T15:04:24.232265+08:00',
@@ -48,9 +48,9 @@ describe('CampusEventListComponent', () => {
   };
 
   beforeEach(async(() => {
-    getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
-    getEvents = jasmine.createSpy();
-    getEvents.and.returnValue(getEvents$);
+    getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
+    getCampusEvents = jasmine.createSpy();
+    getCampusEvents.and.returnValue(getCampusEvents$);
     TestBed.configureTestingModule({
       declarations: [
         CampusEventListComponent,
@@ -68,7 +68,7 @@ describe('CampusEventListComponent', () => {
         {
           provide: EventService,
           useValue: {
-            getEvents: () => getEvents$,
+            getCampusEvents: () => getCampusEvents$,
           }
         },
         {
@@ -92,7 +92,7 @@ describe('CampusEventListComponent', () => {
   it('should load data', () => {
     const count = 100;
     const results: CampusEventResponse[] = [dummyEvent, dummyEvent];
-    getEvents$.next({ count, results, next: '', previous: '' });
+    getCampusEvents$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.events).toEqual(results);
@@ -100,7 +100,7 @@ describe('CampusEventListComponent', () => {
   });
 
   it('should empty data if an error encountered.', () => {
-    getEvents$.error('error');
+    getCampusEvents$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.events).toEqual([]);
