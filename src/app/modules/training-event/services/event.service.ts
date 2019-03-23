@@ -7,34 +7,31 @@ import {
   OffCampusEventRequest,
   OffCampusEventResponse,
 } from 'src/app/interfaces/event';
-import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
+import { GenericListService } from 'src/app/generics/generic-list-service/generic-list-service';
+import { ListRequest } from 'src/app/interfaces/list-request';
 
 /** Provide services for Event. */
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
-
+export class EventService extends GenericListService {
 
   constructor(
-    private readonly http: HttpClient,
-  ) { }
+    protected readonly http: HttpClient,
+  ) {
+    super(http);
+  }
 
   getEvent(id: number) {
     return this.http.get<CampusEventResponse>(
       `${environment.API_URL}/campus-events/${id}/`);
-}
+  }
 
-  getEvents(offset?: number, limit?: number) {
-    offset = offset || 0;
-    limit = limit || environment.PAGINATION_SIZE;
-    const paramsObj = { offset, limit };
-    const queryParams = Object.keys(paramsObj).map(
-      key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
-    let url = environment.API_URL + '/campus-events/';
-    url += '?' + queryParams;
-    return this.http.get<PaginatedResponse<CampusEventResponse>>(url);
- }
+  /** Retrieve campus events. */
+  /** TODO(youchen): Rename this function */
+  getCampusEvents(req: ListRequest) {
+    return this.list<CampusEventResponse>('campus-events', req);
+  }
 
   /** Create an off-campus event. */
   createOffCampusEvent(req: OffCampusEventRequest) {
@@ -46,5 +43,10 @@ export class EventService {
   deleteOffCampusEvent(eventID: number) {
     return this.http.delete(
       `${environment.API_URL}/off-campus-events/${eventID}/`);
+  }
+
+  /** Retrieve off-campus events, it's frequently used in AutoComplete. */
+  getOffCampusEvents(req: ListRequest) {
+    return this.list<OffCampusEventResponse>('off-campus-events', req);
   }
 }

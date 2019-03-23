@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatDatepickerModule,
   MatFormFieldModule,
@@ -40,6 +41,7 @@ import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MatButtonModule,
     MatDatepickerModule,
     MatIconModule,
