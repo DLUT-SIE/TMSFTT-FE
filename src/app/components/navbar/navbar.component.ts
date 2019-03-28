@@ -80,7 +80,7 @@ export class NavbarComponent implements OnInit {
         }
 
         for (const item of this.regularUserRouteItems.concat(this.adminRouteItems)) {
-            if (item.path === url) {
+            if (item.path === url || url.startsWith(item.path)) {
                 return item.title;
             }
         }
