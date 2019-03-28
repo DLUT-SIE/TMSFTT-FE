@@ -6,26 +6,21 @@ import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/interfaces/program';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 
+import { GenericListService } from 'src/app/generics/generic-list-service/generic-list-service';
+import { ListRequest } from 'src/app/interfaces/list-request';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProgramService {
+export class ProgramService extend GenericListService{
 
   constructor(
     private readonly http: HttpClient,
   ) { }
 
   /** get the information of programs from the background. */
-  getPrograms(offset?: number, limit?: number) {
-    if (offset === undefined) offset = 0;
-    if (limit === undefined) limit = environment.PAGINATION_SIZE;
-    const paramsObj = { offset, limit };
-    const queryParams = Object.keys(paramsObj).map(
-      key => key + '=' + encodeURIComponent(paramsObj[key])).join('&');
-    let url = environment.API_URL + '/programs/';
-    url += '?' + queryParams;
-    return this.http.get<PaginatedResponse<Program>>(url);
+  getPrograms(req: ListRequest) {
+    return this.list<Program>('programs', req);
   }
 
   /** get the information of one program from the background. */
