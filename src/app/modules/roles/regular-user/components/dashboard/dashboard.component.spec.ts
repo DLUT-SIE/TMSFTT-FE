@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { MatTooltipPositionDirectiveStub } from 'src/testing/mat-tooltip-position-directive-stub';
+import { EChartsDirectiveStub } from 'src/testing/echarts-directive-stub';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -12,7 +13,8 @@ describe('DashboardComponent', () => {
       declarations: [
         DashboardComponent,
         MatTooltipPositionDirectiveStub,
-      ]
+        EChartsDirectiveStub,
+      ],
     })
     .compileComponents();
   }));
