@@ -13,9 +13,9 @@ import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 describe('RecordListComponent', () => {
   let component: RecordListComponent;
+  let navigate: jasmine.Spy;
   let fixture: ComponentFixture<RecordListComponent>;
   let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
-  let navigate: jasmine.Spy;
   const dummyOffCampusEvent: OffCampusEventResponse = {
     id: 1,
     create_time: '2019-02-21T16:40:03.799178+08:00',
@@ -93,6 +93,16 @@ describe('RecordListComponent', () => {
           }
         },
         {
+          provide: ActivatedRoute,
+          useValue: {},
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate,
+          }
+        },
+        {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
         },
@@ -117,16 +127,16 @@ describe('RecordListComponent', () => {
     getRecords$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.records).toEqual(results);
-    expect(component.recordsLength).toEqual(count);
+    expect(component.results).toEqual(results);
+    expect(component.resultsLength).toEqual(count);
   });
 
   it('should empty data if an error encountered.', () => {
     getRecords$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.records).toEqual([]);
-    expect(component.recordsLength).toEqual(0);
+    expect(component.results).toEqual([]);
+    expect(component.resultsLength).toEqual(0);
   });
 
   it('should navigate to detail', () => {
