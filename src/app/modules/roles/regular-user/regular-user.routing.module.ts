@@ -31,6 +31,10 @@ const routes: Routes = [
             path: 'training-event',
             loadChildren: 'src/app/modules/training-event/training-event.module#TrainingEventModule',
           },
+          {
+            path: 'statistics',
+            loadChildren: 'src/app/modules/statistics/statistics.module#StatisticsModule',
+          }
         ]
       }
     ]
