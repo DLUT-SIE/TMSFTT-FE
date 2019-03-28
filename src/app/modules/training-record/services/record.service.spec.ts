@@ -91,28 +91,14 @@ describe('RecordService', () => {
 
   it('should get records', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const testCase = [
-      [null, null],
-      [0, null],
-      [null, 20],
-      [0, 20],
-    ];
-    for (const args of testCase) {
-      let offset = args[0];
-      let limit = args[1];
 
-      service.getRecords(offset, limit).subscribe(
-        res => { expect(res.results.length).toEqual(2); });
+    service.getRecords({}).subscribe();
 
-      offset = offset || 0;
-      limit = limit || environment.PAGINATION_SIZE;
-      const url = `${environment.API_URL}/records/?offset=${offset}&limit=${limit}`;
+    const url = `${environment.API_URL}/records/?limit=10&offset=0`;
 
-      const req = httpTestingController.expectOne(url);
-      expect(req.request.method).toEqual('GET');
-      req.flush({count: 2, results: [{}, {}]});
-    }
-
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({ count: 2 });
   });
 
   it('should get record', () => {
