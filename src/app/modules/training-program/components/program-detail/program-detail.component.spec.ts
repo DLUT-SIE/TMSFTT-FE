@@ -30,7 +30,18 @@ describe('ProgramDetailComponent', () => {
                 create_time: '2019-3-15',
                 update_time: '2019-3-16',
                 name: 'lgz',
-                admins: []
+                admins: [],
+                admins_detail: {
+                  id: 2,
+                  username: 'lgz',
+                  last_login: 'dh',
+                  first_name: 'l',
+                  last_name: 'gz',
+                  email: '333',
+                  is_active: false,
+                  data_joined:'2019-3-2',
+                  user_permissions:[]
+                }
               },
               category_detail: {
                 id: 2,
