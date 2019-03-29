@@ -20,6 +20,11 @@ export const adminRoutes: Routes = [
             canLoad: [AdminGuard],
             loadChildren: 'src/app/modules/permission-management/permission-management.module#PermissionManagementModule',
           },
+          {
+            path: 'event-management',
+            canLoad: [AdminGuard],
+            loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
+          },
         ],
       },
     ],

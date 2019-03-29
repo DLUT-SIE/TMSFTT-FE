@@ -5,7 +5,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
-    { path: '/admin/event-management', title: '项目管理', icon: 'event', class: '' },
+    { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
     { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
     { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
 

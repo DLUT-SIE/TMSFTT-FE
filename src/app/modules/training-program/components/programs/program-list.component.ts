@@ -21,7 +21,7 @@ export class ProgramListComponent extends GenericListComponent<Program> {
 
 
   getResults(offset: number, limit: number) {
-    return this.programService.getPrograms(offset, limit);
+    return this.programService.getPrograms({offset, limit});
   }
 
 }

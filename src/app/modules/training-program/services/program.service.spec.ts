@@ -40,12 +40,10 @@ describe('ProgramService', () => {
 
   it('should get programs', () => {
     const service: ProgramService = TestBed.get(ProgramService);
-    const offset = 0;
-    const limit = 20;
 
-    service.getPrograms(offset, limit).subscribe();
+    service.getPrograms({}).subscribe();
 
-    const url = `${environment.API_URL}/programs/?offset=${offset}&limit=${limit}`;
+    const url = `${environment.API_URL}/programs/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -68,9 +66,9 @@ describe('ProgramService', () => {
   it('should use default if no value provided', () => {
     const service: ProgramService = TestBed.get(ProgramService);
 
-    service.getPrograms().subscribe();
+    service.getPrograms({}).subscribe();
 
-    const url = `${environment.API_URL}/programs/?offset=0&limit=10`;
+    const url = `${environment.API_URL}/programs/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -78,3 +76,4 @@ describe('ProgramService', () => {
   });
 
 });
+
