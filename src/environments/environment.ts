@@ -7,10 +7,10 @@ import { Environment } from './environment.interface';
 export const environment: Environment = {
   production: false,
   JWT_KEY: 'ACCESS_TOKEN',
-  CAS_LOGIN_URL: 'http://localhost:8000/mock-cas/login/',
-  SERVICE_URL: 'http://localhost:4200/auth/login/',
-  WHITE_LIST_DOMAINS: ['localhost:4200', 'localhost:8000'],
-  API_URL: 'http://localhost:8000/api',
+  CAS_LOGIN_URL: 'http://10.7.23.250:8000/mock-cas/login/',
+  SERVICE_URL: 'http://10.7.23.250:4200/auth/login/',
+  WHITE_LIST_DOMAINS: ['10.7.23.250:4200', '10.7.23.250:8000'],
+  API_URL: 'http://10.7.23.250:8000/api',
   PAGINATION_SIZE: 10,
 };
 

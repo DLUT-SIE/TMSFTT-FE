@@ -2,6 +2,10 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">校内培训活动</h4>
+          <p class="card-category">您可以查看所有历史校内培训活动</p>
+        </div>
         <div class="card-body">
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>
@@ -22,7 +26,7 @@
                   <td class="col-2 col-sm-2">{{ item.location }}</td>
                   <td class="col-2 col-sm-2">{{ item.num_hours | number:"0.1-1" }} </td>
                   <td class="col-2 col-sm-2">{{ item.num_participants }}</td>
-                </tr>s
+                </tr>
               </tbody>
             </table>
             <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
