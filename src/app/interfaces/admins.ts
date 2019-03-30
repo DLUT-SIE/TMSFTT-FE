@@ -6,6 +6,6 @@ export interface Admins {
     last_name: string;
     email: string;
     is_active: boolean;
-    data_joined:string;
-    user_permissions:string[];
+    data_joined: string;
+    user_permissions: string[];
 }

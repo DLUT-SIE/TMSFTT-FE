@@ -5,5 +5,5 @@ export interface Department {
     update_time: string;
     name: string;
     admins: number[];
-    admins_detail: Admins;
+    admins_detail: Admins[];
 }
