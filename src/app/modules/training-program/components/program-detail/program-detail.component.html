@@ -9,63 +9,50 @@
             <table class="table table-hover text-left">
               <tbody>
                 <tr class="d-flex">
-                  <td class="col-3 col-sm-4">
+                  <td class="col-4 col-sm-4">
                     <div class="w-100">
-                      <h4 class="text-danger text-left">单位名称</h4>
+                      <h3 class="text-danger text-left">单位名称</h3>
                       <p class="text-left">{{ program.department_detail.name }}</p>
                       <span class="border-bottom"></span>
                     </div>
                   </td>
                   <td class="col-4 col-sm-4">
                     <div class="w-100">
-                      <h4 class="text-danger text-left">培训类别</h4>
+                      <h3 class="text-danger text-left">创建时间</h3>
                       <p class="text-left">{{ program.department_detail.create_time }}</p>
                       <span class="border-bottom"></span>
                     </div>
                   </td>
-                  <td class="col-5 col-sm-4">
+                  <td class="col-4 col-sm-4">
                     <div class="w-100">
-                      <h4 class="text-danger text-left">培训形式</h4>
-                      <p class="text-left">{{ program.form }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>          
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-6 col-sm-6">
-                    <div class="w-100">
-                      <h4 class="text-danger text-left">创建时间</h4>
-                      <p class="text-left">{{ program.department_detail.create_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-6 col-sm-6">
-                    <div class="w-100">
-                      <h4 class="text-danger text-left">更新时间</h4>
+                      <h3 class="text-danger text-left">更新时间</h3>
                       <p class="text-left">{{ program.department_detail.update_time }}</p>
                       <span class="border-bottom"></span>
                     </div>
-                  </td> 
+                  </td>                  
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-4 col-sm-4">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训类别</h3>
+                      <p class="text-left">{{ program.department_detail.create_time }}</p>
+                      <span class="border-bottom"></span>
+                    </div>
+                  </td>
+                  <td class="col-8 col-sm-8">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训形式</h3>
+                      <p class="text-left">{{ program.form }}</p>
+                      <span class="border-bottom"></span>
+                    </div>
+                  </td>
                 </tr>
                 <tr class="d-flex">
                   <td class="col-12 col-sm-12">
                     <div class="w-100">
-                      <h4 class="text-danger text-left">管理员</h4>
+                      <h3 class="text-danger text-left">管理员</h3>
+                      <span class="border-bottom"></span>
                     </div>
-                  </td>
-                </tr>
-                <tr class="d-flex" *ngFor="let admin_detail of program.department_detail.admins_detail">
-                  <td class="col-3 col-sm-4">
-                    <p class="text-left">姓名: {{ admin_detail.username }}</p>
-                    <p class="text-left">上次登录地点: {{ admin_detail.last_login }}</p>
-                  </td>
-                  <td class="col-3 col-sm-4">
-                    <p class="text-left">邮件: {{ admin_detail.last_login }}</p>
-                    <p class="text-left">激活状态: {{ admin_detail.username }}</p>
-                  </td>
-                  <td class="col-6 col-sm-4">
-                    <p class="text-left">创建时间: {{ admin_detail.email }}</p>
-                    <p class="text-left">许可证: {{ admin_detail.username }}</p>
                   </td>
                 </tr>
               </tbody>
