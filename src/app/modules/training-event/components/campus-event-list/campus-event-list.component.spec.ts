@@ -12,8 +12,8 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 describe('CampusEventListComponent', () => {
   let component: CampusEventListComponent;
   let fixture: ComponentFixture<CampusEventListComponent>;
-  let getEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
-  let getEvents: jasmine.Spy;
+  let getCampusEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
+  let getCampusEvents: jasmine.Spy;
   let navigate: jasmine.Spy;
 
   const dummyEvent: CampusEventResponse = {
@@ -52,9 +52,9 @@ describe('CampusEventListComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
-    getEvents = jasmine.createSpy();
-    getEvents.and.returnValue(getEvents$);
+    getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
+    getCampusEvents = jasmine.createSpy();
+    getCampusEvents.and.returnValue(getCampusEvents$);
     TestBed.configureTestingModule({
       declarations: [
         CampusEventListComponent,

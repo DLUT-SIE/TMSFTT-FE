@@ -20,6 +20,6 @@ export class CampusEventListComponent extends GenericListComponent<CampusEventRe
   }
 
   getResults(offset: number, limit: number) {
-    return this.eventService.getEvents(offset, limit);
+    return this.eventService.getCampusEvents({offset, limit});
   }
 }
