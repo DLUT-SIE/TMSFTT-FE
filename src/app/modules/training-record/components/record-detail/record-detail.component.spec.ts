@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { RecordDetailComponent } from './record-detail.component';
 import { RecordResponse } from 'src/app/interfaces/record';
@@ -42,9 +41,6 @@ describe('RecordDetailComponent', () => {
               status: 1,
             } as RecordResponse}),
           },
-        },
-        {
-          provide: Location
         }
       ]
     })
