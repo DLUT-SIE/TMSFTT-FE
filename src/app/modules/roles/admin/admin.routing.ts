@@ -25,6 +25,11 @@ export const adminRoutes: Routes = [
             canLoad: [AdminGuard],
             loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
           },
+          {
+            path: 'record-review',
+            canLoad: [AdminGuard],
+            loadChildren: 'src/app/modules/record-review/record-review.module#RecordReviewModule',
+          },
         ],
       },
     ],

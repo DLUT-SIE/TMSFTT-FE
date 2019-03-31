@@ -1,0 +1,170 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">培训数据详情</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-lg">
+            <table class="table table-hover text-left">
+              <tbody>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">项目名称</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.off_campus_event.name }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">时间</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.off_campus_event.time | date:'y.M.d H:mm' }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">地点</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.off_campus_event.location }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">学时</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.off_campus_event.num_hours | number:"1.0-2" }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">人数</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.off_campus_event.num_participants }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">人员信息</h3>
+                      <td class="col-11">
+                        <p class="text-left">{{ record.user }}</p>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训内容</h3>
+                      <td class="col-11">
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 0">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训总结</h3>
+                      <td class="col-11">
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 1">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训反馈</h3>
+                      <td class="col-11">
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 2">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">附加文件</h3>
+                      <td class="col-11">
+                      </td>
+                      <td class="col-1">
+                        <button mat-button><mat-icon>calendar_today</mat-icon></button>
+                      </td>
+                      <div *ngFor="let att of record.attachments">
+                        <div *ngIf="att">
+                          <a class="text-left">{{ att.path }}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 ml-auto mr-auto">
+              <div class="row">
+                <div class="col-md-6">
+                  <button mat-raised-button class="btn btn-danger btn-block">通过</button>
+                </div>
+                <div class="col-md-6">
+                  <button mat-raised-button class="btn btn-danger btn-block">不通过</button>
+                </div>
+                <div class="col-md-12">
+                  <a mat-raised-button (click)="goBack()" class="float-right">返回</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

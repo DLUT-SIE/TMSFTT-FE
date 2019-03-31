@@ -8,7 +8,7 @@ export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
     { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
     { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
-
+    { path: '/admin/record-review', title: '记录审核', icon: 'reply', class: '' },
     { path: '/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
     { path: '/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
     { path: '/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
