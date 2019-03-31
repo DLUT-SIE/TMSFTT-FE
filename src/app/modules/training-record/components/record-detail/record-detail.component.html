@@ -2,117 +2,109 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header card-header-info">
+        <div class="card-header card-header-danger">
           <h4 class="card-title">培训数据详情</h4>
         </div>
         <div class="card-body">
-          <table class="table table-hover text-left">
-            <tbody>
-              <tr class="d-flex">
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">项目名称</h3>
-                    <p class="text-left">{{ record.off_campus_event.name }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">时间</h3>
-                    <p class="text-left">{{ record.off_campus_event.time }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="d-flex">
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">地点</h3>
-                    <p class="text-left">{{ record.off_campus_event.location }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">学时</h3>
-                    <p class="text-left">{{ record.off_campus_event.num_hours }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="d-flex">
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">人数</h3>
-                    <p class="text-left">{{ record.off_campus_event.num_participants }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">人员信息</h3>
-                    <p class="text-left">{{ record.user }}</p>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="d-flex">
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">培训内容</h3>
-                    <div *ngFor="let con of record.contents">
-                      <div *ngIf="con.content_type === 0">
-                        <p class="text-left">{{ con.content }}</p>
+          <div class="table-responsive-lg">
+            <table class="table table-hover text-left">
+              <tbody>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">项目名称</h3>
+                      <p class="text-left">{{ record.off_campus_event.name }}</p>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">时间</h3>
+                      <p class="text-left">{{ record.off_campus_event.time | date:'y.M.d H:mm' }}</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">地点</h3>
+                      <p class="text-left">{{ record.off_campus_event.location }}</p>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">学时</h3>
+                      <p class="text-left">{{ record.off_campus_event.num_hours | number:"1.0-2" }}</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">人数</h3>
+                      <p class="text-left">{{ record.off_campus_event.num_participants }}</p>
+                    </div>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">人员信息</h3>
+                      <p class="text-left">{{ record.user }}</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训内容</h3>
+                      <div *ngFor="let con of record.contents">
+                        <div *ngIf="con.content_type === 0">
+                          <p class="text-left">{{ con.content }}</p>
+                        </div>
                       </div>
                     </div>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">培训总结</h3>
-                    <div *ngFor="let con of record.contents">
-                      <div *ngIf="con.content_type === 1">
-                        <p class="text-left">{{ con.content }}</p>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训总结</h3>
+                      <div *ngFor="let con of record.contents">
+                        <div *ngIf="con.content_type === 1">
+                          <p class="text-left">{{ con.content }}</p>
+                        </div>
                       </div>
                     </div>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="d-flex">
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">培训反馈</h3>
-                    <div *ngFor="let con of record.contents">
-                      <div *ngIf="con.content_type === 2">
-                        <p class="text-left">{{ con.content }}</p>
+                  </td>
+                </tr>
+                <tr class="d-flex">
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">培训反馈</h3>
+                      <div *ngFor="let con of record.contents">
+                        <div *ngIf="con.content_type === 2">
+                          <p class="text-left">{{ con.content }}</p>
+                        </div>
                       </div>
                     </div>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-                <td class="col-12 col-sm-6">
-                  <div class="w-100">
-                    <h3 class="text-info text-left">附加文件</h3>
-                    <div *ngFor="let att of record.attachments">
-                      <div *ngIf="att">
-                        <a class="text-left">{{ att.path }}</a>
-                        <a class="float-right">
-                          <mat-icon class="float-right" color="warn">
-                            close
-                          </mat-icon>
-                        </a>
+                  </td>
+                  <td class="col-12 col-sm-6">
+                    <div class="w-100">
+                      <h3 class="text-danger text-left">附加文件</h3>
+                      <div *ngFor="let att of record.attachments">
+                        <div *ngIf="att">
+                          <a class="text-left">{{ att.path }}</a>
+                          <a class="float-right">
+                            <mat-icon class="float-right" color="warn">
+                              close
+                            </mat-icon>
+                          </a>
+                        </div>
                       </div>
                     </div>
-                    <span class="border-bottom"></span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="float-right">
-            <a mat-button color="primary">返回</a>
+            <a mat-raised-button (click)="goBack()">返回</a>
           </div>
         </div>
       </div>

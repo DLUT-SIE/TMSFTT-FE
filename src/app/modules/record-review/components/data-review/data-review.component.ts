@@ -4,13 +4,13 @@ import { Location } from '@angular/common';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 
-/** Display a record in detail. */
+/** Display a record review page in detail. */
 @Component({
-  selector: 'app-record-detail',
-  templateUrl: './record-detail.component.html',
-  styleUrls: ['./record-detail.component.css']
+  selector: 'app-data-review',
+  templateUrl: './data-review.component.html',
+  styleUrls: ['./data-review.component.css']
 })
-export class RecordDetailComponent implements OnInit {
+export class DataReviewComponent implements OnInit {
   /** The data to be displayed. */
   record: RecordResponse;
 
@@ -20,7 +20,6 @@ export class RecordDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /** The record in this component will subscribe to RecordResponse data returned by route. */
     this.route.data.subscribe((data: { record: RecordResponse}) => {
       this.record = data.record;
     });

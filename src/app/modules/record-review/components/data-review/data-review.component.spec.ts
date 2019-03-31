@@ -4,19 +4,19 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { RecordDetailComponent } from './record-detail.component';
+import { DataReviewComponent } from './data-review.component';
 import { RecordResponse } from 'src/app/interfaces/record';
 
-describe('RecordDetailComponent', () => {
-  let component: RecordDetailComponent;
-  let fixture: ComponentFixture<RecordDetailComponent>;
+describe('DataReviewComponent', () => {
+  let component: DataReviewComponent;
+  let fixture: ComponentFixture<DataReviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecordDetailComponent ],
+      declarations: [ DataReviewComponent ],
       imports: [
         MatCardModule,
-        MatIconModule
+        MatIconModule,
       ],
       providers: [
         {
@@ -52,7 +52,7 @@ describe('RecordDetailComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordDetailComponent);
+    fixture = TestBed.createComponent(DataReviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
