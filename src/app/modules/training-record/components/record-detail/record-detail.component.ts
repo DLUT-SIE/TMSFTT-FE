@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 
@@ -16,7 +15,6 @@ export class RecordDetailComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly location: Location,
   ) { }
 
   ngOnInit() {
@@ -24,10 +22,6 @@ export class RecordDetailComponent implements OnInit {
     this.route.data.subscribe((data: { record: RecordResponse}) => {
       this.record = data.record;
     });
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
 }

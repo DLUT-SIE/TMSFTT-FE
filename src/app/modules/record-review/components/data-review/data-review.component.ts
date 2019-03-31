@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 
@@ -16,17 +15,12 @@ export class DataReviewComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly location: Location,
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: { record: RecordResponse}) => {
       this.record = data.record;
     });
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
 }
