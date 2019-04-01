@@ -34,3 +34,7 @@ mat-icon {
 .indent-2 {
     text-indent: 2em;
 }
+
+th, td {
+  white-space: nowrap;
+}
