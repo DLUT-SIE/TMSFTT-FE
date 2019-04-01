@@ -40,6 +40,6 @@ export class RecordService extends GenericListService {
   }
 
   getRecords(req: ListRequest) {
-    return this.list<RecordResponse>('records', req);
+    return this.list<RecordResponse>('records/reviewed', req);
   }
 }

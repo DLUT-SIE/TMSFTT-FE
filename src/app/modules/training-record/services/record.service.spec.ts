@@ -94,7 +94,7 @@ describe('RecordService', () => {
 
     service.getRecords({}).subscribe();
 
-    const url = `${environment.API_URL}/records/?limit=10&offset=0`;
+    const url = `${environment.API_URL}/records/reviewed/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
