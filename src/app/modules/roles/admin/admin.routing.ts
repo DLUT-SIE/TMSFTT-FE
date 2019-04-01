@@ -1,33 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
-import { AdminGuard } from 'src/app/guards/admin.guard';
 import { AdminComponent } from './admin.component';
+import { AdminGuard } from 'src/app/guards/admin.guard';
 
 export const adminRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AdminGuard],
     children: [
       {
         path: '',
-        canActivateChild: [AdminGuard],
         children: [
           {
             path: 'permission-management',
+            // TODO(youchen): Only super-admin has access to this module.
             canLoad: [AdminGuard],
             loadChildren: 'src/app/modules/permission-management/permission-management.module#PermissionManagementModule',
           },
           {
+            path: 'data-management',
+            loadChildren: 'src/app/modules/data-management/data-management.module#DataManagementModule',
+          },
+          {
             path: 'event-management',
-            canLoad: [AdminGuard],
             loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
           },
           {
             path: 'record-review',
-            canLoad: [AdminGuard],
             loadChildren: 'src/app/modules/record-review/record-review.module#RecordReviewModule',
           },
         ],
