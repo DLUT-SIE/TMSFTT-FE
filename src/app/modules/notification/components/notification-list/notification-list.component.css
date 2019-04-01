@@ -14,3 +14,11 @@
 tr:hover {
   cursor: pointer;
 }
+
+th, td {
+  white-space: nowrap;
+}
+
+mat-icon {
+  font-size: 15px;
+}

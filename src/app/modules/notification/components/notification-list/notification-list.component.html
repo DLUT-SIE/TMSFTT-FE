@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12">
+    <div class="col">
       <div class="card">
         <div class="card-header card-header-danger">
           <h4 class="card-title">通知中心</h4>
@@ -14,28 +14,30 @@
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>
           </div>
-          <div class="table-responsive-lg">
+          <div class="table-responsive">
             <table class="table table-hover text-center">
-              <thead class="text-primary d-flex">
-                <th class="col-2 col-sm-1"></th>
-                <th class="col-10 col-sm-5">内容</th>
-                <th class="col-6 col-sm-3">发送者</th>
-                <th class="col-8 col-sm-3">发送时间</th>
+              <thead class="text-primary">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">内容</th>
+                  <th scope="col">发送者</th>
+                  <th scope="col">发送时间</th>
+                </tr>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let notification of results" (click)="navigateToDetail(notification)">
-                  <td class="col-2 col-sm-1" *ngIf="notification.read_time; else unReadStatus">
-                  </td>
-                  <ng-template #unReadStatus>
-                    <td class="text-danger col-2 col-sm-1">
+                <tr *ngFor="let notification of results" (click)="navigateToDetail(notification)">
+                  <th scope="row">
+                    <span class="text-danger" *ngIf="!notification.read_time">
                       <mat-icon>
                         fiber_manual_record
                       </mat-icon>
-                    </td>
-                  </ng-template>
-                  <td class="col-10 col-sm-5 text-justify">{{ notification.content | slice:0:30 }}...</td>
-                  <td class="col-6 col-sm-3">{{ notification.sender }}</td>
-                  <td class="col-8 col-sm-3">{{ notification.time | date:'y年M月d日 H:mm::ss' }}</td>
+                    </span>
+                  </th>
+                  <td class="text-justify">
+                    {{ notification.content | slice:0:30 }}...
+                  </td>
+                  <td>{{ notification.sender }}</td>
+                  <td>{{ notification.time | date:'y年M月d日 H:mm::ss' }}</td>
                 </tr>
               </tbody>
             </table>
