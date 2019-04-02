@@ -23,8 +23,8 @@ import { BatchSubmitComponent } from './components/batch-submit/batch-submit.com
 import { TrainingRecordComponent } from './training-record.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { RecordDetailComponent } from './components/record-detail/record-detail.component';
+import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
 import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
-import { RecordEntryComponent } from './components/record-entry/record-entry.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +33,11 @@ import { RecordEntryComponent } from './components/record-entry/record-entry.com
     RecordFormComponent,
     BatchSubmitComponent,
     RecordListComponent,
+    RecordDetailComponent,
+    OffCampusEventRecordListComponent,
 
     RecordStatusDisplayPipe,
 
-    RecordDetailComponent,
-
-    RecordEntryComponent,
   ],
   imports: [
     CommonModule,
