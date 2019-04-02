@@ -31,7 +31,6 @@ describe('ProgramDetailComponent', () => {
                 update_time: '2019-3-16',
                 name: 'lgz',
                 admins: [],
-                admins_detail: []
               },
               category_detail: {
                 id: 2,

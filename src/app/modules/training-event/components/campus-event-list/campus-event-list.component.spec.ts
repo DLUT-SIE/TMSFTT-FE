@@ -40,7 +40,6 @@ describe('CampusEventListComponent', () => {
         update_time: '2019-3-6',
         name: 'test',
         admins: [],
-        admins_detail: [],
       },
       category_detail: {
         id: 3,
