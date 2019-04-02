@@ -1,15 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RecordService } from 'src/app/modules/record-review/services/record.service';
+import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
+import { RecordResponse } from 'src/app/interfaces/record';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',
   styleUrls: ['./data-export.component.css']
 })
-export class DataExportComponent implements OnInit {
+export class DataExportComponent extends GenericListComponent<RecordResponse> {
+  /** Use FormBuilder to build our form to collect Record data. */
+  filterForm = this.fb.group({
+    eventName: [''],
+    location: [''],
+    // TODO(youchen): Which time should this field related to.
+    startTime: [''],
+    endTime: [''],
+  });
 
-  constructor() { }
+  constructor(
+    protected readonly route: ActivatedRoute,
+    protected readonly router: Router,
+    private readonly fb: FormBuilder,
+    private readonly recordService: RecordService,
+  ) {
+    super(route, router);
+  }
 
-  ngOnInit() {
+  getResults(offset: number, limit: number) {
+    const value = this.filterForm.value;
+    const params = new Map<string, string>([
+      ['event__name', value.eventName],
+      ['event__location', value.location],
+      ['startTime', value.startTime],
+      ['endTime', value.endTime],
+    ]);
+    return this.recordService.getRecords({offset, limit, extraParams: params});
   }
 
 }

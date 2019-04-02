@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SummaryAnalysisComponent } from './summary-analysis.component';
+import { EChartsDirectiveStub } from 'src/testing/echarts-directive-stub';
 
 describe('SummaryAnalysisComponent', () => {
   let component: SummaryAnalysisComponent;
@@ -8,7 +9,10 @@ describe('SummaryAnalysisComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryAnalysisComponent ]
+      declarations: [
+        SummaryAnalysisComponent,
+        EChartsDirectiveStub,
+      ],
     })
     .compileComponents();
   }));
