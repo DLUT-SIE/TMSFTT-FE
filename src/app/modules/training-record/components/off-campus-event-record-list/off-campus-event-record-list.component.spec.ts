@@ -4,18 +4,18 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
-import { RecordListComponent } from './record-list.component';
+import { OffCampusEventRecordListComponent } from './off-campus-event-record-list.component';
 import { RecordService } from '../../services/record.service';
 import { RecordResponse, RecordAttachmentResponse, RecordContentResponse } from 'src/app/interfaces/record';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 import { OffCampusEventResponse } from 'src/app/interfaces/event';
 import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
-describe('RecordListComponent', () => {
-  let component: RecordListComponent;
+describe('OffCampusEventRecordListComponent', () => {
+  let component: OffCampusEventRecordListComponent;
+  let fixture: ComponentFixture<OffCampusEventRecordListComponent>;
   let navigate: jasmine.Spy;
-  let fixture: ComponentFixture<RecordListComponent>;
-  let getReviewedRecords$: Subject<PaginatedResponse<RecordResponse>>;
+  let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
   const dummyOffCampusEvent: OffCampusEventResponse = {
     id: 1,
     create_time: '2019-02-21T16:40:03.799178+08:00',
@@ -64,10 +64,10 @@ describe('RecordListComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getReviewedRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
+    getRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
     TestBed.configureTestingModule({
       declarations: [
-        RecordListComponent,
+        OffCampusEventRecordListComponent,
         RecordStatusDisplayPipe,
       ],
       imports: [
@@ -89,7 +89,7 @@ describe('RecordListComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            getReviewedRecords: () => getReviewedRecords$,
+            getRecords: () => getRecords$,
           }
         },
         {
@@ -112,7 +112,7 @@ describe('RecordListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordListComponent);
+    fixture = TestBed.createComponent(OffCampusEventRecordListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -124,7 +124,7 @@ describe('RecordListComponent', () => {
   it('should load data', () => {
     const count = 100;
     const results: RecordResponse[] = [dummyRecord, dummyRecord];
-    getReviewedRecords$.next({ count, results, next: '', previous: '' });
+    getRecords$.next({ count, results, next: '', previous: '' });
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.results).toEqual(results);
@@ -132,17 +132,17 @@ describe('RecordListComponent', () => {
   });
 
   it('should empty data if an error encountered.', () => {
-    getReviewedRecords$.error('error');
+    getRecords$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.results).toEqual([]);
     expect(component.resultsLength).toEqual(0);
   });
 
-  it('should navigate to detail', () => {
-    component.navigateToDetail(dummyRecord);
+  it('should navigate to form', () => {
+    component.navigateToForm();
 
     expect(navigate).toHaveBeenCalledWith(
-      ['.', dummyRecord.id], { relativeTo: {}});
+      ['.', 'record-form'], { relativeTo: {}});
   });
 });

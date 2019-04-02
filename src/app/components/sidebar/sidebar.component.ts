@@ -21,7 +21,7 @@ export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/training-event/events', title: '校内培训活动', icon: 'list', class: '' },
     // TODO(youchen): Display the number of records without feedbacks.
     { path: '/training-record/records', title: '个人培训记录', icon: 'how_to_reg', class: '' },
-    { path: '/training-record/entry', title: '校外培训填报', icon: 'create', class: '' },
+    { path: '/training-record/off-campus-event-records', title: '校外培训填报', icon: 'create', class: '' },
     { path: '/statistics', title: '个人数据统计', icon: 'unarchive', class: '' },
 ];
 

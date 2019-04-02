@@ -6,11 +6,11 @@ import { RecordService } from '../../services/record.service';
 import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
 
 @Component({
-  selector: 'app-record-entry',
-  templateUrl: './record-entry.component.html',
-  styleUrls: ['./record-entry.component.css']
+  selector: 'app-off-campus-event-record-list',
+  templateUrl: './off-campus-event-record-list.component.html',
+  styleUrls: ['./off-campus-event-record-list.component.css']
 })
-export class RecordEntryComponent extends GenericListComponent<RecordResponse> {
+export class OffCampusEventRecordListComponent extends GenericListComponent<RecordResponse> {
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -21,13 +21,13 @@ export class RecordEntryComponent extends GenericListComponent<RecordResponse> {
   }
 
   getResults(offset: number, limit: number) {
-    const extraParams = new Map();
-    extraParams.set('off_campus_events__isnull', false);
+    const extraParams = new Map<string, string>();
+    extraParams.set('off_campus_event__isnull', 'false');
     return this.recordService.getRecords({offset, limit, extraParams});
   }
 
   navigateToForm() {
-    this.router.navigate(['.','record-form'], { relativeTo: this.route });
+    this.router.navigate(['.', 'record-form'], { relativeTo: this.route });
   }
 
 }

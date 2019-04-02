@@ -7,7 +7,8 @@ import { TrainingRecordComponent } from './training-record.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { RecordDetailComponent } from './components/record-detail/record-detail.component';
 import { RecordDetailResolverService } from './services/record-detail-resolver.service';
-import { RecordEntryComponent } from './components/record-entry/record-entry.component';
+import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
+import { EntryModeComponent } from './components/entry-mode/entry-mode.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            component: RecordEntryComponent,
+            component: EntryModeComponent,
           }
         ]
       },
@@ -49,6 +50,20 @@ const routes: Routes = [
             component: RecordListComponent,
           }
         ]
+      },
+      {
+        path: 'off-campus-event-records',
+        canActivateChild: [AuthGuard],
+        children: [
+          {
+            path: 'record-form',
+            component: RecordFormComponent,
+          },
+          {
+            path: '',
+            component: OffCampusEventRecordListComponent,
+          }
+        ],
       }
     ]
   }
