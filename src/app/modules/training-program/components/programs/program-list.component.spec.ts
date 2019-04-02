@@ -28,7 +28,6 @@ describe('ProgramListComponent', () => {
       update_time: '2019-3-6',
       name: 'test',
       admins: [],
-      admins_detail: []
     },
     category_detail: {
       id: 3,
@@ -99,7 +98,6 @@ describe('ProgramListComponent', () => {
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.programs).toEqual(results);
-    expect(component.programsLength).toEqual(count);
   });
 
   it('should empty data if an error encountered.', () => {
@@ -107,11 +105,10 @@ describe('ProgramListComponent', () => {
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.programs).toEqual([]);
-    expect(component.programsLength).toEqual(0);
   });
 
   it('should navigate to detail', () => {
-    component.navigateToDetail(dummyProgram);
+    component.navigateToRelatedEvents(dummyProgram);
 
     expect(navigate).toHaveBeenCalledWith(
       ['../events'], { queryParams: {program_id: dummyProgram.id} });

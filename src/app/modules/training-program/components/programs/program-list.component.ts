@@ -16,8 +16,6 @@ export class ProgramListComponent implements OnInit {
 
   programs: Program[] = [];
   /** The total number of programs. */
-  programsLength = 0;
-  /** Indicate data loading status */
   isLoadingResults = true;
 
   constructor(
@@ -29,7 +27,6 @@ export class ProgramListComponent implements OnInit {
     this.programService.getPrograms({offset: 0, limit: 100}).pipe(
       map(data => {
         this.isLoadingResults = false;
-        this.programsLength = data.count;
         return data.results;
       }),
       catchError((err) => {
@@ -39,7 +36,7 @@ export class ProgramListComponent implements OnInit {
     ).subscribe(programs => this.programs = programs);
   }
 
-  navigateToDetail(row: Program) {
+  navigateToRelatedEvents(row: Program) {
     this.router.navigate(['../events'], { queryParams: {program_id: row.id} });
   }
 
