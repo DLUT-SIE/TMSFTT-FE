@@ -1,17 +1,17 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordResponse } from 'src/app/interfaces/record';
 import { RecordService } from '../../services/record.service';
 import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
 
-/** Display a list of Records. */
 @Component({
-  selector: 'app-record-list',
-  templateUrl: './record-list.component.html',
-  styleUrls: ['./record-list.component.css']
+  selector: 'app-record-entry',
+  templateUrl: './record-entry.component.html',
+  styleUrls: ['./record-entry.component.css']
 })
-export class RecordListComponent extends GenericListComponent<RecordResponse> {
+export class RecordEntryComponent extends GenericListComponent<RecordResponse> {
+
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
@@ -21,7 +21,13 @@ export class RecordListComponent extends GenericListComponent<RecordResponse> {
   }
 
   getResults(offset: number, limit: number) {
-    return this.recordService.getReviewedRecords({offset, limit});
+    const extraParams = new Map();
+    extraParams.set('off_campus_events__isnull', false);
+    return this.recordService.getRecords({offset, limit, extraParams});
+  }
+
+  navigateToForm() {
+    this.router.navigate(['.','record-form'], { relativeTo: this.route });
   }
 
 }
