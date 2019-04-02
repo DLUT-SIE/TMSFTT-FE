@@ -91,7 +91,6 @@
             "karmaConfig": "src/karma.conf.js",
             "codeCoverageExclude": [
               "src/app/demo/**/*.ts",
-              "src/app/modules/roles/regular-user/components/dashboard/*.ts"
             ],
             "styles": [
               "src/styles.css"

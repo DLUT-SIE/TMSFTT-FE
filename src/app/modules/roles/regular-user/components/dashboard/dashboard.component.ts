@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
       },
     }],
     animationEasing: 'elasticOut',
-    animationDelayUpdate: (idx: number) => {
+    animationDelayUpdate: /* istanbul ignore next */ (idx: number) => {
       return idx * 50;
     },
   };
