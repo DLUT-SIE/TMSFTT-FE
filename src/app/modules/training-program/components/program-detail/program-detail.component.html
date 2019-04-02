@@ -1,64 +1,56 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title">项目名称： {{ program.name }}</h4>
-          </div>
-          <div class="card-body">
-            <table class="table table-hover text-left">
-              <tbody>
-                <tr class="d-flex">
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">单位名称</h3>
-                      <p class="text-left">{{ program.department_detail.name }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">创建时间</h3>
-                      <p class="text-left">{{ program.department_detail.create_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">更新时间</h3>
-                      <p class="text-left">{{ program.department_detail.update_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>                  
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训类别</h3>
-                      <p class="text-left">{{ program.department_detail.create_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-8 col-sm-8">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训形式</h3>
-                      <p class="text-left">{{ program.form }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-12">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">管理员</h3>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">项目名称： {{ program.name }}</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover text-left">
+            <tbody>
+              <tr class="d-flex">
+                <td class="col-4 col-sm-4">
+                  <div class="w-100">
+                    <h3 class="text-danger text-left">单位名称</h3>
+                    <p class="text-left">{{ program.department_detail.name }}</p>
+                    <span class="border-bottom"></span>
+                  </div>
+                </td>
+                <td class="col-4 col-sm-4">
+                  <div class="w-100">
+                    <h3 class="text-danger text-left">创建时间</h3>
+                    <p class="text-left">{{ program.department_detail.create_time }}</p>
+                    <span class="border-bottom"></span>
+                  </div>
+                </td>
+                <td class="col-4 col-sm-4">
+                  <div class="w-100">
+                    <h3 class="text-danger text-left">更新时间</h3>
+                    <p class="text-left">{{ program.department_detail.update_time }}</p>
+                    <span class="border-bottom"></span>
+                  </div>
+                </td>                  
+              </tr>
+              <tr class="d-flex">
+                <td class="col-4 col-sm-4">
+                  <div class="w-100">
+                    <h3 class="text-danger text-left">培训类别</h3>
+                    <p class="text-left">{{ program.department_detail.create_time }}</p>
+                    <span class="border-bottom"></span>
+                  </div>
+                </td>
+                <td class="col-8 col-sm-8">
+                  <div class="w-100">
+                    <h3 class="text-danger text-left">培训形式</h3>
+                    <p class="text-left">{{ program.form }}</p>
+                    <span class="border-bottom"></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>
