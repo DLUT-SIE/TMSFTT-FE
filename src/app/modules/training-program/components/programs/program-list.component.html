@@ -1,10 +1,10 @@
 <div class="container-fluid">
-  <div class="row" *ngFor="let programDetail of programs">
-    <div class="col-12" (click)="navigateToDetail(programDetail)">
+  <div class="row" *ngFor="let program of programs">
+    <div class="col-12" (click)="navigateToRelatedEvents(program)">
       <div class="card card-plain">
         <div class="card-header card-header-danger">
-          <h4 class="card-title">项目名称:{{ programDetail.name }} </h4>
-          <p class="card-category">开设单位:{{ programDetail.department_detail.name }} </p>
+          <h4 class="card-title">项目名称:{{ program.name }} </h4>
+          <p class="card-category">开设单位:{{ program.department_detail.name }} </p>
         </div>
       </div>
     </div>
