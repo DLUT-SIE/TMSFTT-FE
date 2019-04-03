@@ -19,12 +19,14 @@ import { TrainingEventRoutingModule } from './training-event-routing.module';
 import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { TrainingEventComponent } from './training-event.component';
 import { CampusEventDetailComponent } from './components/campus-event-detail/campus-event-detail.component';
+import { AdminCampusEventListComponent } from './components/admin-campus-event-list/admin-campus-event-list.component';
 
 @NgModule({
   declarations: [
     TrainingEventComponent,
     CampusEventListComponent,
     CampusEventDetailComponent,
+    AdminCampusEventListComponent,
   ],
   imports: [
     CommonModule,
