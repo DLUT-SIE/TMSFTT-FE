@@ -112,7 +112,7 @@ describe('AccountPermissionComponent', () => {
     expect(component.isLoading).toBeFalsy();
   });
 
-  it('should retrieve user permissions.', () => {
+  it('should display error message.', () => {
     component.username = 'abc';
     component.retrieveUserPermissions();
     const errorMessage = 'Error message';
