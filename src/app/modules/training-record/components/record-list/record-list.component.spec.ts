@@ -9,7 +9,6 @@ import { RecordService } from '../../services/record.service';
 import { RecordResponse, RecordAttachmentResponse, RecordContentResponse } from 'src/app/interfaces/record';
 import { PaginatedResponse } from 'src/app/interfaces/paginated-response';
 import { OffCampusEventResponse } from 'src/app/interfaces/event';
-import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 describe('RecordListComponent', () => {
   let component: RecordListComponent;
@@ -68,7 +67,6 @@ describe('RecordListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
-        RecordStatusDisplayPipe,
       ],
       imports: [
         MatIconModule,

@@ -24,7 +24,6 @@ import { TrainingRecordComponent } from './training-record.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { RecordDetailComponent } from './components/record-detail/record-detail.component';
 import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
-import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
 
 @NgModule({
   declarations: [
@@ -35,8 +34,6 @@ import { RecordStatusDisplayPipe } from 'src/app/pipes/record-status.pipe';
     RecordListComponent,
     RecordDetailComponent,
     OffCampusEventRecordListComponent,
-
-    RecordStatusDisplayPipe,
 
   ],
   imports: [
