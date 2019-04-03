@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="d-flex justify-content-end">
-    <a href="#" class="btn btn-danger btn-sm active" role="button" aria-pressed="true" routerLink='/admin/event-management/program-form'>创建新项目</a>
+    <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" routerLink='/admin/event-management/program-form'>创建新项目</a>
   </div>  
   <div class="row" *ngFor="let program of programs">
     <div class="col-12" (click)="navigateToRelatedEvents(program)">
