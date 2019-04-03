@@ -58,12 +58,12 @@ describe('NotificationService', () => {
     const service: NotificationService = TestBed.get(NotificationService);
     const offset = 0;
     const limit = 20;
-    const readStatus = true;
 
-    service.getNotifications(offset, limit, readStatus).subscribe(
+    service.getReadNotifications({offset, limit}).subscribe(
       res => { expect(res.results.length).toEqual(2); });
 
-    const url = `${environment.API_URL}/notifications/read/?offset=${offset}&limit=${limit}`;
+    const params = `limit=${limit}&offset=${offset}`;
+    const url = `${environment.API_URL}/notifications/read/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -74,14 +74,14 @@ describe('NotificationService', () => {
     const service: NotificationService = TestBed.get(NotificationService);
     const offset = 0;
     const limit = 20;
-    const readStatus = false;
 
-    service.getNotifications(offset, limit, readStatus).subscribe(
+    service.getUnReadNotifications({offset, limit}).subscribe(
       (res: {}) => {
         expect(res['results'].length).toEqual(2);
       });
 
-    const url = `${environment.API_URL}/notifications/unread/?offset=${offset}&limit=${limit}`;
+    const params = `limit=${limit}&offset=${offset}`;
+    const url = `${environment.API_URL}/notifications/unread/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -91,9 +91,9 @@ describe('NotificationService', () => {
   it('should ignore errors during getting notifications', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
     authenticationSucceed$.next();
-    const getNotifications = spyOn(service, 'getNotifications');
+    const getUnReadNotifications = spyOn(service, 'getUnReadNotifications');
 
-    getNotifications.and.returnValue(throwError('error'));
+    getUnReadNotifications.and.returnValue(throwError('error'));
 
     tick(1000);
 
@@ -105,9 +105,9 @@ describe('NotificationService', () => {
   it('should provide latest unread notifications.', fakeAsync(() => {
     const service: NotificationService = TestBed.get(NotificationService);
     authenticationSucceed$.next();
-    const getNotifications = spyOn(service, 'getNotifications');
+    const getUnReadNotifications = spyOn(service, 'getUnReadNotifications');
 
-    getNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
+    getUnReadNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
 
     tick(1000);
 
@@ -119,12 +119,13 @@ describe('NotificationService', () => {
   it('should use default if no value provided', () => {
     const service: NotificationService = TestBed.get(NotificationService);
 
-    service.getNotifications().subscribe(
+    service.getNotifications({}).subscribe(
       data => {
         expect(data.results.length).toEqual(2);
       });
 
-    const url = `${environment.API_URL}/notifications/?offset=0&limit=10`;
+    const params = `limit=10&offset=0`;
+    const url = `${environment.API_URL}/notifications/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -146,11 +147,10 @@ describe('NotificationService', () => {
 
   it('should mark notifications as read.', () => {
     const service: NotificationService = TestBed.get(NotificationService);
-    const id = 1;
 
-    service.markAllNotificationsAsRead(id).subscribe();
+    service.markAllNotificationsAsRead().subscribe();
 
-    const url = `${environment.API_URL}/users/${id}/tasks/mark-all-notifications-as-read/`;
+    const url = `${environment.API_URL}/notifications/actions/read-all/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -159,11 +159,10 @@ describe('NotificationService', () => {
 
   it('should delete all notifications.', () => {
     const service: NotificationService = TestBed.get(NotificationService);
-    const id = 1;
 
-    service.deleteAllNotifications(id).subscribe();
+    service.deleteAllNotifications().subscribe();
 
-    const url = `${environment.API_URL}/users/${id}/tasks/delete-all-notifications/`;
+    const url = `${environment.API_URL}/notifications/actions/delete-all/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');

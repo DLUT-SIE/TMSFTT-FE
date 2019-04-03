@@ -19,8 +19,6 @@ export class NotificationService extends GenericListService {
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
-  /** How many unread notifications should we display in toolbar. */
-  private UNREAD_BOX_LIMIT = 10;
   /** How often should we query latest notifications. */
   private REFRESH_INTERVAL = 30 * 1000;
 
@@ -32,7 +30,7 @@ export class NotificationService extends GenericListService {
     this.authService.authenticationSucceed.subscribe(() => {
       timer(0, this.REFRESH_INTERVAL).pipe(
         takeWhile(() => this.authService.isAuthenticated),
-        switchMap(() => this.getUnReadNotifications({offset: 0, limit: this.UNREAD_BOX_LIMIT})),
+        switchMap(() => this.getUnReadNotifications({offset: 0})),
         map(res => {
           this.unreadNotifications = res.results;
           this.unreadNotificationsLoaded = true;
@@ -50,14 +48,17 @@ export class NotificationService extends GenericListService {
       `${environment.API_URL}/notifications/${id}/`);
   }
 
+  /** API for retrieving notifications. */
   getNotifications(req: ListRequest) {
     return this.list<NotificationResponse>('notifications', req);
   }
 
+  /** API for retrieving notifications which have been read. */
   getReadNotifications(req: ListRequest) {
     return this.list<NotificationResponse>('notifications/read', req);
   }
 
+  /** API for retrieving notifications which haven't been read. */
   getUnReadNotifications(req: ListRequest) {
     return this.list<NotificationResponse>('notifications/unread', req);
   }
