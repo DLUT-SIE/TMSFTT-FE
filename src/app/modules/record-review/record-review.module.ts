@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule,
   MatIconModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
-  MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
 } from '@angular/material';
@@ -23,6 +23,7 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
   declarations: [RecordReviewComponent, MenuComponent, RecordListComponent, DataReviewComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     RecordReviewRoutingModule,
     FlexLayoutModule,
     MatButtonModule,
@@ -30,7 +31,6 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
     FormsModule
