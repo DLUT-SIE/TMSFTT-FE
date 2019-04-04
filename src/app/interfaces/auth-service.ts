@@ -6,8 +6,12 @@ import { InjectionToken } from '@angular/core';
 export interface AuthService {
     /** Indicate whether the current user is authenticated. */
     isAuthenticated: boolean;
-    /** Indicate whether the curreent user is administrator. */
-    isAdmin: boolean;
+    /** Indicate whether the curreent user is super administrator. */
+    isSuperAdmin: boolean;
+    /** Indicate whether the curreent user is department administrator. */
+    isDepartmentAdmin: boolean;
+    /** Indicate whether the curreent user is teacher. */
+    isTeacher: boolean;
     /** ID for authenticated user. */
     userID: number|null;
     /** Username for authenticated user. */
@@ -40,6 +44,8 @@ export interface AuthService {
      * of True and False to indicate the validity of the JWT.
      */
     refreshJWT(): Observable<boolean>;
+    /** Remove all JWT information. */
+    removeJWT();
 }
 
 /** RESTful response interface for JWT auth. */
@@ -54,6 +60,10 @@ export interface JWTResponse {
         email: string;
         is_active: boolean;
         date_joined: string;
+        user_permissions: number[];
+        is_teacher: boolean;
+        is_dept_admin: boolean;
+        is_superadmin: boolean;
     };
 }
 

@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ).subscribe(isAuthenticated => {
       if (!isAuthenticated) {
         this.loginStatus = LoginStatus.INVALID_CAS_TICKET;
+        this.authService.removeJWT();
         return;
       }
       this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;

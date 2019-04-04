@@ -15,7 +15,9 @@ import { StorageService, STORAGE_SERVICE } from 'src/app/interfaces/storage-serv
 })
 export class HTTPAuthService implements AuthService {
   isAuthenticated = false;
-  isAdmin = false;
+  isSuperAdmin = false;
+  isDepartmentAdmin = false;
+  isTeacher = false;
   userID = null;
   username = null;
   firstName = null;
@@ -50,9 +52,14 @@ export class HTTPAuthService implements AuthService {
     this.lastName = user.last_name;
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
-    // TODO(youchen): Check whether user is admin.
-    this.isAdmin = true;
+    this.isSuperAdmin = user.is_superadmin;
+    this.isDepartmentAdmin = user.is_dept_admin;
+    this.isTeacher = user.is_teacher;
     this.authenticationSucceed.next();
+  }
+
+  removeJWT() {
+    this.storageService.removeItem(environment.JWT_KEY);
   }
 
   /** Retrieve the JWT given ticket and service. */

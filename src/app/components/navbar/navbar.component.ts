@@ -3,9 +3,14 @@ import { Location, DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
-import { ADMIN_ROUTE_ITEMS, REGULAR_USER_ROUTE_ITEMS } from 'src/app/components/sidebar/sidebar.component';
+import {
+    SUPERADMIN_ROUTE_ITEMS,
+    DEPARTMENT_ADMIN_ROUTE_ITEMS,
+    REGULAR_USER_ROUTE_ITEMS,
+} from 'src/app/components/sidebar/sidebar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
+import { WindowService } from 'src/app/services/window.service';
 
 @Component({
     selector: 'app-navbar',
@@ -13,7 +18,8 @@ import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    adminRouteItems = ADMIN_ROUTE_ITEMS;
+    superAdminRouteItems = SUPERADMIN_ROUTE_ITEMS;
+    departmentAdminRouteItems = DEPARTMENT_ADMIN_ROUTE_ITEMS;
     regularUserRouteItems = REGULAR_USER_ROUTE_ITEMS;
 
     private shadingLayer: HTMLDivElement = null;
@@ -30,6 +36,7 @@ export class NavbarComponent implements OnInit {
         @Inject(AUTH_SERVICE) readonly authService: AuthService,
         private readonly location: Location,
         private readonly router: Router,
+        private readonly windowService: WindowService,
         @Inject(DOCUMENT) private readonly document: Document,
     ) { }
 
@@ -79,12 +86,18 @@ export class NavbarComponent implements OnInit {
             url = url.slice(2);
         }
 
-        for (const item of this.regularUserRouteItems.concat(this.adminRouteItems)) {
+        for (const item of this.regularUserRouteItems.concat(this.departmentAdminRouteItems).concat(this.superAdminRouteItems)) {
             if (item.path === url || url.startsWith(item.path)) {
                 return item.title;
             }
         }
 
-        return 'TMSFTT';
+        return '教师培训管理系统';
+    }
+
+    /** Logout user and redirect to home page. */
+    logOut() {
+        this.authService.removeJWT();
+        this.windowService.redirect('/');
     }
 }

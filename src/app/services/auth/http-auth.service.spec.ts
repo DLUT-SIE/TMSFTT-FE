@@ -13,6 +13,7 @@ describe('HTTPAuthService', () => {
   let redirect: jasmine.Spy;
   let getItem: jasmine.Spy;
   let setItem: jasmine.Spy;
+  let removeItem: jasmine.Spy;
   const dummyResponse: JWTResponse = {
     token: 'token',
     user: {
@@ -24,6 +25,10 @@ describe('HTTPAuthService', () => {
       email: 'e@m.com',
       is_active: true,
       date_joined: '2019-01-01',
+      user_permissions: [],
+      is_superadmin: false,
+      is_dept_admin: false,
+      is_teacher: true,
     },
   };
 
@@ -32,7 +37,7 @@ describe('HTTPAuthService', () => {
       'WindowService', ['redirect']);
     redirect = windowService.redirect.and.returnValue(null);
     const storageService = jasmine.createSpyObj(
-      'StorageService', ['getItem', 'setItem']);
+      'StorageService', ['getItem', 'setItem', 'removeItem']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
@@ -50,6 +55,7 @@ describe('HTTPAuthService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
     getItem = storageService.getItem;
     setItem = storageService.setItem;
+    removeItem = storageService.removeItem;
   });
 
   afterEach(() => {
@@ -190,5 +196,13 @@ describe('HTTPAuthService', () => {
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
+  });
+
+  it('should remove JWT', () => {
+    const service: HTTPAuthService = TestBed.get(HTTPAuthService);
+
+    service.removeJWT();
+
+    expect(removeItem).toHaveBeenCalledWith(environment.JWT_KEY);
   });
 });

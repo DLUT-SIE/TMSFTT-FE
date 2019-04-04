@@ -8,7 +8,8 @@ import { Subject } from 'rxjs';
 
 import { NavbarComponent } from './navbar.component';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
-import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
+import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { WindowService } from 'src/app/services/window.service';
 
 @Component({
   selector: '<app-test-navbar>',
@@ -25,13 +26,16 @@ describe('NavbarComponent', () => {
   let closeAll: jasmine.Spy;
   let open: jasmine.Spy;
   let prepareExternalUrl: jasmine.Spy;
-  let authService: AuthService;
+  let removeJWT: jasmine.Spy;
+  let redirect: jasmine.Spy;
   const events$ = new Subject<void>();
   const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(async(() => {
     closeAll = jasmine.createSpy();
     open = jasmine.createSpy();
+    removeJWT = jasmine.createSpy();
+    redirect = jasmine.createSpy();
     prepareExternalUrl = jasmine.createSpy();
     prepareExternalUrl.and.returnValue('url');
     TestBed.configureTestingModule({
@@ -51,10 +55,16 @@ describe('NavbarComponent', () => {
           },
         },
         {
+          provide: WindowService,
+          useValue: {
+            redirect,
+          }
+        },
+        {
           provide: AUTH_SERVICE,
           useValue: {
             authenticationSucceed: authenticationSucceed$,
-            isAdmin: true,
+            removeJWT,
           }
         },
         {
@@ -74,8 +84,6 @@ describe('NavbarComponent', () => {
       ],
     })
     .compileComponents();
-
-    authService = TestBed.get(AUTH_SERVICE);
   }));
 
   beforeEach(() => {
@@ -141,7 +149,6 @@ describe('NavbarComponent', () => {
   }));
 
   it('should get correct title', () => {
-    authService.isAdmin = true;
     authenticationSucceed$.next();
     prepareExternalUrl.and.returnValue('/dashboard');
 
@@ -151,7 +158,6 @@ describe('NavbarComponent', () => {
   });
 
   it('should get correct title(slice url)', () => {
-    authService.isAdmin = true;
     authenticationSucceed$.next();
     prepareExternalUrl.and.returnValue('#x/dashboard');
 
@@ -161,13 +167,19 @@ describe('NavbarComponent', () => {
   });
 
   it('should get default title', () => {
-    authService.isAdmin = true;
     authenticationSucceed$.next();
     prepareExternalUrl.and.returnValue('/not-exist');
 
     const title = component.getTitle();
 
-    expect(title).toBe('TMSFTT');
+    expect(title).toBe('教师培训管理系统');
   });
+
+  it('should logout user', () => {
+    component.logOut();
+
+    expect(removeJWT).toHaveBeenCalled();
+    expect(redirect).toHaveBeenCalled();
+  })
 
 });

@@ -9,7 +9,8 @@ describe('AdminGuard', () => {
   let navigate: jasmine.Spy;
   let authService: {
     isAuthenticated: boolean,
-    isAdmin: boolean,
+    isDepartmentAdmin: boolean,
+    isSuperAdmin: boolean,
   };
 
   beforeEach(() => {
@@ -21,7 +22,8 @@ describe('AdminGuard', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isAuthenticated: false,
-            isAdmin: false,
+            isDepartmentAdmin: false,
+            isSuperAdmin: false,
           },
         },
         {
@@ -56,7 +58,7 @@ describe('AdminGuard', () => {
 
   it('should not activate if authentication succeed but is not admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = false;
+    authService.isDepartmentAdmin = false;
     const canActivate = guard.canActivate(
       {} as ActivatedRouteSnapshot,
       {} as RouterStateSnapshot);
@@ -67,7 +69,7 @@ describe('AdminGuard', () => {
 
   it('should activate if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = true;
+    authService.isDepartmentAdmin = true;
     const canActivate = guard.canActivate(
       {} as ActivatedRouteSnapshot,
       {} as RouterStateSnapshot);
@@ -77,7 +79,7 @@ describe('AdminGuard', () => {
 
   it('should load if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = true;
+    authService.isSuperAdmin = true;
     const canLoad = guard.canLoad({});
 
     expect(canLoad).toBeTruthy();
@@ -85,7 +87,7 @@ describe('AdminGuard', () => {
 
   it('should not load if is not admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = false;
+    authService.isDepartmentAdmin = false;
     const canLoad = guard.canLoad({});
 
     expect(navigate).toHaveBeenCalledWith(['/permission-denied']);
@@ -112,7 +114,7 @@ describe('AdminGuard', () => {
 
   it('should not activate child if authentication succeed but is not admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = false;
+    authService.isDepartmentAdmin = false;
     const canActivateChild = guard.canActivateChild(
       {} as ActivatedRouteSnapshot,
       {} as RouterStateSnapshot);
@@ -123,7 +125,7 @@ describe('AdminGuard', () => {
 
   it('should activate child if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isAdmin = true;
+    authService.isDepartmentAdmin = true;
     const canActivateChild = guard.canActivateChild(
       {} as ActivatedRouteSnapshot,
       {} as RouterStateSnapshot);
