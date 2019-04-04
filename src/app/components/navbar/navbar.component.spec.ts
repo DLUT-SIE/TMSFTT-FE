@@ -180,6 +180,6 @@ describe('NavbarComponent', () => {
 
     expect(removeJWT).toHaveBeenCalled();
     expect(redirect).toHaveBeenCalled();
-  })
+  });
 
 });
