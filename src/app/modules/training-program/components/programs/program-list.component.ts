@@ -20,6 +20,7 @@ export class ProgramListComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
+    // private readonly route: ActivatedRoute,
     private readonly programService: ProgramService,
   ) { }
 
@@ -37,7 +38,7 @@ export class ProgramListComponent implements OnInit {
   }
 
   navigateToRelatedEvents(row: Program) {
-    this.router.navigate(['../events'], { queryParams: {program_id: row.id} });
+    this.router.navigateByUrl('/admin/event-management/events', { queryParams: {program_id: row.id}});
   }
 
 }

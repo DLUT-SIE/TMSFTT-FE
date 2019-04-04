@@ -15,7 +15,7 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { TrainingEventRoutingModule } from './training-event-routing.module';
+import { TrainingEventRoutingModule, AdminEventRoutingModule } from './training-event-routing.module';
 import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { TrainingEventComponent } from './training-event.component';
 import { CampusEventDetailComponent } from './components/campus-event-detail/campus-event-detail.component';
@@ -26,7 +26,6 @@ import { AdminCampusEventListComponent } from './components/admin-campus-event-l
     TrainingEventComponent,
     CampusEventListComponent,
     CampusEventDetailComponent,
-    AdminCampusEventListComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +42,31 @@ import { AdminCampusEventListComponent } from './components/admin-campus-event-l
     MatPaginatorModule,
     MatProgressSpinnerModule,
 
-    TrainingEventRoutingModule
+    TrainingEventRoutingModule,
   ],
 })
 export class TrainingEventModule { }
+
+@NgModule({
+  declarations: [
+    AdminCampusEventListComponent
+  ],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+
+    AdminEventRoutingModule 
+  ],
+})
+export class AdminEventModule { }

@@ -28,9 +28,18 @@ const routes: Routes = [
             component: CampusEventListComponent
           },
         ]
-      },
+      }
+    ]
+  }
+];
+
+const adminRoutes: Routes = [
+  {
+    path: '',
+    component: AdminCampusEventListComponent,
+    children: [
       {
-        path: 'events',
+        path: '',
         component: AdminCampusEventListComponent
       }
     ]
@@ -38,7 +47,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes),
+  ],
   exports: [RouterModule]
 })
 export class TrainingEventRoutingModule { }
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(adminRoutes)
+  ],
+  exports: [RouterModule]
+})
+export class AdminEventRoutingModule { }
+
