@@ -6,13 +6,10 @@ import { TrainingProgramComponent } from './training-program.component';
 import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
 import { ProgramDetailResolverService } from './services/program-detail-resolver.service';
 
-import { AuthGuard } from 'src/app/guards/auth.guard';
-
 const routes: Routes = [
   {
-    path: 'programs',
+    path: '',
     component: TrainingProgramComponent,
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'program-form',

@@ -9,6 +9,7 @@ import { GenericListComponent } from 'src/app/generics/generic-list/generic-list
   templateUrl: './admin-campus-event-list.component.html',
   styleUrls: ['./admin-campus-event-list.component.css']
 })
+
 export class AdminCampusEventListComponent extends GenericListComponent<CampusEventResponse> implements OnInit {
   programId: number;
   constructor(
@@ -20,12 +21,14 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
   }
 
   ngOnInit() {
+    // alert('1')
     this.route.queryParams.subscribe(queryParams => {
       this.programId = queryParams.program_id;
   });
   }
 
   getResults(offset: number, limit: number) {
+    // alert('2')
     let extraParams = new Map();
     extraParams.set('program',this.programId)
     return this.eventService.getCampusEvents({offset, limit, extraParams});
