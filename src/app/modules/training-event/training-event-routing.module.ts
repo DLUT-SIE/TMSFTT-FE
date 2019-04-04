@@ -5,7 +5,7 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 import { TrainingEventComponent } from './training-event.component';
 import { EventDetailResolverService } from './services/event-detail-resolver.service';
 import { CampusEventDetailComponent } from './components/campus-event-detail/campus-event-detail.component';
-// import { AdminCampusEventListComponent } from './components/admin-campus-event-list/admin-campus-event-list.component';
+import { AdminCampusEventListComponent } from './components/admin-campus-event-list/admin-campus-event-list.component';
 
 const routes: Routes = [
   {
@@ -28,6 +28,10 @@ const routes: Routes = [
             component: CampusEventListComponent
           },
         ]
+      },
+      {
+        path: 'events',
+        component: AdminCampusEventListComponent
       }
     ]
   }

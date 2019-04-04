@@ -23,7 +23,7 @@
               <tbody>
                 <tr class="d-flex" *ngFor="let item of results" (click)="navigateToDetail(item)">
                   <td class="col-2 col-sm-2">{{ item.name }}</td>
-                  <td class="col-2 col-sm-2">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
+                  <td class="col-2 col-sm-2">{{ item.time | date:'y.M.d' }}</td>
                   <td class="col-2 col-sm-2">{{ item.location }}</td>
                   <td class="col-2 col-sm-2">{{ item.num_hours | number:"0.1-1" }} </td>
                   <td class="col-2 col-sm-2">{{ item.num_participants }}</td>
