@@ -97,8 +97,6 @@ export function tokenGetter() {
     {
       provide: AUTH_SERVICE,
       useClass: HTTPAuthService,
-      /** Use below if you want to mock AuthService during development. */
-      // useClass: environment.production ? HTTPAuthService : LocalAuthService,
     },
   ],
   bootstrap: [AppComponent]

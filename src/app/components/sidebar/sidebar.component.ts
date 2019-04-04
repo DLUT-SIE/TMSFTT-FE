@@ -4,16 +4,19 @@ import { RouteInfo } from 'src/app/interfaces/route-info';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
-export const ADMIN_ROUTE_ITEMS: RouteInfo[] = [
-    { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
-    { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
+export const SUPERADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
-    { path: '/admin/record-review', title: '记录审核', icon: 'reply', class: '' },
     { path: '/demo/user-profile', title: 'Demo-User Profile', icon: 'person', class: '' },
     { path: '/demo/table-list', title: 'Demo-Table List', icon: 'content_paste', class: '' },
     { path: '/demo/typography', title: 'Demo-Typography', icon: 'library_books', class: '' },
     { path: '/demo/icons', title: 'Demo-Icons', icon: 'bubble_chart', class: '' },
     { path: '/demo/notifications', title: 'Demo-Notifications', icon: 'notifications', class: '' },
+];
+
+export const DEPARTMENT_ADMIN_ROUTE_ITEMS: RouteInfo[] = [
+    { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
+    { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
+    { path: '/admin/record-review', title: '记录审核', icon: 'reply', class: '' },
 ];
 
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
@@ -31,7 +34,8 @@ export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
     styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-    adminRouteItems = ADMIN_ROUTE_ITEMS;
+    superAdminRouteItems = SUPERADMIN_ROUTE_ITEMS;
+    departmentAdminRouteItems = DEPARTMENT_ADMIN_ROUTE_ITEMS;
     regularUserRouteItems = REGULAR_USER_ROUTE_ITEMS;
 
     constructor(

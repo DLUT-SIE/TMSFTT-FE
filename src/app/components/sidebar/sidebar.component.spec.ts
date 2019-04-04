@@ -85,7 +85,7 @@ describe('SidebarComponent', () => {
   });
 
   it('should display admin nav menu if user is admin.', () => {
-    authService.isAdmin = true;
+    authService.isDepartmentAdmin = true;
     fixture.detectChanges();
     const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
     const navMenu = nativeElement.querySelector('.admin-nav-menu');

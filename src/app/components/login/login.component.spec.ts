@@ -13,6 +13,7 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let navigate: jasmine.Spy;
   let login: jasmine.Spy;
+  let removeJWT: jasmine.Spy;
   let retrieveJWT: jasmine.Spy;
   const queryParamMapGet = jasmine.createSpy();
   const retrieveJWT$ = new Subject<boolean>();
@@ -22,11 +23,12 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     navigate = jasmine.createSpy('navigate');
     const authService = jasmine.createSpyObj('AuthService',
-      ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT']);
+      ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT', 'removeJWT']);
     login = authService.login;
     authService.verifyJWT.and.returnValue(verifyJWT$);
     authService.refreshJWT.and.returnValue(refreshJWT$);
     retrieveJWT = authService.retrieveJWT.and.returnValue(retrieveJWT$);
+    removeJWT = authService.removeJWT;
 
     TestBed.configureTestingModule({
       imports: [
@@ -102,6 +104,7 @@ describe('LoginComponent', () => {
     retrieveJWT$.next(false);
 
     expect(component.loginStatus).toBe(component.LoginStatus.INVALID_CAS_TICKET);
+    expect(removeJWT).toHaveBeenCalled();
   });
 
   it('should redirect if ticket is valid', () => {
