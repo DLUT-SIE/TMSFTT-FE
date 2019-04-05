@@ -26,10 +26,6 @@ export const adminRoutes: Routes = [
             path: 'event-management',
             loadChildren: 'src/app/modules/training-program/training-program.module#TrainingProgramModule',
           },
-          {
-            path: 'record-review',
-            loadChildren: 'src/app/modules/record-review/record-review.module#RecordReviewModule',
-          },
         ],
       },
     ],

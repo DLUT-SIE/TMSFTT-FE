@@ -16,7 +16,6 @@ export const SUPERADMIN_ROUTE_ITEMS: RouteInfo[] = [
 export const DEPARTMENT_ADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
     { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
-    { path: '/admin/record-review', title: '记录审核', icon: 'reply', class: '' },
 ];
 
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [

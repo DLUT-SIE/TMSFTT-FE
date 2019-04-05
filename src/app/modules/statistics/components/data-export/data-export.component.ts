@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RecordService } from 'src/app/modules/record-review/services/record.service';
+import { RecordService } from 'src/app/modules/data-management/services/record.service';
 import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
 import { RecordResponse } from 'src/app/interfaces/record';
 import { ActivatedRoute, Router } from '@angular/router';
