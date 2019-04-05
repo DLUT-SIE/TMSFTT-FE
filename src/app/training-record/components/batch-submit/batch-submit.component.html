@@ -1,3 +1,31 @@
-<p>
-  batch-submit works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">培训记录批量导入</h4>
+          <p class="card-category">上传表格文件以批量录入校内培训记录。</p>
+        </div>
+        <div class="card-body">
+
+            <div *ngIf="file">
+                <p>文件名:{{ file.name }}</p>
+                <label *ngIf="count  && flag">成功录入{{ count }}条记录！</label>
+            </div>
+            <div>
+                <input hidden type="file" #uploadFileInput (change)="onFileSlect($event)" accept=".xlsx"/>
+                <button mat-raised-button type="button" color="warn" *ngIf="!file" (click)="uploadFileInput.click()"
+                  i18n>选择表格</button>
+                <button mat-raised-button type="button" color="warn" *ngIf="file" (click)="uploadFileInput.click()"
+                  i18n>重新选择</button>
+                <button mat-raised-button type="button" color="primary" (click)="uploadFile()"
+                  [disabled]="!file" i18n>上传表格</button>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
