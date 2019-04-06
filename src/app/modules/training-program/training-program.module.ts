@@ -18,12 +18,14 @@ import { TrainingProgramRoutingModule } from './training-program-routing.module'
 import { ProgramListComponent } from './components/programs/program-list.component';
 import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
 import { TrainingProgramComponent } from './training-program.component';
+import { ProgramFormComponent } from './components/program-form/program-form.component';
 
 @NgModule({
   declarations: [
     ProgramListComponent,
     ProgramDetailComponent,
     TrainingProgramComponent,
+    ProgramFormComponent,
   ],
   imports: [
     CommonModule,
