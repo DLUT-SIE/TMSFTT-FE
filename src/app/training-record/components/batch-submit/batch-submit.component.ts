@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { RecordService } from '../../services/record.service';
 import { MatSnackBar } from '@angular/material';
@@ -13,7 +13,7 @@ interface FileChangeEvent extends Event {
   templateUrl: './batch-submit.component.html',
   styleUrls: ['./batch-submit.component.css']
 })
-export class BatchSubmitComponent implements OnInit {
+export class BatchSubmitComponent {
 
   file: File;
   count: number;
@@ -23,9 +23,6 @@ export class BatchSubmitComponent implements OnInit {
     private readonly recordService: RecordService,
     private readonly snackBar: MatSnackBar,
   ) { }
-
-  ngOnInit() {
-  }
 
   /** Append file to attachments when encountered a change event. */
   onFileSlect(event: FileChangeEvent) {
@@ -42,7 +39,7 @@ export class BatchSubmitComponent implements OnInit {
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
-          message = error.error['detail'];
+          message = error.error['detail'] + '。';
         }
         this.snackBar.open(message, '关闭');
       });
