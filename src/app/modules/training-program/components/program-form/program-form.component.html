@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">培训项目填报</h4>
+          <p class="card-category">此表单只能提交校内的培训项目</p>
+        </div>
+        <form class="form-container" [formGroup]="programForm">
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>note_add</mat-icon>
+            <mat-label i18n>培训名称</mat-label>
+            <input matInput type="text" placeholder="请告诉我们您要创建培训项目的名称" formControlName="name" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>note_add</mat-icon>
+            <mat-select placeholder="培训形式" type="number" placeholder="请告诉我们您要创建培训项目的培训形式" formControlName="form_id" multiple required>
+              <mat-option value=1>形式一</mat-option>
+              <mat-option value=2>形式二</mat-option>
+              <mat-option value=3>形式三</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>note_add</mat-icon>
+            <mat-select placeholder="培训类别" type="number" placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="category_id" required>
+              <mat-option value=1>类别一</mat-option>
+              <mat-option value=2>类别二</mat-option>
+              <mat-option value=3>类别三</mat-option>
+              <mat-option value=4>类别四</mat-option>
+              <mat-option value=5>类别五</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary"  i18n>提交</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+
