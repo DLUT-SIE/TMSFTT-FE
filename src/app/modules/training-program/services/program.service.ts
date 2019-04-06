@@ -29,5 +29,4 @@ export class ProgramService extends GenericListService {
     return this.http.get<Program>(
       `${environment.API_URL}/programs/${id}/`);
   }
-
 }
