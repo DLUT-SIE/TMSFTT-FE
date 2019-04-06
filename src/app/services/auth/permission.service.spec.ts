@@ -41,7 +41,7 @@ describe('PermissionService', () => {
   it('should get all permissions', () => {
     const service: PermissionService = TestBed.get(PermissionService);
 
-    service.getAllPermissions().subscribe(() => { });
+    service.getPermissions().subscribe(() => { });
 
     const req = httpTestingController.expectOne(
       `${environment.API_URL}/permissions/`);
@@ -57,20 +57,15 @@ describe('PermissionService', () => {
       {
         user: null,
         permission: null,
-        hasPerm: false,
       },
       {
         user: null,
         permission: null,
-        hasPerm: false,
       },
     ];
 
-    service.listUserPermissions(userId).subscribe(res => {
+    service.getUserPermissions(userId).subscribe(res => {
       expect(res.length).toBe(dummyResponse.length);
-      res.map(x => {
-        expect(x.hasPerm).toBeTruthy();
-      });
     });
 
     const req = httpTestingController.expectOne(
@@ -84,7 +79,7 @@ describe('PermissionService', () => {
     const service: PermissionService = TestBed.get(PermissionService);
     const username = 'abc';
     const userId = 123;
-    const getAllPermissionsResponse: Permission[] = [
+    const getPermissionsResponse: Permission[] = [
       {
         id: 1,
         codename: '1',
@@ -101,47 +96,37 @@ describe('PermissionService', () => {
         label: '3',
       },
     ];
-    const listUserPermissionsResponse: UserPermission[] = [
+    const getUserPermissionsResponse: UserPermission[] = [
       {
         id: 11,
         user: userId,
-        permission: {
-          id: 1,
-          codename: '1',
-          label: '1',
-        },
-        hasPerm: true,
+        permission: 1,
       },
       {
         id: 12,
         user: userId,
-        permission: {
-          id: 2,
-          codename: '2',
-          label: '2',
-        },
-        hasPerm: true,
+        permission: 2,
       }
     ];
 
-    spyOn(service, 'getAllPermissions').and.returnValue(
-      observableOf(getAllPermissionsResponse));
+    spyOn(service, 'getPermissions').and.returnValue(
+      observableOf(getPermissionsResponse));
 
-    spyOn(service, 'listUserPermissions').and.returnValue(
-      observableOf(listUserPermissionsResponse));
+    spyOn(service, 'getUserPermissions').and.returnValue(
+      observableOf(getUserPermissionsResponse));
 
-    service.listUserPermissionStatus(username).subscribe(res => {
+    service.getUserPermissionStatus(username).subscribe(res => {
       expect(res.length).toBe(3);
       res.map((x, idx) => {
         if (idx === 2) {
           expect(x.id).toBeUndefined();
-          expect(x.hasPerm).toBeFalsy();
+          expect(x.hasPermission).toBeFalsy();
         } else {
-          expect(x.id).toBe(listUserPermissionsResponse[idx].id);
-          expect(x.hasPerm).toBeTruthy();
+          expect(x.id).toBe(getUserPermissionsResponse[idx].id);
+          expect(x.hasPermission).toBeTruthy();
         }
         expect(x.user).toBe(userId);
-        expect(x.permission).toEqual(getAllPermissionsResponse[idx]);
+        expect(x.permission).toEqual(getPermissionsResponse[idx]);
       });
     });
 
@@ -154,7 +139,7 @@ describe('PermissionService', () => {
     const username = 'abc';
     const userId = 123;
 
-    service.listUserPermissionStatus(username).subscribe(
+    service.getUserPermissionStatus(username).subscribe(
       {
         error: (err) => {
           expect(err.message).toEqual('系统中无此用户!');
@@ -170,7 +155,7 @@ describe('PermissionService', () => {
 
     service.createUserPermission({
       user: 1,
-      permission_id: 2,
+      permission: 2,
     }).subscribe();
 
     const req = httpTestingController.expectOne(
@@ -186,11 +171,11 @@ describe('PermissionService', () => {
     service.createUserPermissions([
       {
         user: 1,
-        permission_id: 2,
+        permission: 2,
       },
       {
         user: 1,
-        permission_id: 2,
+        permission: 2,
       }
     ]).subscribe();
 

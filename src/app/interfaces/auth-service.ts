@@ -13,13 +13,17 @@ export interface AuthService {
     /** Indicate whether the curreent user is teacher. */
     isTeacher: boolean;
     /** ID for authenticated user. */
-    userID: number|null;
+    userID: number | null;
     /** Username for authenticated user. */
-    username: string|null;
+    username: string | null;
     /** Firstnam for authenticated user. */
-    firstName: string|null;
+    firstName: string | null;
     /** Lastname for authenticated user. */
-    lastName: string|null;
+    lastName: string | null;
+    /** Department id for authenticated user. */
+    department: number;
+    /** Department name for authenticated user. */
+    departmentName: string;
     /** Notify when authentication succeed. */
     authenticationSucceed: Observable<void>;
     /**
@@ -48,23 +52,27 @@ export interface AuthService {
     removeJWT();
 }
 
+export interface User {
+    id: number;
+    username: string;
+    last_login: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_active: boolean;
+    date_joined: string;
+    user_permissions: number[];
+    is_teacher: boolean;
+    is_department_admin: boolean;
+    is_superadmin: boolean;
+    department: number;
+    department_str?: string;
+}
+
 /** RESTful response interface for JWT auth. */
 export interface JWTResponse {
     token: string;
-    user: {
-        id: number;
-        username: string;
-        last_login: string;
-        first_name: string;
-        last_name: string;
-        email: string;
-        is_active: boolean;
-        date_joined: string;
-        user_permissions: number[];
-        is_teacher: boolean;
-        is_dept_admin: boolean;
-        is_superadmin: boolean;
-    };
+    user: User;
 }
 
 export const AUTH_SERVICE = new InjectionToken<AuthService>('AuthService');

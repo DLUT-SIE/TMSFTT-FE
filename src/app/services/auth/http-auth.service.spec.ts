@@ -27,8 +27,10 @@ describe('HTTPAuthService', () => {
       date_joined: '2019-01-01',
       user_permissions: [],
       is_superadmin: false,
-      is_dept_admin: false,
+      is_department_admin: false,
       is_teacher: true,
+      department: 1,
+      department_str: 'abc',
     },
   };
 
@@ -129,6 +131,49 @@ describe('HTTPAuthService', () => {
 
     expect(authenticationSucceedFired).toBeTruthy();
   });
+
+  it('should return true when verifyJWT succeed(no department name)', () => {
+    const service: HTTPAuthService = TestBed.get(HTTPAuthService);
+    getItem.and.returnValue('tokenefg');
+    let authenticationSucceedFired = false;
+
+    service.verifyJWT().subscribe((isAuthenticated: boolean) => {
+      expect(isAuthenticated).toBeTruthy();
+      expect(service.isAuthenticated).toBeTruthy();
+    });
+    service.authenticationSucceed.subscribe(() => {
+      authenticationSucceedFired = true;
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/jwt-verify/`);
+    expect(req.request.method).toEqual('POST');
+
+    const dummyResponseWithoutDepartmentName: JWTResponse = {
+      token: 'token',
+      user: {
+        id: 123,
+        username: 'username',
+        last_login: '2019-01-01',
+        first_name: 'first_name',
+        last_name: 'last_name',
+        email: 'e@m.com',
+        is_active: true,
+        date_joined: '2019-01-01',
+        user_permissions: [],
+        is_superadmin: false,
+        is_department_admin: false,
+        is_teacher: true,
+        department: 1,
+      },
+    };
+
+
+    req.flush(dummyResponseWithoutDepartmentName);
+
+    expect(authenticationSucceedFired).toBeTruthy();
+  });
+
 
   it('should return false when verifyJWT with no JWT', () => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
