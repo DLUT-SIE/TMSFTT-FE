@@ -66,7 +66,6 @@ describe('AdminCampusEventListComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          // useValue: {}
           useValue: {
             queryParams: observableOf({program_id: 1})
         }
