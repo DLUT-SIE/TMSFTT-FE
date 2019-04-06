@@ -6,7 +6,6 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { RecordDetailComponent } from './components/record-detail/record-detail.component';
 import { RecordDetailResolverService } from './services/record-detail-resolver.service';
 import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
-import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 
 import { AuthGuard } from 'src/app/guards/auth.guard';
 
@@ -44,11 +43,6 @@ const routes: Routes = [
             component: OffCampusEventRecordListComponent,
           }
         ],
-      },
-      {
-        path: 'batch-submit',
-        component: BatchSubmitComponent,
-        canActivate: [AuthGuard],
       },
     ]
   }
