@@ -66,7 +66,7 @@ export class TrainingEventModule { }
     MatPaginatorModule,
     MatProgressSpinnerModule,
 
-    AdminEventRoutingModule 
+    AdminEventRoutingModule
   ],
 })
 export class AdminEventModule { }

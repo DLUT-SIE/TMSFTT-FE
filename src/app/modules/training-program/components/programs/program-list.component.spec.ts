@@ -111,7 +111,7 @@ describe('ProgramListComponent', () => {
     component.navigateToRelatedEvents(dummyProgram);
 
     expect(navigate).toHaveBeenCalledWith(
-      ['../events'], { queryParams: {program_id: dummyProgram.id} });
+      ['/admin/event-management/events'], { queryParams: {program_id: dummyProgram.id} });
   });
 });
 
