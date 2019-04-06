@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService, AUTH_SERVICE } from 'src/app/interfaces/auth-service';
-import { switchMap, filter, map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { switchMap, filter, map } from 'rxjs/operators';
+import { WindowService } from 'src/app/services/window.service';
 
 enum LoginStatus {
   VERIFYING_JWT = '正在检查您的登录状态...',
@@ -22,24 +22,23 @@ enum LoginStatus {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   /** Make enum visible in template. */
   LoginStatus = LoginStatus;
   /** Current login status. */
   loginStatus = LoginStatus.VERIFYING_JWT;
 
-  private readonly destroyed = new Subject();
   private nextURL: string;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
+    private readonly windowService: WindowService,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
   ngOnInit() {
     this.authService.verifyJWT().pipe(
-      takeUntil(this.destroyed),
       map((isValidJWT: boolean) => {
         const snapshot = this.activatedRoute.snapshot;
         this.nextURL = snapshot.queryParamMap.get('next') || '/dashboard';
@@ -91,8 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  /** Unsubscribe all subscriptions. */
-  ngOnDestroy() {
-    this.destroyed.next();
+  retryLogin() {
+    this.windowService.redirect('/auth/login');
   }
 }

@@ -18,10 +18,12 @@ export class HTTPAuthService implements AuthService {
   isSuperAdmin = false;
   isDepartmentAdmin = false;
   isTeacher = false;
-  userID = null;
-  username = null;
-  firstName = null;
-  lastName = null;
+  userID: number = null;
+  username: string = null;
+  firstName: string = null;
+  lastName: string = null;
+  department: number = null;
+  departmentName: string = null;
   authenticationSucceed = new ReplaySubject<void>();
 
   constructor(
@@ -50,11 +52,13 @@ export class HTTPAuthService implements AuthService {
     this.username = user.username;
     this.firstName = user.first_name;
     this.lastName = user.last_name;
+    this.isSuperAdmin = user.is_superadmin;
+    this.isDepartmentAdmin = user.is_department_admin;
+    this.isTeacher = user.is_teacher;
+    this.department = user.department;
+    this.departmentName = user.department_str || '未知';
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
-    this.isSuperAdmin = user.is_superadmin;
-    this.isDepartmentAdmin = user.is_dept_admin;
-    this.isTeacher = user.is_teacher;
     this.authenticationSucceed.next();
   }
 

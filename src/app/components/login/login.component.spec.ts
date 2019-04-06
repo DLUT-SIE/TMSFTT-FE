@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { LoginComponent } from './login.component';
 import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
 import { AUTH_SERVICE } from 'src/app/interfaces/auth-service';
+import { WindowService } from 'src/app/services/window.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,12 +16,18 @@ describe('LoginComponent', () => {
   let login: jasmine.Spy;
   let removeJWT: jasmine.Spy;
   let retrieveJWT: jasmine.Spy;
-  const queryParamMapGet = jasmine.createSpy();
-  const retrieveJWT$ = new Subject<boolean>();
-  const verifyJWT$ = new Subject<boolean>();
-  const refreshJWT$ = new Subject<boolean>();
+  let queryParamMapGet: jasmine.Spy;
+  let redirect: jasmine.Spy;
+  let retrieveJWT$: Subject<boolean>;
+  let verifyJWT$: Subject<boolean>;
+  let refreshJWT$: Subject<boolean>;
 
   beforeEach(async(() => {
+    queryParamMapGet = jasmine.createSpy();
+    redirect = jasmine.createSpy();
+    retrieveJWT$ = new Subject();
+    verifyJWT$ = new Subject();
+    refreshJWT$ = new Subject();
     navigate = jasmine.createSpy('navigate');
     const authService = jasmine.createSpyObj('AuthService',
       ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT', 'removeJWT']);
@@ -48,6 +55,10 @@ describe('LoginComponent', () => {
         {
           provide: Router,
           useValue: { navigate }
+        },
+        {
+          provide: WindowService,
+          useValue: { redirect }
         },
         {
           provide: ActivatedRoute,
@@ -114,5 +125,11 @@ describe('LoginComponent', () => {
 
     expect(component.loginStatus).toBe(component.LoginStatus.REDIRECTING_TO_HOME);
     expect(navigate).toHaveBeenCalledWith(['/dashboard'], { replaceUrl: true });
+  });
+
+  it('should redirect if user wants to retry to login', () => {
+    component.retryLogin();
+
+    expect(redirect).toHaveBeenCalledWith('/auth/login');
   });
 });

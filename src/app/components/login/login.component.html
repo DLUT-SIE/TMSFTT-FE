@@ -9,6 +9,6 @@
     </ng-template>
   </mat-card-content>
   <mat-card-actions fxLayoutAlign="center">
-    <button mat-raised-button color="warn" *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET" i18n>尝试重新认证</button>
+    <button mat-raised-button color="warn" *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET" (click)="retryLogin()" i18n>尝试重新认证</button>
   </mat-card-actions>
 </mat-card>
