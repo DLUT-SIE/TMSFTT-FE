@@ -7,6 +7,7 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { DataManagementComponent } from './data-management.component';
 import { RecordDetailResolverService } from 'src/app/training-record/services/record-detail-resolver.service';
 import { AdminGuard } from 'src/app/shared/guards/admin.guard';
+import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
                 component: RecordListComponent,
               }
             ]
+          },
+          {
+            path: 'batch-submit',
+            component: BatchSubmitComponent,
           },
           {
             path: '',
