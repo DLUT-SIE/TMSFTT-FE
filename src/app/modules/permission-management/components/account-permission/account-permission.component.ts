@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserPermission, UserPermissionRequest } from 'src/app/interfaces/permission';
+import { UserPermissionRequest, UserPermissionStatus } from 'src/app/interfaces/permission';
 import { MatSnackBar } from '@angular/material';
 import { PermissionService } from 'src/app/services/auth/permission.service';
 import { of as observableOf, zip } from 'rxjs';
@@ -17,9 +17,9 @@ export class AccountPermissionComponent implements OnInit {
   isLoading = false;
   errorMessage = null;
   /** The permissions the selected user currently have. */
-  originalPermissions: UserPermission[] = [];
+  originalPermissions: UserPermissionStatus[] = [];
   /** The permissions that should be after the change. */
-  newPermissions: UserPermission[] = [];
+  newPermissions: UserPermissionStatus[] = [];
 
   constructor(
     private readonly snackBar: MatSnackBar,
@@ -45,12 +45,12 @@ export class AccountPermissionComponent implements OnInit {
     }
     this.reset();
     this.isLoading = true;
-    this.permissionService.listUserPermissionStatus(username).pipe(
+    this.permissionService.getUserPermissionStatus(username).pipe(
       catchError((err: HttpErrorResponse) => {
         this.errorMessage = err.message;
         return observableOf([]);
       }),
-    ).subscribe((permissions: UserPermission[]) => {
+    ).subscribe((permissions: UserPermissionStatus[]) => {
       this.originalPermissions = permissions;
       /** Deepcopy permission items. */
       this.newPermissions = permissions.map(x => Object.assign({}, x));
@@ -69,9 +69,9 @@ export class AccountPermissionComponent implements OnInit {
     for (let i = 0; i < this.originalPermissions.length; i++) {
       const originalPerm = this.originalPermissions[i];
       const newPerm = this.newPermissions[i];
-      if (originalPerm.hasPerm !== newPerm.hasPerm) {
-        if (newPerm.hasPerm === true) {
-          toBeCreated.push({user: newPerm.user, permission_id: newPerm.permission.id});
+      if (originalPerm.hasPermission !== newPerm.hasPermission) {
+        if (newPerm.hasPermission === true) {
+          toBeCreated.push({user: newPerm.user, permission: newPerm.permission.id});
         } else {
           toBeDeleted.push(newPerm.id);
         }

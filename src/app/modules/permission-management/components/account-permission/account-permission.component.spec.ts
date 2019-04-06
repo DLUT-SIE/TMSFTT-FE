@@ -12,10 +12,10 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PermissionService } from 'src/app/services/auth/permission.service';
-import { UserPermission, UserPermissionRequest } from 'src/app/interfaces/permission';
+import { UserPermissionRequest, UserPermissionStatus } from 'src/app/interfaces/permission';
 import { Subject } from 'rxjs';
 
-function generateUserPermissions(): UserPermission[] {
+function generateUserPermissions(): UserPermissionStatus[] {
   return [
     {
       id: 1,
@@ -25,7 +25,7 @@ function generateUserPermissions(): UserPermission[] {
         codename: '1',
         label: '1',
       },
-      hasPerm: true,
+      hasPermission: true,
     }, {
       id: 2,
       user: 1,
@@ -34,7 +34,7 @@ function generateUserPermissions(): UserPermission[] {
         codename: '2',
         label: '2',
       },
-      hasPerm: false,
+      hasPermission: false,
     },
   ];
 }
@@ -42,13 +42,13 @@ function generateUserPermissions(): UserPermission[] {
 describe('AccountPermissionComponent', () => {
   let component: AccountPermissionComponent;
   let fixture: ComponentFixture<AccountPermissionComponent>;
-  let listUserPermissionStatus$: Subject<UserPermission[]>;
+  let getUserPermissionStatus$: Subject<UserPermissionStatus[]>;
   let createUserPermissions$: Subject<Array<{}>>;
   let deleteUserPermissions$: Subject<Array<{}>>;
   let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
-    listUserPermissionStatus$ = new Subject();
+    getUserPermissionStatus$ = new Subject();
     createUserPermissions$ = new Subject();
     deleteUserPermissions$ = new Subject();
     snackBarOpen = jasmine.createSpy();
@@ -73,7 +73,7 @@ describe('AccountPermissionComponent', () => {
         {
           provide: PermissionService,
           useValue: {
-            listUserPermissionStatus: (username: string) => listUserPermissionStatus$,
+            getUserPermissionStatus: (username: string) => getUserPermissionStatus$,
             deleteUserPermissions: (permissionIds: number[]) => deleteUserPermissions$,
             createUserPermissions: (reqs: UserPermissionRequest[]) => createUserPermissions$,
           },
@@ -105,7 +105,7 @@ describe('AccountPermissionComponent', () => {
 
     expect(component.isLoading).toBeTruthy();
 
-    listUserPermissionStatus$.next(generateUserPermissions());
+    getUserPermissionStatus$.next(generateUserPermissions());
 
     expect(component.originalPermissions.length).toBe(2);
     expect(component.newPermissions.length).toBe(2);
@@ -119,7 +119,7 @@ describe('AccountPermissionComponent', () => {
 
     expect(component.isLoading).toBeTruthy();
 
-    listUserPermissionStatus$.error({message: errorMessage});
+    getUserPermissionStatus$.error({message: errorMessage});
 
     expect(component.originalPermissions.length).toBe(0);
     expect(component.newPermissions.length).toBe(0);
@@ -134,7 +134,7 @@ describe('AccountPermissionComponent', () => {
     component.originalPermissions = permissions.map(x => Object.assign({}, x));
     component.newPermissions = permissions.map(x => {
       x = Object.assign({}, x);
-      x.hasPerm = !x.hasPerm;
+      x.hasPermission = !x.hasPermission;
       return x;
     });
 
@@ -156,7 +156,7 @@ describe('AccountPermissionComponent', () => {
     component.originalPermissions = permissions.map(x => Object.assign({}, x));
     component.newPermissions = permissions.map(x => {
       x = Object.assign({}, x);
-      x.hasPerm = !x.hasPerm;
+      x.hasPermission = !x.hasPermission;
       return x;
     });
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, zip, throwError, of as observableOf } from 'rxjs';
-import { Permission, UserPermission, UserPermissionRequest } from 'src/app/interfaces/permission';
+import { Permission, UserPermission, UserPermissionRequest, UserPermissionStatus } from 'src/app/interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,49 +19,45 @@ export class PermissionService {
   ) { }
 
   /** Retrieve all permission instances. */
-  getAllPermissions(): Observable<Permission[]> {
+  getPermissions(): Observable<Permission[]> {
+    // TODO(youchen): Cache to avoid duplicate requests.
     return this.http.get<Permission[]>(`${environment.API_URL}/permissions/`);
   }
 
   /** Retrieve user's permissions. */
-  listUserPermissions(userId: number): Observable<UserPermission[]> {
+  getUserPermissions(userId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
-      `${environment.API_URL}/user-permissions/?user=${userId}`).pipe(
-        map((permissions: UserPermission[]) => {
-          return permissions.map(x => {
-            x.hasPerm = true;
-            return x;
-          });
-        }),
-      );
+      `${environment.API_URL}/user-permissions/?user=${userId}`);
   }
 
   /** Return user's permission status against all permissions. */
-  listUserPermissionStatus(username: string): Observable<UserPermission[]> {
+  getUserPermissionStatus(username: string): Observable<UserPermissionStatus[]> {
     let userId: number = null;
     return this.userService.getUserByUsername(username).pipe(
-      switchMap((res: PaginatedResponse<{id: number}>) => {
-        if (res.count !== 1) return throwError({message: '系统中无此用户!'});
+      switchMap((res: PaginatedResponse<{ id: number }>) => {
+        if (res.count !== 1) return throwError({ message: '系统中无此用户!' });
         userId = res.results[0].id;
         return zip(
-          this.getAllPermissions(),
-          this.listUserPermissions(userId),
+          this.getPermissions(),
+          this.getUserPermissions(userId),
         );
       }),
       map((val: [Permission[], UserPermission[]], index: number) => {
-        const allPermissions = val[0];
-        const userPermissions = val[1];
-        const perms = new Map<string, UserPermission>();
-        userPermissions.map(x => perms.set(x.permission.codename, x));
-        return allPermissions.map(x => {
-          const permId = perms.has(x.codename) ? perms.get(x.codename).id : undefined;
+        // All permissions, Map<permission id, Permission>
+        const permissions = new Map<number, Permission>();
+        val[0].map(x => permissions.set(x.id, x));
+        // User permissions, Map<permission id, UserPermission>;
+        const userPermissions = new Map<number, UserPermission>();
+        val[1].map(x => userPermissions.set(x.permission, x));
+        return val[0].map(x => {
+          const userPermissionId = userPermissions.has(x.id) ? userPermissions.get(x.id).id : undefined;
           return {
-            id: permId,
+            id: userPermissionId,
             user: userId,
             permission: x,
-            hasPerm: permId !== undefined,
-          } as UserPermission;
-        });
+            hasPermission: userPermissionId !== undefined,
+          };
+        }).sort((x, y) => x.permission.id - y.permission.id);
       }),
     );
   }

@@ -35,7 +35,6 @@ describe('ReviewNoteService', () => {
     const expectedUrl = `${environment.API_URL}/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0&record=3&user=87`;
 
     const req = httpTestingController.expectOne(expectedUrl);
-    console.log(url);
     expect(req.request.method).toEqual('GET');
     req.flush({});
   });
