@@ -2,11 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Subject } from 'rxjs';
+import { MatBadgeModule } from '@angular/material';
 
 import { SidebarComponent } from './sidebar.component';
 import { PlatformService } from 'src/app/services/platform.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import { RecordService } from 'src/app/modules/training-record/services/record.service';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -19,6 +21,7 @@ describe('SidebarComponent', () => {
       imports: [
         RouterModule,
         RouterTestingModule,
+        MatBadgeModule,
       ],
       declarations: [
         SidebarComponent,
@@ -34,6 +37,12 @@ describe('SidebarComponent', () => {
           provide: PlatformService,
           useValue: {
             isMobile: true,
+          },
+        },
+        {
+          provide: RecordService,
+          useValue: {
+            numberOfRecordsWithoutFeedback: 10,
           },
         },
         {

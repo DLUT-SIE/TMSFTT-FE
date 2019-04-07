@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 
 import { RecordService } from './record.service';
 
@@ -125,5 +125,21 @@ describe('RecordService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush({});
   });
+
+  it('should return 0 if getNumberOfRecordsWithoutFeedback() fail', fakeAsync(() => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    tick(1000);
+
+    expect(service.numberOfRecordsWithoutFeedback).toBe(10);
+
+    const spy = spyOn(service, 'getNumberOfRecordsWithoutFeedback');
+
+    spy.and.returnValue(throwError(''));
+
+    tick(environment.REFRESH_INTERVAL);
+
+    expect(service.numberOfRecordsWithoutFeedback).toBe(0);
+  }));
 
 });
