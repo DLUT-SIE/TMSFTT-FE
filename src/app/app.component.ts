@@ -4,9 +4,9 @@ import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/ro
 import { filter } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 
-import { PlatformService } from './services/platform.service';
-import { PlatformType } from './enums/platform-type.enum';
-import { WindowService } from './services/window.service';
+import { PlatformService } from './shared/services/platform.service';
+import { PlatformType } from './shared/enums/platform-type.enum';
+import { WindowService } from './shared/services/window.service';
 
 /** Root component. */
 @Component({

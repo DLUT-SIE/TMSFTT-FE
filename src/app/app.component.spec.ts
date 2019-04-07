@@ -7,11 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
-import { PlatformService } from './services/platform.service';
+import { PlatformService } from './shared/services/platform.service';
 import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub';
-import { AUTH_SERVICE } from './interfaces/auth-service';
-import { WindowService } from './services/window.service';
-import { PlatformType } from './enums/platform-type.enum';
+import { AUTH_SERVICE } from './shared/interfaces/auth-service';
+import { WindowService } from './shared/services/window.service';
+import { PlatformType } from './shared/enums/platform-type.enum';
 
 @Component({
   selector: 'app-sidebar',
