@@ -8,4 +8,5 @@ export const environment: Environment = {
   WHITE_LIST_DOMAINS: [],
   API_URL: 'not-set',
   PAGINATION_SIZE: 10,
+  REFRESH_INTERVAL: 30 * 1000,
 };

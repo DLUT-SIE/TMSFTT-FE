@@ -12,6 +12,7 @@ export const environment: Environment = {
   WHITE_LIST_DOMAINS: ['localhost:4200', 'localhost:8000'],
   API_URL: 'http://localhost:8000/api',
   PAGINATION_SIZE: 10,
+  REFRESH_INTERVAL: 30 * 1000,
 };
 
 /*
