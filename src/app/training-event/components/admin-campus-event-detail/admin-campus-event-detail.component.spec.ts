@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
-import { CampusEventResponse } from 'src/app/interfaces/event';
+import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute } from '@angular/router';
 
 describe('AddminCampusEventDetailComponent', () => {

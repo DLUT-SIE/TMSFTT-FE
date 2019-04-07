@@ -28,10 +28,16 @@ export const adminRoutes: Routes = [
               {
                 path: 'programs',
                 loadChildren: 'src/app/training-program/training-program.module#TrainingProgramModule',
-              },
-              {
-                path: 'events',
-                loadChildren: 'src/app/training-event/training-event.module#AdminEventModule',
+                children: [
+                  {
+                    path: 'events',
+                    loadChildren: 'src/app/training-event/training-event.module#AdminEventModule',
+                  },
+                  {
+                    path: '',
+                    loadChildren: 'src/app/training-program/training-program.module#TrainingProgramModule'
+                  }
+                ]
               }
             ],
           },
