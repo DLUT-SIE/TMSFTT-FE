@@ -37,7 +37,7 @@ export class ProgramListComponent implements OnInit {
   }
 
   navigateToRelatedEvents(row: Program) {
-    this.router.navigate(['/admin/event-management/events'], { queryParams: {program_id: row.id}});
+    this.router.navigate(['/admin/event-management/programs/events'], { queryParams: {program_id: row.id}});
   }
 
 }

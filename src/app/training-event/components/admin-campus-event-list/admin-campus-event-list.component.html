@@ -20,7 +20,7 @@
                 <th class="col-2 col-sm-2">参与者人数</th>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let item of results">
+                <tr class="d-flex" *ngFor="let item of results" (click)="navigateToDetail(item)">
                   <td class="col-3 col-sm-3">{{ item.name }}</td>
                   <td class="col-3 col-sm-3">{{ item.time | date:'y.M.d' }}</td>
                   <td class="col-2 col-sm-2">{{ item.location }}</td>

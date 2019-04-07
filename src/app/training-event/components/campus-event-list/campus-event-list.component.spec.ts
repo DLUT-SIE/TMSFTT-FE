@@ -115,11 +115,10 @@ describe('CampusEventListComponent', () => {
     expect(component.results).toEqual([]);
     expect(component.resultsLength).toEqual(0);
   });
+
   it('should navigate to detail', () => {
     component.navigateToDetail(dummyEvent);
-
     expect(navigate).toHaveBeenCalledWith(
       ['.', dummyEvent.id], { relativeTo: {}});
   });
-
 });
