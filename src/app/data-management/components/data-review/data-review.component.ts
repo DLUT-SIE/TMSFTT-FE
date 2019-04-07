@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { ReviewNoteService } from '../../services/review-note.service';
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+
+export interface FieldName {
+  value: string;
+  viewValue: string;
+}
 
 /** Display a record review page in detail. */
 @Component({
@@ -15,11 +22,25 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
 export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse> implements OnInit {
   /** The data to be displayed. */
   record: RecordResponse;
+  reviewnotecontent: string;
+  fieldname: string;
+  fieldnames: FieldName[] = [
+    {value: 'name', viewValue: '项目名称'},
+    {value: 'time', viewValue: '时间'},
+    {value: 'location', viewValue: '地点'},
+    {value: 'num_hours', viewValue: '学时'},
+    {value: 'num_participants', viewValue: '人数'},
+    {value: 'content', viewValue: '培训内容'},
+    {value: 'summary', viewValue: '培训总结'},
+    {value: 'feedback', viewValue: '培训反馈'},
+    {value: 'attachments', viewValue: '附件文件'},
+  ];
 
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
     protected readonly reviewnoteService: ReviewNoteService,
+    protected readonly snackBar: MatSnackBar,
   ) {
     super(route, router);
   }
@@ -29,6 +50,25 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
     extraParams.set('record', this.record.id);
     extraParams.set('user', this.record.user);
     return this.reviewnoteService.getReviewNotes({offset, limit, extraParams});
+  }
+
+  onSubmit() {
+    this.reviewnoteService.createReviewNote(this.record, this.reviewnotecontent, this.fieldname)
+    .subscribe(res => {
+      this.results.push(res);
+      this.resultsLength = this.results.length;
+      },
+      (error: HttpErrorResponse) => {
+        let message = error.message;
+        if (error.error) {
+          message = '';
+          for (const key of Object.keys(error.error)) {
+            message += error.error[key].join(',') + '。';
+          }
+        }
+        this.snackBar.open(message, '创建失败！');
+      }
+    );
   }
 
   ngOnInit() {
