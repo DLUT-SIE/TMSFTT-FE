@@ -8,7 +8,6 @@ import { EventService } from '../../services/event.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 
-
 describe('AdminCampusEventListComponent', () => {
   let component: AdminCampusEventListComponent;
   let fixture: ComponentFixture<AdminCampusEventListComponent>;
@@ -17,33 +16,33 @@ describe('AdminCampusEventListComponent', () => {
   let navigate: jasmine.Spy;
 
   const dummyEvent: CampusEventResponse = {
-    id: 601,
-    create_time: '2019-02-26T15:04:24.232265+08:00',
+    id: 4,
+    create_time: '2019-04-04T18:34:54.760836+08:00',
     update_time: '2019-02-26T15:04:24.232288+08:00',
-    name: '介绍需要关系如此.',
-    time: '2019-04-06T01:07:39.333288+08:00',
-    location: '济南街D座',
-    num_hours: 1.155832407467451,
-    num_participants: 62,
-    deadline: '2019-02-26T15:04:24.231857+08:00',
+    name: '为了关于社会下载.',
+    time: '2019-06-01T07:12:09.042681+08:00',
+    location: '邯郸路i座',
+    num_hours:  0.17651134923455114,
+    num_participants: 15,
+    deadline: '2019-04-04T18:34:54.760492+08:00',
     num_enrolled: 0,
-    description: '问题解决是一对于营.内容她的北京发现项目经济更多.',
-    program: 157,
+    description: '数据网上朋友要求她的继续显示.拥有更多只有美国.\n能力设计无法加入国内政府状态.地址可以部门时间.',
+    program: 1,
     program_detail: {
-      id: 157,
-      name: '还是不是其中信息',
-      department: 77,
-      category: 20,
+      id: 1,
+      name: '精芯',
+      department: 1,
+      category: 4,
       department_detail: {
-        id: 2,
-        create_time: '2019-3-4',
-        update_time: '2019-3-6',
-        name: 'test',
+        id: 1,
+        create_time: '2019-04-04T18:34:54.557369+08:00',
+        update_time: '2019-04-04T18:34:54.557421+08:00',
+        name: '精芯',
         admins: [],
       },
       category_detail: {
-        id: 3,
-        name: 'test',
+        id: 4,
+        name: '青年教师助课',
       },
       form: [],
     },
@@ -68,7 +67,7 @@ describe('AdminCampusEventListComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             queryParams: observableOf({program_id: 1})
-        }
+          }
         },
         {
           provide: Router,
@@ -117,6 +116,4 @@ describe('AdminCampusEventListComponent', () => {
     expect(component.results).toEqual([]);
     expect(component.resultsLength).toEqual(0);
   });
-
-  });
-
+});

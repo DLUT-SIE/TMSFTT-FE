@@ -34,4 +34,5 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
   });
   super.ngOnInit();
   }
+
 }
