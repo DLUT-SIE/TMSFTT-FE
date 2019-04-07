@@ -20,5 +20,7 @@ export interface Environment {
   WHITE_LIST_DOMAINS: string[];
   /** How many items in one page. */
   PAGINATION_SIZE: number;
+  /** How often should we update data (in milliseconds). */
+  REFRESH_INTERVAL: number;
 }
 

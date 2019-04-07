@@ -19,16 +19,13 @@ export class NotificationService extends GenericListService {
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
-  /** How often should we query latest notifications. */
-  private REFRESH_INTERVAL = 30 * 1000;
-
   constructor(
     protected readonly http: HttpClient,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) {
     super(http);
     this.authService.authenticationSucceed.subscribe(() => {
-      timer(0, this.REFRESH_INTERVAL).pipe(
+      timer(0, environment.REFRESH_INTERVAL).pipe(
         takeWhile(() => this.authService.isAuthenticated),
         switchMap(() => this.getUnReadNotifications({offset: 0})),
         map(res => {

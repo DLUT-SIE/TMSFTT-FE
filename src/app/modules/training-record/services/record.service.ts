@@ -1,21 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { timer, of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RecordRequest, RecordResponse, } from 'src/app/interfaces/record';
 import { GenericListService } from 'src/app/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/interfaces/list-request';
+import { switchMap, catchError } from 'rxjs/operators';
 
 /** Provide services for Record. */
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService extends GenericListService {
+  numberOfRecordsWithoutFeedback = 0;
 
   constructor(
     protected readonly http: HttpClient,
   ) {
     super(http);
+    timer(0, environment.REFRESH_INTERVAL).pipe(
+      switchMap(() => this.getNumberOfRecordsWithoutFeedback()),
+      catchError(() => observableOf(0)),
+    ).subscribe(cnt => {
+      this.numberOfRecordsWithoutFeedback = cnt;
+    });
   }
 
   /** Create TrainingRecord along with its contents and attachments. */
@@ -45,5 +54,9 @@ export class RecordService extends GenericListService {
 
   getReviewedRecords(req: ListRequest) {
     return this.list<RecordResponse>('records/reviewed', req);
+  }
+
+  getNumberOfRecordsWithoutFeedback() {
+    return observableOf(10);
   }
 }

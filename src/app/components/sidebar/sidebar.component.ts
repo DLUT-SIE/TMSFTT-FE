@@ -3,6 +3,7 @@ import { PlatformService } from 'src/app/services/platform.service';
 import { RouteInfo } from 'src/app/interfaces/route-info';
 import { AUTH_SERVICE, AuthService } from 'src/app/interfaces/auth-service';
 import { NotificationService } from 'src/app/modules/notification/services/notification.service';
+import { RecordService } from 'src/app/modules/training-record/services/record.service';
 
 export const SUPERADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
@@ -39,6 +40,7 @@ export class SidebarComponent implements OnInit {
 
     constructor(
         readonly platformService: PlatformService,
+        readonly recordService: RecordService,
         readonly notificationService: NotificationService,
         @Inject(AUTH_SERVICE) readonly authService: AuthService,
     ) { }
