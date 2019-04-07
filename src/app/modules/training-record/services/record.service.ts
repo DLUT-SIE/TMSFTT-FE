@@ -12,7 +12,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class RecordService extends GenericListService{
+export class RecordService extends GenericListService {
   numberOfRecordsWithoutFeedback = 0;
 
   constructor(
