@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CampusEventResponse } from 'src/app/interfaces/event';
+import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 
 
 @Component({
