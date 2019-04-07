@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordResponse } from 'src/app/interfaces/record';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/modules/training-record/services/record.service';
 import { GenericListComponent } from 'src/app/generics/generic-list/generic-list';
 
 /** Display a list of Records. */

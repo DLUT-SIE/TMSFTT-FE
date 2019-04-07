@@ -5,7 +5,7 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { DataManagementComponent } from './data-management.component';
-import { RecordDetailResolverService } from './services/record-detail-resolver.service';
+import { RecordDetailResolverService } from 'src/app/modules/training-record/services/record-detail-resolver.service';
 import { AdminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
