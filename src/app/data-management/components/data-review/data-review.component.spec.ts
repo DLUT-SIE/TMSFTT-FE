@@ -1,11 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf, Subject } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HAMMER_LOADER } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import {
   MatCardModule,
   MatPaginatorModule,
   MatIconModule,
   MatFormFieldModule,
+  MatSelectModule,
+  MatSnackBar,
   MatInputModule
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +25,8 @@ describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
   let fixture: ComponentFixture<DataReviewComponent>;
   let getReviewNotes$: Subject<PaginatedResponse<ReviewNoteResponse>>;
+  let createReviewNote$: Subject<ReviewNoteResponse>;
+  let snackBarOpen: jasmine.Spy;
   const dummyReviewNote: ReviewNoteResponse = {
     id: 1,
     create_time: '2019-02-23T20:37:57.127073+08:00',
@@ -31,6 +38,8 @@ describe('DataReviewComponent', () => {
 
   beforeEach(async(() => {
     getReviewNotes$ = new Subject<PaginatedResponse<ReviewNoteResponse>>();
+    createReviewNote$ = new Subject();
+    snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [ DataReviewComponent ],
       imports: [
@@ -39,6 +48,8 @@ describe('DataReviewComponent', () => {
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
+        FormsModule,
         NoopAnimationsModule
       ],
       providers: [
@@ -74,7 +85,18 @@ describe('DataReviewComponent', () => {
           provide: ReviewNoteService,
           useValue: {
             getReviewNotes: () => getReviewNotes$,
+            createReviewNote: () => createReviewNote$,
           }
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          },
+        },
+        {
+          provide: HAMMER_LOADER,
+          useValue: () => new Promise(() => { }),
         },
       ]
     })
@@ -111,6 +133,36 @@ describe('DataReviewComponent', () => {
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.results).toEqual([]);
     expect(component.resultsLength).toEqual(0);
+  });
+
+  it('should create reviewnote.', () => {
+    const resultsLength = component.resultsLength;
+
+    component.onSubmit();
+    createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
+
+    expect(component.resultsLength).toEqual(resultsLength + 1);
+  });
+
+  it('should display errors when creation failed.', () => {
+    component.onSubmit();
+    createReviewNote$.error({
+      message: 'Raw error message',
+      error: {
+        reviewnotecontent_data: ['Invalid content'],
+      },
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content。', '创建失败！');
+  });
+
+  it('should display raw errors when creation failed.', () => {
+    component.onSubmit();
+    createReviewNote$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
   });
 
 });
