@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule,
@@ -11,6 +11,7 @@ import {
   MatSnackBarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatSelectModule,
 } from '@angular/material';
 
 import { DataManagementRoutingModule } from './data-management-routing.module';
@@ -33,6 +34,8 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
     MatSnackBarModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
     FormsModule
   ]
 })
