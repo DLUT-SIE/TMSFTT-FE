@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-import { AuthGuard } from './guards/auth.guard';
-import { AdminGuard } from './guards/admin.guard';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { PermissionDeniedComponent } from './components/permission-denied/permission-denied.component';
-import { LoginComponent } from './components/login/login.component';
+import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
+import { PermissionDeniedComponent } from './core/permission-denied/permission-denied.component';
+import { LoginComponent } from './core/login/login.component';
 
 import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
 import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
@@ -13,6 +11,12 @@ import { TypographyComponent } from 'src/app/demo/typography/typography.componen
 import { IconsComponent } from 'src/app/demo/icons/icons.component';
 import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
 import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { AdminGuard } from './shared/guards/admin.guard';
+import { NotificationComponent } from './core/notification/notification.component';
+import { NotificationDetailResolverService } from './core/notification-detail/notification-detail-resolver.service';
+import { NotificationDetailComponent } from './core/notification-detail/notification-detail.component';
+import { NotificationListComponent } from './core/notification-list/notification-list.component';
 
 const routes: Routes = [
   {
@@ -37,13 +41,31 @@ const routes: Routes = [
   {
     path: 'admin',
     canLoad: [AdminGuard],
-    loadChildren: './modules/roles/admin/admin.module#AdminModule'
+    loadChildren: './roles/admin-user/admin-user.module#AdminUserModule'
   },
   // Load this module if user is authenticated.
   {
     path: '',
     canLoad: [AuthGuard],
-    loadChildren: './modules/roles/regular-user/regular-user.module#RegularUserModule'
+    loadChildren: './roles/regular-user/regular-user.module#RegularUserModule'
+  },
+  {
+    path: 'notifications',
+    component: NotificationComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: ':id',
+        resolve: {
+          notification: NotificationDetailResolverService,
+        },
+        component: NotificationDetailComponent,
+      },
+      {
+        path: '',
+        component: NotificationListComponent,
+      }
+    ]
   },
   {
     path: 'demo',
