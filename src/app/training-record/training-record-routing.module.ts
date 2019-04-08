@@ -7,13 +7,10 @@ import { RecordDetailComponent } from './components/record-detail/record-detail.
 import { RecordDetailResolverService } from './services/record-detail-resolver.service';
 import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
 
-import { AuthGuard } from 'src/app/shared/guards/auth.guard';
-
 const routes: Routes = [
   {
     path: '',
     component: TrainingRecordComponent,
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'records',
