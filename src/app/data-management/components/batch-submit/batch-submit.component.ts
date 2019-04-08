@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/training-record/services/record.service';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -31,7 +31,7 @@ export class BatchSubmitComponent {
   }
 
   uploadFile() {
-    this.recordService.BatchSubmitRecord(this.file).subscribe(
+    this.recordService.batchSubmitRecord(this.file).subscribe(
       response => {
         this.count = response.count;
         this.flag = true;

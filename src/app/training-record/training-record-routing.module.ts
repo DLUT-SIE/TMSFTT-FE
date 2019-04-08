@@ -7,7 +7,7 @@ import { RecordDetailComponent } from './components/record-detail/record-detail.
 import { RecordDetailResolverService } from './services/record-detail-resolver.service';
 import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
 
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 const routes: Routes = [
   {
