@@ -59,4 +59,10 @@ export class RecordService extends GenericListService {
   getNumberOfRecordsWithoutFeedback() {
     return observableOf(10);
   }
+
+  batchSubmitRecord(file: File) {
+    const data = new FormData();
+    data.set('file', file);
+    return this.http.post<{'count': number}>(`${environment.API_URL}/records/actions/batch-submit/`, data);
+  }
 }

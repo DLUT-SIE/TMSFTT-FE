@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { BatchSubmitComponent } from './batch-submit.component';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/training-record/services/record.service';
 
 
 describe('BatchSubmitComponent', () => {
@@ -96,4 +96,3 @@ describe('BatchSubmitComponent', () => {
     expect(component.flag).toBeTruthy();
   });
 });
-
