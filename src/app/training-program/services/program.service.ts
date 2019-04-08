@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
+import { ProgramRequest } from 'src/app/shared/interfaces/program';
 
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
@@ -28,5 +29,11 @@ export class ProgramService extends GenericListService {
   getProgram(id: number) {
     return this.http.get<Program>(
       `${environment.API_URL}/programs/${id}/`);
+  }
+
+  /** create program-form. */
+  createProgram(req: ProgramRequest) {
+    return this.http.post<Program>(
+      `${environment.API_URL}/programs/`, req);
   }
 }
