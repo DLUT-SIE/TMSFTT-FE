@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 import { ProgramService } from './program.service';
 import { environment } from 'src/environments/environment';
+import { ProgramRequest } from 'src/app/shared/interfaces/program';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('ProgramService', () => {
@@ -75,5 +76,22 @@ describe('ProgramService', () => {
     req.flush({count: 2, results: [], next: '', previous: ''});
   });
 
-});
+  it('should create program-form', () => {
+    const service: ProgramService = TestBed.get(ProgramService);
 
+    const createReq: ProgramRequest = {
+      department: 1,
+      name: 'test',
+      category: 2,
+      form: [1, 2],
+    };
+
+    service.createProgram(createReq).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/programs/`);
+    expect(req.request.method).toBe('POST');
+    req.flush({});
+  });
+
+});
