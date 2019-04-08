@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">校内培训活动填报</h4>
+          <p class="card-category">此表单只能提交校内的培训活动</p>
+        </div>
+        <div class="card-body">
+          <form class="form-container"  [formGroup]="eventForm" fxLayout="column">
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-label i18n>活动名称</mat-label>
+              <input matInput type="text" placeholder="请告诉我们您所参加校内培训活动的名称" [matAutocomplete]="auto" formControlName="name"
+                i18n-placeholder required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>calendar_today</mat-icon>
+              <mat-label i18n>时间</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="请告诉我们您所参加校内培训活动的时间" formControlName="time"
+                i18n-placeholder required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>place</mat-icon>
+              <mat-label i18n>参加地点</mat-label>
+              <input matInput type="text" placeholder="请告诉我们您所参加校内培训活动的地点" formControlName="location" i18n-placeholder
+                required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>access_time</mat-icon>
+              <mat-label i18n>参加时长</mat-label>
+              <input matInput type="number" placeholder="请告诉我们您所参加校内培训活动的时长" formControlName="numHours" i18n-placeholder
+                required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>people</mat-icon>
+              <mat-label i18n>参加人数</mat-label>
+              <input matInput type="number" placeholder="请告诉我们您所参加校内培训活动的参加人数" formControlName="numParticipants"
+                i18n-placeholder required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>calendar_today</mat-icon>
+              <mat-label i18n>截止时间</mat-label>
+              <input matInput [matDatepicker]="pickerDeadline" placeholder="请告诉我们您所参加校内培训活动的截止时间" formControlName="deadline"
+                i18n-placeholder required>
+              <mat-datepicker-toggle matSuffix [for]="pickerDeadline"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #pickerDeadline disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>assignment</mat-icon>
+              <mat-label i18n>活动描述</mat-label>
+              <textarea matInput placeholder="请告诉我们您所参加校内培训活动的描述" formControlName="description" i18n-placeholder
+                required></textarea>
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" color="primary" [disabled]="eventForm.invalid" i18n>提交</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

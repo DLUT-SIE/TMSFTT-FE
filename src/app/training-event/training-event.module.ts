@@ -8,6 +8,7 @@ import { AdminCampusEventListComponent } from './components/admin-campus-event-l
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminCampusEventDetailComponent } from './components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { AdminCampusEventComponent } from './components/admin-campus-event/admin-campus-event.component';
+import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ export class TrainingEventModule { }
   declarations: [
     AdminCampusEventComponent,
     AdminCampusEventDetailComponent,
-    AdminCampusEventListComponent
+    AdminCampusEventListComponent,
+    AdminCampusFormComponent,
   ],
   imports: [
     AdminEventRoutingModule,

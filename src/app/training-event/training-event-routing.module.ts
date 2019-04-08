@@ -8,6 +8,7 @@ import { CampusEventDetailComponent } from './components/campus-event-detail/cam
 import { AdminCampusEventListComponent } from './components/admin-campus-event-list/admin-campus-event-list.component';
 import { AdminCampusEventDetailComponent } from './components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { AdminCampusEventComponent } from './components/admin-campus-event/admin-campus-event.component';
+import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const adminRoutes: Routes = [
     path: '',
     component: AdminCampusEventComponent,
     children: [
+      {
+        path: 'event-form',
+        component: AdminCampusFormComponent,
+      },
       {
         path: ':id',
         resolve: {
