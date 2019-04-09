@@ -6,15 +6,27 @@ import {
   MatIconModule,
   MatInputModule,
   MatSelectModule,
+  MatSnackBar,
 } from '@angular/material';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { ProgramFormComponent } from './program-form.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Program } from 'src/app/shared/interfaces/program';
+import { ProgramService } from '../../services/program.service';
 
 describe('ProgramFormComponent', () => {
   let component: ProgramFormComponent;
   let fixture: ComponentFixture<ProgramFormComponent>;
+  let createProgramForm$: Subject<Program>;
+  let navigate: jasmine.Spy;
+  let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
+    createProgramForm$ = new Subject();
+    navigate = jasmine.createSpy();
+    snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -23,7 +35,25 @@ describe('ProgramFormComponent', () => {
         MatIconModule,
         MatInputModule,
         MatSelectModule,
-       ],
+      ],
+      providers: [
+        {
+          provide: ProgramService,
+          useValue: {
+            createProgram: () => createProgramForm$,
+          }
+        },
+        {
+          provide: Router,
+          useValue: { navigate },
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          },
+        },
+      ],
       declarations: [ ProgramFormComponent ]
     })
     .compileComponents();
@@ -39,4 +69,34 @@ describe('ProgramFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should navigate when creation succeed.', () => {
+    component.onSubmit();
+    createProgramForm$.next({ id: 5 } as Program);
+
+    expect(navigate).toHaveBeenCalledWith(['../program-detail/', 5]);
+  });
+  it('should display errors when creation failed.', () => {
+    component.onSubmit();
+    createProgramForm$.error({
+      message: 'Raw error message',
+      error: {
+        attachments_data: ['Invalid number of attachments'],
+      },
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid number of attachments。', '关闭');
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('should display raw errors when creation failed.', () => {
+    component.onSubmit();
+    createProgramForm$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+    expect(navigate).not.toHaveBeenCalled();
+  });
 });
+
+

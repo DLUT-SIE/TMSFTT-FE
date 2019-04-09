@@ -9,3 +9,9 @@ export interface Program {
     form: number[];
     name: string;
 }
+export interface ProgramRequest {
+    department: number;
+    category: number;
+    name: string;
+    form: number[];
+}

@@ -142,4 +142,16 @@ describe('RecordService', () => {
     expect(service.numberOfRecordsWithoutFeedback).toBe(0);
   }));
 
+  it('should batch-submit record', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.batchSubmitRecord(new File([], 'a.xlsx')).subscribe();
+
+    const url = `${environment.API_URL}/records/actions/batch-submit/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
 });

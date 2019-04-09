@@ -40,7 +40,7 @@ const routes: Routes = [
             component: OffCampusEventRecordListComponent,
           }
         ],
-      }
+      },
     ]
   }
 ];
