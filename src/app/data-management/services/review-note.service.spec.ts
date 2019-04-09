@@ -63,14 +63,12 @@ describe('ReviewNoteService', () => {
       user: 9
     };
     const notecontent = 'abc';
-    const fieldname = 'name';
 
-    service.createReviewNote(dres, notecontent, fieldname).subscribe();
+    service.createReviewNote(dres, notecontent).subscribe();
 
     const req = httpTestingController.expectOne(`${environment.API_URL}/review-notes/`);
     expect(req.request.method).toBe('POST');
     const form = req.request.body as FormData;
-    expect(form.has('field_name')).toBeTruthy();
     expect(form.has('content')).toBeTruthy();
     expect(form.has('record')).toBeTruthy();
     expect(form.has('user')).toBeTruthy();
