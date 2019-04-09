@@ -48,14 +48,14 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>place</mat-icon>
               <mat-label i18n>参加地点</mat-label>
-              <input matInput type="text" placeholder="请告诉我们您所参加培训的地点" formControlName="location" i18n-placeholder
+              <input matInput type="text" placeholder="请告诉我们您所参加校内培训活动的地点" formControlName="location" i18n-placeholder
                 required>
               <mat-error *ngIf="location.invalid && (location.dirty || location.touched)">
                 <span *ngIf="!!location.errors.required" i18n>
-                  您需要提供您所参加培训的地点。
+                  您需要提供您所参加的校内培训活动的地点。
                 </span>
                 <span *ngIf="!!location.errors.maxlength" i18n>
-                  参加培训的地点不能超过50个字符。
+                  参加校内培训活动的地点不能超过50个字符。
                 </span>
               </mat-error>
             </mat-form-field>

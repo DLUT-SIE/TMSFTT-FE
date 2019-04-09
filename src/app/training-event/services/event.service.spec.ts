@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import {
   OffCampusEventRequest,
   OffCampusEventResponse,
+  CampusEventRequest,
 } from 'src/app/shared/interfaces/event';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -111,4 +112,27 @@ describe('EventService', () => {
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
   });
+
+  it('should create event-form', () => {
+    const service: EventService = TestBed.get(EventService);
+
+    const createReq: CampusEventRequest = {
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+
+    service.createCampusEvent(createReq).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/campus-events/`);
+    expect(req.request.method).toBe('POST');
+    req.flush({});
+  });
+
 });
