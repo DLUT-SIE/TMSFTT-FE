@@ -65,4 +65,11 @@ export class RecordService extends GenericListService {
     data.set('file', file);
     return this.http.post<{'count': number}>(`${environment.API_URL}/records/actions/batch-submit/`, data);
   }
+
+  feedBack(recordID: number,feedbackData: string) {
+    const data = new FormData();
+    data.set('recordID', recordID.toString());
+    data.set('feedback', feedbackData)
+    return this.http.post(`${environment.API_URL}/records/actions/status_update/`, data);
+  }
 }

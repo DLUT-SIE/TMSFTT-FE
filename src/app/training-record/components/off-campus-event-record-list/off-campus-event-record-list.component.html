@@ -26,7 +26,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let record of results">
+                <tr *ngFor="let record of results" (click)="navigateToDetail(record)">
                     <td scope="col">{{ record.off_campus_event.name }}</td>
                     <td scope="col">{{ record.off_campus_event.time | date:'y.M.d' }}</td>
                     <td scope="col">{{ record.off_campus_event.location }}</td>

@@ -9,102 +9,163 @@
           <div class="table-responsive-lg">
             <table class="table table-hover text-left">
               <tbody>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">项目名称</h3>
-                      <p class="text-left">{{ record.off_campus_event.name }}</p>
-                    </div>
-                  </td>
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">时间</h3>
-                      <p class="text-left">{{ record.off_campus_event.time | date:'y.M.d H:mm' }}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">地点</h3>
-                      <p class="text-left">{{ record.off_campus_event.location }}</p>
-                    </div>
-                  </td>
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">学时</h3>
-                      <p class="text-left">{{ record.off_campus_event.num_hours | number:"1.0-2" }}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">人数</h3>
-                      <p class="text-left">{{ record.off_campus_event.num_participants }}</p>
-                    </div>
-                  </td>
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">人员信息</h3>
-                      <p class="text-left">{{ record.user }}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训内容</h3>
-                      <div *ngFor="let con of record.contents">
-                        <div *ngIf="con.content_type === 0">
-                          <p class="text-left">{{ con.content }}</p>
+                <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">项目名称</h3>
+                        <p class="text-left">{{ record.off_campus_event.name }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">时间</h3>
+                        <p class="text-left">{{ record.off_campus_event.time | date:'y.M.d H:mm' }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">地点</h3>
+                        <p class="text-left">{{ record.off_campus_event.location }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">学时</h3>
+                        <p class="text-left">{{ record.off_campus_event.num_hours | number:"1.0-2" }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">人数</h3>
+                        <p class="text-left">{{ record.off_campus_event.num_participants }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">人员信息</h3>
+                        <p class="text-left">{{ record.user }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">培训内容</h3>
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 0">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训总结</h3>
-                      <div *ngFor="let con of record.contents">
-                        <div *ngIf="con.content_type === 1">
-                          <p class="text-left">{{ con.content }}</p>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">培训总结</h3>
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 1">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训反馈</h3>
-                      <div *ngFor="let con of record.contents">
-                        <div *ngIf="con.content_type === 2">
-                          <p class="text-left">{{ con.content }}</p>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">培训反馈</h3>
+                        <div *ngFor="let con of record.contents">
+                          <div *ngIf="con.content_type === 2">
+                            <p class="text-left">{{ con.content }}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td class="col-12 col-sm-6">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">附加文件</h3>
-                      <div *ngFor="let att of record.attachments">
-                        <div *ngIf="att">
-                          <a class="text-left">{{ att.path }}</a>
-                          <a class="float-right">
-                            <mat-icon class="float-right" color="warn">
-                              close
-                            </mat-icon>
-                          </a>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">附加文件</h3>
+                        <div *ngFor="let att of record.attachments">
+                          <div *ngIf="att">
+                            <a class="text-left">{{ att.path }}</a>
+                            <a class="float-right">
+                              <mat-icon class="float-right" color="warn">
+                                close
+                              </mat-icon>
+                            </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template #elseBlock>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">项目名称</h3>
+                        <p class="text-left">{{ record.campus_event.name }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">时间</h3>
+                        <p class="text-left">{{ record.campus_event.time | date:'y.M.d H:mm' }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">地点</h3>
+                        <p class="text-left">{{ record.campus_event.location }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">学时</h3>
+                        <p class="text-left">{{ record.campus_event.num_hours | number:"1.0-2" }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">人数</h3>
+                        <p class="text-left">{{ record.campus_event.num_participants }}</p>
+                      </div>
+                    </td>
+                    <td class="col-12 col-sm-6">
+                      <div class="w-100">
+                        <h3 class="text-danger text-left">人员信息</h3>
+                        <p class="text-left">{{ record.user }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
               </tbody>
             </table>
           </div>
+          <mat-form-field appearance="outline" *ngIf="未反馈">
+            <mat-icon matPrefix>assignment</mat-icon>
+            <mat-label i18n>培训反馈</mat-label>
+            <textarea matInput placeholder="请告诉我们您对本次培训的一些意见，您也可以通过上传附件的形式提交该部分内容" [formControl]="feedback"
+              i18n-placeholder></textarea>
+            <mat-error *ngIf="feedback.invalid && (feedback.dirty || feedback.touched)">
+              <span *ngIf="!!feedback.errors.maxlength" i18n>
+                参加培训的培训反馈不能超过200个字符。
+              </span>
+            </mat-error>
+          </mat-form-field>
           <div class="float-right">
-            <a mat-raised-button>返回</a>
+            <button mat-raised-button class="btn btn-danger" *ngIf="isCampusEventRecord && !isFeedBacked"
+              (click)="feedBack()" i18n>提交反馈</button>
+            <button mat-raised-button class="btn" *ngIf="isCampusEventRecord && isFeedBacked" i18n>已反馈</button>
+            <button mat-raised-button class="btn btn-danger">返回</button>
           </div>
         </div>
       </div>
