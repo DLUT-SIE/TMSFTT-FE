@@ -14,7 +14,7 @@ interface OffCampusEvent extends Event {
 }
 
 interface CampusEvent extends Event {
-  num_enrolled: number;
+  num_enrolled?: number;
   deadline: string;
   description: string;
 }
@@ -22,6 +22,7 @@ interface CampusEvent extends Event {
 /** RESTful request interface for CampusEvent. */
 // tslint:disable-next-line:no-empty-interface
 export interface CampusEventRequest extends CampusEvent {
+  program: number;
 }
 
 /** RESTful response interface for CampusEvent. */

@@ -6,6 +6,7 @@ import {
   CampusEventResponse,
   OffCampusEventRequest,
   OffCampusEventResponse,
+  CampusEventRequest,
 } from 'src/app/shared/interfaces/event';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
@@ -48,5 +49,11 @@ export class EventService extends GenericListService {
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
     return this.list<OffCampusEventResponse>('off-campus-events', req);
+  }
+
+  /**  Admin create campus event */
+  createCampusEvent(req: CampusEventRequest) {
+    return this.http.post<CampusEventResponse>(
+      `${environment.API_URL}/campus-events/`, req);
   }
 }
