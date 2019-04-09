@@ -15,6 +15,7 @@ import { ProgramFormComponent } from './program-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService } from '../../services/program.service';
+import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('ProgramFormComponent', () => {
   let component: ProgramFormComponent;
@@ -51,6 +52,12 @@ describe('ProgramFormComponent', () => {
           provide: MatSnackBar,
           useValue: {
             open: snackBarOpen,
+          },
+        },
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            userID: 1,
           },
         },
       ],
