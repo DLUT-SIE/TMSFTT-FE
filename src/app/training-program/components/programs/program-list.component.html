@@ -6,11 +6,13 @@
     <mat-spinner></mat-spinner>
   </div>
   <div class="row" *ngFor="let program of programs">
-    <div class="col-12" (click)="navigateToRelatedEvents(program)">
-      <div class="card card-plain">
+    <div class="col-12">
+      <div class="card card-plain" (click)="navigateToRelatedEvents(program)">
         <div class="card-header card-header-danger">
-          <h4 class="card-title">项目名称:{{ program.name }} </h4>
-          <p class="card-category">开设单位:{{ program.department_detail.name }} </p>
+          <a>
+            <h4 class="card-title">项目名称:{{ program.name }} </h4>
+            <p class="card-category">开设单位:{{ program.department_detail.name }} </p>
+          </a>
         </div>
       </div>
     </div>
