@@ -30,7 +30,6 @@ describe('DataReviewComponent', () => {
   const dummyReviewNote: ReviewNoteResponse = {
     id: 1,
     create_time: '2019-02-23T20:37:57.127073+08:00',
-    field_name: 'time',
     content: '组织自己电子国内控制一次登录这样能够',
     record: 2,
     user: 48,

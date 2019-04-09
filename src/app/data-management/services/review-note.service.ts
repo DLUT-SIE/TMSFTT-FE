@@ -24,9 +24,8 @@ export class ReviewNoteService extends GenericListService {
     return this.list<ReviewNoteResponse>('review-notes', req);
   }
 
-  createReviewNote(dres: RecordResponse, notecontent: string, fieldname: string): Observable<ReviewNoteResponse> {
+  createReviewNote(dres: RecordResponse, notecontent: string): Observable<ReviewNoteResponse> {
     const data = new FormData();
-    data.set('field_name', fieldname);
     data.set('content', notecontent);
     data.set('record', dres.id.toString());
     data.set('user', dres.user.toString());

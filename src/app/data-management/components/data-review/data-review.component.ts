@@ -8,11 +8,6 @@ import { ReviewNoteService } from '../../services/review-note.service';
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 
-export interface FieldName {
-  value: string;
-  viewValue: string;
-}
-
 /** Display a record review page in detail. */
 @Component({
   selector: 'app-data-review',
@@ -23,18 +18,6 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
   /** The data to be displayed. */
   record: RecordResponse;
   reviewnotecontent: string;
-  fieldname: string;
-  fieldnames: FieldName[] = [
-    {value: 'name', viewValue: '项目名称'},
-    {value: 'time', viewValue: '时间'},
-    {value: 'location', viewValue: '地点'},
-    {value: 'num_hours', viewValue: '学时'},
-    {value: 'num_participants', viewValue: '人数'},
-    {value: 'content', viewValue: '培训内容'},
-    {value: 'summary', viewValue: '培训总结'},
-    {value: 'feedback', viewValue: '培训反馈'},
-    {value: 'attachments', viewValue: '附件文件'},
-  ];
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -53,7 +36,7 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
   }
 
   onSubmit() {
-    this.reviewnoteService.createReviewNote(this.record, this.reviewnotecontent, this.fieldname)
+    this.reviewnoteService.createReviewNote(this.record, this.reviewnotecontent)
     .subscribe(res => {
       this.results.push(res);
       this.resultsLength = this.results.length;
