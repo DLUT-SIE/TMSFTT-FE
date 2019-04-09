@@ -56,3 +56,20 @@ tr:hover {
   cursor: pointer;
 }
   
+.card-body .detail-item .item-title {
+    text-align: right;
+    font-family: sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(232, 73, 73);
+}
+
+.detail-section mat-divider {
+    margin-bottom: 5px;
+}
+
+/* Fix mat-option display conflict in mat-select. */
+.mat-pseudo-checkbox-checked::after {
+    width: 10px !important;
+    height: 5px !important;
+}

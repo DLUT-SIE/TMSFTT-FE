@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
 import { of as observableOf } from 'rxjs';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatDividerModule } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { NotificationDetailComponent } from './notification-detail.component';
@@ -18,8 +19,15 @@ describe('NotificationDetailComponent', () => {
       ],
       imports: [
         MatCardModule,
+        MatDividerModule,
       ],
       providers: [
+        {
+          provide: Location,
+          useValue: {
+            back: () => {},
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {

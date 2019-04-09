@@ -17,6 +17,7 @@ import {
   MatNativeDateModule,
   MatSelectModule,
   MatCheckboxModule,
+  MatDividerModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
@@ -66,6 +67,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatDividerModule,
     MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
