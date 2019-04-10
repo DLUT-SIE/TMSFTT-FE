@@ -20,6 +20,7 @@ import { ReviewNoteService } from '../../services/review-note.service';
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Location } from '@angular/common';
 
 describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
@@ -55,6 +56,11 @@ describe('DataReviewComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            },
             data: observableOf({record: {
               id: 1,
               create_time: '2019-01-01',
@@ -77,8 +83,14 @@ describe('DataReviewComponent', () => {
           }
         },
         {
+          provide: Location,
+          useValue: {},
+        },
+        {
           provide: Router,
-          useValue: {}
+          useValue: {
+            createUrlTree: () => 'abc',
+          },
         },
         {
           provide: ReviewNoteService,
@@ -110,28 +122,6 @@ describe('DataReviewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should load data', () => {
-    const results: ReviewNoteResponse[] = [dummyReviewNote, dummyReviewNote];
-    getReviewNotes$.next({
-        count: 100,
-        results,
-        next: '',
-        previous: ''
-    });
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.results).toEqual(results);
-    expect(component.resultsLength).toEqual(100);
-  });
-
-  it('should empty data if an error encountered.', () => {
-    getReviewNotes$.error('a');
-
-    expect(component.isLoadingResults).toBeFalsy();
-    expect(component.results).toEqual([]);
-    expect(component.resultsLength).toEqual(0);
   });
 
   it('should create reviewnote.', () => {

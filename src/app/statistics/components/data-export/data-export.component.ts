@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
@@ -23,10 +24,11 @@ export class DataExportComponent extends GenericListComponent<RecordResponse> {
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
+    protected readonly location: Location,
     private readonly fb: FormBuilder,
     private readonly recordService: RecordService,
   ) {
-    super(route, router);
+    super(route, router, location);
   }
 
   getResults(offset: number, limit: number) {

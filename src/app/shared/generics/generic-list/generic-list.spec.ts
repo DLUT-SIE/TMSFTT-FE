@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material';
 import { Component } from '@angular/core';
 import { HAMMER_LOADER } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-list-component',
@@ -17,8 +18,9 @@ class ListComponent extends GenericListComponent<GenericObject> {
     constructor(
         protected readonly route: ActivatedRoute,
         protected readonly router: Router,
+        protected readonly location: Location,
     ) {
-        super(route, router);
+        super(route, router, location);
     }
 
     getResults(offset: number, limit: number) {
@@ -47,13 +49,26 @@ describe('GenericListComponent', () => {
             providers: [
                 {
                     provide: ActivatedRoute,
-                    useValue: {},
+                    useValue: {
+                        snapshot: {
+                            queryParamMap: {
+                                get: () => '1',
+                            },
+                        }
+                    },
                 },
                 {
                     provide: Router,
                     useValue: {
                         navigate,
-                    }
+                        createUrlTree: () => 'abc',
+                    },
+                },
+                {
+                    provide: Location,
+                    useValue: {
+                        go: () => {},
+                    },
                 },
                 {
                     provide: HAMMER_LOADER,
@@ -100,7 +115,6 @@ describe('GenericListComponent', () => {
     it('should navigate to detail', () => {
         component.navigateToDetail({ id: 1 });
 
-        expect(navigate).toHaveBeenCalledWith(
-            ['.', 1], { relativeTo: {} });
+        expect(navigate).toHaveBeenCalled();
     });
 });

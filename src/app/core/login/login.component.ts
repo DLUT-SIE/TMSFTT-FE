@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.nextURL = snapshot.queryParamMap.get('next') || '/dashboard';
         if (isValidJWT) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
-          this.router.navigate([this.nextURL], { replaceUrl: true });
+          this.router.navigateByUrl(this.nextURL, { replaceUrl: true });
           return false;
         }
         return true;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 import { EventService  } from '../../services/event.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,9 +18,10 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
   constructor(
     private readonly eventService: EventService,
     protected readonly route: ActivatedRoute,
+    protected readonly location: Location,
     protected readonly router: Router,
   ) {
-    super(route, router);
+    super(route, router, location);
   }
 
   getResults(offset: number, limit: number) {

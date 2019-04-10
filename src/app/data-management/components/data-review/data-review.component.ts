@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,10 +23,11 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
+    protected readonly location: Location,
     protected readonly reviewnoteService: ReviewNoteService,
     protected readonly snackBar: MatSnackBar,
   ) {
-    super(route, router);
+    super(route, router, location);
   }
 
   getResults(offset: number, limit: number) {

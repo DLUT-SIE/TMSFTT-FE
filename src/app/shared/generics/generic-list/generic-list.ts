@@ -1,8 +1,9 @@
 import { OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of as observableOf, Observable, Subject, merge } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, startWith } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
@@ -20,7 +21,7 @@ export abstract class GenericListComponent<T extends GenericObject> implements O
 
   readonly pageSize = environment.PAGINATION_SIZE;
 
-  private manualRefresh$ = new Subject<PageEvent>();
+  private forceRefresh$ = new Subject<PageEvent>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -33,35 +34,47 @@ export abstract class GenericListComponent<T extends GenericObject> implements O
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
-  ) {}
+    protected readonly location: Location,
+  ) { }
 
   ngOnInit() {
-    merge(this.paginator.page, this.manualRefresh$).pipe(
-      switchMap((event: PageEvent) => {
+    merge(this.paginator.page, this.forceRefresh$).pipe(
+      startWith({
+          pageIndex: (+this.route.snapshot.queryParamMap.get('page') || 1) - 1,
+      }),
+      // Convert event to page index and update URL
+      map((event: PageEvent) => {
         this.isLoadingResults = true;
-        const offset = event.pageIndex * event.pageSize;
-        return this.getResults(offset, this.pageSize);
+        const url = this.router.createUrlTree([], {
+          relativeTo: this.route,
+          queryParams: {
+            page: event.pageIndex + 1,
+          },
+        }).toString();
+        this.location.go(url);
+        return event.pageIndex;
+      }),
+      switchMap(page => {
+        const offset = page * environment.PAGINATION_SIZE;
+        return this.getResults(offset, environment.PAGINATION_SIZE);
       }),
       map(data => {
-        this.isLoadingResults = false;
         this.resultsLength = data.count;
         return data.results;
       }),
       catchError((err) => {
-        this.isLoadingResults = false;
         return observableOf([]);
       }),
-    ).subscribe(results => this.results = results);
-    this.forceRefresh();
+    ).subscribe(results => {
+      this.isLoadingResults = false;
+      this.results = results;
+    });
   }
 
   /** Trigger page refresh manually. */
-  protected forceRefresh() {
-    this.manualRefresh$.next({
-      previousPageIndex: 0,
+  forceRefresh() {
+    this.forceRefresh$.next({
       pageIndex: 0,
-      pageSize: this.pageSize,
-      length: 0,
     } as PageEvent);
   }
 
