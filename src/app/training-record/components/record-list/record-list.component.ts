@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordResponse } from 'src/app/shared/interfaces/record';
@@ -15,9 +16,10 @@ export class RecordListComponent extends GenericListComponent<RecordResponse> {
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
+    protected readonly location: Location,
     private readonly recordService: RecordService,
   ) {
-    super(route, router);
+    super(route, router, location);
   }
 
   getResults(offset: number, limit: number) {

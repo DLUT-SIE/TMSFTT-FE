@@ -13,6 +13,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let navigate: jasmine.Spy;
+  let navigateByUrl: jasmine.Spy;
   let login: jasmine.Spy;
   let removeJWT: jasmine.Spy;
   let retrieveJWT: jasmine.Spy;
@@ -29,6 +30,7 @@ describe('LoginComponent', () => {
     verifyJWT$ = new Subject();
     refreshJWT$ = new Subject();
     navigate = jasmine.createSpy('navigate');
+    navigateByUrl = jasmine.createSpy('navigateByUrl');
     const authService = jasmine.createSpyObj('AuthService',
       ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT', 'removeJWT']);
     login = authService.login;
@@ -54,7 +56,10 @@ describe('LoginComponent', () => {
         },
         {
           provide: Router,
-          useValue: { navigate }
+          useValue: {
+            navigate,
+            navigateByUrl,
+          }
         },
         {
           provide: WindowService,
@@ -89,7 +94,7 @@ describe('LoginComponent', () => {
   it('should redirect to home if JWT is valid', () => {
     verifyJWT$.next(true);
 
-    expect(navigate).toHaveBeenCalledWith(['/dashboard'], { replaceUrl: true});
+    expect(navigateByUrl).toHaveBeenCalledWith('/dashboard', { replaceUrl: true});
     expect(component.loginStatus).toBe(component.LoginStatus.REDIRECTING_TO_HOME);
   });
 

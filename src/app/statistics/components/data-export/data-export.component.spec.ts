@@ -15,6 +15,7 @@ import { DataExportComponent } from './data-export.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent;
@@ -38,10 +39,20 @@ describe('DataExportComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: {},
+          useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            }
+          },
         },
         {
           provide: Router,
+          useValue: {},
+        },
+        {
+          provide: Location,
           useValue: {},
         },
         {

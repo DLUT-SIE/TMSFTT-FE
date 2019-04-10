@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { NotificationListComponent } from './notification-list.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { Location } from '@angular/common';
 
 describe('NotificationListComponent', () => {
   let component: NotificationListComponent;
@@ -52,13 +53,20 @@ describe('NotificationListComponent', () => {
         },
         {
           provide: ActivatedRoute,
-          useValue: {},
+          useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            }
+          },
         },
         {
           provide: Router,
           useValue: {
             navigate,
-          }
+            createUrlTree: () => 'abc',
+          },
         },
         {
           provide: NotificationService,
@@ -67,6 +75,10 @@ describe('NotificationListComponent', () => {
             markAllNotificationsAsRead,
             deleteAllNotifications,
           }
+        },
+        {
+          provide: Location,
+          useValue: {},
         },
         {
           provide: HAMMER_LOADER,
@@ -89,24 +101,26 @@ describe('NotificationListComponent', () => {
   it('should mark all notifications as read', () => {
     const count = 100;
     const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    const forceRefresh = spyOn(component, 'forceRefresh');
     getNotifications$.next({ count, results, next: '', previous: '' });
     markAllNotificationsAsRead.and.returnValue(observableOf(null));
 
     component.markAllAsRead();
 
     expect(markAllNotificationsAsRead).toHaveBeenCalled();
-    expect(getNotifications).toHaveBeenCalledTimes(2);
+    expect(forceRefresh).toHaveBeenCalled();
   });
 
   it('should delete all notifications.', () => {
     const count = 100;
     const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    const forceRefresh = spyOn(component, 'forceRefresh');
     getNotifications$.next({ count, results, next: '', previous: '' });
     deleteAllNotifications.and.returnValue(observableOf(null));
 
     component.deleteAll();
 
     expect(deleteAllNotifications).toHaveBeenCalled();
-    expect(getNotifications).toHaveBeenCalledTimes(2);
+    expect(forceRefresh).toHaveBeenCalled();
   });
 });

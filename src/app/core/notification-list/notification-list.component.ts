@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NotificationResponse } from 'src/app/shared/interfaces/notification';
@@ -15,9 +16,10 @@ export class NotificationListComponent extends GenericListComponent<Notification
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
+    protected readonly location: Location,
     private readonly notificationService: NotificationService,
   ) {
-    super(route, router);
+    super(route, router, location);
   }
 
   getResults(offset: number, limit: number) {
