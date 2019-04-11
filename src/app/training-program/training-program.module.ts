@@ -19,5 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
 
   ],
+  providers: [
+  ]
 })
 export class TrainingProgramModule { }
