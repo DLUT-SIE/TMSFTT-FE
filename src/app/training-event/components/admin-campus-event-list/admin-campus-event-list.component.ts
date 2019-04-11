@@ -27,7 +27,7 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
     protected readonly router: Router,
   ) {
     super(route, router, location);
-  }
+  } 
 
   getResults(offset: number, limit: number) {
     const extraParams = new Map();
