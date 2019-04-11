@@ -18,14 +18,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataReviewComponent } from './data-review.component';
 import { ReviewNoteService } from '../../services/review-note.service';
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
 
 describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
   let fixture: ComponentFixture<DataReviewComponent>;
-  let getReviewNotes$: Subject<PaginatedResponse<ReviewNoteResponse>>;
+  let getReviewNotes$: jasmine.Spy;
   let createReviewNote$: Subject<ReviewNoteResponse>;
   let snackBarOpen: jasmine.Spy;
   const dummyReviewNote: ReviewNoteResponse = {
@@ -37,7 +36,7 @@ describe('DataReviewComponent', () => {
   };
 
   beforeEach(async(() => {
-    getReviewNotes$ = new Subject<PaginatedResponse<ReviewNoteResponse>>();
+    getReviewNotes$ = jasmine.createSpy();
     createReviewNote$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
@@ -122,6 +121,10 @@ describe('DataReviewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get reviewnotes', () => {
+    expect(component.getResults(10,0)).toBe(getReviewNotes$);
   });
 
   it('should create reviewnote.', () => {
