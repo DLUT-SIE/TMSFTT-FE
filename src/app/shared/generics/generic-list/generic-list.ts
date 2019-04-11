@@ -50,6 +50,7 @@ export abstract class GenericListComponent<T extends GenericObject> implements O
           queryParams: {
             page: event.pageIndex + 1,
           },
+          queryParamsHandling: 'merge',
         }).toString();
         this.location.go(url);
         return event.pageIndex;
