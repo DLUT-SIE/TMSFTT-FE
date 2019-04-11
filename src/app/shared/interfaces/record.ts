@@ -22,6 +22,7 @@ export interface RecordResponse {
   contents: RecordContentResponse[];
   user: number;
   status: RecordStatus;
+  feedback: CampusEventFeedbackReponse[];
 }
 
 /** Interface for RecordContent. */
@@ -60,4 +61,10 @@ export interface RecordAttachmentResponse {
   record: number;
   attachment_type: AttachmentType;
   path: string;
+}
+
+export interface CampusEventFeedbackReponse {
+  record: number;
+  feedback: string;
+  create_time: string;
 }
