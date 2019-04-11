@@ -3,22 +3,20 @@ import { Location } from '@angular/common';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 import { RecordListComponent } from './record-list.component';
 import { RecordService } from '../../services/record.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+
 
 describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let navigate: jasmine.Spy;
   let fixture: ComponentFixture<RecordListComponent>;
-  let getReviewedRecords$: Subject<PaginatedResponse<RecordResponse>>;
+  let getReviewedRecords$: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getReviewedRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
+    getReviewedRecords$ = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
@@ -73,5 +71,9 @@ describe('RecordListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load data', () => {
+    expect(component.getResults(0, 0)).toBe(getReviewedRecords$);
   });
 });

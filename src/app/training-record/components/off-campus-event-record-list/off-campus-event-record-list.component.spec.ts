@@ -2,23 +2,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 import { OffCampusEventRecordListComponent } from './off-campus-event-record-list.component';
 import { RecordService } from '../../services/record.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Location } from '@angular/common';
 
 describe('OffCampusEventRecordListComponent', () => {
   let component: OffCampusEventRecordListComponent;
   let fixture: ComponentFixture<OffCampusEventRecordListComponent>;
   let navigate: jasmine.Spy;
-  let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
+  let getRecords$: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getRecords$ = new Subject<PaginatedResponse<RecordResponse>>();
+    getRecords$ = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         OffCampusEventRecordListComponent,
@@ -72,6 +69,10 @@ describe('OffCampusEventRecordListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load data', () => {
+    expect(component.getResults(0, 0)).toBe(getRecords$);
   });
 
   it('should navigate to form', () => {
