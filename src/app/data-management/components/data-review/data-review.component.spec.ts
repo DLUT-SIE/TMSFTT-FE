@@ -124,7 +124,7 @@ describe('DataReviewComponent', () => {
   });
 
   it('should get reviewnotes', () => {
-    expect(component.getResults(10,0)).toBe(getReviewNotes$);
+    expect(component.getResults(10, 0)).toBe(getReviewNotes$);
   });
 
   it('should create reviewnote.', () => {
