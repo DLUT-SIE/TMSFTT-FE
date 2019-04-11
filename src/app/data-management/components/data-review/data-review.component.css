@@ -1,0 +1,7 @@
+p {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.span1 {
+  margin-left: 10px;
+}
