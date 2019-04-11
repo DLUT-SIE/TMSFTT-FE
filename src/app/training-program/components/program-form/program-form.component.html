@@ -6,50 +6,53 @@
           <h4 class="card-title">培训项目填报</h4>
           <p class="card-category">此表单只能提交校内的培训项目</p>
         </div>
-        <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="programForm" fxLayout="column">
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>note_add</mat-icon>
-            <mat-label i18n>培训名称</mat-label>
-            <input matInput type="text" placeholder="请告诉我们您要创建培训项目的名称" formControlName="name" i18n-placeholder required>
-            <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
-              <span *ngIf="!!name.errors.required" i18n>
-                您需要提供培训项目的名称。
-              </span>
-              <span *ngIf="!!name.errors.maxlength" i18n>
-                培训项目的名称不能超过50个字符。
-              </span>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>note_add</mat-icon>
-            <mat-select placeholder="培训形式" formControlName="formsId" placeholder="请告诉我们您要创建培训项目的培训形式" multiple required>
-              <mat-option value=1>参与</mat-option>
-              <mat-option value=2>主持</mat-option>
-              <mat-option value=3>评委</mat-option>
-            </mat-select>
-            <mat-error *ngIf="formsId.invalid && (formsId.dirty || formsId.touched)">
-              <span *ngIf="!!formsId.errors.required" i18n>
-                您需要提供培训项目的形式。
-              </span>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>note_add</mat-icon>
-            <mat-select placeholder="培训类别" placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
-              <mat-option value=1>类别一</mat-option>
-              <mat-option value=2>类别二</mat-option>
-              <mat-option value=3>类别三</mat-option>
-              <mat-option value=4>类别四</mat-option>
-              <mat-option value=5>类别五</mat-option>
-            </mat-select>
-            <mat-error *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
-              <span *ngIf="!!categoryId.errors.required" i18n>
-                您需要提供培训项目的类别。
-              </span>
-            </mat-error>
-          </mat-form-field>
-          <button mat-raised-button type="submit" color="primary"  i18n>提交</button>
-        </form>
+        <div class="card-body">
+          <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="programForm" fxLayout="column">
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-label i18n>培训名称</mat-label>
+              <input matInput type="text" placeholder="请告诉我们您要创建培训项目的名称" formControlName="name" i18n-placeholder required>
+              <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+                <span *ngIf="!!name.errors.required" i18n>
+                  您需要提供培训项目的名称。
+                </span>
+                <span *ngIf="!!name.errors.maxlength" i18n>
+                  培训项目的名称不能超过50个字符。
+                </span>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-select formControlName="formIds" placeholder="请告诉我们您要创建培训项目的培训形式" multiple required>
+                <mat-option value="1">参与</mat-option>
+                <mat-option value="2">主持</mat-option>
+                <mat-option value="3">评委</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formIds.invalid && (formIds.dirty || formIds.touched)">
+                <span *ngIf="!!formIds.errors.required" i18n>
+                  您需要提供培训项目的形式。
+                </span>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-select placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
+                <mat-option value="1">类别一</mat-option>
+                <mat-option value="2">类别二</mat-option>
+                <mat-option value="3">类别三</mat-option>
+                <mat-option value="4">类别四</mat-option>
+                <mat-option value="5">类别五</mat-option>
+              </mat-select>
+              <mat-error *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
+                <span *ngIf="!!categoryId.errors.required" i18n>
+                  您需要提供培训项目的类别。
+                </span>
+              </mat-error>
+            </mat-form-field>
+            <button mat-raised-button type="submit" color="primary"  i18n>提交</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { ProgramRequest } from 'src/app/shared/interfaces/program';
 import { ProgramService} from '../../services/program.service';
+import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 @Component({
   selector: 'app-program-form',
@@ -17,7 +18,7 @@ export class ProgramFormComponent implements OnInit {
   programForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     categoryId: ['', [Validators.required]],
-    formsId: ['', [Validators.required]],
+    formIds: ['', [Validators.required]],
   });
 
   constructor(
@@ -25,6 +26,7 @@ export class ProgramFormComponent implements OnInit {
     private readonly snackBar: MatSnackBar,
     private readonly programService: ProgramService,
     private readonly router: Router,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -36,16 +38,16 @@ export class ProgramFormComponent implements OnInit {
   get categoryId() {
     return this.programForm.get('categoryId');
   }
-  get formsId() {
-    return this.programForm.get('formsId');
+  get formIds() {
+    return this.programForm.get('formIds');
   }
 
   onSubmit() {
     const req: ProgramRequest = {
-      department: 1,
+      department: this.authService.department,
       category: this.programForm.value.categoryId,
       name: this.programForm.value.name,
-      form: this.programForm.value.formsId,
+      form: this.programForm.value.formIds,
     };
     this.programService.createProgram(req).subscribe(
       program => {
