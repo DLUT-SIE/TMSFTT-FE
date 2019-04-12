@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { map, switchMap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { PaginatedResponse } from '../interfaces/paginated-response';
+import { User } from '../interfaces/auth-service';
 
 /** This service manages Permission objects and UserPermission objects. */
 @Injectable({
@@ -34,7 +35,7 @@ export class PermissionService {
   getUserPermissionStatus(username: string): Observable<UserPermissionStatus[]> {
     let userId: number = null;
     return this.userService.getUserByUsername(username).pipe(
-      switchMap((res: PaginatedResponse<{ id: number }>) => {
+      switchMap((res: PaginatedResponse<User>) => {
         if (res.count !== 1) return throwError({ message: '系统中无此用户!' });
         userId = res.results[0].id;
         return zip(

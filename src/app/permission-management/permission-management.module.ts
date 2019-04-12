@@ -6,6 +6,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DepartmentManagementComponent } from './components/department-management/department-management.component';
+import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { DepartmentManagementComponent } from './components/department-managemen
     UserManagementComponent,
     MenuComponent,
     DepartmentManagementComponent,
+    DepartmentDetailComponent,
   ],
   imports: [
     SharedModule,
