@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountPermissionComponent } from './account-permission.component';
+import { UserManagementComponent } from './user-management.component';
 import { FormsModule } from '@angular/forms';
 import {
   MatFormFieldModule,
@@ -39,9 +39,9 @@ function generateUserPermissions(): UserPermissionStatus[] {
   ];
 }
 
-describe('AccountPermissionComponent', () => {
-  let component: AccountPermissionComponent;
-  let fixture: ComponentFixture<AccountPermissionComponent>;
+describe('UserManagementComponent', () => {
+  let component: UserManagementComponent;
+  let fixture: ComponentFixture<UserManagementComponent>;
   let getUserPermissionStatus$: Subject<UserPermissionStatus[]>;
   let createUserPermissions$: Subject<Array<{}>>;
   let deleteUserPermissions$: Subject<Array<{}>>;
@@ -53,7 +53,7 @@ describe('AccountPermissionComponent', () => {
     deleteUserPermissions$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ AccountPermissionComponent ],
+      declarations: [ UserManagementComponent ],
       imports: [
         HttpClientTestingModule,
         FormsModule,
@@ -84,7 +84,7 @@ describe('AccountPermissionComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountPermissionComponent);
+    fixture = TestBed.createComponent(UserManagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

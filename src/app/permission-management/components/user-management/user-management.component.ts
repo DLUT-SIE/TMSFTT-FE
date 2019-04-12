@@ -6,13 +6,13 @@ import { of as observableOf, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
-/** AccountPermissionComponent allows admins modify users' permissions. */
+/** UserManagementComponent allows admins manage users' accounts, permissions. */
 @Component({
-  selector: 'app-account-permission',
-  templateUrl: './account-permission.component.html',
-  styleUrls: ['./account-permission.component.css']
+  selector: 'app-user-management',
+  templateUrl: './user-management.component.html',
+  styleUrls: ['./user-management.component.css']
 })
-export class AccountPermissionComponent implements OnInit {
+export class UserManagementComponent implements OnInit {
   username = '';
   isLoading = false;
   errorMessage = null;
