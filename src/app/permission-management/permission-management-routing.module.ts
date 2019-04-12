@@ -5,6 +5,7 @@ import { UserManagementComponent } from './components/user-management/user-manag
 import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
 import { DepartmentManagementComponent } from './components/department-management/department-management.component';
+import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 
 const routes: Routes = [
   {
@@ -15,12 +16,16 @@ const routes: Routes = [
         path: '',
         children: [
           {
-            path: 'user-management',
+            path: 'users',
             component: UserManagementComponent,
           },
           {
-            path: 'department-management',
+            path: 'departments',
             component: DepartmentManagementComponent,
+          },
+          {
+            path: 'departments/:id',
+            component: DepartmentDetailComponent,
           },
           {
             path: '',
