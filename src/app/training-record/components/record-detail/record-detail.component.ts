@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
+import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
 
 
 /** Display a record in detail. */
@@ -18,11 +19,12 @@ export class RecordDetailComponent implements OnInit {
   record: RecordResponse;
   isCampusEventRecord: boolean;
   isFeedBacked: boolean;
-  feedback = new FormControl('',[Validators.maxLength(200)]);
+  feedback : string;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly recordService: RecordService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -35,8 +37,20 @@ export class RecordDetailComponent implements OnInit {
     });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(FeedbackDialogComponent, {
+      width: '250px',
+      data: {feedback: this.feedback},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.feedback = result;
+      this.feedBack();
+    });
+  }
+
   feedBack() {
-    this.recordService.feedBack(this.record.id, this.feedback.value).subscribe(() => {
+    this.recordService.feedBack(this.record.id, this.feedback).subscribe(() => {
       this.isFeedBacked = true;
     });
   }

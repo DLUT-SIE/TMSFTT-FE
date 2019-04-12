@@ -156,41 +156,13 @@
                 </div>
                 <div fxFlex="1 0 2%"></div>
               </div>
-
-              <div *ngIf="record.feedback[0]">
-                <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-                fxLayoutGap="15px">
-                  <span class="item-title" fxFlex="1 0 20%">反馈内容</span>
-                  <div class="item-content" fxFlex="1 0 78%">
-                    <p>{{ record.feedback[0].feedback }}</p>
-                  </div>
-                  <div fxFlex="1 0 2%"></div>
-                </div>
-              </div>
             </div>
           </ng-template>
 
-          <div *ngIf="isCampusEventRecord && !isFeedBacked">
-            <div fxFlex="1 0 12%"></div>
-            <mat-form-field appearance="outline" fxFlex="1 0 86%">
-                <mat-icon matPrefix>assignment</mat-icon>
-                <mat-label i18n>活动反馈</mat-label>
-                <textarea matInput placeholder="请告诉我们您对本次活动的一些意见" [formControl]="feedback"
-                  i18n-placeholder></textarea>
-                <mat-error *ngIf="feedback.invalid && (feedback.dirty || feedback.touched)">
-                  <span *ngIf="!!feedback.errors.maxlength" i18n>
-                    参加培训的培训反馈不能超过200个字符。
-                  </span>
-                </mat-error>
-            </mat-form-field>
-            <div fxFlex="1 0 2%"></div>
-          </div>
-
           <mat-divider></mat-divider>
           <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !isFeedBacked"
-            (click)="feedBack()">提交反馈</a>
-            <a mat-raised-button color="disabled" *ngIf="isCampusEventRecord && isFeedBacked">已反馈</a>
+            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !isFeedBacked && !feedback"
+            (click)="openDialog()">提交反馈</a>
             <a mat-raised-button color="primary" (click)="location.back()">返回</a> 
           </div>
         </div>
