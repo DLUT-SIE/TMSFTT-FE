@@ -154,4 +154,15 @@ describe('RecordService', () => {
     req.flush({});
   });
 
+  it('should feed back', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.createFeedback(1, '').subscribe();
+
+    const url = `${environment.API_URL}/records/actions/status_update/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
 });
