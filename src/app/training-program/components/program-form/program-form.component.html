@@ -24,9 +24,9 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>note_add</mat-icon>
               <mat-select formControlName="formIds" placeholder="请告诉我们您要创建培训项目的培训形式" multiple required>
-                <mat-option value="1">参与</mat-option>
-                <mat-option value="2">主持</mat-option>
-                <mat-option value="3">评委</mat-option>
+                <mat-option *ngFor="let programForm of programForms" [value]="programForm.id">
+                  {{ programForm.name }}
+                </mat-option>
               </mat-select>
               <mat-error *ngIf="formIds.invalid && (formIds.dirty || formIds.touched)">
                 <span *ngIf="!!formIds.errors.required" i18n>
@@ -37,11 +37,9 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>note_add</mat-icon>
               <mat-select placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
-                <mat-option value="1">类别一</mat-option>
-                <mat-option value="2">类别二</mat-option>
-                <mat-option value="3">类别三</mat-option>
-                <mat-option value="4">类别四</mat-option>
-                <mat-option value="5">类别五</mat-option>
+                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.id">
+                  {{ programCategory.name }}
+                </mat-option>
               </mat-select>
               <mat-error *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
                 <span *ngIf="!!categoryId.errors.required" i18n>
