@@ -1,14 +1,46 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MAT_DIALOG_DATA,
+         MatDialogRef,
+         MatDialogModule,
+         MatInputModule,
+         MatFormFieldModule,
+         MatButtonModule,
+        } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FeedbackDialogComponent } from './feedback-dialog.component';
 
 describe('FeedbackDialogComponent', () => {
   let component: FeedbackDialogComponent;
   let fixture: ComponentFixture<FeedbackDialogComponent>;
+  let close: jasmine.Spy;
 
   beforeEach(async(() => {
+    close = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ FeedbackDialogComponent ]
+      declarations: [ FeedbackDialogComponent ],
+      imports: [
+        MatDialogModule,
+        MatInputModule,
+        MatFormFieldModule,
+        NoopAnimationsModule,
+        MatButtonModule,
+        FormsModule,
+      ],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            feedback: '123',
+          }
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close,
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
@@ -21,5 +53,11 @@ describe('FeedbackDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should close when cancle it', () => {
+    component.onNoClick();
+
+    expect(close).toHaveBeenCalled();
   });
 });

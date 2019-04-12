@@ -22,7 +22,7 @@ export interface RecordResponse {
   contents: RecordContentResponse[];
   user: number;
   status: RecordStatus;
-  feedback: CampusEventFeedbackReponse[];
+  feedback?: CampusEventFeedbackReponse[];
 }
 
 /** Interface for RecordContent. */

@@ -19,7 +19,7 @@ export class RecordDetailComponent implements OnInit {
   record: RecordResponse;
   isCampusEventRecord: boolean;
   isFeedBacked: boolean;
-  feedback : string;
+  feedback: string;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -32,27 +32,23 @@ export class RecordDetailComponent implements OnInit {
     this.route.data.subscribe((data: { record: RecordResponse }) => {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
-      this.isFeedBacked = this.record.status == RecordStatus.STATUS_WITH_FEEDBACK;
+      this.isFeedBacked = this.record.status === RecordStatus.STATUS_WITH_FEEDBACK;
 
     });
   }
 
-  openDialog(): void {
+  openDialog() {
     const dialogRef = this.dialog.open(FeedbackDialogComponent, {
       width: '250px',
       data: {feedback: this.feedback},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.feedback = result;
-      this.feedBack();
+      this.recordService.createFeedback(this.record.id, result).subscribe(() => {
+        this.isFeedBacked = true;
+      });
     });
   }
 
-  feedBack() {
-    this.recordService.feedBack(this.record.id, this.feedback).subscribe(() => {
-      this.isFeedBacked = true;
-    });
-  }
 
 }
