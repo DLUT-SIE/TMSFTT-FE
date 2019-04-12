@@ -65,4 +65,11 @@ export class RecordService extends GenericListService {
     data.set('file', file);
     return this.http.post<{'count': number}>(`${environment.API_URL}/records/actions/batch-submit/`, data);
   }
+
+  updateRecordStatus(id: number, status: number) {
+    const data = new FormData();
+    data.set('status', status.toString());
+    return this.http.patch<RecordResponse>(
+      `${environment.API_URL}/records/${id}/`, data);
+  }
 }

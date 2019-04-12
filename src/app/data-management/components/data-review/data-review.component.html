@@ -140,8 +140,8 @@
               <button mat-raised-button type="button" (click)="onSubmit()" class="btn btn-danger">提交</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-              <button mat-raised-button class="btn btn-danger">通过</button>
-              <button mat-raised-button class="btn btn-danger">不通过</button>
+              <button mat-raised-button class="btn btn-danger" (click)="statuschange('通过')">通过</button>
+              <button mat-raised-button class="btn btn-danger" (click)="statuschange('不通过')">不通过</button>
               <button mat-raised-button class="btn btn-danger">返回</button>
             </div>
 

@@ -7,6 +7,7 @@ import { RecordService } from './record.service';
 import { environment } from 'src/environments/environment';
 import { RecordRequest } from 'src/app/shared/interfaces/record';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
+import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('RecordService', () => {
@@ -151,6 +152,18 @@ describe('RecordService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
+  it('should update record status', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.updateRecordStatus(1, RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED).subscribe();
+
+    const url = `${environment.API_URL}/records/1/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('PATCH');
     req.flush({});
   });
 
