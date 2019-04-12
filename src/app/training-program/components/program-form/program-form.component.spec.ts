@@ -14,18 +14,41 @@ import { Router } from '@angular/router';
 import { ProgramFormComponent } from './program-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Program } from 'src/app/shared/interfaces/program';
+import { ProgramForm } from 'src/app/shared/interfaces/program-form';
+import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from '../../services/program.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 describe('ProgramFormComponent', () => {
   let component: ProgramFormComponent;
   let fixture: ComponentFixture<ProgramFormComponent>;
+  let getProgramForm$: Subject<PaginatedResponse<ProgramForm>>;
+  let getProgramForm: jasmine.Spy;
+  let getProgramCategory$: Subject<PaginatedResponse<ProgramCategory>>;
+  let getProgramCategory: jasmine.Spy;
   let createProgramForm$: Subject<Program>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
 
+  const dummyProgramForm: ProgramForm = {
+    id: 1,
+    name: 'sender',
+  };
+
+  const dummyProgramCategory: ProgramCategory = {
+    id: 1,
+    name: 'sender',
+  };
+
   beforeEach(async(() => {
     createProgramForm$ = new Subject();
+    getProgramForm$ = new Subject<PaginatedResponse<ProgramForm>>();
+    getProgramForm = jasmine.createSpy();
+    getProgramForm.and.returnValue(getProgramForm$);
+    getProgramCategory$ = new Subject<PaginatedResponse<ProgramCategory>>();
+    getProgramCategory = jasmine.createSpy();
+    getProgramCategory.and.returnValue(getProgramCategory$);
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
@@ -42,6 +65,8 @@ describe('ProgramFormComponent', () => {
           provide: ProgramService,
           useValue: {
             createProgram: () => createProgramForm$,
+            getProgramForm,
+            getProgramCategory,
           }
         },
         {
@@ -76,12 +101,29 @@ describe('ProgramFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load program-form', () => {
+    const count = 100;
+    const results: ProgramForm[] = [dummyProgramForm, dummyProgramForm];
+    getProgramForm$.next({ count, results, next: '', previous: '' });
+
+    expect(component.programForms).toEqual(results);
+  });
+
+  it('should load program-category', () => {
+    const count = 100;
+    const results: ProgramCategory[] = [dummyProgramCategory, dummyProgramCategory];
+    getProgramCategory$.next({ count, results, next: '', previous: '' });
+
+    expect(component.programCategories).toEqual(results);
+  });
+
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
     createProgramForm$.next({ id: 5 } as Program);
 
-    expect(navigate).toHaveBeenCalledWith(['../program-detail/', 5]);
+    expect(navigate).toHaveBeenCalledWith(['/admin/event-management/programs/events'], { queryParams: {program_id: 5}});
   });
+
   it('should display errors when creation failed.', () => {
     component.onSubmit();
     createProgramForm$.error({

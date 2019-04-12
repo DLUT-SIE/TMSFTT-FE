@@ -3,8 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { map } from 'rxjs/operators';
 
 import { ProgramRequest } from 'src/app/shared/interfaces/program';
+import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
+import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 import { ProgramService} from '../../services/program.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -14,6 +17,9 @@ import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-servic
   styleUrls: ['./program-form.component.css']
 })
 export class ProgramFormComponent implements OnInit {
+
+  programCategories: ProgramCategory[] = [];
+  programForms: ProgramForm[] = [];
 
   programForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -30,6 +36,20 @@ export class ProgramFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.programService.getProgramCategory().pipe(
+      map(data => {
+      return data.results;
+    })).subscribe(
+      programCategories => {this.programCategories = programCategories;
+      }
+    );
+    this.programService.getProgramForm().pipe(
+      map(data => {
+      return data.results;
+    })).subscribe(
+      programForms => {this.programForms = programForms;
+      }
+    );
   }
 
   get name() {
@@ -51,7 +71,7 @@ export class ProgramFormComponent implements OnInit {
     };
     this.programService.createProgram(req).subscribe(
       program => {
-        this.router.navigate(['../program-detail/', program.id]);
+        this.router.navigate(['/admin/event-management/programs/events'], { queryParams: {program_id: program.id}});
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
