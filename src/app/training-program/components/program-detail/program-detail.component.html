@@ -3,60 +3,68 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title">项目名称： {{ program.name }}</h4>
+            <h4 class="card-title">培训项目详情</h4>
           </div>
           <div class="card-body">
-            <table class="table table-hover text-left">
-              <tbody>
-                <tr class="d-flex">
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">单位名称</h3>
-                      <p class="text-left">{{ program.department_detail.name }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">创建时间</h3>
-                      <p class="text-left">{{ program.department_detail.create_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">更新时间</h3>
-                      <p class="text-left">{{ program.department_detail.update_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>          
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-4 col-sm-4">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训时间</h3>
-                      <p class="text-left">{{ program.department_detail.create_time }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                  <td class="col-8 col-sm-8">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">培训形式</h3>
-                      <p class="text-left">{{ program.form }}</p>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td> 
-                </tr>
-                <tr class="d-flex">
-                  <td class="col-12 col-sm-12">
-                    <div class="w-100">
-                      <h3 class="text-danger text-left">管理员</h3>
-                      <span class="border-bottom"></span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">项目名称</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ program.department_detail.name }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+                <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+                fxLayoutGap="15px">
+                <span class="item-title" fxFlex="1 0 20%">所属机构</span>
+                <div class="item-content" fxFlex="1 0 78%">
+                  <p>{{ program.department_detail.name }}</p>
+                </div>
+                <div fxFlex="1 0 2%"></div>
+              </div>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">创建时间</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ program.department_detail.create_time | date:'y年M月d日 H:mm::ss' }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">更新时间</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ program.department_detail.update_time | date:'y年M月d日 H:mm::ss' }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">培训类别</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ program.category_detail.name }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">培训形式</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ program.form }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+            <div class="d-flex flex-row justify-content-end">
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >修改该项目</a>
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >删除该项目</a>
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >返回</a>
+            </div>
           </div>
         </div>
       </div>
