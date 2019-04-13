@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="d-flex justify-content-end">
+    <!-- <div class="d-flex justify-content-end">
         <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" routerLink='/admin/event-management/programs/events/event-form'>创建新活动</a>
-      </div>
+      </div> -->
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -10,6 +10,9 @@
           <p class="card-category">开设单位:{{ program.department_detail.name }}</p>
         </div>
         <div class="card-body">
+            <div class="float-right">
+                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" routerLink='/admin/event-management/programs/events/event-form'>创建新活动</a>
+              </div>
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>
           </div>

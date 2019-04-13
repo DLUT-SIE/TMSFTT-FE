@@ -6,6 +6,7 @@ import { ProgramService } from '../../../training-program/services/program.servi
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { Program } from 'src/app/shared/interfaces/program';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-campus-event-list',
@@ -26,7 +27,7 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
     protected readonly router: Router,
   ) {
     super(route, router, location);
-  } 
+  }
 
   getResults(offset: number, limit: number) {
     const extraParams = new Map();
@@ -35,14 +36,15 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(queryParams => {
-      this.programId = queryParams.program_id;
-      this.programService.getProgram(Number(this.programId)).subscribe(program=> {
-        this.program = program;
-        console.log(this.program);
-      });
-  });
-  super.ngOnInit();
+    this.route.queryParams.pipe(
+      switchMap(queryParams => {
+        this.programId = queryParams.program_id;
+        return this.programService.getProgram(Number(this.programId));
+      })
+    ).subscribe(program => {
+      this.program = program;
+    });
+    super.ngOnInit();
   }
 
 }

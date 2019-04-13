@@ -9,7 +9,6 @@ import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response'
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 
-
 describe('CampusEventListComponent', () => {
   let component: CampusEventListComponent;
   let fixture: ComponentFixture<CampusEventListComponent>;
@@ -75,4 +74,9 @@ describe('CampusEventListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load data', () => {
+    expect(component.getResults(0, 0)).toBe(getCampusEvents$);
+  });
+
 });
