@@ -261,7 +261,6 @@ describe('DataReviewComponent', () => {
                         };
     component.statuschange(message);
     expect(component.record.status).toBe(RecordStatus.STATUS_SUBMITTED);
-    console.log(component.record.status);
     expect(snackBarOpen).toHaveBeenCalledWith('培训记录不合格，未通过审核！', '关闭');
     component.record = { id: 1,
                          create_time: '2019-01-01',

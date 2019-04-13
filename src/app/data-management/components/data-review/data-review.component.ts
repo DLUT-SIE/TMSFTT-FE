@@ -42,6 +42,7 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
     return this.reviewnoteService.getReviewNotes({offset, limit, extraParams});
   }
 
+  /** Submit review note created by admins. */
   onSubmit() {
     this.reviewnoteService.createReviewNote(this.record, this.reviewnotecontent)
     .subscribe(res => {
@@ -61,6 +62,7 @@ export class DataReviewComponent extends GenericListComponent<ReviewNoteResponse
     );
   }
 
+  /** Allow admins to change record status. */
   statuschange(message: string) {
     const prestatus = this.record.status;
     const isDepartmentAdmin = this.authService.isDepartmentAdmin;
