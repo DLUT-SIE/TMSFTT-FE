@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Program } from 'src/app/shared/interfaces/program';
 
@@ -13,6 +14,7 @@ export class ProgramDetailComponent implements OnInit {
   program: Program;
 
   constructor(
+    private readonly router: Router,
     private readonly route: ActivatedRoute,
   ) { }
 
@@ -20,6 +22,10 @@ export class ProgramDetailComponent implements OnInit {
     this.route.data.subscribe((data: { program: Program}) => {
       this.program = data.program;
     });
+  }
+
+  navigateToChangeProgram() {
+    this.router.navigate(['/admin/event-management/programs/program-form'], { queryParams: {program_id: this.program.id}});
   }
 
 }

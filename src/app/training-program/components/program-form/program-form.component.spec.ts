@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of as observableOf } from 'rxjs';
 import {
   MatButtonModule,
   MatIconModule,
@@ -9,7 +10,7 @@ import {
   MatSnackBar,
 } from '@angular/material';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProgramFormComponent } from './program-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,6 +28,8 @@ describe('ProgramFormComponent', () => {
   let getProgramForm: jasmine.Spy;
   let getProgramCategory$: Subject<PaginatedResponse<ProgramCategory>>;
   let getProgramCategory: jasmine.Spy;
+  let getProgram$: Subject<Program>;
+  let getProgram: jasmine.Spy;
   let createProgramForm$: Subject<Program>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
@@ -49,6 +52,9 @@ describe('ProgramFormComponent', () => {
     getProgramCategory$ = new Subject<PaginatedResponse<ProgramCategory>>();
     getProgramCategory = jasmine.createSpy();
     getProgramCategory.and.returnValue(getProgramCategory$);
+    getProgram$ = new Subject<Program>();
+    getProgram = jasmine.createSpy();
+    getProgram.and.returnValue(getProgram$);
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
@@ -62,11 +68,23 @@ describe('ProgramFormComponent', () => {
       ],
       providers: [
         {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: observableOf({program_id: 1}),
+            snapshot: {
+              queryParams: {
+                get: () => '1',
+              },
+            },
+          },
+        },
+        {
           provide: ProgramService,
           useValue: {
             createProgram: () => createProgramForm$,
             getProgramForm,
             getProgramCategory,
+            getProgram,
           }
         },
         {
@@ -122,6 +140,30 @@ describe('ProgramFormComponent', () => {
     createProgramForm$.next({ id: 5 } as Program);
 
     expect(navigate).toHaveBeenCalledWith(['/admin/event-management/programs/events'], { queryParams: {program_id: 5}});
+  });
+
+  it('should load pragram', () => {
+    const dummyProgram: Program = {
+      id: 1,
+      name: 'sender',
+      department: 2,
+      category: 3,
+      department_detail: {
+        id: 2,
+        create_time: '2019-3-4',
+        update_time: '2019-3-6',
+        name: 'test',
+        admins: [],
+      },
+      category_detail: {
+        id: 3,
+        name: 'test',
+      },
+      form: [],
+    };
+    getProgram$.next(dummyProgram);
+
+    expect(component.program).toBe(dummyProgram);
   });
 
   it('should display errors when creation failed.', () => {
