@@ -161,7 +161,7 @@
 
           <mat-divider></mat-divider>
           <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !isFeedBacked && !feedback"
+            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
             (click)="openDialog()">提交反馈</a>
             <a mat-raised-button color="primary" (click)="location.back()">返回</a> 
           </div>

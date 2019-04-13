@@ -68,8 +68,8 @@ export class RecordService extends GenericListService {
 
   createFeedback(recordID: number, feedbackData: string) {
     const data = new FormData();
-    data.set('recordID', recordID.toString());
+    data.set('record', recordID.toString());
     data.set('feedback', feedbackData);
-    return this.http.post(`${environment.API_URL}/records/actions/status_update/`, data);
+    return this.http.post(`${environment.API_URL}/campus-event-feedback/`, data);
   }
 }

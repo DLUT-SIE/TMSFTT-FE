@@ -102,6 +102,6 @@ describe('RecordDetailComponent', () => {
     feedBack$.next({});
     expect(open).toHaveBeenCalled();
     expect(createFeedback).toHaveBeenCalledWith(component.record.id, '123');
-    expect(component.isFeedBacked).toBeTruthy();
+    expect(component.hasFeedbackSent).toBeTruthy();
   });
 });
