@@ -69,7 +69,7 @@ describe('AdminCampusEventListComponent', () => {
         {
           provide: ProgramService,
           useValue: {
-            getProgram: () => getProgram$,
+            getProgram
           }
         },
         {
@@ -110,10 +110,12 @@ describe('AdminCampusEventListComponent', () => {
       },
       form: [],
     };
+    getProgram.and.returnValue(getProgram$);
     getProgram$.next(dummyProgram);
-
     expect(component.program).toBe(dummyProgram);
-    expect(component.getResults(0, 0)).toBe(getCampusEvents$);
   });
 
+  it('should load event', () => {
+    expect(component.getResults(0, 0)).toBe(getCampusEvents$);
+  });
 });
