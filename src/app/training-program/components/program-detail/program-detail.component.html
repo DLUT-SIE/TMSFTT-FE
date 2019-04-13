@@ -11,7 +11,7 @@
               fxLayoutGap="15px">
               <span class="item-title" fxFlex="1 0 20%">项目名称</span>
               <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ program.department_detail.name }}</p>
+                <p>{{ program.name }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
             </div>
@@ -61,7 +61,7 @@
               <div fxFlex="1 0 2%"></div>
             </div>
             <div class="d-flex flex-row justify-content-end">
-              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >修改该项目</a>
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToChangeProgram()">修改该项目</a>
               <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >删除该项目</a>
               <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >返回</a>
             </div>

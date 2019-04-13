@@ -1,13 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { ProgramRequest } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
+import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService} from '../../services/program.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -20,6 +21,8 @@ export class ProgramFormComponent implements OnInit {
 
   programCategories: ProgramCategory[] = [];
   programForms: ProgramForm[] = [];
+  programId: number;
+  program: Program;
 
   programForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -32,6 +35,7 @@ export class ProgramFormComponent implements OnInit {
     private readonly snackBar: MatSnackBar,
     private readonly programService: ProgramService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
@@ -50,6 +54,19 @@ export class ProgramFormComponent implements OnInit {
       programForms => {this.programForms = programForms;
       }
     );
+    this.route.queryParams.pipe(
+      switchMap(queryParams => {
+        this.programId = queryParams.program_id;
+        return this.programService.getProgram(Number(this.programId));
+       })
+      ).subscribe(
+        program => {
+          this.program = program;
+          this.name.setValue(this.program.name);
+          this.categoryId.setValue(this.program.category);
+          this.formIds.setValue(this.program.form);
+      });
+
   }
 
   get name() {
