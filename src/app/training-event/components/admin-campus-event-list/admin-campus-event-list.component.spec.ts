@@ -113,6 +113,7 @@ describe('AdminCampusEventListComponent', () => {
     getProgram.and.returnValue(getProgram$);
     getProgram$.next(dummyProgram);
     expect(component.program).toBe(dummyProgram);
+    expect(getProgram).toHaveBeenCalled();
   });
 
   it('should load event', () => {
