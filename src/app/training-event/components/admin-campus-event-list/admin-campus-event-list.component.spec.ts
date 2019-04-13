@@ -110,7 +110,6 @@ describe('AdminCampusEventListComponent', () => {
       },
       form: [],
     };
-    // const result = dummyProgram;
     getProgram$.next(dummyProgram);
 
     expect(component.program).toBe(dummyProgram);
