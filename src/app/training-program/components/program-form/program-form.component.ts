@@ -3,15 +3,18 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { ProgramRequest } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService} from '../../services/program.service';
+import { ProgramFormService} from '../../services/program-form.service';
+import { ProgramCategoryService} from '../../services/program-category.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
+/* Create or update a program-form**/
 @Component({
   selector: 'app-program-form',
   templateUrl: './program-form.component.html',
@@ -34,39 +37,40 @@ export class ProgramFormComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly snackBar: MatSnackBar,
     private readonly programService: ProgramService,
+    private readonly programFormService: ProgramFormService,
+    private readonly programCategoryService: ProgramCategoryService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
   ngOnInit() {
-    this.programService.getProgramCategory().pipe(
+    this.programCategoryService.getProgramCategories({offset: 0, limit: 100}).pipe(
       map(data => {
       return data.results;
     })).subscribe(
       programCategories => {this.programCategories = programCategories;
       }
     );
-    this.programService.getProgramForm().pipe(
+    this.programFormService.getProgramForms({offset: 0, limit: 100}).pipe(
       map(data => {
       return data.results;
     })).subscribe(
       programForms => {this.programForms = programForms;
       }
     );
-    this.route.queryParams.pipe(
-      switchMap(queryParams => {
-        this.programId = queryParams.program_id;
-        return this.programService.getProgram(Number(this.programId));
-       })
-      ).subscribe(
-        program => {
-          this.program = program;
-          this.name.setValue(this.program.name);
-          this.categoryId.setValue(this.program.category);
-          this.formIds.setValue(this.program.form);
-      });
-
+    /* istanbul ignore else  */
+    if (this.route.snapshot.queryParams.program_id !== undefined) {
+      const programId = this.route.snapshot.queryParams.program_id;
+      this.programService.getProgram(Number(programId)).
+        subscribe(
+          program => {
+            this.program = program;
+            this.name.setValue(this.program.name);
+            this.categoryId.setValue(this.program.category);
+            this.formIds.setValue(this.program.form);
+        });
+      }
   }
 
   get name() {

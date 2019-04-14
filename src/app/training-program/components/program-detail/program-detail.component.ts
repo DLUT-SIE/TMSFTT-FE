@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { Program } from 'src/app/shared/interfaces/program';
+import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 
 @Component({
   selector: 'app-program-detail',
@@ -12,6 +13,7 @@ import { Program } from 'src/app/shared/interfaces/program';
 export class ProgramDetailComponent implements OnInit {
 
   program: Program;
+  programForms: ProgramForm[] = [];
 
   constructor(
     private readonly router: Router,
