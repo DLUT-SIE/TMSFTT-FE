@@ -7,7 +7,6 @@ import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
 
-
 /** Display a record in detail. */
 @Component({
   selector: 'app-record-detail',
@@ -49,6 +48,5 @@ export class RecordDetailComponent implements OnInit {
       });
     });
   }
-
 
 }

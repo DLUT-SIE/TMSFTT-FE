@@ -9,7 +9,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 
 @NgModule({
-  declarations: [DataManagementComponent, MenuComponent, RecordListComponent, DataReviewComponent, BatchSubmitComponent],
+  declarations: [
+    DataManagementComponent,
+    MenuComponent,
+    RecordListComponent,
+    DataReviewComponent,
+    BatchSubmitComponent,
+  ],
   imports: [
     SharedModule,
     DataManagementRoutingModule,
