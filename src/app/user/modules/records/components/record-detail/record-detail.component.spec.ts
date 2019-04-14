@@ -32,11 +32,8 @@ describe('RecordDetailComponent', () => {
   let dialogRef: jasmine.SpyObj<MatDialogRef<FeedbackDialogComponent>>;
   let createFeedback: jasmine.Spy;
   let open: jasmine.Spy;
-<<<<<<< HEAD
   let snackBarOpen: jasmine.Spy;
-=======
   let navigate: jasmine.Spy;
->>>>>>> Add a button for navigating to record-form page from detail page.
 
   beforeEach(async(() => {
     feedBack$ = new Subject();
