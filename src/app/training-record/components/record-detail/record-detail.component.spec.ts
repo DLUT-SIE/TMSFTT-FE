@@ -1,19 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule,
          MatIconModule,
+         MatPaginatorModule,
+         MatFormFieldModule,
+         MatSelectModule,
+         MatSnackBar,
+         MatInputModule,
          MatDividerModule,
          MatDialogModule,
          MatDialog,
          MatDialogRef,
         } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Location } from '@angular/common';
 
 import { RecordDetailComponent } from './record-detail.component';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { FeedbackDialogComponent } from 'src/app/training-record/components/feedback-dialog/feedback-dialog.component';
+import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
 
 describe('RecordDetailComponent', () => {
   let component: RecordDetailComponent;
@@ -23,26 +32,39 @@ describe('RecordDetailComponent', () => {
   let dialogRef: jasmine.SpyObj<MatDialogRef<FeedbackDialogComponent>>;
   let createFeedback: jasmine.Spy;
   let open: jasmine.Spy;
+  let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
     feedBack$ = new Subject();
     afterClosed$ = new Subject();
     createFeedback = jasmine.createSpy();
     open = jasmine.createSpy();
+    snackBarOpen = jasmine.createSpy();
     dialogRef = jasmine.createSpyObj('', ['afterClosed']);
     TestBed.configureTestingModule({
-      declarations: [ RecordDetailComponent ],
+      declarations: [ RecordDetailComponent, OffCampusRecordDetailComponent ],
       imports: [
         MatCardModule,
         MatIconModule,
+        MatPaginatorModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
         MatDividerModule,
         MatDialogModule,
-        HttpClientTestingModule
+        FormsModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
       ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            },
             data: observableOf({record: {
               id: 1,
               create_time: '2019-01-01',
@@ -75,6 +97,22 @@ describe('RecordDetailComponent', () => {
           useValue: {
             open,
           }
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          },
+        },
+        {
+          provide: Location,
+          useValue: {},
+        },
+        {
+          provide: Router,
+          useValue: {
+            createUrlTree: () => 'abc',
+          },
         },
       ]
     })

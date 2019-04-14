@@ -24,10 +24,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
 
 
 @NgModule({
-  declarations: [ ],
+  declarations: [ OffCampusRecordDetailComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -49,6 +50,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
 
@@ -79,6 +81,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSnackBarModule,
+
+    OffCampusRecordDetailComponent,
 
     NgxEchartsModule,
   ],

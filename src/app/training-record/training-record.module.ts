@@ -19,7 +19,6 @@ import { FeedbackDialogComponent } from './components/feedback-dialog/feedback-d
     RecordDetailComponent,
     OffCampusEventRecordListComponent,
     FeedbackDialogComponent,
-
   ],
   imports: [
     TrainingRecordRoutingModule,
