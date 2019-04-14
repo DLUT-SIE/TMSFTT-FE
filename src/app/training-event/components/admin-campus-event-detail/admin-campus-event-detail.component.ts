@@ -27,6 +27,5 @@ export class AdminCampusEventDetailComponent implements OnInit {
   navigateToChangeEvent() {
     this.router.navigate(['/admin/event-management/programs/events/event-form']);
   }
-  
-  
+
 }

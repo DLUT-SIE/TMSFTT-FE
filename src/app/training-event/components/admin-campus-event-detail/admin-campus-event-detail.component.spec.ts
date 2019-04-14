@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('AddminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
