@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 
@@ -19,11 +19,13 @@ export class RecordDetailComponent implements OnInit {
   record: Record;
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
+  couldEdit: boolean;
   feedback: string;
 
   constructor(
     readonly location: Location,
     private readonly route: ActivatedRoute,
+    protected readonly router: Router,
     private readonly recordService: RecordService,
     public dialog: MatDialog,
   ) { }
@@ -33,7 +35,9 @@ export class RecordDetailComponent implements OnInit {
     this.route.data.subscribe((data: { record: Record }) => {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
-      this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
+      this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_WITH_FEEDBACK;
+      this.couldEdit = this.record.status === RecordStatus.STATUS_SUBMITTED ||
+                       this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED;
 
     });
   }
@@ -49,6 +53,10 @@ export class RecordDetailComponent implements OnInit {
         this.hasFeedbackSent = true;
       });
     });
+  }
+
+  navigateToForm() {
+    this.router.navigate(['training-record/off-campus-event-records/record-form'], { queryParams: { recordID: this.record.id } });
   }
 
 }

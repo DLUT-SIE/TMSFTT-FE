@@ -32,11 +32,16 @@ describe('RecordDetailComponent', () => {
   let dialogRef: jasmine.SpyObj<MatDialogRef<FeedbackDialogComponent>>;
   let createFeedback: jasmine.Spy;
   let open: jasmine.Spy;
+<<<<<<< HEAD
   let snackBarOpen: jasmine.Spy;
+=======
+  let navigate: jasmine.Spy;
+>>>>>>> Add a button for navigating to record-form page from detail page.
 
   beforeEach(async(() => {
     feedBack$ = new Subject();
     afterClosed$ = new Subject();
+    navigate = jasmine.createSpy();
     createFeedback = jasmine.createSpy();
     open = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
@@ -94,6 +99,12 @@ describe('RecordDetailComponent', () => {
           }
         },
         {
+          provide: Router,
+          useValue: {
+            navigate,
+          }
+        },
+        {
           provide: MatDialog,
           useValue: {
             open,
@@ -142,5 +153,11 @@ describe('RecordDetailComponent', () => {
     expect(open).toHaveBeenCalled();
     expect(createFeedback).toHaveBeenCalledWith(component.record.id, '123');
     expect(component.hasFeedbackSent).toBeTruthy();
+  });
+
+  it('should navigate to form', () => {
+    component.navigateToForm();
+
+    expect(navigate).toHaveBeenCalled();
   });
 });
