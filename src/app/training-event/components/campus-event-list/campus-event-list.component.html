@@ -22,12 +22,23 @@
               </thead>
               <tbody>
                 <tr class="d-flex" *ngFor="let item of results">
+                 <div *ngIf="item.id>7; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock>
                   <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.name }}</td>
                   <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
                   <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.location }}</td>
                   <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
                   <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
                   <td class="col-2 col-sm-2"><button mat-raised-button color="primary">报名</button></td>
+                </ng-template>
+                <ng-template #elseBlock>
+                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.name }}</td>
+                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
+                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.location }}</td>
+                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
+                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
+                  <td class="col-2 col-sm-2">已报名</td>
+                  </ng-template>
                 </tr>
               </tbody>
             </table>
