@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { of as observableOf } from 'rxjs';
 import {
   MatButtonModule,
   MatIconModule,
@@ -18,16 +17,18 @@ import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from '../../services/program.service';
+import { ProgramFormService} from '../../services/program-form.service';
+import { ProgramCategoryService} from '../../services/program-category.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 describe('ProgramFormComponent', () => {
   let component: ProgramFormComponent;
   let fixture: ComponentFixture<ProgramFormComponent>;
-  let getProgramForm$: Subject<PaginatedResponse<ProgramForm>>;
-  let getProgramForm: jasmine.Spy;
-  let getProgramCategory$: Subject<PaginatedResponse<ProgramCategory>>;
-  let getProgramCategory: jasmine.Spy;
+  let getProgramForms$: Subject<PaginatedResponse<ProgramForm>>;
+  let getProgramForms: jasmine.Spy;
+  let getProgramCategories$: Subject<PaginatedResponse<ProgramCategory>>;
+  let getProgramCategories: jasmine.Spy;
   let getProgram$: Subject<Program>;
   let getProgram: jasmine.Spy;
   let createProgramForm$: Subject<Program>;
@@ -46,12 +47,12 @@ describe('ProgramFormComponent', () => {
 
   beforeEach(async(() => {
     createProgramForm$ = new Subject();
-    getProgramForm$ = new Subject<PaginatedResponse<ProgramForm>>();
-    getProgramForm = jasmine.createSpy();
-    getProgramForm.and.returnValue(getProgramForm$);
-    getProgramCategory$ = new Subject<PaginatedResponse<ProgramCategory>>();
-    getProgramCategory = jasmine.createSpy();
-    getProgramCategory.and.returnValue(getProgramCategory$);
+    getProgramForms$ = new Subject<PaginatedResponse<ProgramForm>>();
+    getProgramForms = jasmine.createSpy();
+    getProgramForms.and.returnValue(getProgramForms$);
+    getProgramCategories$ = new Subject<PaginatedResponse<ProgramCategory>>();
+    getProgramCategories = jasmine.createSpy();
+    getProgramCategories.and.returnValue(getProgramCategories$);
     getProgram$ = new Subject<Program>();
     getProgram = jasmine.createSpy();
     getProgram.and.returnValue(getProgram$);
@@ -70,10 +71,9 @@ describe('ProgramFormComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: observableOf({program_id: 1}),
             snapshot: {
               queryParams: {
-                get: () => '1',
+                program_id: '1',
               },
             },
           },
@@ -82,9 +82,19 @@ describe('ProgramFormComponent', () => {
           provide: ProgramService,
           useValue: {
             createProgram: () => createProgramForm$,
-            getProgramForm,
-            getProgramCategory,
             getProgram,
+          }
+        },
+        {
+          provide: ProgramFormService,
+          useValue: {
+            getProgramForms,
+          }
+        },
+        {
+          provide: ProgramCategoryService,
+          useValue: {
+            getProgramCategories,
           }
         },
         {
@@ -119,18 +129,18 @@ describe('ProgramFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load program-form', () => {
+  it('should load program-forms', () => {
     const count = 100;
     const results: ProgramForm[] = [dummyProgramForm, dummyProgramForm];
-    getProgramForm$.next({ count, results, next: '', previous: '' });
+    getProgramForms$.next({ count, results, next: '', previous: '' });
 
     expect(component.programForms).toEqual(results);
   });
 
-  it('should load program-category', () => {
+  it('should load program-categories', () => {
     const count = 100;
     const results: ProgramCategory[] = [dummyProgramCategory, dummyProgramCategory];
-    getProgramCategory$.next({ count, results, next: '', previous: '' });
+    getProgramCategories$.next({ count, results, next: '', previous: '' });
 
     expect(component.programCategories).toEqual(results);
   });

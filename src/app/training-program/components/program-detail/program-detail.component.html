@@ -16,29 +16,11 @@
               <div fxFlex="1 0 2%"></div>
             </div>
             <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-                <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-                fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">所属机构</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ program.department_detail.name }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
               <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
               fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">创建时间</span>
+              <span class="item-title" fxFlex="1 0 20%">所属院系</span>
               <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ program.department_detail.create_time | date:'y年M月d日 H:mm::ss' }}</p>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">更新时间</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ program.department_detail.update_time | date:'y年M月d日 H:mm::ss' }}</p>
+                <p>{{ program.department_detail.name }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
             </div>
@@ -61,8 +43,8 @@
               <div fxFlex="1 0 2%"></div>
             </div>
             <div class="d-flex flex-row justify-content-end">
-              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToChangeProgram()">修改该项目</a>
-              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >删除该项目</a>
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToChangeProgram()">修改</a>
+              <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >删除</a>
               <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >返回</a>
             </div>
           </div>
