@@ -103,8 +103,13 @@
                 <div class="item-content" fxFlex="1 0 78%">
                   <p>{{ item.program_detail.category }}</p>
                 </div>
-              <div fxFlex="1 0 2%"></div>
-          </div>
+                <div fxFlex="1 0 2%"></div>
+              </div>
+              <div class="d-flex flex-row justify-content-end">
+                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToChangeEvent()" >修改该项目</a>
+                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >删除该项目</a>
+                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" >返回</a>
+           </div>
         </div>
       </div>
     </div>

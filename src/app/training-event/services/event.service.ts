@@ -56,4 +56,5 @@ export class EventService extends GenericListService {
     return this.http.post<CampusEventResponse>(
       `${environment.API_URL}/campus-events/`, req);
   }
+
 }
