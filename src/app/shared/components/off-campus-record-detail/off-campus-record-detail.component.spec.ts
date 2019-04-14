@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of as observableOf } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of as observableOf, Subject } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -15,20 +15,32 @@ import {
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { DataReviewComponent } from './data-review.component';
-import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
+import { OffCampusRecordDetailComponent } from './off-campus-record-detail.component';
+import { ReviewNoteService } from 'src/app/data-management/services/review-note.service';
+import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
 
-describe('DataReviewComponent', () => {
-  let component: DataReviewComponent;
-  let fixture: ComponentFixture<DataReviewComponent>;
+describe('OffCampusRecordDetailComponent', () => {
+  let component: OffCampusRecordDetailComponent;
+  let fixture: ComponentFixture<OffCampusRecordDetailComponent>;
+  let getReviewNotes$: jasmine.Spy;
+  let createReviewNote$: Subject<ReviewNoteResponse>;
   let snackBarOpen: jasmine.Spy;
+  const dummyReviewNote: ReviewNoteResponse = {
+    id: 1,
+    create_time: '2019-02-23T20:37:57.127073+08:00',
+    content: '组织自己电子国内控制一次登录这样能够',
+    record: 2,
+    user: 48,
+  };
 
   beforeEach(async(() => {
+    getReviewNotes$ = jasmine.createSpy();
+    createReviewNote$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ DataReviewComponent, OffCampusRecordDetailComponent ],
+      declarations: [ OffCampusRecordDetailComponent ],
       imports: [
         MatCardModule,
         MatPaginatorModule,
@@ -37,8 +49,7 @@ describe('DataReviewComponent', () => {
         MatInputModule,
         MatSelectModule,
         FormsModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
+        NoopAnimationsModule
       ],
       providers: [
         {
@@ -81,6 +92,13 @@ describe('DataReviewComponent', () => {
           },
         },
         {
+          provide: ReviewNoteService,
+          useValue: {
+            getReviewNotes: () => getReviewNotes$,
+            createReviewNote: () => createReviewNote$,
+          }
+        },
+        {
           provide: MatSnackBar,
           useValue: {
             open: snackBarOpen,
@@ -96,13 +114,59 @@ describe('DataReviewComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataReviewComponent);
+    fixture = TestBed.createComponent(OffCampusRecordDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get reviewnotes', () => {
+    const dummyRecord = {
+      id: 1,
+      create_time: '2019-01-01',
+      update_time: '2019-01-02',
+      campus_event: null,
+      off_campus_event: null,
+      contents: [],
+      attachments: [],
+      user: 1,
+      status: 1,
+    };
+    component.record = dummyRecord;
+    expect(component.getResults(10, 0)).toBe(getReviewNotes$);
+  });
+
+  it('should create reviewnote.', () => {
+    const resultsLength = component.resultsLength;
+
+    component.onSubmit();
+    createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
+
+    expect(component.resultsLength).toEqual(resultsLength + 1);
+  });
+
+  it('should display errors when creation failed.', () => {
+    component.onSubmit();
+    createReviewNote$.error({
+      message: 'Raw error message',
+      error: {
+        reviewnotecontent_data: ['Invalid content'],
+      },
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content。', '创建失败！');
+  });
+
+  it('should display raw errors when creation failed.', () => {
+    component.onSubmit();
+    createReviewNote$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
   });
 
 });
