@@ -159,7 +159,7 @@ describe('RecordService', () => {
 
     service.createFeedback(1, '').subscribe();
 
-    const url = `${environment.API_URL}/campus-event-feedback/`;
+    const url = `${environment.API_URL}/campus-event-feedbacks/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
