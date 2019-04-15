@@ -11,7 +11,7 @@
                 <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToProgramDetail()">查看项目详情</a>
               </div>
             <div class="float-right">
-                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" routerLink='/admin/event-management/programs/events/event-form'>创建新活动</a>
+                <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" (click)="navigateToCreateForm()">创建新活动</a>
               </div>
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>

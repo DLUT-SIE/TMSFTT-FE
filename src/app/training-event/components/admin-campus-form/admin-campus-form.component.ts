@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
@@ -13,6 +13,7 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./admin-campus-form.component.css']
 })
 export class AdminCampusFormComponent implements OnInit {
+  programId: number;
 
   eventForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -28,9 +29,13 @@ export class AdminCampusFormComponent implements OnInit {
     private readonly snackBar: MatSnackBar,
     private readonly eventService: EventService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.programId = queryParams.program_id;
+    });
   }
 
   /** 新增加的get函数 */
@@ -63,7 +68,7 @@ export class AdminCampusFormComponent implements OnInit {
   }
   onSubmit() {
     const req: CampusEventRequest = {
-      program: 1,
+      program: this.programId,
       name: this.eventForm.value.name,
       time: this.eventForm.value.time,
       location: this.eventForm.value.location,

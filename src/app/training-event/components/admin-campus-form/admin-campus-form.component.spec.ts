@@ -10,8 +10,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
 } from '@angular/material';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { of as observableOf, Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -42,6 +42,17 @@ describe('AdminCampusFormComponent', () => {
         MatNativeDateModule,
       ],
       providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: observableOf({program_id: 1}),
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            }
+           },
+        },
         {
           provide: EventService,
           useValue: {
