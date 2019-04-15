@@ -2,18 +2,26 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('AddminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
   let fixture: ComponentFixture<AdminCampusEventDetailComponent>;
+  let navigate: jasmine.Spy;
 
   beforeEach(async(() => {
+    navigate = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         AdminCampusEventDetailComponent
       ],
       providers: [
+        {
+          provide: Router,
+          useValue: {
+            navigate,
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -66,5 +74,12 @@ describe('AddminCampusEventDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to event form', () => {
+    component.navigateToChangeEvent();
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['/admin/event-management/programs/events/event-form']);
   });
 });

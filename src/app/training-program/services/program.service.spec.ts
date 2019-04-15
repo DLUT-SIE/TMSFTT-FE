@@ -93,29 +93,4 @@ describe('ProgramService', () => {
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
-
-  it('should get program-form', () => {
-    const service: ProgramService = TestBed.get(ProgramService);
-
-    service.getProgramForm().subscribe();
-
-    const url = `${environment.API_URL}/program-forms/`;
-
-    const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('GET');
-    req.flush({});
-  });
-
-  it('should get program-category', () => {
-    const service: ProgramService = TestBed.get(ProgramService);
-
-    service.getProgramCategory().subscribe();
-
-    const url = `${environment.API_URL}/program-categories/`;
-
-    const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('GET');
-    req.flush({});
-  });
-
 });

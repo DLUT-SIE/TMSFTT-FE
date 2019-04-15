@@ -18,4 +18,5 @@ export class ProgramDetailResolverService implements Resolve<Program> {
     const id = +route.paramMap.get('id');
     return this.programService.getProgram(id);
   }
+
 }

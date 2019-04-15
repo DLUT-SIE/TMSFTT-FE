@@ -35,6 +35,10 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
     return this.eventService.getCampusEvents({offset, limit, extraParams});
   }
 
+  navigateToProgramDetail() {
+    this.router.navigate(['/admin/event-management/programs', this.programId]);
+  }
+
   ngOnInit() {
     this.route.queryParams.pipe(
       switchMap(queryParams => {

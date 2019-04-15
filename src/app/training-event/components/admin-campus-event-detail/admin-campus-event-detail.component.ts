@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 
@@ -15,12 +15,17 @@ export class AdminCampusEventDetailComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: { item: CampusEventResponse}) => {
       this.item = data.item;
     });
+  }
+
+  navigateToChangeEvent() {
+    this.router.navigate(['/admin/event-management/programs/events/event-form']);
   }
 
 }
