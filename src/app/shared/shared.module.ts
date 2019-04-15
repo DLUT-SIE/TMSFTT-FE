@@ -18,6 +18,8 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatDividerModule,
+  MatListModule,
+  MatChipsModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
@@ -69,12 +71,14 @@ import { OffCampusRecordDetailComponent } from './components/off-campus-record-d
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatChipsModule,
     MatDividerModule,
     MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
+    MatListModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,

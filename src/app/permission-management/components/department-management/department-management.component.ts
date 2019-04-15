@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
-import { DepartmentResponse } from 'src/app/shared/interfaces/department';
+import { Department } from 'src/app/shared/interfaces/department';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DepartmentService } from 'src/app/shared/services/department.service';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/shared/services/user.service';
   templateUrl: './department-management.component.html',
   styleUrls: ['./department-management.component.css']
 })
-export class DepartmentManagementComponent extends GenericListComponent<DepartmentResponse> {
+export class DepartmentManagementComponent extends GenericListComponent<Department> {
 
   constructor(
     readonly userService: UserService,
