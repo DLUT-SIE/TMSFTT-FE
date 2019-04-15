@@ -34,10 +34,12 @@ describe('GenericListComponent', () => {
     let navigate: jasmine.Spy;
     let getResults: jasmine.Spy;
     let getResults$: Subject<PaginatedResponse<GenericObject>>;
+    let go: jasmine.Spy;
     const dummyResponse = { id: 1 };
 
     beforeEach(() => {
-        navigate = jasmine.createSpy();
+        go = jasmine.createSpy(),
+            navigate = jasmine.createSpy();
         getResults$ = new Subject();
         TestBed.configureTestingModule({
             declarations: [
@@ -67,7 +69,7 @@ describe('GenericListComponent', () => {
                 {
                     provide: Location,
                     useValue: {
-                        go: () => {},
+                        go,
                     },
                 },
                 {
@@ -116,5 +118,12 @@ describe('GenericListComponent', () => {
         component.navigateToDetail({ id: 1 });
 
         expect(navigate).toHaveBeenCalled();
+    });
+
+    it('should trigger refresh', () => {
+        component.forceRefresh();
+
+        expect(go).toHaveBeenCalled();
+        expect(getResults).toHaveBeenCalled();
     });
 });

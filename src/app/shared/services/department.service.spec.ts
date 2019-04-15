@@ -1,17 +1,55 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DepartmentService } from './department.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { environment } from 'src/environments/environment';
 
 describe('DepartmentService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HttpClientTestingModule,
-    ],
-  }));
+  let httpTestingController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+    });
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
+  });
 
   it('should be created', () => {
     const service: DepartmentService = TestBed.get(DepartmentService);
     expect(service).toBeTruthy();
   });
+
+  it('should get departments', () => {
+    const service: DepartmentService = TestBed.get(DepartmentService);
+    const limit = 5;
+    const offset = 10;
+    service.getDepartments({ limit, offset }).subscribe();
+
+    const params = `limit=${limit}&offset=${offset}`;
+    const url = `${environment.API_URL}/departments/?${params}`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+  it('should get deparmtent', () => {
+    const service: DepartmentService = TestBed.get(DepartmentService);
+    const id = 5;
+    service.getDepartment(id).subscribe();
+
+    const url = `${environment.API_URL}/departments/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+
 });

@@ -50,6 +50,20 @@ describe('PermissionService', () => {
     req.flush({});
   });
 
+  it('should return cached permissions', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.getPermissions().subscribe();
+
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/permissions/`);
+
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+
+    service.getPermissions().subscribe();
+  });
+
   it('should get all user permissions', () => {
     const service: PermissionService = TestBed.get(PermissionService);
     const userId = 1;

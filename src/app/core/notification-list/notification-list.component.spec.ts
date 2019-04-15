@@ -123,4 +123,11 @@ describe('NotificationListComponent', () => {
     expect(deleteAllNotifications).toHaveBeenCalled();
     expect(forceRefresh).toHaveBeenCalled();
   });
+
+  it('should get results', () => {
+    const offset = 5, limit = 10;
+    component.getResults(offset, limit);
+
+    expect(getNotifications).toHaveBeenCalledWith({offset, limit});
+  });
 });
