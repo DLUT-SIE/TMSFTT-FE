@@ -14,7 +14,7 @@ export class MatPaginatorIntlService extends MatPaginatorIntl {
 
   getRangeLabel = (page: number, pageSize: number, length: number) => {
     const startRecord = page * pageSize + 1;
-    const endRecord = (page + 1) * pageSize + 1;
-    return `${length} 条结果中的第 ${startRecord} - ${Math.min(length, endRecord)} 条结果`;
+    const endRecord = Math.min(length, (page + 1) * pageSize);
+    return `${length} 条结果中的第 ${Math.min(startRecord, endRecord)} - ${endRecord} 条结果`;
   };
 }

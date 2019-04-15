@@ -1,3 +1,136 @@
-<p>
-  department-detail works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">学部学院管理</h4>
+        </div>
+        <div class="card-body">
+          <p class="text-danger" *ngIf="errorMessage !== null">{{ errorMessage }}</p>
+
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-spinner *ngIf="isLoading" color="warn" mode="indeterminate">
+            </mat-spinner>
+          </div>
+
+          <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px"
+            *ngIf="department">
+            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">院系名称</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ department.name }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+
+            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">院系管理员</span>
+              <div class="table-responsive item-content" fxFlex="1 0 78%">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th>
+                      用户名
+                    </th>
+                    <th>
+                      姓名
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of department.admins">
+                      <td>用户名{{user}}</td>
+                      <td>姓名{{user}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+
+            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">院系成员</span>
+              <div class="table-responsive item-content" fxFlex="1 0 78%">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th>
+                      用户名
+                    </th>
+                    <th>
+                      姓名
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of department.users">
+                      <td>用户名{{user}}</td>
+                      <td>姓名{{user}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+
+            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">部门权限</span>
+              <div class="table-responsive item-content" fxFlex="1 0 78%">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th>
+                      权限名称
+                    </th>
+                    <th>
+                      是否拥有该权限？
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        添加培训记录
+                      </td>
+                      <td>
+                        <mat-checkbox [checked]="true"></mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        删除培训记录
+                      </td>
+                      <td>
+                        <mat-checkbox [checked]="false"></mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        查看培训记录
+                      </td>
+                      <td>
+                        <mat-checkbox [checked]="true"></mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        修改培训记录
+                      </td>
+                      <td>
+                        <mat-checkbox [checked]="true"></mat-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+          <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+            <a mat-raised-button color="primary" (click)="location.back()">返回</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

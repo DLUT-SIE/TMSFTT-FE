@@ -1,13 +1,10 @@
-export interface Department {
-    name: string;
-}
+import { GenericObject } from './generics';
 
-export interface DepartmentRequest extends Department {
-}
-
-export interface DepartmentResponse extends Department {
-    id: number;
-    create_time: string;
-    update_time: string;
-    admins: number[];
+export interface Department extends GenericObject {
+    id?: number;
+    name?: string;
+    create_time?: string;
+    update_time?: string;
+    admins?: number[];
+    users?: number[];
 }
