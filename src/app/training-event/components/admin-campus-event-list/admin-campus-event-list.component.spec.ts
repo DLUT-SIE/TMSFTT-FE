@@ -20,6 +20,25 @@ describe('AdminCampusEventListComponent', () => {
   let getProgram: jasmine.Spy;
   let navigate: jasmine.Spy;
 
+  const dummyProgram: Program = {
+    id: 1,
+    name: 'sender',
+    department: 2,
+    category: 3,
+    department_detail: {
+      id: 2,
+      create_time: '2019-3-4',
+      update_time: '2019-3-6',
+      name: 'test',
+      admins: [],
+    },
+    category_detail: {
+      id: 3,
+      name: 'test',
+    },
+    form: [],
+  };
+
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
@@ -91,25 +110,6 @@ describe('AdminCampusEventListComponent', () => {
   });
 
   it('should load data', () => {
-
-    const dummyProgram: Program = {
-      id: 1,
-      name: 'sender',
-      department: 2,
-      category: 3,
-      department_detail: {
-        id: 2,
-        create_time: '2019-3-4',
-        update_time: '2019-3-6',
-        name: 'test',
-        admins: [],
-      },
-      category_detail: {
-        id: 3,
-        name: 'test',
-      },
-      form: [],
-    };
     getProgram.and.returnValue(getProgram$);
     getProgram$.next(dummyProgram);
     expect(component.program).toBe(dummyProgram);
@@ -118,5 +118,12 @@ describe('AdminCampusEventListComponent', () => {
 
   it('should load event', () => {
     expect(component.getResults(0, 0)).toBe(getCampusEvents$);
+  });
+
+  it('should navigate to  program detail', () => {
+    component.navigateToProgramDetail();
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['/admin/event-management/programs', dummyProgram.id]);
   });
 });
