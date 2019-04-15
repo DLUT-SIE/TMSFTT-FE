@@ -6,12 +6,14 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Subject } from 'rxjs';
+import { Department } from 'src/app/shared/interfaces/department';
 
 describe('DepartmentDetailComponent', () => {
   let component: DepartmentDetailComponent;
   let fixture: ComponentFixture<DepartmentDetailComponent>;
   let getDepartment: jasmine.Spy;
   let getDepartment$: Subject<{}>;
+  const departmentId = 5;
 
   beforeEach(async(() => {
     getDepartment$ = new Subject();
@@ -33,7 +35,7 @@ describe('DepartmentDetailComponent', () => {
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => '1',
+                get: () => `${departmentId}`,
               },
             },
           },
@@ -57,5 +59,15 @@ describe('DepartmentDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.isLoading).toBeTruthy();
+  });
+
+  it('should get department', () => {
+    const department = {id: 1, name: 'name'} as Department;
+    getDepartment$.next(department);
+
+    expect(getDepartment).toHaveBeenCalledWith(departmentId);
+    expect(component.isLoading).toBeFalsy();
+    expect(component.department).toEqual(department);
   });
 });

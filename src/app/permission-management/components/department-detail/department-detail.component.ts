@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserPermissionStatus } from 'src/app/shared/interfaces/permission';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Department } from 'src/app/shared/interfaces/department';
 import { ActivatedRoute } from '@angular/router';
@@ -13,11 +12,6 @@ import { Location } from '@angular/common';
 export class DepartmentDetailComponent implements OnInit {
   isLoading = true;
   department: Department = null;
-  errorMessage = '';
-  /** The permissions the selected department currently have. */
-  originalPermissions: UserPermissionStatus[] = [];
-  /** The permissions that should be after the change. */
-  newPermissions: UserPermissionStatus[] = [];
 
   constructor(
     readonly location: Location,

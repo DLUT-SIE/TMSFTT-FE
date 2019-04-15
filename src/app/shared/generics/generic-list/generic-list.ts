@@ -40,7 +40,7 @@ export abstract class GenericListComponent<T extends GenericObject> implements O
   ngOnInit() {
     merge(this.paginator.page, this.forceRefresh$).pipe(
       startWith({
-          pageIndex: (+this.route.snapshot.queryParamMap.get('page') || 1) - 1,
+        pageIndex: (+this.route.snapshot.queryParamMap.get('page') || /* istanbul ignore next */ 1) - 1,
       }),
       // Convert event to page index and update URL
       map((event: PageEvent) => {

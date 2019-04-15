@@ -4,7 +4,6 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-department-management',
@@ -14,7 +13,6 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class DepartmentManagementComponent extends GenericListComponent<Department> {
 
   constructor(
-    readonly userService: UserService,
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
     protected readonly location: Location,
