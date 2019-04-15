@@ -20,6 +20,7 @@ import { ReviewNoteService } from 'src/app/data-management/services/review-note.
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
@@ -143,9 +144,14 @@ describe('OffCampusRecordDetailComponent', () => {
     const resultsLength = component.resultsLength;
 
     component.onSubmit();
+    component.results.length = environment.PAGINATION_SIZE + 1;
     createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
 
     expect(component.resultsLength).toEqual(resultsLength + 1);
+
+    component.onSubmit();
+    component.results.length = environment.PAGINATION_SIZE - 1;
+    createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
   });
 
   it('should display errors when creation failed.', () => {

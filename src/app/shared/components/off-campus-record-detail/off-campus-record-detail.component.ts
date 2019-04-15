@@ -8,6 +8,7 @@ import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { ReviewNoteService } from 'src/app/data-management/services/review-note.service';
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-off-campus-record-detail',
@@ -39,8 +40,11 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
   onSubmit() {
     this.reviewnoteService.createReviewNote(this.record, this.reviewnotecontent)
     .subscribe(res => {
-      this.results.push(res);
-      this.resultsLength = this.results.length;
+      this.results.unshift(res);
+      this.resultsLength = this.resultsLength + 1;
+      if (this.results.length > environment.PAGINATION_SIZE) {
+        this.results = this.results.slice(0, environment.PAGINATION_SIZE);
+        }
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
