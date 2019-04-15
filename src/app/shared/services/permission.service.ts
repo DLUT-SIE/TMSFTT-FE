@@ -1,66 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Observable, zip, throwError, of as observableOf } from 'rxjs';
-import { Permission, UserPermission, UserPermissionRequest, UserPermissionStatus } from '../interfaces/permission';
+import { Observable, zip, of as observableOf } from 'rxjs';
+import { Permission, UserPermission, UserPermissionRequest } from '../interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { map, switchMap } from 'rxjs/operators';
-import { UserService } from './user.service';
-import { PaginatedResponse } from '../interfaces/paginated-response';
-import { User } from '../interfaces/auth-service';
+import { tap } from 'rxjs/operators';
 
 /** This service manages Permission objects and UserPermission objects. */
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionService {
+  private permissions: Permission[] = [];
 
   constructor(
     private readonly http: HttpClient,
-    private readonly userService: UserService,
   ) { }
 
   /** Retrieve all permission instances. */
   getPermissions(): Observable<Permission[]> {
     // TODO(youchen): Cache to avoid duplicate requests.
-    return this.http.get<Permission[]>(`${environment.API_URL}/permissions/`);
+    if (this.permissions.length !== 0) {
+      return observableOf(this.permissions);
+    }
+    return this.http.get<Permission[]>(`${environment.API_URL}/permissions/`).pipe(
+      tap((permissions: Permission[]) => {
+        this.permissions = permissions;
+      })
+    );
   }
 
   /** Retrieve user's permissions. */
   getUserPermissions(userId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
       `${environment.API_URL}/user-permissions/?user=${userId}`);
-  }
-
-  /** Return user's permission status against all permissions. */
-  getUserPermissionStatus(username: string): Observable<UserPermissionStatus[]> {
-    let userId: number = null;
-    return this.userService.getUserByUsername(username).pipe(
-      switchMap((res: PaginatedResponse<User>) => {
-        if (res.count !== 1) return throwError({ message: '系统中无此用户!' });
-        userId = res.results[0].id;
-        return zip(
-          this.getPermissions(),
-          this.getUserPermissions(userId),
-        );
-      }),
-      map((val: [Permission[], UserPermission[]], index: number) => {
-        // All permissions, Map<permission id, Permission>
-        const permissions = new Map<number, Permission>();
-        val[0].map(x => permissions.set(x.id, x));
-        // User permissions, Map<permission id, UserPermission>;
-        const userPermissions = new Map<number, UserPermission>();
-        val[1].map(x => userPermissions.set(x.permission, x));
-        return val[0].map(x => {
-          const userPermissionId = userPermissions.has(x.id) ? userPermissions.get(x.id).id : undefined;
-          return {
-            id: userPermissionId,
-            user: userId,
-            permission: x,
-            hasPermission: userPermissionId !== undefined,
-          };
-        }).sort((x, y) => x.permission.id - y.permission.id);
-      }),
-    );
   }
 
   createUserPermission(req: UserPermissionRequest) {
