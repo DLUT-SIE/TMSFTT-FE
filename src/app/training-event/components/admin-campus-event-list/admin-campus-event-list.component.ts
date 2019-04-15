@@ -39,6 +39,11 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
     this.router.navigate(['/admin/event-management/programs', this.programId]);
   }
 
+  navigateToCreateForm() {
+    this.router.navigate(['/admin/event-management/programs/events/event-form'], { queryParams: {program_id: this.programId}});
+  }
+
+
   ngOnInit() {
     this.route.queryParams.pipe(
       switchMap(queryParams => {
