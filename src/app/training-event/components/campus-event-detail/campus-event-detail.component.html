@@ -29,7 +29,7 @@
                     fxLayoutGap="15px">
                     <span class="item-title" fxFlex="1 0 20%">时间</span>
                     <div class="item-content" fxFlex="1 0 78%">
-                      <p>{{ item.time | date:'y年M月d日 H:mm::ss' }}</p>
+                      <p>{{ item.time | date:'y年M月d日 H:mm' }}</p>
                     </div>
                     <div fxFlex="1 0 2%"></div>
                   </div>
@@ -105,6 +105,11 @@
               </div>
             <div fxFlex="1 0 2%"></div>
           </div>
+
+          <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+              <a mat-raised-button class="btn btn-danger">取消报名</a> 
+              <a mat-raised-button class="btn btn-danger">返回</a> 
+            </div>
         </div>
       </div>
     </div>
