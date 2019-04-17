@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProgramListComponent } from './components/programs/program-list.component';
+import { ProgramListComponent } from './components/program-list/program-list.component';
 import { ProgramFormComponent } from './components/program-form/program-form.component';
 import { TrainingProgramComponent } from './training-program.component';
 import { ProgramDetailComponent } from './components/program-detail/program-detail.component';

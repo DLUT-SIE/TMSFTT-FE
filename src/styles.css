@@ -64,8 +64,9 @@ tr:hover {
     color: rgb(232, 73, 73);
 }
 
-.detail-section mat-divider {
-    margin-bottom: 5px;
+mat-divider {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 /* Fix mat-option display conflict in mat-select. */

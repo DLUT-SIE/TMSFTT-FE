@@ -5,10 +5,10 @@ import { GenericListComponent } from './generic-list';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { GenericObject } from 'src/app/shared/interfaces/generics';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatPaginatorModule } from '@angular/material';
 import { Component } from '@angular/core';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material';
 
 @Component({
     selector: 'app-list-component',
@@ -34,10 +34,12 @@ describe('GenericListComponent', () => {
     let navigate: jasmine.Spy;
     let getResults: jasmine.Spy;
     let getResults$: Subject<PaginatedResponse<GenericObject>>;
+    let go: jasmine.Spy;
     const dummyResponse = { id: 1 };
 
     beforeEach(() => {
-        navigate = jasmine.createSpy();
+        go = jasmine.createSpy(),
+            navigate = jasmine.createSpy();
         getResults$ = new Subject();
         TestBed.configureTestingModule({
             declarations: [
@@ -67,7 +69,7 @@ describe('GenericListComponent', () => {
                 {
                     provide: Location,
                     useValue: {
-                        go: () => {},
+                        go,
                     },
                 },
                 {
@@ -117,4 +119,27 @@ describe('GenericListComponent', () => {
 
         expect(navigate).toHaveBeenCalled();
     });
+
+    it('should trigger refresh (at first page)', () => {
+        const hasPreviousPage = spyOn(component.paginator, 'hasPreviousPage');
+        const firstPage = spyOn(component.paginator, 'firstPage');
+        hasPreviousPage.and.returnValue(true);
+        component.forceRefresh();
+
+        expect(hasPreviousPage).toHaveBeenCalled();
+        expect(firstPage).toHaveBeenCalled();
+    });
+
+    it('should trigger refresh (not at first page)', () => {
+        const hasPreviousPage = spyOn(component.paginator, 'hasPreviousPage');
+        const firstPage = spyOn(component.paginator, 'firstPage');
+        hasPreviousPage.and.returnValue(false);
+        component.forceRefresh();
+
+        expect(hasPreviousPage).toHaveBeenCalled();
+        expect(firstPage).not.toHaveBeenCalled();
+        expect(go).toHaveBeenCalled();
+        expect(getResults).toHaveBeenCalled();
+    });
+
 });

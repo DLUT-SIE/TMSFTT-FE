@@ -1,0 +1,11 @@
+td,th {
+    text-align: center;
+}
+
+.red {
+    color: rgb(232, 73, 73);
+}
+
+td {
+    white-space: pre-wrap;
+}

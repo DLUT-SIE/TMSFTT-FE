@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { Location } from '@angular/common';
 
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
@@ -21,6 +22,7 @@ export class RecordDetailComponent implements OnInit {
   feedback: string;
 
   constructor(
+    readonly location: Location,
     private readonly route: ActivatedRoute,
     private readonly recordService: RecordService,
     public dialog: MatDialog,

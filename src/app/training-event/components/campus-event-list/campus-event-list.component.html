@@ -10,34 +10,36 @@
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>
           </div>
-          <div class="table-responsive-lg">
+          <div class="table-responsive">
             <table class="table table-hover text-center">
-              <thead class="text-primary d-flex">
-                <th class="col-2 col-sm-2">名字</th>
-                <th class="col-2 col-sm-2">时间</th>
-                <th class="col-2 col-sm-2">地点</th>
-                <th class="col-2 col-sm-2">总时长</th>
-                <th class="col-2 col-sm-2">参与者人数</th>
-                <th class="col-2 col-sm-2">状态</th>
+              <thead class="text-primary ">
+               <tr>
+                <th scope="col">名字</th>
+                <th scope="col">时间</th>
+                <th scope="col">地点</th>
+                <th scope="col">总时长</th>
+                <th scope="col">参与者人数</th>
+                <th scope="col">状态</th>
+                </tr>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let item of results">
-                 <div *ngIf="item.id>7; then thenBlock else elseBlock"></div>
+                <tr  *ngFor="let item of results; let i = index">
+                 <div *ngIf="i>2; then thenBlock else elseBlock"></div>
                   <ng-template #thenBlock>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.name }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.location }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
-                  <td class="col-2 col-sm-2"><button mat-raised-button color="primary">报名</button></td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
+                  <td scope="col"><button mat-raised-button color="primary">报名</button></td>
                 </ng-template>
                 <ng-template #elseBlock>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.name }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.time | date:'y年M月d日 H:mm::ss' }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.location }}</td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
-                  <td class="col-2 col-sm-2" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
-                  <td class="col-2 col-sm-2">已报名</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
+                  <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
+                  <td scope="col">已报名</td>
                   </ng-template>
                 </tr>
               </tbody>

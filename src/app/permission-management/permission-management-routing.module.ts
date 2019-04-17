@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AccountPermissionComponent } from './components/account-permission/account-permission.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
+import { DepartmentManagementComponent } from './components/department-management/department-management.component';
+import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 
 const routes: Routes = [
   {
@@ -14,8 +16,16 @@ const routes: Routes = [
         path: '',
         children: [
           {
-            path: 'account-permission',
-            component: AccountPermissionComponent,
+            path: 'users',
+            component: UserManagementComponent,
+          },
+          {
+            path: 'departments',
+            component: DepartmentManagementComponent,
+          },
+          {
+            path: 'departments/:id',
+            component: DepartmentDetailComponent,
           },
           {
             path: '',

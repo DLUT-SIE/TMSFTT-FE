@@ -120,10 +120,17 @@ describe('AdminCampusEventListComponent', () => {
     expect(component.getResults(0, 0)).toBe(getCampusEvents$);
   });
 
-  it('should navigate to  program detail', () => {
+  it('should navigate to program detail', () => {
     component.navigateToProgramDetail();
 
     expect(navigate).toHaveBeenCalledWith(
       ['/admin/event-management/programs', dummyProgram.id]);
+  });
+
+  it('should navigate to create form', () => {
+    component.navigateToCreateForm();
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['/admin/event-management/programs/events/event-form'], { queryParams: {program_id: dummyProgram.id} });
   });
 });
