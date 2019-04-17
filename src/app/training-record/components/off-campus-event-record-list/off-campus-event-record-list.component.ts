@@ -32,8 +32,4 @@ export class OffCampusEventRecordListComponent extends GenericListComponent<Reco
     this.router.navigate(['.', 'record-form'], { relativeTo: this.route });
   }
 
-  navigateToDetail(record: RecordResponse) {
-    this.router.navigate(['../../records/', record.id], { relativeTo: this.route });
-  }
-
 }
