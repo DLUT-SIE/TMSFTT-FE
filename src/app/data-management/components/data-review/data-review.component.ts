@@ -16,7 +16,7 @@ export class DataReviewComponent implements OnInit {
 
   constructor(
     protected readonly route: ActivatedRoute,
-    protected readonly location: Location,
+    readonly location: Location,
   ) { }
 
   ngOnInit() {
