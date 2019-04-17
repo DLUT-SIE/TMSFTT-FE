@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { OffCampusEventRecordListComponent } from './off-campus-event-record-list.component';
 import { RecordService } from '../../services/record.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
 
 describe('OffCampusEventRecordListComponent', () => {
@@ -82,28 +81,4 @@ describe('OffCampusEventRecordListComponent', () => {
     expect(navigate).toHaveBeenCalled();
   });
 
-  it('should navigate to detail', () => {
-    const record: RecordResponse = {
-      id: 1,
-      create_time: '2019-01-01',
-      update_time: '2019-01-02',
-      campus_event: null,
-      off_campus_event: {id: 1,
-                         create_time: '2019-03-02T09:07:57.159755+08:00',
-                         update_time: '2019-03-02T09:07:57.159921+08:00',
-                         name: 'sfdg',
-                         time: '2019-03-02T00:00:00+08:00',
-                         location: 'dfgfd',
-                         num_hours: 0,
-                         num_participants: 25
-                         },
-      contents: [],
-      attachments: [],
-      user: 1,
-      status: 1,
-    };
-    component.navigateToDetail(record);
-
-    expect(navigate).toHaveBeenCalled();
-  });
 });
