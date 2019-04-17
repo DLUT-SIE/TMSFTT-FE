@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
@@ -18,6 +19,7 @@ export class ProgramDetailComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    readonly location: Location,
   ) { }
 
   ngOnInit() {
