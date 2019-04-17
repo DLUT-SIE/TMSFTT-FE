@@ -55,6 +55,9 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data: { record: RecordResponse}) => {
+      this.record = data.record;
+    });
     super.ngOnInit();
   }
 }
