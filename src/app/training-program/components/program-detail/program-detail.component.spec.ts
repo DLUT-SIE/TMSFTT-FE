@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ProgramDetailComponent } from './program-detail.component';
 import { Program } from 'src/app/shared/interfaces/program';
@@ -19,6 +20,12 @@ describe('ProgramDetailComponent', () => {
         MatCardModule,
       ],
       providers: [
+        {
+          provide: Location,
+          useValue: {
+            back: () => {},
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {
