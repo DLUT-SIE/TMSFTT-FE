@@ -3,6 +3,7 @@ import { of as observableOf } from 'rxjs';
 import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 describe('AddminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
@@ -16,6 +17,10 @@ describe('AddminCampusEventDetailComponent', () => {
         AdminCampusEventDetailComponent
       ],
       providers: [
+        {
+          provide: Location,
+          useValue: {},
+        },
         {
           provide: Router,
           useValue: {

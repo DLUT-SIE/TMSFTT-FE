@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Location } from '@angular/common';
 import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 
 
@@ -14,6 +14,7 @@ export class AdminCampusEventDetailComponent implements OnInit {
   item: CampusEventResponse;
 
   constructor(
+    readonly location: Location,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) { }
