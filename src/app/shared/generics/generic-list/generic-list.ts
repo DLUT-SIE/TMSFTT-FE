@@ -74,6 +74,13 @@ export abstract class GenericListComponent<T extends GenericObject> implements O
 
   /** Trigger page refresh manually. */
   forceRefresh() {
+    if (this.paginator.hasPreviousPage()) {
+      // Not at first page. Jump to first page and content will be udpated
+      // accordingly
+      this.paginator.firstPage();
+      return;
+    }
+    // At first page, just trigger content refresh
     this.forceRefresh$.next({
       pageIndex: 0,
     } as PageEvent);
