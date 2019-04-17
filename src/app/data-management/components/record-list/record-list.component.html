@@ -10,18 +10,20 @@
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>
           </div>
-          <div class="table-responsive-lg">
+          <div class="table-responsive">
             <table class="table table-hover text-center">
-              <thead class="text-primary d-flex">
-                <th class="col-2 col-sm-2">项目名称</th>
-                <th class="col-2 col-sm-2">时间</th>
-                <th class="col-2 col-sm-2">地点</th>
-                <th class="col-2 col-sm-2">学时</th>
-                <th class="col-2 col-sm-2">人数</th>
-                <th class="col-2 col-sm-2">审核状态</th>
+              <thead class="text-primary">
+                <tr>
+                  <th class="col-2 col-sm-2">项目名称</th>
+                  <th class="col-2 col-sm-2">时间</th>
+                  <th class="col-2 col-sm-2">地点</th>
+                  <th class="col-2 col-sm-2">学时</th>
+                  <th class="col-2 col-sm-2">人数</th>
+                  <th class="col-2 col-sm-2">审核状态</th>
+                </tr>
               </thead>
               <tbody>
-                <tr class="d-flex" *ngFor="let record of results" (click)="navigateToDetail(record)">
+                <tr *ngFor="let record of results" (click)="navigateToDetail(record)">
                   <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
                   <ng-template #thenBlock>
                     <td class="col-2 col-sm-2">{{ record.off_campus_event.name }}</td>

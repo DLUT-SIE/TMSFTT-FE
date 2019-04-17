@@ -14,11 +14,11 @@ import {
   MatInputModule,
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { DataReviewComponent } from './data-review.component';
 import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
-import { Location } from '@angular/common';
 
 describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
@@ -41,6 +41,12 @@ describe('DataReviewComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [
+        {
+          provide: Location,
+          useValue: {
+            back: () => {},
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -69,10 +75,6 @@ describe('DataReviewComponent', () => {
               status: 1,
             } as RecordResponse}),
           }
-        },
-        {
-          provide: Location,
-          useValue: {},
         },
         {
           provide: Router,
