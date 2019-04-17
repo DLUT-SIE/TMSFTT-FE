@@ -119,16 +119,16 @@
         </div>
       </div>
       <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
-      <div class="row">
-        <div class="col-7 col-sm-10">
-          <mat-form-field appearance="outline">
+      <div fxLayout="row" fxLayoutAlign="space-between start" fxLayout.xs="column" fxLayoutAlign.xs="start stretch">
+        <div fxLayout="row" fxFlex="1 1 80%" fxLayoutGap="5px">
+          <mat-form-field fxFlexFill fxLayoutAlign="center" appearance="outline">
             <mat-icon matPrefix>assignment</mat-icon>
             <mat-label i18n>审核与反馈</mat-label>
             <input matInput [(ngModel)]="reviewnotecontent" placeholder="请输入内容" i18n-placeholder required>
           </mat-form-field>
         </div>
-        <div class="col-2 col-sm-2">
-          <button mat-raised-button (click)="onSubmit()" class="btn btn-danger">提交</button>
+        <div fxLayout="row" fxFlex="1 1 20%" fxLayoutAlign="end center">
+          <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-danger">提交</button>
         </div>
       </div>
     </div>
