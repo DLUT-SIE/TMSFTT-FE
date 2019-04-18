@@ -32,15 +32,15 @@ const routes: Routes = [
         path: 'off-campus-event-records',
         children: [
           {
+            path: 'record-form',
+            component: RecordFormComponent,
+          },
+          {
             path: ':id',
             resolve: {
               record: RecordDetailResolverService,
             },
             component: RecordDetailComponent,
-          },
-          {
-            path: 'record-form',
-            component: RecordFormComponent,
           },
           {
             path: '',
