@@ -20,7 +20,6 @@ import { ReviewNoteService } from 'src/app/data-management/services/review-note.
 import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
 import { RecordResponse } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
-import { environment } from 'src/environments/environment';
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
@@ -28,13 +27,6 @@ describe('OffCampusRecordDetailComponent', () => {
   let getReviewNotes$: jasmine.Spy;
   let createReviewNote$: Subject<ReviewNoteResponse>;
   let snackBarOpen: jasmine.Spy;
-  const dummyReviewNote: ReviewNoteResponse = {
-    id: 1,
-    create_time: '2019-02-23T20:37:57.127073+08:00',
-    content: '组织自己电子国内控制一次登录这样能够',
-    record: 2,
-    user: 48,
-  };
 
   beforeEach(async(() => {
     getReviewNotes$ = jasmine.createSpy();
@@ -141,21 +133,15 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should create reviewnote.', () => {
-    const resultsLength = component.resultsLength;
+    const forceRefresh = spyOn(component, 'forceRefresh');
 
     component.onSubmit();
-    component.results.length = environment.PAGINATION_SIZE + 1;
-    createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
+    createReviewNote$.next();
 
-    expect(component.resultsLength).toEqual(resultsLength + 1);
-
-    component.onSubmit();
-    component.results.length = environment.PAGINATION_SIZE - 1;
-    createReviewNote$.next(dummyReviewNote as ReviewNoteResponse);
+    expect(forceRefresh).toHaveBeenCalled();
   });
 
   it('should display errors when creation failed.', () => {
-    component.onSubmit();
     createReviewNote$.error({
       message: 'Raw error message',
       error: {
@@ -163,14 +149,17 @@ describe('OffCampusRecordDetailComponent', () => {
       },
     } as HttpErrorResponse);
 
+    component.onSubmit();
+
     expect(snackBarOpen).toHaveBeenCalledWith('Invalid content。', '创建失败！');
   });
 
   it('should display raw errors when creation failed.', () => {
-    component.onSubmit();
     createReviewNote$.error({
       message: 'Raw error message',
     } as HttpErrorResponse);
+
+    component.onSubmit();
 
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
   });
