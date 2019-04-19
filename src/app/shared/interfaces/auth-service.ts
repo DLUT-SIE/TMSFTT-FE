@@ -6,8 +6,8 @@ import { InjectionToken } from '@angular/core';
 export interface AuthService {
     /** Indicate whether the current user is authenticated. */
     isAuthenticated: boolean;
-    /** Indicate whether the curreent user is super administrator. */
-    isSuperAdmin: boolean;
+    /** Indicate whether the curreent user is school administrator. */
+    isSchoolAdmin: boolean;
     /** Indicate whether the curreent user is department administrator. */
     isDepartmentAdmin: boolean;
     /** Indicate whether the curreent user is teacher. */
@@ -64,7 +64,7 @@ export interface User {
     user_permissions: number[];
     is_teacher: boolean;
     is_department_admin: boolean;
-    is_superadmin: boolean;
+    is_school_admin: boolean;
     department: number;
     department_str?: string;
 }
