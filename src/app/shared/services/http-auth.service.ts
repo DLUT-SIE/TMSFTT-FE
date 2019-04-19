@@ -15,7 +15,7 @@ import { StorageService, STORAGE_SERVICE } from '../interfaces/storage-service';
 })
 export class HTTPAuthService implements AuthService {
   isAuthenticated = false;
-  isSuperAdmin = false;
+  isSchoolAdmin = false;
   isDepartmentAdmin = false;
   isTeacher = false;
   userID: number = null;
@@ -52,7 +52,7 @@ export class HTTPAuthService implements AuthService {
     this.username = user.username;
     this.firstName = user.first_name;
     this.lastName = user.last_name;
-    this.isSuperAdmin = user.is_superadmin;
+    this.isSchoolAdmin = user.is_school_admin;
     this.isDepartmentAdmin = user.is_department_admin;
     this.isTeacher = user.is_teacher;
     this.department = user.department;

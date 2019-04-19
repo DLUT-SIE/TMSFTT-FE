@@ -10,7 +10,7 @@ describe('AdminGuard', () => {
   let authService: {
     isAuthenticated: boolean,
     isDepartmentAdmin: boolean,
-    isSuperAdmin: boolean,
+    isSchoolAdmin: boolean,
   };
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('AdminGuard', () => {
           useValue: {
             isAuthenticated: false,
             isDepartmentAdmin: false,
-            isSuperAdmin: false,
+            isSchoolAdmin: false,
           },
         },
         {
@@ -79,7 +79,7 @@ describe('AdminGuard', () => {
 
   it('should load if authentication succeed and is admin', inject([AdminGuard], (guard: AdminGuard) => {
     authService.isAuthenticated = true;
-    authService.isSuperAdmin = true;
+    authService.isSchoolAdmin = true;
     const canLoad = guard.canLoad({});
 
     expect(canLoad).toBeTruthy();

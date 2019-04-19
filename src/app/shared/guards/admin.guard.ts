@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate, CanLoad, CanActivateChild {
 
   private checkAdmin(url: string) {
     const isAuthenticated = this.authService.isAuthenticated;
-    const isAdmin = this.authService.isSuperAdmin || this.authService.isDepartmentAdmin;
+    const isAdmin = this.authService.isSchoolAdmin || this.authService.isDepartmentAdmin;
 
     if (isAuthenticated && isAdmin) return true;
 

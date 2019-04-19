@@ -55,7 +55,7 @@
             </a>
         </li>
     </ul>
-    <ul class="nav admin-nav-menu" *ngIf="authService.isDepartmentAdmin || authService.isSuperAdmin">
+    <ul class="nav admin-nav-menu" *ngIf="authService.isDepartmentAdmin || authService.isSchoolAdmin">
         <li class="nav-item">
             <span class="nav-link">管理员导航菜单</span>
         </li>
@@ -66,7 +66,7 @@
                 <p>{{ menuItem.title }}</p>
             </a>
         </li>
-        <ng-container *ngIf="authService.isSuperAdmin">
+        <ng-container *ngIf="authService.isSchoolAdmin">
             <li routerLinkActive="active" *ngFor="let menuItem of superAdminRouteItems"
                 class="{{ menuItem.class }} nav-item">
                 <a class="nav-link" [routerLink]="[menuItem.path]">
