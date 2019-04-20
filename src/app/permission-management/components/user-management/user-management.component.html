@@ -60,28 +60,16 @@
 
               <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
                 fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">身份</span>
+                <span class="item-title" fxFlex="1 0 20%">所属部门及身份</span>
                 <div class="item-content" fxFlex="1 0 78%">
                   <mat-chip-list>
-                    <mat-chip *ngIf="user.is_teacher">教师</mat-chip>
-                    <mat-chip color="primary" *ngIf="user.is_department_admin" selected>院系管理员</mat-chip>
-                    <mat-chip color="warn" *ngIf="user.is_superadmin" selected>超级管理员</mat-chip>
+                    <mat-chip color="primary" *ngFor="let group of user.group_str" selected>{{group}}</mat-chip>
                   </mat-chip-list>
                 </div>
                 <div fxFlex="1 0 2%"></div>
               </div>
 
-
             </ng-container>
-
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px" *ngIf="department">
-              <span class="item-title" fxFlex="1 0 20%">所属部门</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                {{ department.name }}
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
 
             <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
               fxLayoutGap="15px" *ngIf="!isLoading && newPermissions.length !== 0">
