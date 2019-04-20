@@ -5,12 +5,6 @@ import { PageNotFoundComponent } from './core/page-not-found/page-not-found.comp
 import { PermissionDeniedComponent } from './core/permission-denied/permission-denied.component';
 import { LoginComponent } from './core/login/login.component';
 
-import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
-import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
-import { TypographyComponent } from 'src/app/demo/typography/typography.component';
-import { IconsComponent } from 'src/app/demo/icons/icons.component';
-import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
-import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { NotificationComponent } from './core/notification/notification.component';
@@ -65,35 +59,6 @@ const routes: Routes = [
         path: '',
         component: NotificationListComponent,
       }
-    ]
-  },
-  {
-    path: 'demo',
-    children: [
-      {
-        path: 'user-profile',
-        component: UserProfileComponent,
-      },
-      {
-        path: 'table-list',
-        component: TableListComponent,
-      },
-      {
-        path: 'typography',
-        component: TypographyComponent,
-      },
-      {
-        path: 'icons',
-        component: IconsComponent,
-      },
-      {
-        path: 'notifications',
-        component: NotificationsComponent,
-      },
-      {
-        path: 'upgrade',
-        component: UpgradeComponent,
-      },
     ]
   },
   {
