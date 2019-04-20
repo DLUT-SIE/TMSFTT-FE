@@ -150,7 +150,7 @@ describe('NavbarComponent', () => {
 
   it('should get correct title', () => {
     authenticationSucceed$.next();
-    prepareExternalUrl.and.returnValue('/dashboard');
+    prepareExternalUrl.and.returnValue('/user/dashboard');
 
     const title = component.getTitle();
 
@@ -159,7 +159,7 @@ describe('NavbarComponent', () => {
 
   it('should get correct title(slice url)', () => {
     authenticationSucceed$.next();
-    prepareExternalUrl.and.returnValue('#x/dashboard');
+    prepareExternalUrl.and.returnValue('#x/user/dashboard');
 
     const title = component.getTitle();
 
