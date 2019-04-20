@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.authService.verifyJWT().pipe(
       map((isValidJWT: boolean) => {
         const snapshot = this.activatedRoute.snapshot;
-        this.nextURL = snapshot.queryParamMap.get('next') || '/dashboard';
+        this.nextURL = snapshot.queryParamMap.get('next') || '/user/dashboard';
         if (isValidJWT) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
           this.router.navigateByUrl(this.nextURL, { replaceUrl: true });

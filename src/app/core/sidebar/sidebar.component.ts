@@ -20,12 +20,12 @@ export const DEPARTMENT_ADMIN_ROUTE_ITEMS: RouteInfo[] = [
 ];
 
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
-    { path: '/dashboard', title: '首页', icon: 'dashboard', class: '' },
-    { path: '/training-event/events', title: '校内培训活动', icon: 'list', class: '' },
+    { path: '/user/dashboard', title: '首页', icon: 'dashboard', class: '' },
+    { path: '/user/training-event/events', title: '校内培训活动', icon: 'list', class: '' },
     // TODO(youchen): Display the number of records without feedbacks.
-    { path: '/training-record/records', title: '个人培训记录', icon: 'how_to_reg', class: '' },
-    { path: '/training-record/off-campus-event-records', title: '校外培训填报', icon: 'create', class: '' },
-    { path: '/statistics', title: '个人数据统计', icon: 'unarchive', class: '' },
+    { path: '/user/training-record/records', title: '个人培训记录', icon: 'how_to_reg', class: '' },
+    { path: '/user/training-record/off-campus-event-records', title: '校外培训填报', icon: 'create', class: '' },
+    { path: '/user/statistics', title: '个人数据统计', icon: 'unarchive', class: '' },
 ];
 
 @Component({

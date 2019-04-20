@@ -21,7 +21,7 @@ import { NotificationListComponent } from './core/notification-list/notification
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/user/dashboard',
     pathMatch: 'full',
   },
   {
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   // Load this module if user is authenticated.
   {
-    path: '',
+    path: 'user',
     canLoad: [AuthGuard],
     loadChildren: './roles/regular-user/regular-user.module#RegularUserModule'
   },
