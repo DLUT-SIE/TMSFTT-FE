@@ -16,12 +16,6 @@ import { AUTH_SERVICE } from './shared/interfaces/auth-service';
 import { HTTPAuthService } from './shared/services/http-auth.service';
 import { SharedModule } from './shared/shared.module';
 
-import { TableListComponent } from 'src/app/demo/table-list/table-list.component';
-import { UserProfileComponent } from 'src/app/demo/user-profile/user-profile.component';
-import { TypographyComponent } from 'src/app/demo/typography/typography.component';
-import { IconsComponent } from 'src/app/demo/icons/icons.component';
-import { NotificationsComponent } from 'src/app/demo/notifications/notifications.component';
-import { UpgradeComponent } from 'src/app/demo/upgrade/upgrade.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
@@ -35,14 +29,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-
-    // Demo components
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
   ],
   imports: [
     BrowserModule,
