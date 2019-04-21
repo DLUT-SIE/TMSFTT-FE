@@ -5,7 +5,7 @@ import { MatCardModule, MatDividerModule } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { NotificationDetailComponent } from './notification-detail.component';
-import { NotificationResponse } from 'src/app/shared/interfaces/notification';
+import { Notification } from 'src/app/shared/interfaces/notification';
 
 
 describe('NotificationDetailComponent', () => {
@@ -33,12 +33,12 @@ describe('NotificationDetailComponent', () => {
           useValue: {
             data: observableOf({notification: {
               id: 1,
-              sender: 'sender',
-              recipient: 'recipient',
+              sender: 2,
+              recipient: 3,
               content: 'content',
               time: '2019-01-01',
               read_time: '2019-01-01',
-            } as NotificationResponse}),
+            } as Notification}),
           },
         }
       ]

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from '../../services/event.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { HAMMER_LOADER } from '@angular/platform-browser';
@@ -12,13 +12,13 @@ import { Location } from '@angular/common';
 describe('CampusEventListComponent', () => {
   let component: CampusEventListComponent;
   let fixture: ComponentFixture<CampusEventListComponent>;
-  let getCampusEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
+  let getCampusEvents$: Subject<PaginatedResponse<CampusEvent>>;
   let getCampusEvents: jasmine.Spy;
   let navigate: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
+    getCampusEvents$ = new Subject<PaginatedResponse<CampusEvent>>();
     getCampusEvents = jasmine.createSpy();
     getCampusEvents.and.returnValue(getCampusEvents$);
     TestBed.configureTestingModule({

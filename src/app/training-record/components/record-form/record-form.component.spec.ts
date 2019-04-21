@@ -23,10 +23,10 @@ import { Router } from '@angular/router';
 import { RecordFormComponent } from './record-form.component';
 import { RecordService } from '../../services/record.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EventService } from 'src/app/training-event/services/event.service';
-import { OffCampusEventResponse } from 'src/app/shared/interfaces/event';
+import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 describe('RecordFormComponent', () => {
@@ -36,15 +36,15 @@ describe('RecordFormComponent', () => {
   // respond to new value. This is not a big deal in unit tests, but we
   // need to make sure that we are aware of the consequences of this
   // behavior, such as codes are marked run multiple times in coverage report.
-  let createOffCampusRecord$: Subject<RecordResponse>;
-  let getOffCampusEvents$: Subject<PaginatedResponse<OffCampusEventResponse>>;
+  let createOffCampusRecord$: Subject<Record>;
+  let getOffCampusEvents$: Subject<PaginatedResponse<OffCampusEvent>>;
   let getOffCampusEvents: jasmine.Spy;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
   let component: RecordFormComponent;
   let fixture: ComponentFixture<RecordFormComponent>;
 
-  const dummyEvent: OffCampusEventResponse = {
+  const dummyEvent: OffCampusEvent = {
     id: 5,
     name: 'abc',
     time: 'time',
@@ -179,7 +179,7 @@ describe('RecordFormComponent', () => {
 
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
-    createOffCampusRecord$.next({ id: 123 } as RecordResponse);
+    createOffCampusRecord$.next({ id: 123 } as Record);
 
     expect(navigate).toHaveBeenCalledWith(['../record-detail/', 123]);
   });
@@ -225,7 +225,7 @@ describe('RecordFormComponent', () => {
   }));
 
   it('should set fields with selected option', () => {
-    const offCampusEvent: OffCampusEventResponse = {
+    const offCampusEvent: OffCampusEvent = {
       id: 1,
       name: 'abc',
       time: '2019-01-01 12:34:45',

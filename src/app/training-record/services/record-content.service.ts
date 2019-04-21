@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { zip, of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { RecordContentRequest, RecordContentResponse } from 'src/app/shared/interfaces/record';
+import { RecordContent } from 'src/app/shared/interfaces/record-content';
 
 /** Provide services for RecordContent. */
 @Injectable({
@@ -16,13 +16,13 @@ export class RecordContentService {
   ) { }
 
   /** Create single content. */
-  createRecordContent(req: RecordContentRequest) {
-    return this.http.post<RecordContentResponse>(
+  createRecordContent(req: RecordContent) {
+    return this.http.post<RecordContent>(
       `${environment.API_URL}/record-contents/`, req);
   }
 
   /** Create multiple contents. */
-  createRecordContents(reqs: RecordContentRequest[]) {
+  createRecordContents(reqs: RecordContent[]) {
     if (reqs.length === 0) return observableOf([]);
     return zip(...reqs.map(req => this.createRecordContent(req)));
   }

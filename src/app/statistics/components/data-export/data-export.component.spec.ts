@@ -18,14 +18,14 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { Subject } from 'rxjs';
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent;
   let fixture: ComponentFixture<DataExportComponent>;
   let getRecords: jasmine.Spy;
-  let getRecords$: Subject<PaginatedResponse<RecordResponse>>;
+  let getRecords$: Subject<PaginatedResponse<Record>>;
 
   beforeEach(async(() => {
     getRecords$ = new Subject();

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 import { ProgramService } from './program.service';
 import { environment } from 'src/environments/environment';
-import { ProgramRequest } from 'src/app/shared/interfaces/program';
+import { Program } from 'src/app/shared/interfaces/program';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('ProgramService', () => {
@@ -79,7 +79,7 @@ describe('ProgramService', () => {
   it('should create program-form', () => {
     const service: ProgramService = TestBed.get(ProgramService);
 
-    const createReq: ProgramRequest = {
+    const createReq: Program = {
       department: 1,
       name: 'test',
       category: 2,

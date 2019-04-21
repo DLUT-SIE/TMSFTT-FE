@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { ReviewNoteService } from 'src/app/data-management/services/review-note.service';
-import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
+import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 
 @Component({
@@ -14,9 +14,9 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
   templateUrl: './off-campus-record-detail.component.html',
   styleUrls: ['./off-campus-record-detail.component.css']
 })
-export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewNoteResponse> implements OnInit {
+export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewNote> implements OnInit {
   /** The data to be displayed. */
-  @Input() record: RecordResponse;
+  @Input() record: Record;
   reviewnotecontent: string;
 
   constructor(
@@ -55,7 +55,7 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { record: RecordResponse}) => {
+    this.route.data.subscribe((data: { record: Record}) => {
       this.record = data.record;
     });
     super.ngOnInit();

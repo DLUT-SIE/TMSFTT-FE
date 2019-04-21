@@ -158,18 +158,6 @@ describe('ProgramFormComponent', () => {
       name: 'sender',
       department: 2,
       category: 3,
-      department_detail: {
-        id: 2,
-        create_time: '2019-3-4',
-        update_time: '2019-3-6',
-        name: 'test',
-        admins: [],
-      },
-      category_detail: {
-        id: 3,
-        name: 'test',
-      },
-      form: [],
     };
     getProgram$.next(dummyProgram);
 

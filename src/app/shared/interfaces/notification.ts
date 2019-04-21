@@ -1,9 +1,9 @@
 /** RESTful response interface for Notification. */
-export interface NotificationResponse {
-  id: number;
-  time: string;
-  sender: string;
-  recipient: string;
-  content: string;
-  read_time: string;
+export interface Notification {
+  id?: number;
+  time?: string;
+  sender?: number;
+  recipient?: number;
+  content?: string;
+  read_time?: string;
 }

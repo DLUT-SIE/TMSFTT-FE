@@ -3,10 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import {
-  CampusEventResponse,
-  OffCampusEventRequest,
-  OffCampusEventResponse,
-  CampusEventRequest,
+  OffCampusEvent,
+  CampusEvent,
 } from 'src/app/shared/interfaces/event';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
@@ -24,19 +22,19 @@ export class EventService extends GenericListService {
   }
 
   getEvent(id: number) {
-    return this.http.get<CampusEventResponse>(
+    return this.http.get<CampusEvent>(
       `${environment.API_URL}/campus-events/${id}/`);
   }
 
   /** Retrieve campus events. */
   /** TODO(youchen): Rename this function */
   getCampusEvents(req: ListRequest) {
-    return this.list<CampusEventResponse>('campus-events', req);
+    return this.list<CampusEvent>('campus-events', req);
   }
 
   /** Create an off-campus event. */
-  createOffCampusEvent(req: OffCampusEventRequest) {
-    return this.http.post<OffCampusEventResponse>(
+  createOffCampusEvent(req: OffCampusEvent) {
+    return this.http.post<OffCampusEvent>(
       `${environment.API_URL}/off-campus-events/`, req);
   }
 
@@ -48,12 +46,12 @@ export class EventService extends GenericListService {
 
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
-    return this.list<OffCampusEventResponse>('off-campus-events', req);
+    return this.list<OffCampusEvent>('off-campus-events', req);
   }
 
   /**  Admin create campus event */
-  createCampusEvent(req: CampusEventRequest) {
-    return this.http.post<CampusEventResponse>(
+  createCampusEvent(req: CampusEvent) {
+    return this.http.post<CampusEvent>(
       `${environment.API_URL}/campus-events/`, req);
   }
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ReviewNoteService } from './review-note.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 
 import { environment } from 'src/environments/environment';
 
@@ -42,19 +42,9 @@ describe('ReviewNoteService', () => {
 
   it('should create reviewnote', () => {
     const service: ReviewNoteService = TestBed.get(ReviewNoteService);
-    const dres: RecordResponse = {
+    const dres: Record = {
       id: 1,
       campus_event: null,
-      off_campus_event: {
-        id: 1,
-        create_time: '2019-04-05T14:21:55.151136+08:00',
-        update_time: '2019-04-05T14:21:55.151190+08:00',
-        name: '为了其中主要公司.',
-        time: '2019-05-01T05:00:33.149789+08:00',
-        location: '哈尔滨路n座',
-        num_hours: 0.39234403748298163,
-        num_participants: 57
-      },
       attachments: null,
       contents: null,
       create_time: '2019-04-05T14:21:55.787056+08:00',

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of as observableOf, Subject  } from 'rxjs';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService } from '../../../training-program/services/program.service';
 import { EventService } from '../../services/event.service';
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 describe('AdminCampusEventListComponent', () => {
   let component: AdminCampusEventListComponent;
   let fixture: ComponentFixture<AdminCampusEventListComponent>;
-  let getCampusEvents$: Subject<PaginatedResponse<CampusEventResponse>>;
+  let getCampusEvents$: Subject<PaginatedResponse<CampusEvent>>;
   let getCampusEvents: jasmine.Spy;
   let getProgram$: Subject<Program>;
   let getProgram: jasmine.Spy;
@@ -25,23 +25,12 @@ describe('AdminCampusEventListComponent', () => {
     name: 'sender',
     department: 2,
     category: 3,
-    department_detail: {
-      id: 2,
-      create_time: '2019-3-4',
-      update_time: '2019-3-6',
-      name: 'test',
-      admins: [],
-    },
-    category_detail: {
-      id: 3,
-      name: 'test',
-    },
     form: [],
   };
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getCampusEvents$ = new Subject<PaginatedResponse<CampusEventResponse>>();
+    getCampusEvents$ = new Subject<PaginatedResponse<CampusEvent>>();
     getCampusEvents = jasmine.createSpy();
     getCampusEvents.and.returnValue(getCampusEvents$);
     getProgram$ = new Subject<Program>();

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService  } from '../../services/event.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
@@ -11,7 +11,7 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
   templateUrl: './campus-event-list.component.html',
   styleUrls: ['./campus-event-list.component.css']
 })
-export class CampusEventListComponent extends GenericListComponent<CampusEventResponse> {
+export class CampusEventListComponent extends GenericListComponent<CampusEvent> {
   constructor(
     private readonly eventService: EventService,
     protected readonly route: ActivatedRoute,

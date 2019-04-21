@@ -14,12 +14,12 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PermissionService } from 'src/app/shared/services/permission.service';
-import { UserPermissionRequest, UserPermissionStatus, Permission, UserPermission } from 'src/app/shared/interfaces/permission';
+import { UserPermissionStatus, Permission, UserPermission } from 'src/app/shared/interfaces/permission';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/app/shared/services/user.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { User } from 'src/app/shared/interfaces/auth-service';
+import { User } from 'src/app/shared/interfaces/user';
 
 function generatePermissions(n?: number): Permission[] {
   n = n || 5;
@@ -108,7 +108,7 @@ describe('UserManagementComponent', () => {
             getPermissions: () => getPermissions$,
             getUserPermissions: (id: number) => getUserPermissions$,
             deleteUserPermissions: (permissionIds: number[]) => deleteUserPermissions$,
-            createUserPermissions: (reqs: UserPermissionRequest[]) => createUserPermissions$,
+            createUserPermissions: (reqs: UserPermission[]) => createUserPermissions$,
           },
         }
       ]

@@ -17,15 +17,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { OffCampusRecordDetailComponent } from './off-campus-record-detail.component';
 import { ReviewNoteService } from 'src/app/data-management/services/review-note.service';
-import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { ReviewNote } from 'src/app/shared/interfaces/review-note';
+import { Record } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
   let fixture: ComponentFixture<OffCampusRecordDetailComponent>;
   let getReviewNotes$: jasmine.Spy;
-  let createReviewNote$: Subject<ReviewNoteResponse>;
+  let createReviewNote$: Subject<ReviewNote>;
   let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
@@ -58,20 +58,11 @@ describe('OffCampusRecordDetailComponent', () => {
               create_time: '2019-01-01',
               update_time: '2019-01-02',
               campus_event: null,
-              off_campus_event: {id: 1,
-                                 create_time: '2019-03-02T09:07:57.159755+08:00',
-                                 update_time: '2019-03-02T09:07:57.159921+08:00',
-                                 name: 'sfdg',
-                                 time: '2019-03-02T00:00:00+08:00',
-                                 location: 'dfgfd',
-                                 num_hours: 0,
-                                 num_participants: 25
-                                 },
               contents: [],
               attachments: [],
               user: 1,
               status: 1,
-            } as RecordResponse}),
+            } as Record}),
           }
         },
         {

@@ -3,19 +3,19 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 
 import { RecordService } from './record.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 
 /** Pre-fetching record data. */
 @Injectable({
   providedIn: 'root'
 })
-export class RecordDetailResolverService implements Resolve< RecordResponse > {
+export class RecordDetailResolverService implements Resolve< Record > {
 
   constructor(
     private readonly recordService: RecordService,
   ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RecordResponse> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Record> {
     const id = +route.paramMap.get('id');
     return this.recordService.getRecord(id);
   }
