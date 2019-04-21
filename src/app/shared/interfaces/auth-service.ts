@@ -67,8 +67,13 @@ export interface User {
     is_school_admin: boolean;
     department: number;
     department_str?: string;
+    groups: number[];
 }
 
+export interface Group {
+   id: number;
+   name: string;
+}
 /** RESTful response interface for JWT auth. */
 export interface JWTResponse {
     token: string;
