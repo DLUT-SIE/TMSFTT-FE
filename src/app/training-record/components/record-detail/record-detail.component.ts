@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { RecordService } from 'src/app/training-record/services/record.service';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
 
@@ -16,7 +16,7 @@ import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.comp
 })
 export class RecordDetailComponent implements OnInit {
   /** The data to be displayed. */
-  record: RecordResponse;
+  record: Record;
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
   feedback: string;
@@ -29,8 +29,8 @@ export class RecordDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /** The record in this component will subscribe to RecordResponse data returned by route. */
-    this.route.data.subscribe((data: { record: RecordResponse }) => {
+    /** The record in this component will subscribe to Record data returned by route. */
+    this.route.data.subscribe((data: { record: Record }) => {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
       this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_WITH_FEEDBACK;

@@ -4,7 +4,7 @@ import { switchMap, map, catchError, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { NotificationResponse } from 'src/app/shared/interfaces/notification';
+import { Notification } from 'src/app/shared/interfaces/notification';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
@@ -15,7 +15,7 @@ import { ListRequest } from 'src/app/shared/interfaces/list-request';
 })
 export class NotificationService extends GenericListService {
   /** Latest unread notifications. */
-  unreadNotifications: NotificationResponse[] = [];
+  unreadNotifications: Notification[] = [];
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
@@ -41,23 +41,23 @@ export class NotificationService extends GenericListService {
   }
 
   getNotification(id: number) {
-    return this.http.get<NotificationResponse>(
+    return this.http.get<Notification>(
       `${environment.API_URL}/notifications/${id}/`);
   }
 
   /** API for retrieving notifications. */
   getNotifications(req: ListRequest) {
-    return this.list<NotificationResponse>('notifications', req);
+    return this.list<Notification>('notifications', req);
   }
 
   /** API for retrieving notifications which have been read. */
   getReadNotifications(req: ListRequest) {
-    return this.list<NotificationResponse>('notifications/read', req);
+    return this.list<Notification>('notifications/read', req);
   }
 
   /** API for retrieving notifications which haven't been read. */
   getUnReadNotifications(req: ListRequest) {
-    return this.list<NotificationResponse>('notifications/unread', req);
+    return this.list<Notification>('notifications/unread', req);
   }
 
   /** Mark all notifications for user as read. */

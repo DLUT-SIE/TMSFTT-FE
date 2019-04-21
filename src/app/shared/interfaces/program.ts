@@ -1,17 +1,7 @@
-import { Department } from './department';
-import { ProgramCategory } from './program-category';
 export interface Program {
-    id: number;
-    department: number;
-    category: number;
-    department_detail: Department;
-    category_detail: ProgramCategory;
-    form: number[];
-    name: string;
-}
-export interface ProgramRequest {
-    department: number;
-    category: number;
-    name: string;
-    form: number[];
+    id?: number;
+    name?: string;
+    department?: number;
+    category?: number;
+    form?: number[];
 }

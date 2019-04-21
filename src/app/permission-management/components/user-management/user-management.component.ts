@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserPermissionRequest, UserPermissionStatus, Permission, UserPermission } from 'src/app/shared/interfaces/permission';
+import { UserPermission, UserPermissionStatus, Permission } from 'src/app/shared/interfaces/permission';
 import { MatSnackBar } from '@angular/material';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { of as observableOf, zip, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Department } from 'src/app/shared/interfaces/department';
-import { User } from 'src/app/shared/interfaces/auth-service';
+import { User } from 'src/app/shared/interfaces/user';
 import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DepartmentService } from 'src/app/shared/services/department.service';
@@ -103,8 +103,8 @@ export class UserManagementComponent implements OnInit {
    * Populate what permissions we want to update,
    * skip permissions with no change.
    */
-  private diffPermissions(): [UserPermissionRequest[], number[]] {
-    const toBeCreated: UserPermissionRequest[] = [];
+  private diffPermissions(): [UserPermission[], number[]] {
+    const toBeCreated: UserPermission[] = [];
     const toBeDeleted: number[] = [];
 
     for (let i = 0; i < this.originalPermissions.length; i++) {

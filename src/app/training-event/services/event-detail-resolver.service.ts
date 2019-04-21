@@ -3,18 +3,18 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 
 import { EventService } from './event.service';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 /** Pre-fetching notification data. */
 @Injectable({
   providedIn: 'root'
 })
-export class EventDetailResolverService implements Resolve<CampusEventResponse> {
+export class EventDetailResolverService implements Resolve<CampusEvent> {
 
   constructor(
     private readonly eventService: EventService,
   ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CampusEventResponse > {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CampusEvent > {
     const id = +route.paramMap.get('id');
     return this.eventService.getEvent(id);
   }

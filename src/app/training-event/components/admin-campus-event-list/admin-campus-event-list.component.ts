@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService  } from '../../services/event.service';
 import { ProgramService } from '../../../training-program/services/program.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./admin-campus-event-list.component.css']
 })
 
-export class AdminCampusEventListComponent extends GenericListComponent<CampusEventResponse> implements OnInit {
+export class AdminCampusEventListComponent extends GenericListComponent<CampusEvent> implements OnInit {
 
   programId: number;
   program: Program;

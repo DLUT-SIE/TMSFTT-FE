@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './data-export.component.html',
   styleUrls: ['./data-export.component.css']
 })
-export class DataExportComponent extends GenericListComponent<RecordResponse> {
+export class DataExportComponent extends GenericListComponent<Record> {
   /** Use FormBuilder to build our form to collect Record data. */
   filterForm = this.fb.group({
     eventName: [''],

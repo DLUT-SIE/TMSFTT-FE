@@ -5,10 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { map } from 'rxjs/operators';
 
-import { ProgramRequest } from 'src/app/shared/interfaces/program';
+import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
-import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService} from '../../services/program.service';
 import { ProgramFormService} from '../../services/program-form.service';
 import { ProgramCategoryService} from '../../services/program-category.service';
@@ -84,7 +83,7 @@ export class ProgramFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const req: ProgramRequest = {
+    const req: Program = {
       department: this.authService.department,
       category: this.programForm.value.categoryId,
       name: this.programForm.value.name,

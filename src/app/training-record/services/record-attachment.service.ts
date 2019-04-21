@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { zip, of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { RecordAttachmentResponse, RecordAttachmentRequest } from 'src/app/shared/interfaces/record';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 
 /** Export services for RecordAttachment. */
 @Injectable({
@@ -16,16 +16,16 @@ export class RecordAttachmentService {
   ) { }
 
   /** Create single attachment. */
-  createRecordAttachment(req: RecordAttachmentRequest) {
+  createRecordAttachment(req: RecordAttachment) {
     const data = new FormData();
     data.set('record', req.record.toString());
-    data.set('path', req.path, req.path.name);
-    return this.http.post<RecordAttachmentResponse>(
+    data.set('path', req.path, (req.path as File).name);
+    return this.http.post<RecordAttachment>(
       `${environment.API_URL}/record-attachments/`, data);
   }
 
   /** Create multiple attachments. */
-  createRecordAttachments(reqs: RecordAttachmentRequest[]) {
+  createRecordAttachments(reqs: RecordAttachment[]) {
     if (reqs.length === 0) return observableOf([]);
     return zip(...reqs.map(req => this.createRecordAttachment(req)));
   }

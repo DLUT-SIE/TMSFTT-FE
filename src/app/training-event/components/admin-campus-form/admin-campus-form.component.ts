@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
-import { CampusEventRequest } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from '../../services/event.service';
 
 @Component({
@@ -67,7 +67,7 @@ export class AdminCampusFormComponent implements OnInit {
     return this.eventForm.get('description');
   }
   onSubmit() {
-    const req: CampusEventRequest = {
+    const req: CampusEvent = {
       program: this.programId,
       name: this.eventForm.value.name,
       time: this.eventForm.value.time,

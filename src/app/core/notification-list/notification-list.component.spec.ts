@@ -4,7 +4,7 @@ import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@an
 import { ActivatedRoute, Router } from '@angular/router';
 import { of as observableOf, Subject } from 'rxjs';
 
-import { NotificationResponse } from 'src/app/shared/interfaces/notification';
+import { Notification } from 'src/app/shared/interfaces/notification';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { NotificationListComponent } from './notification-list.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
@@ -14,23 +14,23 @@ import { Location } from '@angular/common';
 describe('NotificationListComponent', () => {
   let component: NotificationListComponent;
   let fixture: ComponentFixture<NotificationListComponent>;
-  let getNotifications$: Subject<PaginatedResponse<NotificationResponse>>;
+  let getNotifications$: Subject<PaginatedResponse<Notification>>;
   let navigate: jasmine.Spy;
   let getNotifications: jasmine.Spy;
   let markAllNotificationsAsRead: jasmine.Spy;
   let deleteAllNotifications: jasmine.Spy;
-  const dummyNotification: NotificationResponse = {
+  const dummyNotification: Notification = {
     id: 2,
     time: '2019-01-01',
-    sender: 'sender',
-    recipient: 'recipient',
+    sender: 2,
+    recipient: 3,
     content: 'content',
     read_time: '2019-01-01',
   };
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getNotifications$ = new Subject<PaginatedResponse<NotificationResponse>>();
+    getNotifications$ = new Subject<PaginatedResponse<Notification>>();
     getNotifications = jasmine.createSpy();
     getNotifications.and.returnValue(getNotifications$);
     markAllNotificationsAsRead = jasmine.createSpy();
@@ -100,7 +100,7 @@ describe('NotificationListComponent', () => {
 
   it('should mark all notifications as read', () => {
     const count = 100;
-    const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    const results: Notification[] = [dummyNotification, dummyNotification];
     const forceRefresh = spyOn(component, 'forceRefresh');
     getNotifications$.next({ count, results, next: '', previous: '' });
     markAllNotificationsAsRead.and.returnValue(observableOf(null));
@@ -113,7 +113,7 @@ describe('NotificationListComponent', () => {
 
   it('should delete all notifications.', () => {
     const count = 100;
-    const results: NotificationResponse[] = [dummyNotification, dummyNotification];
+    const results: Notification[] = [dummyNotification, dummyNotification];
     const forceRefresh = spyOn(component, 'forceRefresh');
     getNotifications$.next({ count, results, next: '', previous: '' });
     deleteAllNotifications.and.returnValue(observableOf(null));

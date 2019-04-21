@@ -5,9 +5,8 @@ import { Subject } from 'rxjs';
 import { EventService } from './event.service';
 import { environment } from 'src/environments/environment';
 import {
-  OffCampusEventRequest,
-  OffCampusEventResponse,
-  CampusEventRequest,
+  OffCampusEvent,
+  CampusEvent,
 } from 'src/app/shared/interfaces/event';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -89,7 +88,7 @@ describe('EventService', () => {
       location: 'location',
       num_hours: 10,
       num_participants: 50,
-    } as OffCampusEventRequest).subscribe();
+    } as OffCampusEvent).subscribe();
     const req = httpTestingController.expectOne(
       `${environment.API_URL}/off-campus-events/`);
     expect(req.request.method).toEqual('POST');
@@ -99,7 +98,7 @@ describe('EventService', () => {
       location: 'location',
       num_hours: 10,
       num_participants: 50,
-    } as OffCampusEventResponse);
+    } as OffCampusEvent);
   });
 
   it('should delete OffCampusEvent', () => {
@@ -116,7 +115,7 @@ describe('EventService', () => {
   it('should create event-form', () => {
     const service: EventService = TestBed.get(EventService);
 
-    const createReq: CampusEventRequest = {
+    const createReq: CampusEvent = {
       name: 'test',
       time: 'time',
       location: 'location',

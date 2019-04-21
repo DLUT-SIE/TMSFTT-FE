@@ -19,7 +19,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 
 import { RecordDetailComponent } from './record-detail.component';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/training-record/services/record.service';
 import { FeedbackDialogComponent } from 'src/app/training-record/components/feedback-dialog/feedback-dialog.component';
 import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
@@ -70,20 +70,11 @@ describe('RecordDetailComponent', () => {
               create_time: '2019-01-01',
               update_time: '2019-01-02',
               campus_event: null,
-              off_campus_event: {id: 1,
-                                 create_time: '2019-03-02T09:07:57.159755+08:00',
-                                 update_time: '2019-03-02T09:07:57.159921+08:00',
-                                 name: 'sfdg',
-                                 time: '2019-03-02T00:00:00+08:00',
-                                 location: 'dfgfd',
-                                 num_hours: 0,
-                                 num_participants: 25
-                                 },
               contents: [],
               attachments: [],
               user: 1,
               status: 1,
-            } as RecordResponse}),
+            } as Record}),
           },
         },
         {

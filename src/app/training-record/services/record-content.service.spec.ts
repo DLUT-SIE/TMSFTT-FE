@@ -2,14 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RecordContentService } from './record-content.service';
-import { RecordContentRequest } from 'src/app/shared/interfaces/record';
+import { RecordContent } from 'src/app/shared/interfaces/record-content';
 
 import { environment } from 'src/environments/environment';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 
 describe('RecordContentService', () => {
   let httpTestingController: HttpTestingController;
-  const dummyReq: RecordContentRequest = {
+  const dummyReq: RecordContent = {
     record: 1,
     content_type: ContentType.CONTENT_TYPE_CONTENT,
     content: 'abc',

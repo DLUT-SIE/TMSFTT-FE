@@ -3,12 +3,12 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 
 import { RecordAttachmentService } from './record-attachment.service';
 import { environment } from 'src/environments/environment';
-import { RecordAttachmentRequest } from 'src/app/shared/interfaces/record';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 
 
 describe('RecordAttachmentService', () => {
   let httpTestingController: HttpTestingController;
-  const dummyReq: RecordAttachmentRequest = {
+  const dummyReq: RecordAttachment = {
     record: 1,
     path: new File([''], 'file'),
   };
