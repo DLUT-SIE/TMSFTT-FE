@@ -1,5 +1,5 @@
 interface Event {
-  id?: number
+  id?: number;
   create_time?: string;
   update_time?: string;
   name?: string;
