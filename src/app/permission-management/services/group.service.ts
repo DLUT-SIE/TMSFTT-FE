@@ -10,7 +10,7 @@ export class GroupService {
 
   constructor(
     private readonly http: HttpClient,
-  ) { };
+  ) { }
 
   getGroupById(id: number) {
     return this.http.get<Group>(`${environment.API_URL}/groups/${id}/`);

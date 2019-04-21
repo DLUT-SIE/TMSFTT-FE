@@ -11,7 +11,7 @@ import { Group } from 'src/app/shared/interfaces/group';
 import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { GroupService } from 'src/app/permission-management/services/group.service'
+import { GroupService } from 'src/app/permission-management/services/group.service';
 
 /** UserManagementComponent allows admins manage users' accounts, permissions. */
 @Component({
@@ -67,12 +67,12 @@ export class UserManagementComponent implements OnInit {
       map((department: Department) => {
         this.department = department;
       }),
-      switchMap(() =>{
+      switchMap(() => {
           return zip(...this.user.groups.map(
             x => this.groupService.getGroupById(x)));
       }),
       map((groups: Group[]) => {
-        this.groups = groups
+        this.groups = groups;
       }),
       switchMap(() => {
         return zip(
