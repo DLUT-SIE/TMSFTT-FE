@@ -13,4 +13,5 @@ export interface User {
     is_school_admin?: boolean;
     department?: number;
     department_str?: string;
+    groups?: number[]; 
 }

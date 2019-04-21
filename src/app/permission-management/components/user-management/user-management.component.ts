@@ -7,9 +7,11 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Department } from 'src/app/shared/interfaces/department';
 import { User } from 'src/app/shared/interfaces/user';
+import { Group } from 'src/app/shared/interfaces/group';
 import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DepartmentService } from 'src/app/shared/services/department.service';
+import { GroupService } from 'src/app/permission-management/services/group.service'
 
 /** UserManagementComponent allows admins manage users' accounts, permissions. */
 @Component({
@@ -23,6 +25,7 @@ export class UserManagementComponent implements OnInit {
   department: Department = null;
   isLoading = false;
   errorMessage = '';
+  groups: Group[] = [];
   /** The permissions the selected user currently have. */
   originalPermissions: UserPermissionStatus[] = [];
   /** The permissions that should be after the change. */
@@ -33,6 +36,7 @@ export class UserManagementComponent implements OnInit {
     private readonly userService: UserService,
     private readonly departmentService: DepartmentService,
     private readonly permissionService: PermissionService,
+    private readonly groupService: GroupService,
   ) { }
 
   ngOnInit() {
@@ -42,6 +46,7 @@ export class UserManagementComponent implements OnInit {
     this.errorMessage = '';
     this.originalPermissions = [];
     this.user = null;
+    this.groups = [];
     this.newPermissions = [];
     this.department = null;
     this.isLoading = true;
@@ -61,6 +66,13 @@ export class UserManagementComponent implements OnInit {
       }),
       map((department: Department) => {
         this.department = department;
+      }),
+      switchMap(() =>{
+          return zip(...this.user.groups.map(
+            x => this.groupService.getGroupById(x)));
+      }),
+      map((groups: Group[]) => {
+        this.groups = groups
       }),
       switchMap(() => {
         return zip(
