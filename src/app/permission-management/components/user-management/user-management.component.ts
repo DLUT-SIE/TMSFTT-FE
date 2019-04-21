@@ -68,10 +68,9 @@ export class UserManagementComponent implements OnInit {
         this.department = department;
       }),
       switchMap(() => {
-        const _group = this.user.groups.map(
-          x => this.groupService.getGroupById(x));
-        if (_group.length === 0) return observableOf([]);
-        return zip(..._group);
+        if (this.user.groups.length === 0) return observableOf([]);
+        return zip(...this.user.groups.map(
+          x => this.groupService.getGroupById(x)));
       }),
       map((groups: Group[]) => {
         this.groups = groups;
