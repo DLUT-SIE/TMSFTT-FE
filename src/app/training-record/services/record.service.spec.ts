@@ -5,7 +5,7 @@ import { Subject, throwError } from 'rxjs';
 import { RecordService } from './record.service';
 
 import { environment } from 'src/environments/environment';
-import { RecordRequest } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -43,14 +43,8 @@ describe('RecordService', () => {
 
   it('should create off-campus record', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const createReq: RecordRequest = {
-      off_campus_event: {
-        name: 'name',
-        location: 'loc',
-        time: 'time',
-        num_hours: 5,
-        num_participants: 30,
-      },
+    const createReq: Record = {
+      off_campus_event: 3,
       user: 1,
       contents: [
         {

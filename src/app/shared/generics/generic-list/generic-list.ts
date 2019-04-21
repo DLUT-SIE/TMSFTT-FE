@@ -7,11 +7,10 @@ import { switchMap, map, catchError, startWith } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
-import { GenericObject } from '../../interfaces/generics';
 
 
 /** Implement generic logic for displaying list of objects. */
-export abstract class GenericListComponent<T extends GenericObject> implements OnInit {
+export abstract class GenericListComponent<T extends {id?: number}> implements OnInit {
   /** The data to be displayed */
   results: T[] = [];
   /** The total number of results. */

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { CampusEventDetailComponent } from './campus-event-detail.component';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -55,7 +55,7 @@ describe('CampusEventDetailComponent', () => {
                 num_enrolled: 0,
                 description: '问题解决建设不同.所以任何下.',
                 program: 157
-              } as CampusEventResponse}),
+              } as CampusEvent}),
           }
         }
       ]

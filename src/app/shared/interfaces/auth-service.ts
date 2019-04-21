@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { InjectionToken } from '@angular/core';
+import { User } from './user';
 
 
 /** This interface declares required methods for an authentication service. */
@@ -50,23 +51,6 @@ export interface AuthService {
     refreshJWT(): Observable<boolean>;
     /** Remove all JWT information. */
     removeJWT();
-}
-
-export interface User {
-    id: number;
-    username: string;
-    last_login: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    is_active: boolean;
-    date_joined: string;
-    user_permissions: number[];
-    is_teacher: boolean;
-    is_department_admin: boolean;
-    is_school_admin: boolean;
-    department: number;
-    department_str?: string;
 }
 
 /** RESTful response interface for JWT auth. */

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, zip, of as observableOf } from 'rxjs';
-import { Permission, UserPermission, UserPermissionRequest } from '../interfaces/permission';
+import { Permission, UserPermission } from '../interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
@@ -35,11 +35,11 @@ export class PermissionService {
       `${environment.API_URL}/user-permissions/?user=${userId}`);
   }
 
-  createUserPermission(req: UserPermissionRequest) {
+  createUserPermission(req: UserPermission) {
     return this.http.post(`${environment.API_URL}/user-permissions/`, req);
   }
 
-  createUserPermissions(reqs: UserPermissionRequest[]) {
+  createUserPermissions(reqs: UserPermission[]) {
     // TODO(youchen): Evaluate the performance cost.
     if (reqs.length === 0) return observableOf([]);
     return zip(...reqs.map(req => this.createUserPermission(req)));

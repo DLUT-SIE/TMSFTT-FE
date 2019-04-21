@@ -4,15 +4,16 @@ import { Router } from '@angular/router';
 
 import { RecordService } from '../../services/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
-import { OffCampusEventRequest, OffCampusEventResponse } from 'src/app/shared/interfaces/event';
-import { RecordContent, RecordRequest } from 'src/app/shared/interfaces/record';
-import { ContentType } from 'src/app/shared/enums/content-type.enum';
+import { OffCampusEvent } from 'src/app/shared/interfaces/event';
+import { Record } from 'src/app/shared/interfaces/record';
 import { MatSnackBar, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EventService } from 'src/app/training-event/services/event.service';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { switchMap, map, debounceTime } from 'rxjs/operators';
+import { ContentType } from 'src/app/shared/enums/content-type.enum';
+import { RecordContent } from 'src/app/shared/interfaces/record-content';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -39,7 +40,7 @@ export class RecordFormComponent implements OnInit {
   });
 
   @ViewChild(MatAutocomplete) autoComplete: MatAutocomplete;
-  filteredOptions: Observable<OffCampusEventResponse[]>;
+  filteredOptions: Observable<OffCampusEvent[]>;
 
   /** The attachments to be uploaded. */
   attachments: File[] = [];
@@ -58,12 +59,12 @@ export class RecordFormComponent implements OnInit {
     this.filteredOptions = this.name.valueChanges.pipe(
       debounceTime(1000),
       switchMap(prefix => this._filter(prefix)),
-      map((value: PaginatedResponse<OffCampusEventResponse>) => value.results),
+      map((value: PaginatedResponse<OffCampusEvent>) => value.results),
     );
 
     // Update form when the auto-complete option is selected.
     this.autoComplete.optionSelected.subscribe((event: MatAutocompleteSelectedEvent) => {
-      const offCampusEvent = event.option.value as OffCampusEventResponse;
+      const offCampusEvent = event.option.value as OffCampusEvent;
       this.name.setValue(offCampusEvent.name);
       this.time.setValue(offCampusEvent.time);
       this.location.setValue(offCampusEvent.location);
@@ -156,20 +157,20 @@ export class RecordFormComponent implements OnInit {
     ].filter((val) => val.content !== '');
   }
 
-  private buildOffCampusEventRequest(): OffCampusEventRequest {
-    const value = this.recordForm.value;
-    return {
-      name: value.name,
-      time: value.time,
-      location: value.location,
-      num_hours: value.numHours,
-      num_participants: value.numParticipants,
-    };
-  }
+  // TODO: Fix below and remove this comment
+  // private buildOffCampusEvent(): OffCampusEvent {
+  //   const value = this.recordForm.value;
+  //   return {
+  //     name: value.name,
+  //     time: value.time,
+  //     location: value.location,
+  //     num_hours: value.numHours,
+  //     num_participants: value.numParticipants,
+  //   };
+  // }
 
   onSubmit() {
-    const req: RecordRequest = {
-      off_campus_event: this.buildOffCampusEventRequest(),
+    const req: Record = {
       user: this.authService.userID,
       contents: this.buildContents(),
       attachments: this.attachments,

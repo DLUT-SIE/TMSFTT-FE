@@ -1,6 +1,4 @@
-import { GenericObject } from './generics';
-
-export interface Department extends GenericObject {
+export interface Department {
     id?: number;
     name?: string;
     create_time?: string;

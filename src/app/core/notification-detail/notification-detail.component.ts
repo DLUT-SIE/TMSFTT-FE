@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { NotificationResponse } from 'src/app/shared/interfaces/notification';
+import { Notification } from 'src/app/shared/interfaces/notification';
 
 /** Display a notification in detail. */
 @Component({
@@ -12,14 +12,14 @@ import { NotificationResponse } from 'src/app/shared/interfaces/notification';
 })
 export class NotificationDetailComponent implements OnInit {
   /** The data to be displayed. */
-  notification: NotificationResponse;
+  notification: Notification;
   constructor(
     private readonly route: ActivatedRoute,
     readonly location: Location,
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { notification: NotificationResponse}) => {
+    this.route.data.subscribe((data: { notification: Notification}) => {
       this.notification = data.notification;
     });
   }

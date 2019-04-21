@@ -15,13 +15,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CampusEventRequest } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from '../../services/event.service';
 
 describe('AdminCampusFormComponent', () => {
   let component: AdminCampusFormComponent;
   let fixture: ComponentFixture<AdminCampusFormComponent>;
-  let createEventForm$: Subject<CampusEventRequest>;
+  let createEventForm$: Subject<CampusEvent>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
 
@@ -87,7 +87,7 @@ describe('AdminCampusFormComponent', () => {
 
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
-    createEventForm$.next({ program: 2 } as CampusEventRequest);
+    createEventForm$.next({ program: 2 } as CampusEvent);
 
     expect(navigate).toHaveBeenCalledWith(['../event-detail/', 2]);
   });

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { RecordResponse } from 'src/app/shared/interfaces/record';
-import { ReviewNoteResponse } from 'src/app/shared/interfaces/review-note';
+import { Record } from 'src/app/shared/interfaces/record';
+import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 
@@ -21,15 +21,15 @@ export class ReviewNoteService extends GenericListService {
   }
 
   getReviewNotes(req: ListRequest) {
-    return this.list<ReviewNoteResponse>('review-notes', req);
+    return this.list<ReviewNote>('review-notes', req);
   }
 
-  createReviewNote(dres: RecordResponse, notecontent: string): Observable<ReviewNoteResponse> {
+  createReviewNote(dres: Record, notecontent: string): Observable<ReviewNote> {
     const data = new FormData();
     data.set('content', notecontent);
     data.set('record', dres.id.toString());
     data.set('user', dres.user.toString());
-    return this.http.post<ReviewNoteResponse>(
+    return this.http.post<ReviewNote>(
       `${environment.API_URL}/review-notes/`, data);
   }
 }

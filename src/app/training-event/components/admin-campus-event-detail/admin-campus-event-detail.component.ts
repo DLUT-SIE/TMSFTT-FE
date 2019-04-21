@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CampusEventResponse } from 'src/app/shared/interfaces/event';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { CampusEventResponse } from 'src/app/shared/interfaces/event';
 })
 export class AdminCampusEventDetailComponent implements OnInit {
 
-  item: CampusEventResponse;
+  item: CampusEvent;
 
   constructor(
     readonly location: Location,
@@ -20,7 +20,7 @@ export class AdminCampusEventDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { item: CampusEventResponse}) => {
+    this.route.data.subscribe((data: { item: CampusEvent}) => {
       this.item = data.item;
     });
   }

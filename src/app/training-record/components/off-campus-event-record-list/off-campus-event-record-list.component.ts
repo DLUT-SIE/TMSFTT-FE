@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { RecordResponse } from 'src/app/shared/interfaces/record';
+import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from '../../services/record.service';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 
@@ -11,7 +11,7 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
   templateUrl: './off-campus-event-record-list.component.html',
   styleUrls: ['./off-campus-event-record-list.component.css']
 })
-export class OffCampusEventRecordListComponent extends GenericListComponent<RecordResponse> {
+export class OffCampusEventRecordListComponent extends GenericListComponent<Record> {
 
   constructor(
     protected readonly route: ActivatedRoute,

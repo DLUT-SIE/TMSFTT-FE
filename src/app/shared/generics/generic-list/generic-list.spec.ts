@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GenericListComponent } from './generic-list';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { GenericObject } from 'src/app/shared/interfaces/generics';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { HAMMER_LOADER } from '@angular/platform-browser';
@@ -14,7 +13,7 @@ import { MatPaginatorModule } from '@angular/material';
     selector: 'app-list-component',
     template: '<mat-paginator></mat-paginator>',
 })
-class ListComponent extends GenericListComponent<GenericObject> {
+class ListComponent extends GenericListComponent<{id: number}> {
     constructor(
         protected readonly route: ActivatedRoute,
         protected readonly router: Router,
@@ -24,7 +23,7 @@ class ListComponent extends GenericListComponent<GenericObject> {
     }
 
     getResults(offset: number, limit: number) {
-        return observableOf({} as PaginatedResponse<GenericObject>);
+        return observableOf({} as PaginatedResponse<{id: number}>);
     }
 }
 
@@ -33,7 +32,7 @@ describe('GenericListComponent', () => {
     let fixture: ComponentFixture<ListComponent>;
     let navigate: jasmine.Spy;
     let getResults: jasmine.Spy;
-    let getResults$: Subject<PaginatedResponse<GenericObject>>;
+    let getResults$: Subject<PaginatedResponse<{id: number}>>;
     let go: jasmine.Spy;
     const dummyResponse = { id: 1 };
 

@@ -3,19 +3,19 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { NotificationResponse } from 'src/app/shared/interfaces/notification';
+import { Notification } from 'src/app/shared/interfaces/notification';
 
 /** Pre-fetching notification data. */
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationDetailResolverService implements Resolve<NotificationResponse> {
+export class NotificationDetailResolverService implements Resolve<Notification> {
 
   constructor(
     private readonly notificationService: NotificationService,
   ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NotificationResponse> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Notification> {
     const id = +route.paramMap.get('id');
     return this.notificationService.getNotification(id);
   }

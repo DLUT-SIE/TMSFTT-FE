@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../interfaces/auth-service';
+import { User } from '../interfaces/user';
 import { PaginatedResponse } from '../interfaces/paginated-response';
 
 /** This service manage User objects. */
