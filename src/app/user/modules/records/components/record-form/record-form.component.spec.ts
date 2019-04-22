@@ -27,7 +27,7 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { EventService } from 'src/app/user/modules/events/services/event.service';
+import { EventService } from 'src/app/shared/services/events/event.service';
 
 describe('RecordFormComponent', () => {
   // Note: We should create Observable before our each test in certain
