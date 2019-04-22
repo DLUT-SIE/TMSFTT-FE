@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 
-import { RegularUserRoutingModule } from './regular-user.routing.module';
-import { RegularUserComponent } from './regular-user.component';
+import { UserRoutingModule } from './user.routing.module';
+import { UserComponent } from './user.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    RegularUserComponent,
+    UserComponent,
     DashboardComponent,
   ],
   imports: [
-    RegularUserRoutingModule,
+    UserRoutingModule,
     SharedModule,
   ],
 })
-export class RegularUserModule { }
+export class UserModule { }

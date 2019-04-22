@@ -35,13 +35,13 @@ const routes: Routes = [
   {
     path: 'admin',
     canLoad: [AdminGuard],
-    loadChildren: './roles/admin-user/admin-user.module#AdminUserModule'
+    loadChildren: './admin/admin.module#AdminModule'
   },
   // Load this module if user is authenticated.
   {
     path: 'user',
     canLoad: [AuthGuard],
-    loadChildren: './roles/regular-user/regular-user.module#RegularUserModule'
+    loadChildren: './user/user.module#UserModule'
   },
   {
     path: 'notifications',

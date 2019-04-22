@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RegularUserComponent } from './regular-user.component';
+import { UserComponent } from './user.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: RegularUserComponent,
+    component: UserComponent,
     children: [
       {
         path: '',
@@ -38,4 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RegularUserRoutingModule { }
+export class UserRoutingModule { }
