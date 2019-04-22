@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService } from '../../services/event.service';
+import { EventService } from 'src/app/shared/services/events/event.service';
 
 @Component({
   selector: 'app-admin-campus-form',

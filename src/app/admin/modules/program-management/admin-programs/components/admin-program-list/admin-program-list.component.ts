@@ -4,7 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
-import { ProgramService} from '../../services/program.service';
+import { ProgramService} from 'src/app/shared/services/programs/program.service';
 
 @Component({
   selector: 'app-admin-program-list',

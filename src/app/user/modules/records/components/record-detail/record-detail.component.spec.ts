@@ -20,7 +20,7 @@ import { Location } from '@angular/common';
 
 import { RecordDetailComponent } from './record-detail.component';
 import { Record } from 'src/app/shared/interfaces/record';
-import { RecordService } from 'src/app/user/modules/records/services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { FeedbackDialogComponent } from 'src/app/user/modules/records/components/feedback-dialog/feedback-dialog.component';
 import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
 

@@ -4,7 +4,7 @@ import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@an
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService } from '../../services/event.service';
+import { EventService } from 'src/app/shared/services/events/event.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';

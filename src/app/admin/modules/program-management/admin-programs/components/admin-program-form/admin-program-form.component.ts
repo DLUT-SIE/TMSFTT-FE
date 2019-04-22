@@ -8,9 +8,9 @@ import { map } from 'rxjs/operators';
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
-import { ProgramService} from '../../services/program.service';
-import { ProgramFormService} from '../../services/program-form.service';
-import { ProgramCategoryService} from '../../services/program-category.service';
+import { ProgramService} from 'src/app/shared/services/programs/program.service';
+import { ProgramFormService} from 'src/app/shared/services/programs/program-form.service';
+import { ProgramCategoryService} from 'src/app/shared/services/programs/program-category.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 /* Create or update a admin-program-form**/

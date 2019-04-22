@@ -4,7 +4,7 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { OffCampusEventRecordListComponent } from './off-campus-event-record-list.component';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Location } from '@angular/common';
 
 describe('OffCampusEventRecordListComponent', () => {

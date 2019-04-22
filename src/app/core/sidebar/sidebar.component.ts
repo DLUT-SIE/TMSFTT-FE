@@ -3,7 +3,7 @@ import { PlatformService } from 'src/app/shared/services/platform.service';
 import { RouteInfo } from 'src/app/shared/interfaces/route-info';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { RecordService } from 'src/app/user/modules/records/services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 export const SUPERADMIN_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/admin/permissions', title: '权限管理', icon: 'security', class: '' },

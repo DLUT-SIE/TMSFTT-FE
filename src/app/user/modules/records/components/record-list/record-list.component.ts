@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Record } from 'src/app/shared/interfaces/record';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 
 /** Display a list of Records. */

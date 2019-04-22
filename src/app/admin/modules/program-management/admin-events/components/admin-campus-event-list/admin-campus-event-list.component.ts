@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService  } from '../../services/event.service';
-import { ProgramService } from '../../../admin-programs/services/program.service';
+import { EventService  } from 'src/app/shared/services/events/event.service';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { Program } from 'src/app/shared/interfaces/program';

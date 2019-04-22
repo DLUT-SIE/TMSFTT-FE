@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { RecordService } from '../../services/record.service';
+import { RecordService } from '../../../../../shared/services/records/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -13,7 +13,7 @@ import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response'
 import { switchMap, map, debounceTime } from 'rxjs/operators';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
-import { EventService } from 'src/app/user/modules/events/services/event.service';
+import { EventService } from 'src/app/shared/services/events/event.service';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;

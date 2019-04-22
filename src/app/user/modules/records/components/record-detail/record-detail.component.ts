@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 
-import { RecordService } from 'src/app/user/modules/records/services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';

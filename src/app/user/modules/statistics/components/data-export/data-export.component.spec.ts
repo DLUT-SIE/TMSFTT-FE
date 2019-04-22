@@ -16,7 +16,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { RecordService } from 'src/app/user/modules/records/services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Record } from 'src/app/shared/interfaces/record';
 import { Subject } from 'rxjs';

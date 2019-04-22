@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { EventsComponent } from './events.component';
-import { EventDetailResolverService } from './services/event-detail-resolver.service';
+import { EventDetailResolverService } from 'src/app/shared/services/events/event-detail-resolver.service';
 import { CampusEventDetailComponent } from './components/campus-event-detail/campus-event-detail.component';
 
 const routes: Routes = [
