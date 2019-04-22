@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Record } from 'src/app/shared/interfaces/record';
-import { ReviewNoteService } from 'src/app/data-management/services/review-note.service';
+import { ReviewNoteService } from 'src/app/admin/modules/data-management/services/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 

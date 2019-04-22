@@ -10,25 +10,12 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       {
-        path: '',
-        children: [
-          {
-            path: 'dashboard',
-            component: DashboardComponent,
-          },
-          {
-            path: 'training-record',
-            loadChildren: 'src/app/training-record/training-record.module#TrainingRecordModule',
-          },
-          {
-            path: 'training-event',
-            loadChildren: 'src/app/training-event/training-event.module#TrainingEventModule',
-          },
-          {
-            path: 'statistics',
-            loadChildren: 'src/app/statistics/statistics.module#StatisticsModule',
-          }
-        ]
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'statistics',
+        loadChildren: 'src/app/statistics/statistics.module#StatisticsModule',
       }
     ]
   }
