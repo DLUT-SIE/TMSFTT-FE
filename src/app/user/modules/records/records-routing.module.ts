@@ -4,7 +4,7 @@ import { RecordFormComponent } from './components/record-form/record-form.compon
 import { RecordsComponent } from './records.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { RecordDetailComponent } from './components/record-detail/record-detail.component';
-import { RecordDetailResolverService } from './services/record-detail-resolver.service';
+import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { OffCampusEventRecordListComponent } from './components/off-campus-event-record-list/off-campus-event-record-list.component';
 
 const routes: Routes = [

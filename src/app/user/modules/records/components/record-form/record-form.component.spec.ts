@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { RecordFormComponent } from './record-form.component';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { Record } from 'src/app/shared/interfaces/record';
 import { HttpErrorResponse } from '@angular/common/http';

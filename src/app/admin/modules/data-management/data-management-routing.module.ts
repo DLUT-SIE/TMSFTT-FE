@@ -4,7 +4,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { DataReviewComponent } from './components/data-review/data-review.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { DataManagementComponent } from './data-management.component';
-import { RecordDetailResolverService } from 'src/app/user/modules/records/services/record-detail-resolver.service';
+import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 
 const routes: Routes = [

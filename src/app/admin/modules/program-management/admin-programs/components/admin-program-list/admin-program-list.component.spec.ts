@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
-import { ProgramService } from '../../services/program.service';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { AdminProgramListComponent } from './admin-program-list.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';

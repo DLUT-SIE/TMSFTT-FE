@@ -5,7 +5,7 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordListComponent } from './record-list.component';
-import { RecordService } from '../../services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 
 describe('RecordListComponent', () => {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService  } from '../../services/event.service';
+import { EventService  } from 'src/app/shared/services/events/event.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 

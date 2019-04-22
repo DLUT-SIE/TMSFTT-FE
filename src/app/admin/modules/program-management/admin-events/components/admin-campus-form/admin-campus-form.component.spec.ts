@@ -16,7 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService } from '../../services/event.service';
+import { EventService } from 'src/app/shared/services/events/event.service';
 
 describe('AdminCampusFormComponent', () => {
   let component: AdminCampusFormComponent;

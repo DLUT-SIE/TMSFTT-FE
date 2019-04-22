@@ -8,7 +8,7 @@ import { SidebarComponent } from './sidebar.component';
 import { PlatformService } from 'src/app/shared/services/platform.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { RecordService } from 'src/app/user/modules/records/services/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;

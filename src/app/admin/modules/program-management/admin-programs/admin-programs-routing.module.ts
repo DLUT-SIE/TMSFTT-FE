@@ -4,7 +4,7 @@ import { AdminProgramListComponent } from './components/admin-program-list/admin
 import { AdminProgramFormComponent } from './components/admin-program-form/admin-program-form.component';
 import { AdminProgramDetailComponent } from './components/admin-program-detail/admin-program-detail.component';
 import { AdminProgramsComponent } from './admin-programs.component';
-import { ProgramDetailResolverService } from './services/program-detail-resolver.service';
+import { ProgramDetailResolverService } from 'src/app/shared/services/programs/program-detail-resolver.service';
 
 const routes: Routes = [
   {
