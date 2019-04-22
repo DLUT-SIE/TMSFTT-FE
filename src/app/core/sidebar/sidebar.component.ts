@@ -3,23 +3,23 @@ import { PlatformService } from 'src/app/shared/services/platform.service';
 import { RouteInfo } from 'src/app/shared/interfaces/route-info';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { RecordService } from 'src/app/training-record/services/record.service';
+import { RecordService } from 'src/app/user/modules/records/services/record.service';
 
 export const SUPERADMIN_ROUTE_ITEMS: RouteInfo[] = [
-    { path: '/admin/permission-management', title: '权限管理', icon: 'security', class: '' },
+    { path: '/admin/permissions', title: '权限管理', icon: 'security', class: '' },
 ];
 
 export const DEPARTMENT_ADMIN_ROUTE_ITEMS: RouteInfo[] = [
-    { path: '/admin/event-management/programs', title: '项目管理', icon: 'event', class: '' },
-    { path: '/admin/data-management', title: '数据管理', icon: 'data_usage', class: '' },
+    { path: '/admin/programs', title: '项目管理', icon: 'event', class: '' },
+    { path: '/admin/data', title: '数据管理', icon: 'data_usage', class: '' },
 ];
 
 export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
     { path: '/user/dashboard', title: '首页', icon: 'dashboard', class: '' },
-    { path: '/user/training-event/events', title: '校内培训活动', icon: 'list', class: '' },
+    { path: '/user/events', title: '校内培训活动', icon: 'list', class: '' },
     // TODO(youchen): Display the number of records without feedbacks.
-    { path: '/user/training-record/records', title: '个人培训记录', icon: 'how_to_reg', class: '' },
-    { path: '/user/training-record/off-campus-event-records', title: '校外培训填报', icon: 'create', class: '' },
+    { path: '/user/records', title: '个人培训记录', icon: 'how_to_reg', class: '' },
+    { path: '/user/off-campus-event-records', title: '校外培训填报', icon: 'create', class: '' },
     { path: '/user/statistics', title: '个人数据统计', icon: 'unarchive', class: '' },
 ];
 
