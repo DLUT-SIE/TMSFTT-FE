@@ -13,10 +13,6 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
-      {
-        path: 'statistics',
-        loadChildren: 'src/app/statistics/statistics.module#StatisticsModule',
-      }
     ]
   }
 ];
