@@ -72,7 +72,7 @@ describe('SidebarComponent', () => {
 
   it('should not display regular user nav menu if user is not authenticated.', () => {
     const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
-    const navMenu = nativeElement.querySelector('.regular-user-nav-menu');
+    const navMenu = nativeElement.querySelector('.user-nav-menu');
 
     expect(navMenu).toBeNull();
   });
@@ -81,7 +81,7 @@ describe('SidebarComponent', () => {
     authService.isAuthenticated = true;
     fixture.detectChanges();
     const nativeElement = fixture.debugElement.nativeElement as HTMLElement;
-    const navMenu = nativeElement.querySelector('.regular-user-nav-menu');
+    const navMenu = nativeElement.querySelector('.user-nav-menu');
 
     expect(navMenu).not.toBeNull();
   });
