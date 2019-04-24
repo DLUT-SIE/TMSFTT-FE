@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <mat-form-field>
+          <mat-label>选择统计类型</mat-label>
+          <mat-select [(value)]="selected_graph_type">
+            <mat-option *ngFor="let statistics of statistics_type" [value]="statistics.id">{{statistics.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>{{selected_graph_type}}</p>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <mat-form-field>
+          <mat-label>选择分组类型</mat-label>
+          <mat-select [(value)]="selected_group_type">
+            <mat-option *ngFor="let group_type of second_type[selected_graph_type]" [value]="group_type.id">{{group_type.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>{{selected_group_type}}</p>
+      </div>
+</div>
+<div echarts [options]="chartOption"></div>

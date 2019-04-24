@@ -8,6 +8,7 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TableExportComponent } from './components/table-export/table-export.component';
+import { DataGraphComponent } from './components/data-graph/data-graph.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TableExportComponent } from './components/table-export/table-export.com
     DataReviewComponent,
     BatchSubmitComponent,
     TableExportComponent,
+    DataGraphComponent,
   ],
   imports: [
     SharedModule,
