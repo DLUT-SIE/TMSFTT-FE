@@ -44,6 +44,11 @@ export class EventService extends GenericListService {
       `${environment.API_URL}/off-campus-events/${eventID}/`);
   }
 
+  getOffCampusEvent(eventID: number) {
+    return this.http.get<OffCampusEvent>(
+      `${environment.API_URL}/off-campus-events/${eventID}/`);
+  }
+
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
     return this.list<OffCampusEvent>('off-campus-events', req);
