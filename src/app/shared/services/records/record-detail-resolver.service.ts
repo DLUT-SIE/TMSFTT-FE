@@ -17,6 +17,6 @@ export class RecordDetailResolverService implements Resolve< Record > {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Record> {
     const id = +route.paramMap.get('id');
-    return this.recordService.getRecord(id);
+    return this.recordService.getRecordWithDetailData(id);
   }
 }
