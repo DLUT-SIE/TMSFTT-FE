@@ -6,6 +6,7 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataManagementComponent } from './data-management.component';
 import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
+import { DataGraphComponent } from './components/data-graph/data-graph.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'batch-submit',
         component: BatchSubmitComponent,
+      },
+      {
+        path: 'record-figure',
+        component: DataGraphComponent,
       },
       {
         path: '',

@@ -17,6 +17,7 @@ import { HTTPAuthService } from './shared/services/http-auth.service';
 import { SharedModule } from './shared/shared.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
@@ -44,6 +45,7 @@ export function tokenGetter() {
     AppRoutingModule,
     CoreModule,
     SharedModule,
+    NgxEchartsModule,
   ],
   providers: [
     {
