@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService} from 'src/app/shared/services/programs/program.service';
+import { Department }from 'src/app/shared/interfaces/department';
+import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 @Component({
   selector: 'app-admin-program-list',
@@ -15,6 +17,8 @@ import { ProgramService} from 'src/app/shared/services/programs/program.service'
 export class AdminProgramListComponent implements OnInit {
 
   programs: Program[] = [];
+  department: Department;
+  departmentId: number = this.authService.department;
   /** The total number of programs. */
   isLoadingResults = true;
 
@@ -22,6 +26,7 @@ export class AdminProgramListComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly programService: ProgramService,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -34,7 +39,10 @@ export class AdminProgramListComponent implements OnInit {
         this.isLoadingResults = false;
         return observableOf([]);
       }),
-    ).subscribe(programs => this.programs = programs);
+    ).subscribe(
+      programs => {
+        this.programs = programs;
+      });
   }
 
   navigateToRelatedEvents(row: Program) {

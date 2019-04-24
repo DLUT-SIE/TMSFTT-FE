@@ -74,6 +74,6 @@ describe('AdminProgramDetailComponent', () => {
     component.navigateToChangeProgram();
 
     expect(navigate).toHaveBeenCalledWith(
-      ['/admin/event-management/programs/admin-program-form'], { queryParams: {program_id: 2} });
+      ['/admin/programs/form'], { queryParams: {program_id: 2} });
   });
 });

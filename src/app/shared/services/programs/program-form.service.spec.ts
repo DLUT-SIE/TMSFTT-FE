@@ -41,7 +41,7 @@ describe('ProgramFormService', () => {
 
     service.getProgramForms({}).subscribe();
 
-    const url = `${environment.API_URL}/admin-program-forms/?limit=10&offset=0`;
+    const url = `${environment.API_URL}/program-forms/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');

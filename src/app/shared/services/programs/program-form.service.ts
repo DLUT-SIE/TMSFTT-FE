@@ -19,6 +19,6 @@ export class ProgramFormService extends GenericListService {
 
   /* get admin-program-forms from background**/
   getProgramForms(req: ListRequest) {
-    return this.list<ProgramForm>('admin-program-forms', req);
+    return this.list<ProgramForm>('program-forms', req);
   }
 }

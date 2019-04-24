@@ -29,7 +29,7 @@ export class AdminProgramDetailComponent implements OnInit {
   }
 
   navigateToChangeProgram() {
-    this.router.navigate(['/admin/event-management/programs/admin-program-form'], { queryParams: {program_id: this.program.id}});
+    this.router.navigate(['/admin/programs/form'], { queryParams: {program_id: this.program.id}});
   }
 
 }
