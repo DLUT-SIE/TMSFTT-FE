@@ -68,16 +68,6 @@ describe('LocalStorageService', () => {
     expect(localStorage.getItem('key')).toBeNull();
   });
 
-  it('should return key if key is in localStorage', () => {
-    const service: LocalStorageService = TestBed.get(LocalStorageService);
-    localStorage.setItem('key', 'value');
-    localStorage.setItem('key2', 'value');
-
-    const key = service.key(1);
-
-    expect(key).toBe('key2');
-  });
-
   it('should return null if key is not in localStorage', () => {
     const service: LocalStorageService = TestBed.get(LocalStorageService);
     localStorage.setItem('key', 'value');
