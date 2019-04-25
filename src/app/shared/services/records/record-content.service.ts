@@ -28,15 +28,15 @@ export class RecordContentService {
   }
 
   /** Get single content. */
-  getRecordcontent(id: number) {
+  getRecordContent(id: number) {
     return this.http.get<RecordContent>(
       `${environment.API_URL}/record-contents/${id}/`
     );
   }
 
   /** Get multiple contents. */
-  getRecordcontents(ids: number[]): Observable<RecordContent[]> {
+  getRecordContents(ids: number[]): Observable<RecordContent[]> {
     if (ids.length === 0) return observableOf([]);
-    return zip(...ids.map(id => this.getRecordcontent(id)));
+    return zip(...ids.map(id => this.getRecordContent(id)));
   }
 }

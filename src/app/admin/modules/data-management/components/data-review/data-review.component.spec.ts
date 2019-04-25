@@ -60,6 +60,16 @@ describe('DataReviewComponent', () => {
               create_time: '2019-01-01',
               update_time: '2019-01-02',
               campus_event: null,
+              off_campus_event: {
+                id: 1,
+                create_time: '2019-03-02T09:07:57.159755+08:00',
+                update_time: '2019-03-02T09:07:57.159921+08:00',
+                name: 'sfdg',
+                time: '2019-03-02T00:00:00+08:00',
+                location: 'dfgfd',
+                num_hours: 0,
+                num_participants: 25
+                },
               contents: [],
               attachments: [],
               user: 1,

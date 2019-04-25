@@ -181,7 +181,7 @@ describe('RecordFormComponent', () => {
     component.onSubmit();
     createOffCampusRecord$.next({ id: 123 } as Record);
 
-    expect(navigate).toHaveBeenCalledWith(['../record-detail/', 123]);
+    expect(navigate).toHaveBeenCalledWith(['user/off-campus-event-records/', 123]);
   });
 
   it('should display errors when creation failed.', () => {

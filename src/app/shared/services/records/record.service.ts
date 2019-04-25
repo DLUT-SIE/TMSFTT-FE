@@ -56,30 +56,35 @@ export class RecordService extends GenericListService {
   getRecord(id: number) {
     return this.http.get<Record>(
       `${environment.API_URL}/records/${id}/`);
-    }
+  }
 
+  getRecordWithDetail(id: number) {
+    return this.getDetaiOfRecord(this.getRecord(id));
+  }
     /** Get the data of event,contents,attachments in record. */
-  getRecordWithDetailData(id: number) {
-    let record: Record;
-    return this.http.get<Record>(`${environment.API_URL}/records/${id}/`).pipe(
+  private getDetaiOfRecord(record: Observable<Record>) {
+    let recordWithDetail: Record;
+    return record.pipe(
       switchMap((data) => {
-        record = data;
+        recordWithDetail = data;
         return zip(
-          record.off_campus_event ?
+          recordWithDetail.off_campus_event ?
           this.eventService.getOffCampusEvent(data.off_campus_event as number) :
           this.eventService.getEvent(data.campus_event as number),
-          this.recordContentSerice.getRecordcontents(data.contents as number[]),
+          this.recordContentSerice.getRecordContents(data.contents as number[]),
           this.recordAttachmentService.getRecordAttachments(data.attachments as number[]),
         );
       }),
       map((val: [OffCampusEvent | CampusEvent, RecordContent[], RecordAttachment[]]) => {
-        record.off_campus_event ?
-        record.off_campus_event = val[0] as OffCampusEvent :
-        record.campus_event = val[0] as CampusEvent;
-        record.contents = val[1] as RecordContent[];
-        record.attachments = val[2] as File[];
-        return record;
-      })
+        if (recordWithDetail.off_campus_event) {
+          recordWithDetail.off_campus_event = val[0] as OffCampusEvent;
+        } else {
+          recordWithDetail.campus_event = val[0] as CampusEvent;
+        }
+        recordWithDetail.contents = val[1] as RecordContent[];
+        recordWithDetail.attachments = val[2] as File[];
+        return recordWithDetail;
+      }),
     );
   }
 
@@ -87,11 +92,19 @@ export class RecordService extends GenericListService {
     return this.list<Record>('records', req);
   }
 
+  getRecordsWithDetail(req: ListRequest) {
+    return this.getDetailOfRecords(this.getRecords(req));
+  }
+
   getReviewedRecords(req: ListRequest) {
     return this.list<Record>('records/reviewed', req);
   }
 
-  getRecordsWithDetailData(records: Observable<PaginatedResponse<Record>>): Observable<PaginatedResponse<Record>> {
+  getReviewedRecordsWithDetail(req: ListRequest) {
+    return this.getDetailOfRecords(this.getReviewedRecords(req));
+  }
+
+  private getDetailOfRecords(records: Observable<PaginatedResponse<Record>>): Observable<PaginatedResponse<Record>> {
     let paginatedRecords: PaginatedResponse<Record>;
     return records.pipe(
       switchMap((data) => {
@@ -105,9 +118,11 @@ export class RecordService extends GenericListService {
       }),
       map((val: Array<CampusEvent | OffCampusEvent>) => {
         for (let index = 0; index < val.length; index++) {
-          paginatedRecords.results[index].off_campus_event ?
-          paginatedRecords.results[index].off_campus_event = val[index] as OffCampusEvent :
-          paginatedRecords.results[index].campus_event = val[index] as CampusEvent;
+          if (paginatedRecords.results[index].off_campus_event) {
+            paginatedRecords.results[index].off_campus_event = val[index] as OffCampusEvent;
+          } else {
+            paginatedRecords.results[index].campus_event = val[index] as CampusEvent;
+          }
         }
         return paginatedRecords;
       }),

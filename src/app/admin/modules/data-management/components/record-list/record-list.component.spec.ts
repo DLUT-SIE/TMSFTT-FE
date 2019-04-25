@@ -11,11 +11,11 @@ describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let navigate: jasmine.Spy;
   let fixture: ComponentFixture<RecordListComponent>;
-  let getRecords$: jasmine.Spy;
+  let getRecordsWithDetail$: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getRecords$ = jasmine.createSpy();
+    getRecordsWithDetail$ = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
@@ -50,7 +50,7 @@ describe('RecordListComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            getRecords: () => getRecords$,
+            getRecordsWithDetail: () => getRecordsWithDetail$,
           }
         },
         {
@@ -73,6 +73,6 @@ describe('RecordListComponent', () => {
   });
 
   it('should load data', () => {
-    expect(component.getResults(0, 0)).toBe(getRecords$);
+    expect(component.getResults(0, 0)).toBe(getRecordsWithDetail$);
   });
 });
