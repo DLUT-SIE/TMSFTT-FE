@@ -45,6 +45,6 @@ describe('ProgramFormService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({});
+    req.flush({count: 2, results: [], next: '', previous: ''});
   });
 });

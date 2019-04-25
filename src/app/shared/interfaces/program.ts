@@ -1,7 +1,9 @@
+import { Department } from './department';
+
 export interface Program {
     id?: number;
     name?: string;
-    department?: number;
+    department?: Department|number;
     category?: number;
     form?: number[];
 }
