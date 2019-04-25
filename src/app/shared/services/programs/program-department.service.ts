@@ -25,18 +25,17 @@ export class ProgramDepartmentService extends GenericListService {
   getProgramDepartments(req: ListRequest) {
     return this.list<Department>('departments', req).pipe(
       tap( data => {
-        for(let i = 0; i < data.results.length; i++) {
+        for (let i = 0; i < data.results.length; i++) {
           this.cachedProgramDepartments.set(data.results[i].id, data.results[i]);
         }
       }));
   }
 
-  getProgramForm(id: number) {
+  getProgramDepartment(id: number) {
     if (this.cachedProgramDepartments.has(id)) {
-      return observableOf(this.cachedProgramDepartments.get(id));  //变成obserable对象
-      
+      return observableOf(this.cachedProgramDepartments.get(id));//变成obserable对象      
     }
-    return this.http.get<Department>(`${environment.API_URL}/department/${id}/`);
+    return this.http.get<Department>(`${environment.API_URL}/departments/${id}/`);
   }
 
 }

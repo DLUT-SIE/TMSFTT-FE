@@ -1,12 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, catchError } from 'rxjs/operators';
-import { of as observableOf } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { of as observableOf, zip } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
-import { ProgramService} from 'src/app/shared/services/programs/program.service';
-import { Department }from 'src/app/shared/interfaces/department';
-import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { Department } from 'src/app/shared/interfaces/department';
 
 @Component({
   selector: 'app-admin-program-list',
@@ -17,8 +17,7 @@ import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-servic
 export class AdminProgramListComponent implements OnInit {
 
   programs: Program[] = [];
-  department: Department;
-  departmentId: number = this.authService.department;
+  departments: Department[] = [];
   /** The total number of programs. */
   isLoadingResults = true;
 
@@ -26,21 +25,34 @@ export class AdminProgramListComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly programService: ProgramService,
-    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
+    private readonly departmentService: DepartmentService,
   ) { }
 
   ngOnInit() {
-    this.programService.getPrograms({offset: 0, limit: 100}).pipe(
-      map(data => {
-        this.isLoadingResults = false;
-        return data.results;
-      }),
-      catchError((err) => {
-        this.isLoadingResults = false;
-        return observableOf([]);
-      }),
+    let programs;
+    zip(
+      this.programService.getPrograms({offset: 0, limit: 100}).pipe(
+        map(data => {
+          this.isLoadingResults = false;
+          programs = data.results;
+          return programs;
+        }),
+        switchMap((programs: Program[]) => {
+          return zip(...programs.map(program => {
+              return this.departmentService.getDepartment(program.department);
+          }));
+        }),
+        map((departments: Department[]) => {
+          for (let i = 0 ; i < programs.length; i++) {
+            programs[i].department = departments[i];
+          }
+        }),
+        catchError((err) => {
+          this.isLoadingResults = false;
+          return observableOf([]);
+        })),
     ).subscribe(
-      programs => {
+      data => {
         this.programs = programs;
       });
   }
