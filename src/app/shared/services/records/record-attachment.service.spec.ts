@@ -57,4 +57,43 @@ describe('RecordAttachmentService', () => {
       expect(res.length).toBe(0);
     });
   });
+
+  it('should get attachment.', () => {
+    const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
+    const id = 1;
+
+    service.getRecordAttachment(id).subscribe();
+
+    const url = `${environment.API_URL}/record-attachments/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+  it('should get attachments.', () => {
+    const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
+
+    service.getRecordAttachments([1, 2]).subscribe();
+
+    const req1 = httpTestingController.expectOne(
+      `${environment.API_URL}/record-attachments/1/`);
+
+    expect(req1.request.method).toEqual('GET');
+
+    const req2 = httpTestingController.expectOne(
+      `${environment.API_URL}/record-attachments/2/`);
+
+    expect(req2.request.method).toEqual('GET');
+    req1.flush({});
+    req2.flush({});
+  });
+
+  it('should return if no requests.', () => {
+    const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
+
+    service.getRecordAttachments([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });

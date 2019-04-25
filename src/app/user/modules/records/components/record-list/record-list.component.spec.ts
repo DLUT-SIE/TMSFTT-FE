@@ -3,20 +3,23 @@ import { Location } from '@angular/common';
 import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { RecordListComponent } from './record-list.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
+import { Record } from 'src/app/shared/interfaces/record';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 
 describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let navigate: jasmine.Spy;
   let fixture: ComponentFixture<RecordListComponent>;
-  let getReviewedRecords$: jasmine.Spy;
+  let getReviewedRecordsWithDetail$: Subject<PaginatedResponse<Record>>;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getReviewedRecords$ = jasmine.createSpy();
+    getReviewedRecordsWithDetail$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
@@ -51,7 +54,7 @@ describe('RecordListComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            getReviewedRecords: () => getReviewedRecords$,
+            getReviewedRecordsWithDetail: () => getReviewedRecordsWithDetail$,
           }
         },
         {
@@ -74,6 +77,6 @@ describe('RecordListComponent', () => {
   });
 
   it('should load data', () => {
-    expect(component.getResults(0, 0)).toBe(getReviewedRecords$);
+    expect(component.getResults(0, 0)).toBe(getReviewedRecordsWithDetail$);
   });
 });
