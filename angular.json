@@ -91,6 +91,8 @@
             "karmaConfig": "src/karma.conf.js",
             "codeCoverageExclude": [
               "src/app/demo/**/*.ts",
+              "src/testings/*",
+              "src/environments/*"
             ],
             "styles": [
               "src/styles.css"
