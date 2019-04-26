@@ -1,22 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Record } from 'src/app/shared/interfaces/record';
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { RecordContent } from 'src/app/shared/interfaces/record-content';
+import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 
 @Component({
   selector: 'app-off-campus-record-detail',
   templateUrl: './off-campus-record-detail.component.html',
   styleUrls: ['./off-campus-record-detail.component.css']
 })
-export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewNote> implements OnInit {
+export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewNote> {
   /** The data to be displayed. */
-  @Input() record: Record;
+  @Input() record: {
+    id?: number;
+    create_time?: string;
+    update_time?: string;
+    off_campus_event?: OffCampusEvent;
+    user?: number;
+    status?: number;
+    feedback?: number;
+    attachments?: File[];
+    contents?: RecordContent[];
+  };
   reviewnotecontent: string;
 
   constructor(
@@ -54,10 +65,4 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
     );
   }
 
-  ngOnInit() {
-    this.route.data.subscribe((data: { record: Record}) => {
-      this.record = data.record;
-    });
-    super.ngOnInit();
-  }
 }

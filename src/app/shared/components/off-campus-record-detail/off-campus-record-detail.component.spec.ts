@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of as observableOf, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
@@ -18,18 +18,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OffCampusRecordDetailComponent } from './off-campus-record-detail.component';
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
-import { Record } from 'src/app/shared/interfaces/record';
 import { Location } from '@angular/common';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
   let fixture: ComponentFixture<OffCampusRecordDetailComponent>;
-  let getReviewNotes$: jasmine.Spy;
+  let getReviewNotes$: Subject<PaginatedResponse<ReviewNote>>;
   let createReviewNote$: Subject<ReviewNote>;
   let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
-    getReviewNotes$ = jasmine.createSpy();
+    getReviewNotes$ = new Subject();
     createReviewNote$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
@@ -53,16 +54,6 @@ describe('OffCampusRecordDetailComponent', () => {
                 get: () => '1',
               },
             },
-            data: observableOf({record: {
-              id: 1,
-              create_time: '2019-01-01',
-              update_time: '2019-01-02',
-              campus_event: null,
-              contents: [],
-              attachments: [],
-              user: 1,
-              status: 1,
-            } as Record}),
           }
         },
         {
@@ -100,6 +91,27 @@ describe('OffCampusRecordDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OffCampusRecordDetailComponent);
     component = fixture.componentInstance;
+    const record = {
+      id: 1,
+      create_time: '2019-01-01',
+      update_time: '2019-01-02',
+      campus_event: null,
+      off_campus_event: {
+        id: 1,
+        create_time: '2019-03-02T09:07:57.159755+08:00',
+        update_time: '2019-03-02T09:07:57.159921+08:00',
+        name: 'sfdg',
+        time: '2019-03-02T00:00:00+08:00',
+        location: 'dfgfd',
+        num_hours: 0,
+        num_participants: 25
+        },
+      contents: [],
+      attachments: [],
+      user: 1,
+      status: 1,
+    };
+    component.record = record;
     fixture.detectChanges();
   });
 
@@ -108,18 +120,6 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should get reviewnotes', () => {
-    const dummyRecord = {
-      id: 1,
-      create_time: '2019-01-01',
-      update_time: '2019-01-02',
-      campus_event: null,
-      off_campus_event: null,
-      contents: [],
-      attachments: [],
-      user: 1,
-      status: 1,
-    };
-    component.record = dummyRecord;
     expect(component.getResults(10, 0)).toBe(getReviewNotes$);
   });
 

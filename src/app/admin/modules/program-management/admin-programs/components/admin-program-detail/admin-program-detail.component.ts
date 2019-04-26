@@ -23,7 +23,7 @@ export class AdminProgramDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { program: Program}) => {
+    this.route.data.subscribe((data: { program: Program }) => {
       this.program = data.program;
     });
   }

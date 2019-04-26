@@ -25,7 +25,7 @@ export class OffCampusEventRecordListComponent extends GenericListComponent<Reco
   getResults(offset: number, limit: number) {
     const extraParams = new Map<string, string>();
     extraParams.set('off_campus_event__isnull', 'false');
-    return this.recordService.getRecords({offset, limit, extraParams});
+    return this.recordService.getRecordsWithDetail({offset, limit, extraParams});
   }
 
   navigateToForm() {

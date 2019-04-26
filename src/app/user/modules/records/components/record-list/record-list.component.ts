@@ -23,7 +23,7 @@ export class RecordListComponent extends GenericListComponent<Record> {
   }
 
   getResults(offset: number, limit: number) {
-    return this.recordService.getReviewedRecords({offset, limit});
+    return this.recordService.getReviewedRecordsWithDetail({offset, limit});
   }
 
 }

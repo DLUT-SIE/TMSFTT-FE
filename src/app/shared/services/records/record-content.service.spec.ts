@@ -57,4 +57,43 @@ describe('RecordContentService', () => {
       expect(res.length).toBe(0);
     });
   });
+
+  it('should get content.', () => {
+    const service: RecordContentService = TestBed.get(RecordContentService);
+    const id = 1;
+
+    service.getRecordContent(id).subscribe();
+
+    const url = `${environment.API_URL}/record-contents/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+  it('should get contents.', () => {
+    const service: RecordContentService = TestBed.get(RecordContentService);
+
+    service.getRecordContents([1, 2]).subscribe();
+
+    const req1 = httpTestingController.expectOne(
+      `${environment.API_URL}/record-contents/1/`);
+
+    expect(req1.request.method).toEqual('GET');
+
+    const req2 = httpTestingController.expectOne(
+      `${environment.API_URL}/record-contents/2/`);
+
+    expect(req2.request.method).toEqual('GET');
+    req1.flush({});
+    req2.flush({});
+  });
+
+  it('should return if no requests.', () => {
+    const service: RecordContentService = TestBed.get(RecordContentService);
+
+    service.getRecordContents([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });

@@ -5,14 +5,14 @@ import { RecordDetailResolverService } from './record-detail-resolver.service';
 import { RecordService } from './record.service';
 
 describe('RecordDetailResolverService', () => {
-  let getRecord: jasmine.Spy;
+  let getRecordWithDetail: jasmine.Spy;
   beforeEach(() => {
-    getRecord = jasmine.createSpy();
+    getRecordWithDetail = jasmine.createSpy();
     TestBed.configureTestingModule({
       providers: [
         {
           provide: RecordService,
-          useValue: { getRecord }
+          useValue: { getRecordWithDetail }
         }
       ]
     });
@@ -30,10 +30,10 @@ describe('RecordDetailResolverService', () => {
     route.paramMap = {
       get: (key: string) => id.toString(),
     };
-    getRecord.and.returnValue(observableOf(null));
+    getRecordWithDetail.and.returnValue(observableOf(null));
 
     service.resolve(route, null).subscribe();
 
-    expect(getRecord).toHaveBeenCalledWith(id);
+    expect(getRecordWithDetail).toHaveBeenCalled();
   });
 });

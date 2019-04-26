@@ -157,27 +157,27 @@ export class RecordFormComponent implements OnInit {
     ].filter((val) => val.content !== '');
   }
 
-  // TODO: Fix below and remove this comment
-  // private buildOffCampusEvent(): OffCampusEvent {
-  //   const value = this.recordForm.value;
-  //   return {
-  //     name: value.name,
-  //     time: value.time,
-  //     location: value.location,
-  //     num_hours: value.numHours,
-  //     num_participants: value.numParticipants,
-  //   };
-  // }
+  private buildOffCampusEvent(): OffCampusEvent {
+    const value = this.recordForm.value;
+    return {
+      name: value.name,
+      time: value.time,
+      location: value.location,
+      num_hours: value.numHours,
+      num_participants: value.numParticipants,
+    };
+  }
 
   onSubmit() {
     const req: Record = {
+      off_campus_event: this.buildOffCampusEvent(),
       user: this.authService.userID,
       contents: this.buildContents(),
       attachments: this.attachments,
     };
     this.recordService.createOffCampusRecord(req).subscribe(
       record => {
-        this.router.navigate(['../record-detail/', record.id]);
+        this.router.navigate(['user/off-campus-event-records/', record.id]);
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
