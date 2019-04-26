@@ -2,16 +2,26 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
 
+import { Department } from 'src/app/shared/interfaces/department';
+import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from './program.service';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { ProgramCategoryService } from 'src/app/shared/services/programs/program-category.service';
 import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('ProgramService', () => {
   let httpTestingController: HttpTestingController;
-
+  let getDepartment$: Subject<Department>;
+  let getProgramCategory$: Subject<ProgramCategory>;
+  let getProgram$: Subject<{}>;
 
   beforeEach(() => {
+    getDepartment$ = new Subject();
+    getProgramCategory$ = new Subject();
+    getProgram$ = new Subject<{}>();
+
     const authenticationSucceed$ = new Subject<void>();
     TestBed.configureTestingModule({
       imports: [
@@ -23,6 +33,18 @@ describe('ProgramService', () => {
           useValue: {
             authenticationSucceed: authenticationSucceed$,
             isAuthenticated: true,
+          },
+        },
+        {
+          provide: DepartmentService,
+          useValue: {
+            getDepartment: () => getDepartment$,
+          },
+        },
+        {
+          provide: ProgramCategoryService,
+          useValue: {
+            getProgramCategory: () => getProgramCategory$,
           },
         },
       ]
@@ -62,6 +84,29 @@ describe('ProgramService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
     req.flush({});
+  });
+
+  it('should get program with detail data.', () => {
+    const service: ProgramService = TestBed.get(ProgramService);
+    const program: Program = {
+      id: 1,
+      name: 'test',
+      department: 2,
+      category: 5,
+      form: [],
+    };
+
+    const getProgram = spyOn(service, 'getProgram');
+    getProgram.and.returnValue(getProgram$);
+
+    service.getProgramWithDetail(1).subscribe((data: Program) => {
+      expect(data.department).toEqual({});
+      expect(data.category).toEqual({});
+    });
+
+    getProgram$.next(program);
+    getDepartment$.next({});
+    getProgramCategory$.next({});
   });
 
   it('should use default if no value provided', () => {
