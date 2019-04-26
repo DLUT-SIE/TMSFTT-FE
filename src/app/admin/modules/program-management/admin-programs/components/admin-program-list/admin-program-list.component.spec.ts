@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { Program } from 'src/app/shared/interfaces/program';
-import { Department } from 'src/app/shared/interfaces/department';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { AdminProgramListComponent } from './admin-program-list.component';
@@ -35,7 +34,7 @@ describe('AdminProgramListComponent', () => {
     navigate = jasmine.createSpy();
     getPrograms$ = new Subject<PaginatedResponse<Program>>();
     getPrograms = jasmine.createSpy();
-    getDepartment$ = new Subject<PaginatedResponse<Department>>();
+    getDepartment$ = new Subject<{}>();
     getDepartment = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
     getDepartment.and.returnValue(getDepartment$);

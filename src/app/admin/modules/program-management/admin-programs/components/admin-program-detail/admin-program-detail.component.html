@@ -6,11 +6,11 @@
             <h4 class="card-title">培训项目详情</h4>
           </div>
           <div class="card-body">
-            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px" >
               <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
               fxLayoutGap="15px">
               <span class="item-title" fxFlex="1 0 20%">项目名称</span>
-              <div class="item-content" fxFlex="1 0 78%">
+              <div class="item-content"  *ngIf="program" fxFlex="1 0 78%">
                 <p>{{ program.name }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
@@ -19,8 +19,8 @@
               <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
               fxLayoutGap="15px">
               <span class="item-title" fxFlex="1 0 20%">所属院系</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <!-- <p>{{ program.department_detail.name }}</p> -->
+              <div class="item-content" *ngIf="program" fxFlex="1 0 78%">
+                <p>{{ program.department.name }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
             </div>
@@ -28,17 +28,8 @@
               <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
               fxLayoutGap="15px">
               <span class="item-title" fxFlex="1 0 20%">培训类别</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <!-- <p>{{ program.category_detail.name }}</p> -->
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">培训形式</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ program.form }}</p>
+              <div class="item-content" *ngIf="program" fxFlex="1 0 78%">
+                <p>{{ program.category.name }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
             </div>

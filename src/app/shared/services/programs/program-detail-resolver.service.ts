@@ -16,7 +16,7 @@ export class ProgramDetailResolverService implements Resolve<Program> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Program> {
     const id = +route.paramMap.get('id');
-    return this.programService.getProgram(id);
+    return this.programService.getProgramWithDetail(id);
   }
 
 }

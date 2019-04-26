@@ -36,12 +36,25 @@ describe('ProgramCategoryService', () => {
     const service: ProgramCategoryService = TestBed.get(ProgramCategoryService);
     expect(service).toBeTruthy();
   });
-  it('should get program-category', () => {
+
+  it('should get program-categories', () => {
     const service: ProgramCategoryService = TestBed.get(ProgramCategoryService);
 
     service.getProgramCategories({}).subscribe();
 
     const url = `${environment.API_URL}/program-categories/?limit=10&offset=0`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+  it('should get program-category', () => {
+    const service: ProgramCategoryService = TestBed.get(ProgramCategoryService);
+    const id = 5;
+    service.getProgramCategory(id).subscribe();
+
+    const url = `${environment.API_URL}/program-categories/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
