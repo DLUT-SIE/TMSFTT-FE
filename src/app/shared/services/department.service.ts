@@ -20,7 +20,7 @@ export class DepartmentService extends GenericListService {
     return this.list<Department>('departments', req);
   }
 
-  getDepartment(id: number|Department) {
+  getDepartment(id: Department|number) {
     return this.http.get<Department>(`${environment.API_URL}/departments/${id}/`);
   }
 }

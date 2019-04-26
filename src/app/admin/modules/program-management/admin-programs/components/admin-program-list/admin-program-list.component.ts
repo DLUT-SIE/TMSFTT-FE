@@ -30,28 +30,27 @@ export class AdminProgramListComponent implements OnInit {
 
   ngOnInit() {
     let programs;
-    zip(
-      this.programService.getPrograms({offset: 0, limit: 100}).pipe(
+    this.programService.getPrograms({offset: 0, limit: 100}).pipe(
         map(data => {
-          this.isLoadingResults = false;
           programs = data.results;
           return programs;
         }),
-        switchMap((programs: Program[]) => {
-          return zip(...programs.map(program => {
-              return this.departmentService.getDepartment(program.department);
-          }));
+        switchMap((data: Program[]) => {
+          return zip(...data.map(program =>
+              this.departmentService.getDepartment(program.department)
+          ));
         }),
         map((departments: Department[]) => {
+          this.isLoadingResults = false;
           for (let i = 0 ; i < programs.length; i++) {
             programs[i].department = departments[i];
           }
         }),
         catchError((err) => {
           this.isLoadingResults = false;
-          return observableOf([]);
-        })),
-    ).subscribe(
+          programs = observableOf([]);
+          return programs.value;
+        })).subscribe(
       data => {
         this.programs = programs;
       });
