@@ -27,7 +27,7 @@ export class DepartmentListComponent extends GenericListComponent<Department> {
     return this.departmentService.getDepartments({offset, limit});
   }
 
-  onSelect(department: Department){
+  onSelect(department: Department) {
     this.departmentChildSelect = department;
     this.departmentSelect.emit(department);
   }

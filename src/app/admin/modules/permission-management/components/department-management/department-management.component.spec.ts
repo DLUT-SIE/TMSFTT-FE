@@ -26,7 +26,8 @@ describe('DepartmentManagementComponent', () => {
       declarations: [
         DepartmentManagementComponent,
         DepartmentGroupComponent,
-        DepartmentListComponent,],
+        DepartmentListComponent,
+      ],
       imports: [
           MatIconModule,
           MatProgressSpinnerModule,
