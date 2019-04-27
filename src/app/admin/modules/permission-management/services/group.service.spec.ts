@@ -40,8 +40,8 @@ describe('GroupService', () => {
     const service: GroupService = TestBed.get(GroupService);
     service.getGroupByDepartmentName(department.name).subscribe();
 
-    const params = `name__startswith=${department.name}`
-    const url = `${environment.API_URL}/groups/?${params}`
+    const params = `name__startswith=${department.name}`;
+    const url = `${environment.API_URL}/groups/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');

@@ -17,7 +17,7 @@ export class GroupService {
     return this.http.get<Group>(`${environment.API_URL}/groups/${id}/`);
   }
 
-  getGroupByDepartmentName(name: string): Observable<Group[]>{
+  getGroupByDepartmentName(name: string): Observable<Group[]> {
     return this.http.get<Group[]>(
       `${environment.API_URL}/groups/?name__startswith=${name}`);
   }
