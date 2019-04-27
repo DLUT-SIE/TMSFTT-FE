@@ -82,7 +82,7 @@ export class RecordService extends GenericListService {
           recordWithDetail.campus_event = val[0] as CampusEvent;
         }
         recordWithDetail.contents = val[1] as RecordContent[];
-        recordWithDetail.attachments = val[2] as File[];
+        recordWithDetail.attachments = val[2] as RecordAttachment[];
         return recordWithDetail;
       }),
     );
