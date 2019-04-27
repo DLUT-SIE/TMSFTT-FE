@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Group } from 'src/app/shared/interfaces/group';
-import { Observable } from 'rxjs';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class GroupService {
     return this.http.get<Group>(`${environment.API_URL}/groups/${id}/`);
   }
 
-  getGroupByDepartmentName(name: string): Observable<Group[]> {
-    return this.http.get<Group[]>(
+  getGroupByDepartmentName(name: string) {
+    return this.http.get<PaginatedResponse<Group>>(
       `${environment.API_URL}/groups/?name__startswith=${name}`);
   }
 }

@@ -24,7 +24,7 @@ export class DepartmentGroupComponent implements OnInit, OnChanges {
     if (this.departmentSelected) {
     this.groupService.getGroupByDepartmentName(
       this.departmentSelected.name).subscribe(
-        (groups: Group[]) => this.departmentGroup = groups);
+        res => this.departmentGroup = res.results);
     }
   }
 
