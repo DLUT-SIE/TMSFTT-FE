@@ -12,8 +12,8 @@ import { switchMap } from 'rxjs/operators';
 })
 export class DepartmentGroupComponent implements OnInit {
 
-  private _departmentSelected: Department = null;
   private _departmentChange = new Subject();
+  departmentSelectedItem: Department = null;
   departmentGroup: Group[] = [];
 
   constructor(
@@ -22,7 +22,7 @@ export class DepartmentGroupComponent implements OnInit {
 
   @Input()
   set departmentSelected(department: Department) {
-    this._departmentSelected = department;
+    this.departmentSelectedItem = department;
     this._departmentChange.next();
   }
 
@@ -30,7 +30,7 @@ export class DepartmentGroupComponent implements OnInit {
     this._departmentChange.pipe(
       switchMap(() => {
         return this.groupService.getGroupByDepartmentName(
-          this._departmentSelected.name);
+          this.departmentSelectedItem.name);
       }),
     ).subscribe(res => {
       this.departmentGroup = res.results;
