@@ -19,7 +19,7 @@ export class RecordDetailComponent implements OnInit {
   record: Record;
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
-  couldEdit: boolean;
+  couldEditStauts: boolean;
   feedback: string;
 
   constructor(
@@ -35,9 +35,9 @@ export class RecordDetailComponent implements OnInit {
     this.route.data.subscribe((data: { record: Record }) => {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
-      this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_WITH_FEEDBACK;
-      this.couldEdit = this.record.status === RecordStatus.STATUS_SUBMITTED ||
-                       this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED;
+      this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
+      this.couldEditStauts = this.record.status === RecordStatus.STATUS_SUBMITTED ||
+                             this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED;
 
     });
   }

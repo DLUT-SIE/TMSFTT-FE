@@ -62,9 +62,9 @@
 
           <mat-divider></mat-divider>
           <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button color="warn" *ngIf="!isCampusEventRecord && couldEdit"
+            <a mat-raised-button class="btn btn-danger" *ngIf="!isCampusEventRecord && couldEditStauts"
             (click)="navigateToForm()">编辑</a>
-            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
+            <a mat-raised-button class="btn btn-danger" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
             (click)="openDialog()">提交反馈</a>
             <a mat-raised-button class="btn btn-danger" (click)="location.back()">返回</a> 
           </div>
