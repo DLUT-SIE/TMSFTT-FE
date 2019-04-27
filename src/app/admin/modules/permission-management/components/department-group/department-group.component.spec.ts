@@ -39,7 +39,7 @@ describe('DepartmentGroupComponent', () => {
     const department = {id: 1, name: 'name1'} as Department;
     getGroupByDepartmentName$.next(department);
 
-    const department = {id: 2, name: 'name2'} as Department;
-    getGroupByDepartmentName$.next(department);
+    component.ngOnChanges();
+    fixture.detectChanges();
   });
 });
