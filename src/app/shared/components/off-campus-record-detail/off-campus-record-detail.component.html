@@ -98,7 +98,7 @@
       <span class="item-title" fxFlex="1 0 20%">附加文件</span>
       <div class="item-content" fxFlex="1 0 78%">
         <div *ngFor="let att of record.attachments">
-          <a>{{ att.path }}</a>
+          <a>{{ att.path.name }}</a>
         </div>
       </div>
       <div fxFlex="1 0 2%"></div>
