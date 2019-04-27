@@ -51,7 +51,7 @@ describe('DepartmentGroupComponent', () => {
     const n = 5;
     const department = {id: 1, name: 'name'} as Department;
     component.departmentSelected = department;
-    getGroupByDepartmentName$.next(generatePaginatedGroups(5));
+    getGroupByDepartmentName$.next(generatePaginatedGroups(n));
 
     expect(component.departmentGroup.length).toBe(n);
   });
