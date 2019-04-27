@@ -35,14 +35,8 @@ describe('DepartmentGroupComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call ngOnChanges', () => {
-    const spy = spyOn(component, 'ngOnChanges');
-    fixture.detectChanges();
-    component.ngOnChanges();
-
+  it('should departmentSelected', () => {
     const department = {id: 1, name: 'name1'} as Department;
     getGroupByDepartmentName$.next(department);
-
-    expect(spy).toHaveBeenCalled();
   });
 });
