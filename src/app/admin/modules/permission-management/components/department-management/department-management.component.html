@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="row" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center"
     fxLayoutGap="15px" fxLayoutAlign.xs="start start">
-    <div class="col-md-6">
+    <div fxFlex="50">
       <app-department-list (departmentSelect)="onchanged($event)"></app-department-list>
     </div>
-    <div class="col-md-4">
+    <div fxFlex="30">
       <app-department-group [departmentSelected]="departmentSelected"></app-department-group>
     </div>
   </div>
