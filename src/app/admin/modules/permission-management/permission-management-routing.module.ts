@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
-import { DepartmentManagementComponent } from './components/department-management/department-management.component';
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
+import { DepartmentManagementComponent } from './components/department-management/department-management.component';
 
 const routes: Routes = [
   {
