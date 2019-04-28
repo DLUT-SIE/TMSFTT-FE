@@ -65,7 +65,8 @@ export class ProgramService extends GenericListService {
           }})
       );
     }
-    return observableOf(this.cachedProgramCategories);
+    /* istanbul ignore next  */
+      return observableOf(this.cachedProgramCategories);
   }
 
   /** create admin-program-form. */
