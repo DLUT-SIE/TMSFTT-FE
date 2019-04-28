@@ -111,7 +111,7 @@ describe('ProgramService', () => {
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush([{val:1, name:'test1'},{val:2, name:'test2'}]);
+    req.flush([{val: 1, name: 'test1'}, {val: 2, name: 'test2'}]);
 
   });
 
