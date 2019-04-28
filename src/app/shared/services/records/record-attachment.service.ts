@@ -42,4 +42,8 @@ export class RecordAttachmentService {
     if (ids.length === 0) return observableOf([]);
     return zip(...ids.map(id => this.getRecordAttachment(id)));
   }
+
+  deleteRecordAttachment(id: number) {
+    return this.http.delete(`${environment.API_URL}/record-attachments/${id}/`);
+  }
 }

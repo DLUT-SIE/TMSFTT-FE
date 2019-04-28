@@ -37,15 +37,24 @@ export class RecordService extends GenericListService {
     });
   }
 
-  /** Create Records along with its contents and attachments. */
-  createOffCampusRecord(req: Record) {
+  private buildRecordFormData(req: Record) {
     const data = new FormData();
     data.set('off_campus_event', JSON.stringify(req.off_campus_event));
     data.set('user', req.user.toString());
     (req.attachments as File[]).map(x => data.append('attachments', x));
     (req.contents as RecordContent[]).map(x => data.append('contents', JSON.stringify(x)));
-
+    return data;
+  }
+  /** Create Records along with its contents and attachments. */
+  createOffCampusRecord(req: Record) {
+    const data = this.buildRecordFormData(req);
     return this.http.post<Record>(
+      `${environment.API_URL}/records/`, data);
+  }
+
+  updateOffCampusRecord(req: Record) {
+    const data = this.buildRecordFormData(req);
+    return this.http.put<Record>(
       `${environment.API_URL}/records/`, data);
   }
 
@@ -53,6 +62,43 @@ export class RecordService extends GenericListService {
     return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
   }
 
+  // updateOffCampusRecord(oldRecord: Record, lastRecord: Record) {
+
+  //   if (oldRecord.off_campus_event !== lastRecord.off_campus_event) {
+  //     this.eventService.updateOffCampusEvent(lastRecord.off_campus_event as OffCampusEvent);
+  //   }
+
+  //   let tempContent1: RecordContent;
+  //   let tempContent2: RecordContent;
+  //   for (let type of ContentType) {
+  //     tempContent1 = null;
+  //     tempContent2 = null;
+  //     for (let oldContent of oldRecord.contents as RecordContent[]) {
+  //       if (oldContent.content_type === type) {
+  //         tempContent1 = oldContent;
+  //       }
+  //     }
+  //     for (let lastContent of lastRecord.contents as RecordContent[]) {
+  //       if (lastContent.content_type ===type) {
+  //         tempContent2 = lastContent;
+  //       }
+  //     }
+  //     if(!tempContent1 && !tempContent2) {}
+  //     else if (!tempContent1 && tempContent2) {
+  //       this.recordContentSerice.createRecordContent(tempContent2);
+  //     } else if(tempContent1 && !tempContent2) {
+  //       this.recordContentSerice.deleteRecordContent(tempContent1.id);
+  //     }else {
+  //       if (tempContent1.content === tempContent2.content) {}
+  //       else this.recordContentSerice.updateRecordContent(tempContent2);
+  //     }
+  //   }
+
+  //   this.recordAttachmentService.createRecordAttachments(lastRecord.attachments as RecordAttachment[]);
+
+  //   return lastRecord;
+
+  // }
   getRecord(id: number) {
     return this.http.get<Record>(
       `${environment.API_URL}/records/${id}/`);
