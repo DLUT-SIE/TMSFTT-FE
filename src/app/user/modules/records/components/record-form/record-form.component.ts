@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { RecordService } from '../../../../../shared/services/records/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
@@ -14,6 +14,8 @@ import { switchMap, map, debounceTime } from 'rxjs/operators';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
+import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -44,14 +46,20 @@ export class RecordFormComponent implements OnInit {
 
   /** The attachments to be uploaded. */
   attachments: File[] = [];
+  record: Record;
+  originalAttachments: RecordAttachment[] = [];
+  hasOriginalAttachments: boolean;
+  toUpdate: boolean;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly snackBar: MatSnackBar,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly recordService: RecordService,
     private readonly eventService: EventService,
+    private readonly recordAttachmentService: RecordAttachmentService,
   ) { }
 
   ngOnInit() {
@@ -71,6 +79,44 @@ export class RecordFormComponent implements OnInit {
       this.numHours.setValue(offCampusEvent.num_hours);
       this.numParticipants.setValue(offCampusEvent.num_participants);
     });
+    console.log(this.route.snapshot.queryParams.record_id);
+    if (this.route.snapshot.queryParams.record_id !== undefined) {
+      const recordID = this.route.snapshot.queryParams.record_id;
+      this.recordService.getRecordWithDetail(recordID).subscribe(
+        record => {
+          this.toUpdate = true;
+          this.record = record;
+          this.record.off_campus_event = record.off_campus_event as OffCampusEvent;
+          this.name.setValue(this.record.off_campus_event.name);
+          this.time.setValue(this.record.off_campus_event.time);
+          this.location.setValue(this.record.off_campus_event.location);
+          this.numHours.setValue(this.record.off_campus_event.num_hours);
+          this.numParticipants.setValue(this.record.off_campus_event.num_participants);
+          this.record.contents = record.contents as RecordContent[];
+          this.record.contents.map(content => {
+            switch (content.content_type) {
+              case ContentType.CONTENT_TYPE_SUMMARY: {
+                this.summary.setValue(content.content);
+                break;
+              }
+              case ContentType.CONTENT_TYPE_CONTENT: {
+                this.content.setValue(content.content);
+                break;
+              }
+              case ContentType.CONTENT_TYPE_FEEDBACK: {
+                this.feedback.setValue(content.content);
+              }
+            }
+          });
+          if (record.attachments.length !== 0) {
+            this.originalAttachments = record.attachments as RecordAttachment[];
+            this.hasOriginalAttachments = true;
+            console.log(record.attachments);
+
+          }
+        }
+      )
+    }
   }
 
   /**
@@ -175,7 +221,13 @@ export class RecordFormComponent implements OnInit {
       contents: this.buildContents(),
       attachments: this.attachments,
     };
-    this.recordService.createOffCampusRecord(req).subscribe(
+    let targetRecord: Observable<Record>;
+    if (this.toUpdate) {
+      targetRecord = this.recordService.updateOffCampusRecord(req);
+    } else {
+      targetRecord = this.recordService.createOffCampusRecord(req);
+    }
+    targetRecord.subscribe(
       record => {
         this.router.navigate(['user/off-campus-event-records/', record.id]);
       },
@@ -194,5 +246,14 @@ export class RecordFormComponent implements OnInit {
   /** Push a new FormControl to FormArray, this supports multi files uploading. */
   addFile() {
     this.files.push(this.fb.control(null));
+  }
+
+  deleteAttachment(attachment: RecordAttachment) {
+    return this.recordAttachmentService.deleteRecordAttachment(attachment.id).subscribe(
+      () => {
+        this.originalAttachments = this.originalAttachments.filter(item => item !== attachment);
+      }
+    )
+
   }
 }

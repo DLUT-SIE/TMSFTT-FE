@@ -56,7 +56,7 @@ export class RecordDetailComponent implements OnInit {
   }
 
   navigateToForm() {
-    this.router.navigate(['training-record/off-campus-event-records/record-form'], { queryParams: { recordID: this.record.id } });
+    this.router.navigate(['/user/off-campus-event-records/form'], { queryParams: { record_id: this.record.id } });
   }
 
 }
