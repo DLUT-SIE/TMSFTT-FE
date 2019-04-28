@@ -1,21 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { Department } from 'src/app/shared/interfaces/department';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { DepartmentService } from 'src/app/shared/services/department.service';
 
 @Component({
   selector: 'app-department-management',
   templateUrl: './department-management.component.html',
   styleUrls: ['./department-management.component.css']
 })
-export class DepartmentManagementComponent implements OnInit {
+export class DepartmentManagementComponent extends GenericListComponent<Department> {
 
-  departmentSelected: Department = null;
-
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    protected readonly route: ActivatedRoute,
+    protected readonly router: Router,
+    protected readonly location: Location,
+    private readonly departmentService: DepartmentService,
+  ) {
+    super(route, router, location);
   }
 
-  onchanged(department: Department) {
-    this.departmentSelected = department;
+  getResults(offset: number, limit: number) {
+    return this.departmentService.getDepartments({offset, limit});
   }
+
 }

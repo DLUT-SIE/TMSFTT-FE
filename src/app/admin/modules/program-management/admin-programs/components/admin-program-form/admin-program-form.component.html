@@ -23,21 +23,8 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>note_add</mat-icon>
-              <mat-select formControlName="formIds" placeholder="请告诉我们您要创建培训项目的培训形式" multiple required>
-                <mat-option *ngFor="let programForm of programForms" [value]="programForm.id">
-                  {{ programForm.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="formIds.invalid && (formIds.dirty || formIds.touched)">
-                <span *ngIf="!!formIds.errors.required" i18n>
-                  您需要提供培训项目的形式。
-                </span>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>note_add</mat-icon>
               <mat-select placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
-                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.id">
+                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.val">
                   {{ programCategory.name }}
                 </mat-option>
               </mat-select>

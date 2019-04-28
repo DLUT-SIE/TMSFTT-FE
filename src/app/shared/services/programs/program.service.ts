@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
+import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { ProgramCategoryService } from 'src/app/shared/services/programs/program-category.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { Observable, zip } from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramService extends GenericListService {
 
+  private cachedProgramCategories: ProgramCategory[];
+
   constructor(
     private readonly departmentService: DepartmentService,
-    private readonly programCategoryService: ProgramCategoryService,
     protected readonly http: HttpClient,
   ) {
       super(http);
@@ -44,17 +45,27 @@ export class ProgramService extends GenericListService {
     return program.pipe(
       switchMap((data) => {
         programWithDetail = data;
-        return  zip(
-          this.departmentService.getDepartment(data.department),
-          this.programCategoryService.getProgramCategory(data.category)
-        );
+        return  this.departmentService.getDepartment(data.department);
       }),
       map((data) => {
-        programWithDetail.department = data[0];
-        programWithDetail.category = data[1];
+        programWithDetail.department = data;
         return programWithDetail;
       }),
     );
+  }
+
+  getProgramCategories() {
+    if (this.cachedProgramCategories === undefined) {
+      return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/program-categories/`).pipe(
+        tap(
+          data => {
+          this.cachedProgramCategories = [];
+          for (let i = 0; i < data.length; i++) {
+            this.cachedProgramCategories[i] = data[i];
+          }})
+      );
+    }
+    return observableOf(this.cachedProgramCategories);
   }
 
   /** create admin-program-form. */

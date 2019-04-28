@@ -157,21 +157,6 @@ describe('UserManagementComponent', () => {
     expect(component.isLoading).toBeFalsy();
   });
 
-  it('should get empty groups.', () => {
-    component.username = 'abc';
-    component.retrieveUserPermissions();
-    const n = 5;
-    const k = 2;
-
-    getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ department: 1, id: 1, groups: []} as User] });
-    getDepartment$.next({});
-    getGroupById$.next({});
-    getPermissions$.next(generatePermissions(n));
-    getUserPermissions$.next(generateUserPermissions(k));
-
-    expect(component.groups.length).toBe(0);
-  });
-
   it('should display error message.', () => {
     component.username = 'abc';
     component.retrieveUserPermissions();

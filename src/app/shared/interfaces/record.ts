@@ -1,5 +1,4 @@
 import { RecordContent } from './record-content';
-import { RecordAttachment } from './record-attachment';
 import { OffCampusEvent, CampusEvent } from './event';
 
 /** RESTful reponse interface for Record. */
@@ -12,6 +11,6 @@ export interface Record {
   user?: number;
   status?: number;
   feedback?: number;
-  attachments?: number[] | File[] | RecordAttachment[];
+  attachments?: number[] | File[];
   contents?: number[] | RecordContent[];
 }
