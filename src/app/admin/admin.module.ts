@@ -16,7 +16,7 @@ import { DataManagementModule } from './modules/data-management/data-management.
     DataManagementModule,
     AdminProgramsModule,
     AdminEventsModule,
-    AdminRoutingModule
+    AdminRoutingModule,
   ],
 })
 
