@@ -21,8 +21,14 @@ export class DataGraphComponent implements OnInit {
 
   private currentYear: number;
   private startYear: number;
-  selectedGraphValues: any;
-  selectedGraph: FormGroup = new FormGroup({});
+  selectedGraphValues: {
+    selectedGraphType: number,
+    selectedGroupType: number,
+    selectedStartYear: number,
+    selectedEndYear: number,
+    selectedDepartment: string
+  };
+  selectedGraph: FormGroup;
   showDepartmentSelector: boolean;
   startYearList: number[];
   endYearList: number[];
