@@ -17,8 +17,8 @@ import {
   MatAutocompleteSelectedEvent,
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { of as observableOf, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordFormComponent } from './record-form.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
@@ -28,6 +28,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { ContentType } from 'src/app/shared/enums/content-type.enum';
+import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 
 describe('RecordFormComponent', () => {
   // Note: We should create Observable before our each test in certain
@@ -37,8 +40,11 @@ describe('RecordFormComponent', () => {
   // need to make sure that we are aware of the consequences of this
   // behavior, such as codes are marked run multiple times in coverage report.
   let createOffCampusRecord$: Subject<Record>;
+  let updateOffCampusRecord$: Subject<Record>;
   let getOffCampusEvents$: Subject<PaginatedResponse<OffCampusEvent>>;
   let getOffCampusEvents: jasmine.Spy;
+  let getRecordWithDetail$: Subject<Record>;
+  let deleteRecordAttachment$: Subject<RecordAttachment>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
   let component: RecordFormComponent;
@@ -55,7 +61,10 @@ describe('RecordFormComponent', () => {
 
   beforeEach(async(() => {
     createOffCampusRecord$ = new Subject();
+    updateOffCampusRecord$ = new Subject();
     getOffCampusEvents$ = new Subject();
+    getRecordWithDetail$ = new Subject();
+    deleteRecordAttachment$ = new Subject();
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
     getOffCampusEvents = jasmine.createSpy();
@@ -78,9 +87,50 @@ describe('RecordFormComponent', () => {
       ],
       providers: [
         {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+              queryParams: {
+                record_id: '1',
+              },
+            },
+            data: observableOf({record: {
+              id: 1,
+              create_time: '2019-01-01',
+              update_time: '2019-01-02',
+              campus_event: null,
+              off_campus_event: {
+                id: 1,
+                create_time: '2019-03-02T09:07:57.159755+08:00',
+                update_time: '2019-03-02T09:07:57.159921+08:00',
+                name: 'sfdg',
+                time: '2019-03-02T00:00:00+08:00',
+                location: 'dfgfd',
+                num_hours: 0,
+                num_participants: 25
+                },
+              contents: [],
+              attachments: [],
+              user: 1,
+              status: 1,
+            } as Record}),
+          },
+        },
+        {
+          provide: RecordAttachmentService,
+          useValue: {
+            deleteRecordAttachment: () => deleteRecordAttachment$,
+          },
+        },
+        {
           provide: RecordService,
           useValue: {
             createOffCampusRecord: () => createOffCampusRecord$,
+            updateOffCampusRecord: () => updateOffCampusRecord$,
+            getRecordWithDetail: () => getRecordWithDetail$,
           },
         },
         {
@@ -118,6 +168,47 @@ describe('RecordFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load record.', () => {
+    const dummyRecord: Record = {
+      id: 1,
+      create_time: '2019-01-01',
+      update_time: '2019-01-02',
+      campus_event: null,
+      off_campus_event: {
+        id: 1,
+        create_time: '2019-03-02T09:07:57.159755+08:00',
+        update_time: '2019-03-02T09:07:57.159921+08:00',
+        name: 'sfdg',
+        time: '2019-03-02T00:00:00+08:00',
+        location: 'dfgfd',
+        num_hours: 0,
+        num_participants: 25
+        },
+      contents: [
+        {
+          content_type: ContentType.CONTENT_TYPE_CONTENT,
+          content: 'abc',
+        },
+        {
+          content_type: ContentType.CONTENT_TYPE_FEEDBACK,
+          content: 'abc',
+        },
+        {
+          content_type: ContentType.CONTENT_TYPE_SUMMARY,
+          content: 'abc',
+        }
+      ],
+      attachments: [
+        new File([''], 'file'),
+        new File([''], 'file'),
+      ],
+      user: 1,
+      status: 1,
+    };
+    getRecordWithDetail$.next(dummyRecord);
+    expect(component.record).toBe(dummyRecord);
   });
 
   it('should add new FormControl to FormArray.', () => {
@@ -184,6 +275,18 @@ describe('RecordFormComponent', () => {
     expect(navigate).toHaveBeenCalledWith(['user/off-campus-event-records/', 123]);
   });
 
+  it('should navigate when updation succeed.', () => {
+    component.toUpdate = true;
+    component.record = {
+      id: 1,
+      off_campus_event: {id: 1},
+    };
+    component.onSubmit();
+    updateOffCampusRecord$.next({ id: 123 } as Record);
+
+    expect(navigate).toHaveBeenCalledWith(['user/off-campus-event-records/', 123]);
+  });
+
   it('should display errors when creation failed.', () => {
     component.onSubmit();
     createOffCampusRecord$.error({
@@ -246,5 +349,13 @@ describe('RecordFormComponent', () => {
     expect(component.location.value).toBe(offCampusEvent.location);
     expect(component.numHours.value).toBe(offCampusEvent.num_hours);
     expect(component.numParticipants.value).toBe(offCampusEvent.num_participants);
+  });
+
+  it('should delete attachment when edit it.', () => {
+    component.originalAttachments = [{id: 1}, {id: 2}];
+    component.deleteAttachment({id: 2});
+    deleteRecordAttachment$.next({id: 2});
+
+    expect(component.originalAttachments).toEqual([{id: 1}]);
   });
 });

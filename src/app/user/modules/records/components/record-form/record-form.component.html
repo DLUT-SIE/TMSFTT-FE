@@ -131,8 +131,8 @@
               </h3>
               <div *ngIf='hasOriginalAttachments'>
                 <div *ngFor="let attachment of originalAttachments">
-                  <label><span i18n>文件名:</span>{{ attachment.path }}</label>
-                  <button mat-button type="button" color="warn" *ngIf="attachment.path" (click)="deleteAttachment(attachment)"
+                  <label><span i18n>文件名:</span>{{ attachment.path.name }}</label>
+                  <button mat-button type="button" color="warn" *ngIf="attachment.path.name" (click)="deleteAttachment(attachment)"
                     i18n>删除附件</button>
                 </div>
               </div>
