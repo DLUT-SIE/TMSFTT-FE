@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 
@@ -25,7 +26,7 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
     user?: number;
     status?: number;
     feedback?: number;
-    attachments?: File[];
+    attachments?: File[] | RecordAttachment[];
     contents?: RecordContent[];
   };
   reviewnotecontent: string;

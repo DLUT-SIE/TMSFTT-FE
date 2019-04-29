@@ -1,13 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DepartmentManagementComponent } from './department-management.component';
-import { MatPaginatorModule, MatProgressSpinnerModule } from '@angular/material';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { DepartmentManagementComponent } from './department-management.component';
+import { Department } from 'src/app/shared/interfaces/department';
+import { DepartmentGroupComponent } from '../department-group/department-group.component';
+import { DepartmentListComponent } from '../department-list/department-list.component';
+import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { Department } from 'src/app/shared/interfaces/department';
 import { Subject } from 'rxjs';
 
 describe('DepartmentManagementComponent', () => {
@@ -15,43 +16,55 @@ describe('DepartmentManagementComponent', () => {
   let fixture: ComponentFixture<DepartmentManagementComponent>;
   let getDepartments: jasmine.Spy;
   let getDepartments$: Subject<PaginatedResponse<Department>>;
+  let getGroupByDepartmentName$: Subject<{}>;
 
   beforeEach(async(() => {
     getDepartments$ = new Subject();
     getDepartments = jasmine.createSpy().and.returnValue(getDepartments$);
+    getGroupByDepartmentName$ = new Subject();
     TestBed.configureTestingModule({
-      declarations: [ DepartmentManagementComponent ],
-      imports: [
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        HttpClientTestingModule,
+      declarations: [
+        DepartmentManagementComponent,
+        DepartmentGroupComponent,
+        DepartmentListComponent,
       ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParamMap: {
-                get: () => '1',
+      imports: [
+          MatIconModule,
+          MatProgressSpinnerModule,
+          MatPaginatorModule,
+        ],
+        providers: [
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                queryParamMap: {
+                  get: () => '1',
+                },
               },
             },
           },
-        },
-        {
-          provide: Router,
-          useValue: {},
-        },
-        {
-          provide: Location,
-          useValue: {},
-        },
-        {
-          provide: DepartmentService,
-          useValue: {
-            getDepartments,
+          {
+            provide: Router,
+            useValue: {},
           },
-        },
-      ],
+          {
+            provide: Location,
+            useValue: {},
+          },
+          {
+            provide: DepartmentService,
+            useValue: {
+              getDepartments,
+            },
+          },
+          {
+            provide: GroupService,
+            useValue: {
+              getGroupByDepartmentName: () => getGroupByDepartmentName$,
+            },
+          },
+       ]
     })
     .compileComponents();
   }));
@@ -66,10 +79,10 @@ describe('DepartmentManagementComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shoulde get results', () => {
-    const limit = 10, offset = 5;
-    component.getResults(offset, limit);
+  it('should get departmentSelected', () => {
+    const department = {id: 1, name: 'name'} as Department;
+    component.onchanged(department);
 
-    expect(getDepartments).toHaveBeenCalledWith({offset, limit});
+    expect(component.departmentSelected).toEqual(department);
   });
 });

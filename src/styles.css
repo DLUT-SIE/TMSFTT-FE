@@ -50,11 +50,11 @@ th, td {
   align-items: center;
   justify-content: center;
 }
- 
+
 tr:hover {
   cursor: pointer;
 }
-  
+
 .card-body .detail-item .item-title {
     text-align: right;
     font-family: sans-serif;
@@ -62,6 +62,12 @@ tr:hover {
     font-weight: bold;
     color: rgb(232, 73, 73);
 }
+
+tr.selected {
+  background-color: rgb(232, 73, 73) !important;
+  color: white;
+}
+
 
 mat-divider {
     margin-top: 5px !important;
