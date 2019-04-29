@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataGraphComponent, TimeValidator } from './data-graph.component';
+import { DataGraphComponent, timeValidator } from './data-graph.component';
 import { DataGraphChildComponent } from './data-graph-child/data-graph-child.component';
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
@@ -37,31 +37,31 @@ describe('DataGraphComponent', () => {
 
   it('should get null', () => {
       const testFormGroup = component.selectedGraph;
-      expect(TimeValidator(testFormGroup)).toBe(null);
+      expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.patchValue({'selectedStartYear': null, 'selectedEndYear': 1});
-      expect(TimeValidator(testFormGroup)).toBe(null);
+      expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': null});
-      expect(TimeValidator(testFormGroup)).toBe(null);
+      expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 1});
-      expect(TimeValidator(testFormGroup)).toBe(null);
-      
+      expect(timeValidator(testFormGroup)).toBe(null);
+
       testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 3});
-      expect(TimeValidator(testFormGroup)).toBe(null);
+      expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.patchValue({'selectedStartYear': '', 'selectedEndYear': ''});
-      expect(TimeValidator(testFormGroup)).toBe(null);
+      expect(timeValidator(testFormGroup)).toBe(null);
   });
 
   it('should get a FormGroup ValidationErrors', () => {
     const testFormGroup = component.selectedGraph;
     testFormGroup.patchValue({'selectedStartYear': 3, 'selectedEndYear': 1});
-    expect(TimeValidator(testFormGroup)).toEqual(<ValidationErrors>{ 'TimeValidator': true });
+    expect(timeValidator(testFormGroup)).toEqual({ 'timeValidator': true } as ValidationErrors);
   });
 
-  it('should hide the department_selector', () =>{
+  it('should hide the department_selector', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
     testFormGroup.patchValue({'selectedGraph_type': 3});
@@ -78,7 +78,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedDepartment.value).toBe('全校');
   });
 
-  it('should display the department_selector', () =>{
+  it('should display the department_selector', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
     testFormGroup.patchValue({'selectedGraph_type': 2});

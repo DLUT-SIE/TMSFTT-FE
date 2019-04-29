@@ -25,16 +25,16 @@ export class DataGraphChildComponent implements OnInit {
   chartOption?: EChartOption;
   title: string;
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
-  seriesData: GraphData[] = [{id:0, data: [120, 101, 90, 134, 230, 132, 210]}, {id:1, data: [320, 301, 390, 302, 330, 320, 334]}];
+  seriesData: GraphData[] = [{id: 0, data: [120, 101, 90, 134, 230, 132, 210]}, {id: 1, data: [320, 301, 390, 302, 330, 320, 334]}];
 
   doubleBarChartOption: EChartOption = {
     legend: {
-        data: ['总人数','参加培训人数'],
+        data: ['总人数', '参加培训人数'],
         x: '10%',
         y: '0%'
     },
     tooltip: {
-    formatter:'{c0}'
+    formatter: '{c0}'
     },
     title: {
         text: this.title,
@@ -107,7 +107,7 @@ barChartOption: EChartOption = {
     },
     yAxis:  {
         type: 'value',
-        data: ['asd','qwe','111','3','4','12344','555']
+        data: ['asd', 'qwe', '111', '3', '4', '12344', '555']
     },
     xAxis: {
         type: 'category',
@@ -115,8 +115,8 @@ barChartOption: EChartOption = {
     },
     tooltip: {
         trigger: 'axis',
-        formatter: function(c){
-          return Math.round(c[0].value/c[1].value * 100)+"%";
+        formatter:  (c) => {
+          return Math.round(c[0].value / c[1].value * 100) + '%';
         }
     },
     series: [
@@ -159,7 +159,7 @@ pieChartOption: EChartOption = {
 
     tooltip: {
         trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
 
     visualMap: [{
@@ -172,8 +172,8 @@ pieChartOption: EChartOption = {
     }],
     series: [
         {
-            name:'访问来源',
-            type:'pie',
+            name: '访问来源',
+            type: 'pie',
             radius: '55%',
             center: ['50%', '50%'],
             data: this.pieGraphData,
@@ -181,28 +181,28 @@ pieChartOption: EChartOption = {
 
             animationType: 'scale',
             animationEasing: 'elasticOut',
-            animationDelay: function (idx) {
+            animationDelay:  () => {
                 return Math.random() * 200;
             }
         }
     ]
 };
 
-  @Input() set graphParam(val:any){
-    if(!(val && Object.keys(val)))return;
-    this.titleYear = val.selectedStartYear === val.selectedEndYear ? 
-        `${val.selectedStartYear}`: `${val.selectedStartYear}-${val.selectedEndYear}`;
+  @Input() set graphParam(val: any){
+    if (!(val && Object.keys(val)))return;
+    this.titleYear = val.selectedStartYear === val.selectedEndYear ?
+        `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
     this.titleDepartment = val.selectedDepartment;
     this.title = `${this.titleYear} ${this.titleDepartment} ${this.titleGraphNames[val.selectedGraphType].name}`;
 
-    if(this.isPieGraph){
-        var data: number[] = this.seriesData[0].data;
-        var i: number;
+    if (this.isPieGraph) {
+        let data: number[] = this.seriesData[0].data;
+        let i: number;
         this.pieGraphData = [];
-        for(i = 0; i < data.length;i ++){
-            this.pieGraphData.push(<PieGraphData>{value:data[i], name:this.xAxisList[i]});
+        for (i = 0; i < data.length; i ++) {
+            this.pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
-        this.pieGraphData.sort(function (a, b) { return a.value - b.value; });
+        this.pieGraphData.sort( (a, b) => { return a.value - b.value; });
         this.pieChartOption.title = [{
           text: this.title,
           left: 'center',
@@ -213,24 +213,23 @@ pieChartOption: EChartOption = {
         }];
         this.pieChartOption.series = [
           {
-              name:'访问来源',
-              type:'pie',
+              name: '访问来源',
+              type: 'pie',
               radius: '55%',
               center: ['50%', '50%'],
               data: this.pieGraphData,
               roseType: 'radius',
-  
               animationType: 'scale',
               animationEasing: 'elasticOut',
-              animationDelay: function () {
+              animationDelay: () => {
                   return Math.random() * 200;
               }
           }
         ];
         echarts.getInstanceByDom(this.myCharts.nativeElement).setOption(this.pieChartOption);
     }
-    else{
-      if(val.selectedGraphType === 0 || val.selectedGraphType === 2)this.chartOption = this.doubleBarChartOption;
+    else {
+      if (val.selectedGraphType === 0 || val.selectedGraphType === 2)this.chartOption = this.doubleBarChartOption;
       else this.chartOption = this.barChartOption;
     }
   }

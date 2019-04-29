@@ -26,7 +26,7 @@
           </mat-select>
           <mat-error *ngIf="selectedStartYear.hasError('required')">Please choose a right start year</mat-error>
         </mat-form-field>
-        <div *ngIf="selectedGraph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的开始年份</div>
+        <div *ngIf="selectedGraph.errors?.timeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的开始年份</div>
       </div>
       <div class="col-md-2">
         <mat-form-field appValidator>
@@ -37,7 +37,7 @@
           </mat-select>
           <mat-error *ngIf="selectedGraph.invalid && !selectedEndYear.hasError('required')">Please choose a right end year</mat-error>
         </mat-form-field>
-        <div *ngIf="selectedGraph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的结束年份</div>
+        <div *ngIf="selectedGraph.errors?.timeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的结束年份</div>
       </div>
       <div class="col-md-2" *ngIf="showDepartmentSelector">
         <mat-form-field>
