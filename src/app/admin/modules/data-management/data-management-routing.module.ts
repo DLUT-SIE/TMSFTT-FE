@@ -39,7 +39,7 @@ const routes: Routes = [
         component: TableExportComponent,
       },
       {
-        path: 'record-figure',
+        path: 'data-graph',
         component: DataGraphComponent,
       },
       {
