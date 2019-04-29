@@ -66,7 +66,7 @@ export class DataGraphComponent implements OnInit {
 
   Docheck() {
     this.selectedGraphType.valueChanges.subscribe(val => {
-        if (val > 2) {
+        if (val === 3) {
             this.showDepartmentSelector = false;
         } else {
             this.showDepartmentSelector = true;
@@ -75,7 +75,7 @@ export class DataGraphComponent implements OnInit {
       });
     this.selectedGroupType.valueChanges.subscribe(val => {
         if (val === null)return;
-        if (this.selectedGraphType.value > 2 || val === 0) {
+        if (this.selectedGraphType.value === 3 || val === 0) {
             this.showDepartmentSelector = false;
             this.selectedGraph.patchValue({selectedDepartment: '全校'});
         } else {
