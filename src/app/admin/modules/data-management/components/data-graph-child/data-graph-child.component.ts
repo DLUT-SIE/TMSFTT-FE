@@ -188,7 +188,13 @@ pieChartOption: EChartOption = {
     ]
 };
 
-  @Input() set graphParam(val: any) {
+  @Input() set graphParam(val: {
+    selectedGraphType: number,
+    selectedGroupType: number,
+    selectedStartYear: number,
+    selectedEndYear: number,
+    selectedDepartment: string
+  }) {
     if (!(val && Object.keys(val)))return;
     this.titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;

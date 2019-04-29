@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataGraphComponent, timeValidator } from './data-graph.component';
-import { DataGraphChildComponent } from './data-graph-child/data-graph-child.component';
+import { DataGraphChildComponent } from '../data-graph-child/data-graph-child.component';
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxEchartsModule } from 'ngx-echarts';
