@@ -8,6 +8,8 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { DataGraphChildComponent } from './components/data-graph/data-graph-child/data-graph-child.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,12 @@ import { DataGraphComponent } from './components/data-graph/data-graph.component
     DataReviewComponent,
     BatchSubmitComponent,
     DataGraphComponent,
+    DataGraphChildComponent,
   ],
   imports: [
     SharedModule,
     DataManagementRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class DataManagementModule { }

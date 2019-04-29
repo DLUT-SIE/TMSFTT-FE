@@ -34,7 +34,7 @@ const routes: Routes = [
         component: BatchSubmitComponent,
       },
       {
-        path: 'record-figure',
+        path: 'data-graph',
         component: DataGraphComponent,
       },
       {
