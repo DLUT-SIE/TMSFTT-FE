@@ -49,12 +49,21 @@ describe('TableExportComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load data', () => {
+  it('should occure error', () => {
     component.doTableExport();
     exportTableSubject$.error({
       statusText: 'Raw error message',
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalled();
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+  });
+
+  it('should load data', () => {
+    component.doTableExport();
+    exportTableSubject$.next({
+      url: '/path/to/file',
+    } as {url: string});
+    expect(snackBarOpen).toHaveBeenCalled();
+    expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '关闭', {duration: 3000});
   });
 });
