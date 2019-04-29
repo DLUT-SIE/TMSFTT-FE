@@ -58,7 +58,7 @@ describe('DataGraphComponent', () => {
   it('should get a FormGroup ValidationErrors', () => {
     const testFormGroup = component.selectedGraph;
     testFormGroup.patchValue({selectedStartYear: 3, selectedEndYear: 1});
-    expect(timeValidator(testFormGroup)).toEqual({ 'timeValidator': true } as ValidationErrors);
+    expect(timeValidator(testFormGroup)).toEqual({ timeValidator: true } as ValidationErrors);
   });
 
   it('should hide the departmentSelector', () => {
