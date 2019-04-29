@@ -34,8 +34,8 @@ export class DataGraphComponent implements OnInit {
   trainLabelType: Graph[] = [{id: 0, name: '按学院'}, {id: 1, name: '按职称'}, {id: 2, name: '按年龄'}];
   trainHourLabelType: Graph[] = [{id: 0, name: '按总数'}, {id: 1, name: '按总学时'}, {id: 2, name: '按人均学时'},
                                     {id: 3, name: '按总工作量'}, {id: 4, name: '按人均工作量'}];
-  departmentsList: string[] = ['全校','创新创业学院', '电信学部', '机械学部', '管经学部'];
-  
+  departmentsList: string[] = ['全校', '创新创业学院', '电信学部', '机械学部', '管经学部'];
+
   secondType = [this.peopleLabelType, this.trainLabelType, this.trainLabelType, this.trainHourLabelType];
 
   get selectedGraphType() {
@@ -60,10 +60,9 @@ export class DataGraphComponent implements OnInit {
 
   Docheck() {
     this.selectedGraphType.valueChanges.subscribe(val => {
-        if(val > 2) {
+        if (val > 2) {
             this.showDepartmentSelector = false;
-        }
-        else {
+        } else {
             this.showDepartmentSelector = true;
         }
         this.selectedGraph.patchValue({'selectedGroupType': null, 'selectedDepartment': '全校'});
@@ -73,8 +72,7 @@ export class DataGraphComponent implements OnInit {
         if (this.selectedGraphType.value > 2 || val === 0) {
             this.showDepartmentSelector = false;
             this.selectedGraph.patchValue({'selectedDepartment': '全校'});
-        }
-        else {
+        } else {
             this.showDepartmentSelector = true;
         }
     });
@@ -82,7 +80,7 @@ export class DataGraphComponent implements OnInit {
         if (val === 'VALID')this.selectedGraphValues = this.selectedGraph.value;
     });
   }
-               
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -95,13 +93,13 @@ export class DataGraphComponent implements OnInit {
         selectedStartYear: [this.currentYear, Validators.required],
         selectedEndYear: [this.currentYear, Validators.required],
         selectedDepartment: ['全校']
-        }, { validator: timeValidator })
+        }, { validator: timeValidator });
       this.selectedGraphValues = null;
       this.Docheck();
       this.startYearList = [];
       this.endYearList = [];
-      let i:number;
-      for (i = this.startYear; i <= this.currentYear;i ++) {
+      let i: number;
+      for (i = this.startYear; i <= this.currentYear; i ++) {
           this.startYearList.push(i);
           this.endYearList.push(i);
       }

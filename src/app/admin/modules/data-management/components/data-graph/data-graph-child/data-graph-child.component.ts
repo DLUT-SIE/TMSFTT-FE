@@ -188,7 +188,7 @@ pieChartOption: EChartOption = {
     ]
 };
 
-  @Input() set graphParam(val: any){
+  @Input() set graphParam(val: any) {
     if (!(val && Object.keys(val)))return;
     this.titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
@@ -196,13 +196,13 @@ pieChartOption: EChartOption = {
     this.title = `${this.titleYear} ${this.titleDepartment} ${this.titleGraphNames[val.selectedGraphType].name}`;
 
     if (this.isPieGraph) {
-        let data: number[] = this.seriesData[0].data;
+        const data: number[] = this.seriesData[0].data;
         let i: number;
         this.pieGraphData = [];
         for (i = 0; i < data.length; i ++) {
             this.pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
-        this.pieGraphData.sort( (a, b) => { return a.value - b.value; });
+        this.pieGraphData.sort( (a, b) => a.value - b.value);
         this.pieChartOption.title = [{
           text: this.title,
           left: 'center',
@@ -227,8 +227,7 @@ pieChartOption: EChartOption = {
           }
         ];
         echarts.getInstanceByDom(this.myCharts.nativeElement).setOption(this.pieChartOption);
-    }
-    else {
+    } else {
       if (val.selectedGraphType === 0 || val.selectedGraphType === 2)this.chartOption = this.doubleBarChartOption;
       else this.chartOption = this.barChartOption;
     }
