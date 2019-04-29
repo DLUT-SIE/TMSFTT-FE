@@ -7,7 +7,7 @@ export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
     const selectedEndYear = control.get('selectedEndYear');
 
     return selectedStartYear.value && selectedEndYear.value && selectedStartYear.value > selectedEndYear.value ?
-           { 'timeValidator': true } : null;
+           { timeValidator: true } : null;
 };
 
 
@@ -33,7 +33,7 @@ export class DataGraphComponent implements OnInit {
   startYearList: number[];
   endYearList: number[];
 
-  statisticsType : Graph[] = [{id: 0 , name: '教职工人数统计'}, {id: 1, name: '培训人数统计'},
+  statisticsType: Graph[] = [{id: 0 , name: '教职工人数统计'}, {id: 1, name: '培训人数统计'},
                                {id: 2, name: '专任教师培训覆盖率统计'}, {id: 3, name: '培训学时与工作量统计'}];
   peopleLabelType: Graph[] = [{id: 0, name: '按学院'}, {id: 1, name: '按人员类别'}, {id: 2, name: '按职称'},
                                 {id: 3, name: '按最高学位'}, {id: 4, name: '按年龄分布'}];
@@ -71,13 +71,13 @@ export class DataGraphComponent implements OnInit {
         } else {
             this.showDepartmentSelector = true;
         }
-        this.selectedGraph.patchValue({'selectedGroupType': null, 'selectedDepartment': '全校'});
+        this.selectedGraph.patchValue({selectedGroupType: null, selectedDepartment: '全校'});
       });
     this.selectedGroupType.valueChanges.subscribe(val => {
         if (val === null)return;
         if (this.selectedGraphType.value > 2 || val === 0) {
             this.showDepartmentSelector = false;
-            this.selectedGraph.patchValue({'selectedDepartment': '全校'});
+            this.selectedGraph.patchValue({selectedDepartment: '全校'});
         } else {
             this.showDepartmentSelector = true;
         }
