@@ -10,9 +10,7 @@ describe('DataGraphChildComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DataGraphChildComponent ],
-      imports:[
-        NgxEchartsModule,
-      ]
+      imports: [ NgxEchartsModule ]
     })
     .compileComponents();
   }));
