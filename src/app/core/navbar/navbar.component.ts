@@ -97,7 +97,7 @@ export class NavbarComponent implements OnInit {
 
     /** Logout user and redirect to home page. */
     logOut() {
-        this.authService.removeJWT();
+        this.authService.logout();
         this.windowService.redirect('/');
     }
 }

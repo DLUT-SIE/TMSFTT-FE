@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { timer, Observable, of as ObservableOf, ReplaySubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from 'src/environments/environment';
 import { JWTResponse, AuthService } from '../interfaces/auth-service';
@@ -29,19 +30,29 @@ export class HTTPAuthService implements AuthService {
   constructor(
     private readonly http: HttpClient,
     private readonly windowService: WindowService,
+    private readonly cookieService: CookieService,
     @Inject(STORAGE_SERVICE) private readonly storageService: StorageService,
   ) { }
 
   /** Redirect user to CAS login page. */
-  login() {
+  login(nextURL?: string) {
+    // Remove any query parameters in next URL.
+    const questionMarkPos = nextURL.indexOf('?');
+    if (questionMarkPos !== -1) {
+      nextURL = nextURL.slice(0, questionMarkPos);
+    }
     const queryParams = {
-      service: environment.SERVICE_URL,
+      service: `${environment.SERVICE_URL}?next=${nextURL}`,
     };
     const payload = Object.entries(queryParams).map(([k, v]) =>
       `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
     timer(500).subscribe(() => {
       this.windowService.redirect(`${environment.CAS_LOGIN_URL}?${payload}`);
     });
+  }
+
+  logout() {
+    this.deauthenticate();
   }
 
   /** Extract necessary information from data and set fields of service. */
@@ -62,8 +73,11 @@ export class HTTPAuthService implements AuthService {
     this.authenticationSucceed.next();
   }
 
-  removeJWT() {
+  /** Remove JWT in all storages and set boolean field to false. */
+  private deauthenticate() {
+    this.cookieService.delete(environment.JWT_KEY);
     this.storageService.removeItem(environment.JWT_KEY);
+    this.isAuthenticated = false;
   }
 
   /** Retrieve the JWT given ticket and service. */
@@ -76,7 +90,7 @@ export class HTTPAuthService implements AuthService {
         return true;
       }),
       catchError(() => {
-        this.isAuthenticated = false;
+        this.deauthenticate();
         return ObservableOf(false);
       }),
     );
@@ -92,7 +106,7 @@ export class HTTPAuthService implements AuthService {
         return true;
       }),
       catchError(() => {
-        this.isAuthenticated = false;
+        this.deauthenticate();
         return ObservableOf(false);
       }),
     );

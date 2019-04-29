@@ -57,12 +57,18 @@ export class LoginComponent implements OnInit {
         const service = snapshot.queryParamMap.get('service');
         if (!ticket || !service) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_CAS;
-          this.authService.login();
+          this.authService.login(this.nextURL);
           return {
             shouldContinue: false,
             ticket: '',
             service: '',
           };
+        }
+        const nextKey = 'next=';
+        const nextParamPos = service.indexOf(nextKey);
+        // If we found next=/xxx in service url, we use it.
+        if (nextParamPos !== -1) {
+          this.nextURL = service.slice(nextParamPos + nextKey.length);
         }
         return {
           shouldContinue: true,
@@ -82,7 +88,6 @@ export class LoginComponent implements OnInit {
     ).subscribe(isAuthenticated => {
       if (!isAuthenticated) {
         this.loginStatus = LoginStatus.INVALID_CAS_TICKET;
-        this.authService.removeJWT();
         return;
       }
       this.loginStatus = LoginStatus.REDIRECTING_TO_HOME;
