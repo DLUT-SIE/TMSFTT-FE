@@ -56,7 +56,7 @@ export class ProgramService extends GenericListService {
 
   getProgramCategories() {
     if (this.cachedProgramCategories === undefined) {
-      return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/program-categories/`).pipe(
+      return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/`).pipe(
         tap(
           data => {
           this.cachedProgramCategories = [];
