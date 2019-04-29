@@ -107,7 +107,7 @@ describe('ProgramService', () => {
     service.getProgramCategories().subscribe((data: ProgramCategory[]) => {
       expect(data.length).toEqual(2);
     });
-    const url = `${environment.API_URL}/program-categories/program-categories/`;
+    const url = `${environment.API_URL}/program-categories/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
