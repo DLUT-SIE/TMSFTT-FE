@@ -85,7 +85,7 @@ describe('RecordDetailComponent', () => {
               contents: [],
               attachments: [],
               user: 1,
-              status: 1,
+              status: 2,
             } as Record}),
           },
         },
@@ -93,12 +93,6 @@ describe('RecordDetailComponent', () => {
           provide: RecordService,
           useValue: {
             createFeedback,
-          }
-        },
-        {
-          provide: Router,
-          useValue: {
-            navigate,
           }
         },
         {
@@ -121,6 +115,7 @@ describe('RecordDetailComponent', () => {
           provide: Router,
           useValue: {
             createUrlTree: () => 'abc',
+            navigate,
           },
         },
       ]

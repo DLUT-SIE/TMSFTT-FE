@@ -96,4 +96,17 @@ describe('RecordAttachmentService', () => {
       expect(res.length).toBe(0);
     });
   });
+
+  it('shoule delete attachment.', () => {
+    const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
+    const id = 1;
+
+    service.deleteRecordAttachment(id).subscribe();
+
+    const url = `${environment.API_URL}/record-attachments/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush({});
+  });
 });

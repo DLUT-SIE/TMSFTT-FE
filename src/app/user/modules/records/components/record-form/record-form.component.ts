@@ -79,7 +79,6 @@ export class RecordFormComponent implements OnInit {
       this.numHours.setValue(offCampusEvent.num_hours);
       this.numParticipants.setValue(offCampusEvent.num_participants);
     });
-    console.log(this.route.snapshot.queryParams.record_id);
     if (this.route.snapshot.queryParams.record_id !== undefined) {
       const recordID = this.route.snapshot.queryParams.record_id;
       this.recordService.getRecordWithDetail(recordID).subscribe(
@@ -103,19 +102,18 @@ export class RecordFormComponent implements OnInit {
                 this.content.setValue(content.content);
                 break;
               }
-              case ContentType.CONTENT_TYPE_FEEDBACK: {
+              default: {
                 this.feedback.setValue(content.content);
+                break;
               }
             }
           });
           if (record.attachments.length !== 0) {
             this.originalAttachments = record.attachments as RecordAttachment[];
             this.hasOriginalAttachments = true;
-            console.log(record.attachments);
-
           }
         }
-      )
+      );
     }
   }
 
@@ -203,7 +201,7 @@ export class RecordFormComponent implements OnInit {
     ].filter((val) => val.content !== '');
   }
 
-  private buildOffCampusEvent(): OffCampusEvent {
+  private buildOffCampusEventToCreate(): OffCampusEvent {
     const value = this.recordForm.value;
     return {
       name: value.name,
@@ -214,18 +212,38 @@ export class RecordFormComponent implements OnInit {
     };
   }
 
-  onSubmit() {
-    const req: Record = {
-      off_campus_event: this.buildOffCampusEvent(),
-      user: this.authService.userID,
-      contents: this.buildContents(),
-      attachments: this.attachments,
+  private buildOffCampusEventToUpdate(): OffCampusEvent {
+    const value = this.recordForm.value;
+    const offCampusEvent = this.record.off_campus_event as OffCampusEvent;
+    return {
+      id: offCampusEvent.id,
+      name: value.name,
+      time: value.time,
+      location: value.location,
+      num_hours: value.numHours,
+      num_participants: value.numParticipants,
     };
+  }
+
+  onSubmit() {
     let targetRecord: Observable<Record>;
     if (this.toUpdate) {
-      targetRecord = this.recordService.updateOffCampusRecord(req);
+      const updateReq: Record = {
+        id: this.record.id,
+        off_campus_event: this.buildOffCampusEventToUpdate(),
+        user: this.authService.userID,
+        contents: this.buildContents(),
+        attachments: this.attachments,
+      };
+      targetRecord = this.recordService.updateOffCampusRecord(updateReq);
     } else {
-      targetRecord = this.recordService.createOffCampusRecord(req);
+      const createReq: Record = {
+        off_campus_event: this.buildOffCampusEventToCreate(),
+        user: this.authService.userID,
+        contents: this.buildContents(),
+        attachments: this.attachments,
+      };
+      targetRecord = this.recordService.createOffCampusRecord(createReq);
     }
     targetRecord.subscribe(
       record => {
@@ -251,9 +269,9 @@ export class RecordFormComponent implements OnInit {
   deleteAttachment(attachment: RecordAttachment) {
     return this.recordAttachmentService.deleteRecordAttachment(attachment.id).subscribe(
       () => {
-        this.originalAttachments = this.originalAttachments.filter(item => item !== attachment);
+        this.originalAttachments = this.originalAttachments.filter(item => item.id !== attachment.id);
       }
-    )
+    );
 
   }
 }
