@@ -39,54 +39,54 @@ describe('DataGraphComponent', () => {
       const testFormGroup = component.selectedGraph;
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({'selectedStartYear': null, 'selectedEndYear': 1});
+      testFormGroup.patchValue({selectedStartYear: null, selectedEndYear: 1});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': null});
+      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: null});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 1});
+      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: 1});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 3});
+      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: 3});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({'selectedStartYear': '', 'selectedEndYear': ''});
+      testFormGroup.patchValue({selectedStartYear: '', selectedEndYear: ''});
       expect(timeValidator(testFormGroup)).toBe(null);
   });
 
   it('should get a FormGroup ValidationErrors', () => {
     const testFormGroup = component.selectedGraph;
-    testFormGroup.patchValue({'selectedStartYear': 3, 'selectedEndYear': 1});
+    testFormGroup.patchValue({selectedStartYear: 3, selectedEndYear: 1});
     expect(timeValidator(testFormGroup)).toEqual({ 'timeValidator': true } as ValidationErrors);
   });
 
-  it('should hide the department_selector', () => {
+  it('should hide the departmentSelector', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
-    testFormGroup.patchValue({'selectedGraph_type': 3});
+    testFormGroup.patchValue({selectedGraphType: 3});
     expect(component.selectedGroupType.value).toBe(null);
     expect(component.showDepartmentSelector).toBeFalsy();
     expect(component.selectedDepartment.value).toBe('全校');
 
-    testFormGroup.patchValue({'selectedGroupType': 2});
+    testFormGroup.patchValue({selectedGroupType: 2});
     expect(component.showDepartmentSelector).toBeFalsy();
     expect(component.selectedDepartment.value).toBe('全校');
 
-    testFormGroup.patchValue({'selectedGraph_type': 2, 'selectedGroupType': 0});
+    testFormGroup.patchValue({selectedGraphType: 2, selectedGroupType: 0});
     expect(component.showDepartmentSelector).toBeFalsy();
     expect(component.selectedDepartment.value).toBe('全校');
   });
 
-  it('should display the department_selector', () => {
+  it('should display the departmentSelector', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
-    testFormGroup.patchValue({'selectedGraph_type': 2});
+    testFormGroup.patchValue({selectedGraphType: 2});
     expect(component.selectedGroupType.value).toBe(null);
     expect(component.showDepartmentSelector).toBeTruthy();
     expect(component.selectedDepartment.value).toBe('全校');
 
-    testFormGroup.patchValue({'selectedGroupType': 2});
+    testFormGroup.patchValue({selectedGroupType: 2});
     expect(component.showDepartmentSelector).toBeTruthy();
     expect(component.selectedDepartment.value).toBe('全校');
   });
@@ -95,47 +95,47 @@ describe('DataGraphComponent', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
     testFormGroup.patchValue({
-      'selectedGraph_type': null,
-      'selectedGroupType': null,
-      'selectedStartYear': null,
-      'selectedEndYear': null,
-      'selectedDepartment': null
+      selectedGraphType: null,
+      selectedGroupType: null,
+      selectedStartYear: null,
+      selectedEndYear: null,
+      selectedDepartment: null
     });
     expect(component.selectedGraphValues).toBe(null);
 
     testFormGroup.patchValue({
-      'selectedGraph_type': 1,
-      'selectedGroupType': 2,
-      'selectedStartYear': 2019,
-      'selectedEndYear': 2019,
-      'selectedDepartment': '创新创业学院'
+      selectedGraphType: 1,
+      selectedGroupType: 2,
+      selectedStartYear: 2019,
+      selectedEndYear: 2019,
+      selectedDepartment: '创新创业学院'
     });
     expect(component.selectedGraphValues).toEqual(testFormGroup.value);
 
     testFormGroup.patchValue({
-      'selectedGraph_type': 1,
-      'selectedGroupType': 2,
-      'selectedStartYear': 2019,
-      'selectedEndYear': 2018,
-      'selectedDepartment': '创新创业学院'
+      selectedGraphType: 1,
+      selectedGroupType: 2,
+      selectedStartYear: 2019,
+      selectedEndYear: 2018,
+      selectedDepartment: '创新创业学院'
     });
     expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
     testFormGroup.patchValue({
-      'selectedGraph_type': 1,
-      'selectedGroupType': null,
-      'selectedStartYear': 2014,
-      'selectedEndYear': 2018,
-      'selectedDepartment': '创新创业学院'
+      selectedGraphType: 1,
+      selectedGroupType: null,
+      selectedStartYear: 2014,
+      selectedEndYear: 2018,
+      selectedDepartment: '创新创业学院'
     });
     expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
     testFormGroup.patchValue({
-      'selectedGraph_type': 3,
-      'selectedGroupType': 3,
-      'selectedStartYear': 2014,
-      'selectedEndYear': 2018,
-      'selectedDepartment': '创新创业学院'
+      selectedGraphType: 3,
+      selectedGroupType: 3,
+      selectedStartYear: 2014,
+      selectedEndYear: 2018,
+      selectedDepartment: '创新创业学院'
     });
     expect(component.selectedGraphValues === testFormGroup.value).toBeTruthy();
   });
