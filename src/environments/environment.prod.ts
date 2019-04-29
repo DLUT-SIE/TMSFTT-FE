@@ -8,7 +8,7 @@ export const environment: Environment = {
   SERVICE_URL: 'http://localhost:8000/auth/login/',
   WHITE_LIST_DOMAINS: ['localhost:8000'],
   API_URL: 'http://localhost:8000/api',
-  HOST: "http://localhost:8000",
+  HOST: 'http://localhost:8000',
   PAGINATION_SIZE: 10,
   REFRESH_INTERVAL: 30 * 1000,
 };
