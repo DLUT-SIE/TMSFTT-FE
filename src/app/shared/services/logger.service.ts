@@ -6,15 +6,15 @@ import { environment } from 'src/environments/environment';
 })
 export class LoggerService {
 
-    log(msg: any, ...optionMsg: any[]) {
+    log(msg: {}, ...optionMsg: Array<{}>) {
         if (!environment.production) {
-            console.log(msg, optionMsg)
+            console.log(msg, optionMsg);
         }
     }
 
-    error(msg: any, ...optionMsg: any[]) {
+    error(msg: {}, ...optionMsg: Array<{}>) {
         if (!environment.production) {
-            console.error(msg, optionMsg)
+            console.error(msg, optionMsg);
         }
     }
 

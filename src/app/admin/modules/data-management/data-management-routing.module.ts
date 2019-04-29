@@ -6,7 +6,7 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataManagementComponent } from './data-management.component';
 import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
-import { TableExportComponent } from './components/table-export/table-export.component'
+import { TableExportComponent } from './components/table-export/table-export.component';
 
 const routes: Routes = [
   {
