@@ -6,6 +6,7 @@ import { JWTResponse } from '../interfaces/auth-service';
 import { HTTPAuthService } from './http-auth.service';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { STORAGE_SERVICE } from '../interfaces/storage-service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 describe('HTTPAuthService', () => {
@@ -40,6 +41,8 @@ describe('HTTPAuthService', () => {
     redirect = windowService.redirect.and.returnValue(null);
     const storageService = jasmine.createSpyObj(
       'StorageService', ['getItem', 'setItem', 'removeItem']);
+    const cookieService = jasmine.createSpyObj(
+      'CookieService', ['delete']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
@@ -51,6 +54,10 @@ describe('HTTPAuthService', () => {
           provide: STORAGE_SERVICE,
           useValue: storageService,
         },
+        {
+          provide: CookieService,
+          useValue: cookieService,
+        }
       ]
     });
 
@@ -71,7 +78,18 @@ describe('HTTPAuthService', () => {
 
   it('should redirect to CAS login', fakeAsync(() => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
-    service.login();
+    const nextURL = '/abc/def';
+    service.login(nextURL);
+
+    tick(500);
+
+    expect(redirect).toHaveBeenCalled();
+  }));
+
+  it('should redirect to CAS login (query params trimed)', fakeAsync(() => {
+    const service: HTTPAuthService = TestBed.get(HTTPAuthService);
+    const nextURL = '/abc/def?abc=ddd';
+    service.login(nextURL);
 
     tick(500);
 
@@ -243,10 +261,10 @@ describe('HTTPAuthService', () => {
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
   });
 
-  it('should remove JWT', () => {
+  it('should logout', () => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
 
-    service.removeJWT();
+    service.logout();
 
     expect(removeItem).toHaveBeenCalledWith(environment.JWT_KEY);
   });

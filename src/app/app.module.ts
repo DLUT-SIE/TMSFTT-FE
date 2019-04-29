@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { CookieService } from 'ngx-cookie-service';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
@@ -69,6 +70,7 @@ export function tokenGetter() {
       provide: DOCUMENT,
       useValue: document,
     },
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })

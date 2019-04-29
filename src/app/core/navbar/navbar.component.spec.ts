@@ -25,8 +25,8 @@ describe('NavbarComponent', () => {
   let fixture: ComponentFixture<TestNavbarComponent>;
   let closeAll: jasmine.Spy;
   let open: jasmine.Spy;
+  let logout: jasmine.Spy;
   let prepareExternalUrl: jasmine.Spy;
-  let removeJWT: jasmine.Spy;
   let redirect: jasmine.Spy;
   const events$ = new Subject<void>();
   const authenticationSucceed$ = new Subject<void>();
@@ -34,7 +34,7 @@ describe('NavbarComponent', () => {
   beforeEach(async(() => {
     closeAll = jasmine.createSpy();
     open = jasmine.createSpy();
-    removeJWT = jasmine.createSpy();
+    logout = jasmine.createSpy();
     redirect = jasmine.createSpy();
     prepareExternalUrl = jasmine.createSpy();
     prepareExternalUrl.and.returnValue('url');
@@ -64,7 +64,7 @@ describe('NavbarComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             authenticationSucceed: authenticationSucceed$,
-            removeJWT,
+            logout,
           }
         },
         {
@@ -178,7 +178,7 @@ describe('NavbarComponent', () => {
   it('should logout user', () => {
     component.logOut();
 
-    expect(removeJWT).toHaveBeenCalled();
+    expect(logout).toHaveBeenCalled();
     expect(redirect).toHaveBeenCalled();
   });
 

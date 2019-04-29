@@ -31,7 +31,8 @@ export interface AuthService {
      * Login user before retrieving JWT. This method will redirect user to
      * CAS authentication page.
      */
-    login(): void;
+    login(nextURL?: string): void;
+    logout(): void;
     /**
      * Retrieve JWT by ticket, return an Observable of True and False to
      * indicate the validity of the JWT.
@@ -49,8 +50,6 @@ export interface AuthService {
      * of True and False to indicate the validity of the JWT.
      */
     refreshJWT(): Observable<boolean>;
-    /** Remove all JWT information. */
-    removeJWT();
 }
 
 /** RESTful response interface for JWT auth. */
