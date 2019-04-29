@@ -3,10 +3,10 @@ import { Graph } from 'src/app/shared/interfaces/graph';
 import { FormBuilder, Validators, ValidatorFn, FormGroup, ValidationErrors} from '@angular/forms';
 
 export const TimeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-    const selected_start_year = control.get('selected_start_year');
-    const selected_end_year = control.get('selected_end_year');
+    const selectedStartYear = control.get('selectedStartYear');
+    const selectedEndYear = control.get('selectedEndYear');
   
-    return selected_start_year.value && selected_end_year.value && selected_start_year.value > selected_end_year.value ? { 'TimeValidator': true } : null;
+    return selectedStartYear.value && selectedEndYear.value && selectedStartYear.value > selectedEndYear.value ? { 'TimeValidator': true } : null;
 };
 
 
@@ -18,92 +18,92 @@ export const TimeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
 
 export class DataGraphComponent implements OnInit {
 
-  private current_year :number;
-  private start_year :number;
-  selected_graph_values: any;
-  selected_graph :FormGroup = new FormGroup({});
-  show_department_selector :boolean;
-  start_year_list: number[];
-  end_year_list: number[];
+  private currentYear: number;
+  private startYear: number;
+  selectedGraphValues: any;
+  selectedGraph: FormGroup = new FormGroup({});
+  showDepartmentSelector: boolean;
+  startYearList: number[];
+  endYearList: number[];
 
-  get selected_graph_type(){
-    return this.selected_graph.get('selected_graph_type');
+  get selectedGraphType(){
+    return this.selectedGraph.get('selectedGraphType');
   }
 
-  get selected_group_type(){
-    return this.selected_graph.get('selected_group_type');
+  get selectedGroupType(){
+    return this.selectedGraph.get('selectedGroupType');
   }
 
-  get selected_start_year(){
-      return this.selected_graph.get('selected_start_year');
+  get selectedStartYear(){
+      return this.selectedGraph.get('selectedStartYear');
   }
 
-  get selected_end_year(){
-      return this.selected_graph.get('selected_end_year');
+  get selectedEndYear(){
+      return this.selectedGraph.get('selectedEndYear');
   }
 
-  get selected_department(){
-      return this.selected_graph.get('selected_department');
+  get selectedDepartment(){
+      return this.selectedGraph.get('selectedDepartment');
   }
 
   Docheck(){
-    this.selected_graph_type.valueChanges.subscribe(val => {
+    this.selectedGraphType.valueChanges.subscribe(val => {
         if(val > 2){
-            this.show_department_selector = false;
+            this.showDepartmentSelector = false;
         }
         else{
-            this.show_department_selector = true;
+            this.showDepartmentSelector = true;
         }
-        this.selected_graph.patchValue({'selected_group_type':null, 'selected_department':'全校'});
+        this.selectedGraph.patchValue({'selectedGroupType': null, 'selectedDepartment': '全校'});
       });
-    this.selected_group_type.valueChanges.subscribe(val =>{
+    this.selectedGroupType.valueChanges.subscribe(val =>{
         if(val === null)return;
-        if(this.selected_graph_type.value > 2 || val === 0){
-            this.show_department_selector = false;
-            this.selected_graph.patchValue({'selected_department':'全校'});
+        if(this.selectedGraphType.value > 2 || val === 0){
+            this.showDepartmentSelector = false;
+            this.selectedGraph.patchValue({'selectedDepartment': '全校'});
         }
         else{
-            this.show_department_selector = true;
+            this.showDepartmentSelector = true;
         }
     });
-    this.selected_graph.statusChanges.subscribe(val=>{
-        if(val === "VALID")this.selected_graph_values = this.selected_graph.value;
+    this.selectedGraph.statusChanges.subscribe(val=>{
+        if(val === "VALID")this.selectedGraphValues = this.selectedGraph.value;
     });
   }
 
-  statistics_type : Graph[] = [{id:0 , name:'教职工人数统计'}, {id:1, name:'培训人数统计'},
-                               {id:2, name:'专任教师培训覆盖率统计'}, {id:3, name:'培训学时与工作量统计'}];
-  people_label_type: Graph[] = [{id:0, name:'按学院'}, {id:1, name:'按人员类别'}, {id:2, name:'按职称'},
-                                {id:3, name:'按最高学位'}, {id:4, name:'按年龄分布'}];
-  train_label_type: Graph[] = [{id:0, name:'按学院'}, {id:1, name:'按职称'}, {id:2, name:'按年龄'}];
-  train_hour_label_type: Graph[] = [{id:0, name:'按总数'}, {id:1, name:'按总学时'}, {id:2, name:'按人均学时'},
-                                    {id:3, name:'按总工作量'}, {id:4, name:'按人均工作量'}];
-  departments_list: string[] = ['全校','创新创业学院', '电信学部', '机械学部', '管经学部'];
+  statisticsType : Graph[] = [{id: 0 , name: '教职工人数统计'}, {id: 1, name: '培训人数统计'},
+                               {id: 2, name: '专任教师培训覆盖率统计'}, {id: 3, name: '培训学时与工作量统计'}];
+  peopleLabelType: Graph[] = [{id: 0, name: '按学院'}, {id: 1, name: '按人员类别'}, {id: 2, name: '按职称'},
+                                {id: 3, name: '按最高学位'}, {id: 4, name: '按年龄分布'}];
+  trainLabelType: Graph[] = [{id: 0, name: '按学院'}, {id: 1, name: '按职称'}, {id: 2, name: '按年龄'}];
+  trainHourLabelType: Graph[] = [{id: 0, name: '按总数'}, {id: 1, name: '按总学时'}, {id: 2, name: '按人均学时'},
+                                    {id: 3, name: '按总工作量'}, {id: 4, name: '按人均工作量'}];
+  departmentsList: string[] = ['全校','创新创业学院', '电信学部', '机械学部', '管经学部'];
   
-  second_type = [this.people_label_type, this.train_label_type, this.train_label_type, this.train_hour_label_type];
+  secondType = [this.peopleLabelType, this.trainLabelType, this.trainLabelType, this.trainHourLabelType];
 
                           
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-      this.current_year = (new Date()).getFullYear();
-      this.start_year = 2014;
-      this.show_department_selector = true;
-      this.selected_graph= this.fb.group({
-        selected_graph_type: [null, Validators.required],
-        selected_group_type: [null, Validators.required],
-        selected_start_year: [this.current_year, Validators.required],
-        selected_end_year: [this.current_year, Validators.required],
-        selected_department: ['全校']
+      this.currentYear = (new Date()).getFullYear();
+      this.startYear = 2014;
+      this.showDepartmentSelector = true;
+      this.selectedGraph= this.fb.group({
+        selectedGraphType: [null, Validators.required],
+        selectedGroupType: [null, Validators.required],
+        selectedStartYear: [this.currentYear, Validators.required],
+        selectedEndYear: [this.currentYear, Validators.required],
+        selectedDepartment: ['全校']
         },{ validator: TimeValidator })
-      this.selected_graph_values = null;
+      this.selectedGraphValues = null;
       this. Docheck();
-      this.start_year_list = [];
-      this.end_year_list = [];
+      this.startYearList = [];
+      this.endYearList = [];
       var i:number;
-      for(i = this.start_year; i <= this.current_year;i ++){
-          this.start_year_list.push(i);
-          this.end_year_list.push(i);
+      for(i = this.startYear; i <= this.currentYear;i ++){
+          this.startYearList.push(i);
+          this.endYearList.push(i);
       }
   }
 }

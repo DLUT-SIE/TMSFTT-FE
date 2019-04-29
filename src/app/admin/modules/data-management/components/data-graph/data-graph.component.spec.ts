@@ -36,107 +36,107 @@ describe('DataGraphComponent', () => {
   });
 
   it('should get null', () => {
-      const test_form_group = component.selected_graph;
-      expect(TimeValidator(test_form_group)).toBe(null);
+      const testFormGroup = component.selectedGraph;
+      expect(TimeValidator(testFormGroup)).toBe(null);
 
-      test_form_group.patchValue({'selected_start_year':null, 'selected_end_year':1});
-      expect(TimeValidator(test_form_group)).toBe(null);
+      testFormGroup.patchValue({'selectedStartYear': null, 'selectedEndYear': 1});
+      expect(TimeValidator(testFormGroup)).toBe(null);
 
-      test_form_group.patchValue({'selected_start_year':1, 'selected_end_year':null});
-      expect(TimeValidator(test_form_group)).toBe(null);
+      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': null});
+      expect(TimeValidator(testFormGroup)).toBe(null);
 
-      test_form_group.patchValue({'selected_start_year':1, 'selected_end_year':1});
-      expect(TimeValidator(test_form_group)).toBe(null);
+      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 1});
+      expect(TimeValidator(testFormGroup)).toBe(null);
       
-      test_form_group.patchValue({'selected_start_year':1, 'selected_end_year':3});
-      expect(TimeValidator(test_form_group)).toBe(null);
+      testFormGroup.patchValue({'selectedStartYear': 1, 'selectedEndYear': 3});
+      expect(TimeValidator(testFormGroup)).toBe(null);
 
-      test_form_group.patchValue({'selected_start_year':'', 'selected_end_year':''});
-      expect(TimeValidator(test_form_group)).toBe(null);
+      testFormGroup.patchValue({'selectedStartYear': '', 'selectedEndYear': ''});
+      expect(TimeValidator(testFormGroup)).toBe(null);
   });
 
   it('should get a FormGroup ValidationErrors', () => {
-    const test_form_group = component.selected_graph;
-    test_form_group.patchValue({'selected_start_year':3, 'selected_end_year':1});
-    expect(TimeValidator(test_form_group)).toEqual(<ValidationErrors>{ 'TimeValidator': true });
+    const testFormGroup = component.selectedGraph;
+    testFormGroup.patchValue({'selectedStartYear': 3, 'selectedEndYear': 1});
+    expect(TimeValidator(testFormGroup)).toEqual(<ValidationErrors>{ 'TimeValidator': true });
   });
 
   it('should hide the department_selector', () =>{
-    const test_form_group = component.selected_graph;
+    const testFormGroup = component.selectedGraph;
     component.Docheck();
-    test_form_group.patchValue({'selected_graph_type':3});
-    expect(component.selected_group_type.value).toBe(null);
-    expect(component.show_department_selector).toBeFalsy();
-    expect(component.selected_department.value).toBe('全校');
+    testFormGroup.patchValue({'selectedGraph_type': 3});
+    expect(component.selectedGroupType.value).toBe(null);
+    expect(component.showDepartmentSelector).toBeFalsy();
+    expect(component.selectedDepartment.value).toBe('全校');
 
-    test_form_group.patchValue({'selected_group_type': 2});
-    expect(component.show_department_selector).toBeFalsy();
-    expect(component.selected_department.value).toBe('全校');
+    testFormGroup.patchValue({'selectedGroupType': 2});
+    expect(component.showDepartmentSelector).toBeFalsy();
+    expect(component.selectedDepartment.value).toBe('全校');
 
-    test_form_group.patchValue({'selected_graph_type':2, 'selected_group_type': 0});
-    expect(component.show_department_selector).toBeFalsy();
-    expect(component.selected_department.value).toBe('全校');
+    testFormGroup.patchValue({'selectedGraph_type': 2, 'selectedGroupType': 0});
+    expect(component.showDepartmentSelector).toBeFalsy();
+    expect(component.selectedDepartment.value).toBe('全校');
   });
 
   it('should display the department_selector', () =>{
-    const test_form_group = component.selected_graph;
+    const testFormGroup = component.selectedGraph;
     component.Docheck();
-    test_form_group.patchValue({'selected_graph_type':2});
-    expect(component.selected_group_type.value).toBe(null);
-    expect(component.show_department_selector).toBeTruthy();
-    expect(component.selected_department.value).toBe('全校');
+    testFormGroup.patchValue({'selectedGraph_type': 2});
+    expect(component.selectedGroupType.value).toBe(null);
+    expect(component.showDepartmentSelector).toBeTruthy();
+    expect(component.selectedDepartment.value).toBe('全校');
 
-    test_form_group.patchValue({'selected_group_type': 2});
-    expect(component.show_department_selector).toBeTruthy();
-    expect(component.selected_department.value).toBe('全校');
+    testFormGroup.patchValue({'selectedGroupType': 2});
+    expect(component.showDepartmentSelector).toBeTruthy();
+    expect(component.selectedDepartment.value).toBe('全校');
   });
 
-  it('should get selected_graph_values', () =>{
-    const test_form_group = component.selected_graph;
+  it('should get selectedGraphValues', () =>{
+    const testFormGroup = component.selectedGraph;
     component.Docheck();
-    test_form_group.patchValue({
-      'selected_graph_type':null,
-      'selected_group_type':null,
-      'selected_start_year':null,
-      'selected_end_year':null,
-      'selected_department':null
+    testFormGroup.patchValue({
+      'selectedGraph_type': null,
+      'selectedGroupType': null,
+      'selectedStartYear': null,
+      'selectedEndYear': null,
+      'selectedDepartment': null
     });
-    expect(component.selected_graph_values).toBe(null);
+    expect(component.selectedGraphValues).toBe(null);
 
-    test_form_group.patchValue({
-      'selected_graph_type':1,
-      'selected_group_type':2,
-      'selected_start_year':2019,
-      'selected_end_year':2019,
-      'selected_department':'创新创业学院'
+    testFormGroup.patchValue({
+      'selectedGraph_type': 1,
+      'selectedGroupType': 2,
+      'selectedStartYear': 2019,
+      'selectedEndYear': 2019,
+      'selectedDepartment': '创新创业学院'
     });
-    expect(component.selected_graph_values).toEqual(test_form_group.value);
+    expect(component.selectedGraphValues).toEqual(testFormGroup.value);
 
-    test_form_group.patchValue({
-      'selected_graph_type':1,
-      'selected_group_type':2,
-      'selected_start_year':2019,
-      'selected_end_year':2018,
-      'selected_department':'创新创业学院'
+    testFormGroup.patchValue({
+      'selectedGraph_type': 1,
+      'selectedGroupType': 2,
+      'selectedStartYear': 2019,
+      'selectedEndYear': 2018,
+      'selectedDepartment': '创新创业学院'
     });
-    expect(component.selected_graph_values === test_form_group.value).toBeFalsy();
+    expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
-    test_form_group.patchValue({
-      'selected_graph_type':1,
-      'selected_group_type':null,
-      'selected_start_year':2014,
-      'selected_end_year':2018,
-      'selected_department':'创新创业学院'
+    testFormGroup.patchValue({
+      'selectedGraph_type': 1,
+      'selectedGroupType': null,
+      'selectedStartYear': 2014,
+      'selectedEndYear': 2018,
+      'selectedDepartment': '创新创业学院'
     });
-    expect(component.selected_graph_values === test_form_group.value).toBeFalsy();
+    expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
-    test_form_group.patchValue({
-      'selected_graph_type':3,
-      'selected_group_type':3,
-      'selected_start_year':2014,
-      'selected_end_year':2018,
-      'selected_department':'创新创业学院'
+    testFormGroup.patchValue({
+      'selectedGraph_type': 3,
+      'selectedGroupType': 3,
+      'selectedStartYear': 2014,
+      'selectedEndYear': 2018,
+      'selectedDepartment': '创新创业学院'
     });
-    expect(component.selected_graph_values === test_form_group.value).toBeTruthy();
+    expect(component.selectedGraphValues === testFormGroup.value).toBeTruthy();
   });
 });
