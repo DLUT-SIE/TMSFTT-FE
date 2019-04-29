@@ -64,6 +64,6 @@ describe('TableExportComponent', () => {
       url: '/path/to/file',
     } as {url: string});
     expect(snackBarOpen).toHaveBeenCalled();
-    expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '关闭', {duration: 3000});
+    expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '确定', {duration: 3000});
   });
 });
