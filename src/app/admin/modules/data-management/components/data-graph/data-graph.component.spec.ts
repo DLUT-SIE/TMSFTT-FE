@@ -91,7 +91,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedDepartment.value).toBe('全校');
   });
 
-  it('should get selectedGraphValues', () =>{
+  it('should get selectedGraphValues', () => {
     const testFormGroup = component.selectedGraph;
     component.Docheck();
     testFormGroup.patchValue({
