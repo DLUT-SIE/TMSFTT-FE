@@ -7,6 +7,7 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataReviewComponent } from './components/data-review/data-review.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
+import { TableExportComponent } from './components/table-export/table-export.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { BatchSubmitComponent } from './components/batch-submit/batch-submit.com
     RecordListComponent,
     DataReviewComponent,
     BatchSubmitComponent,
+    TableExportComponent,
   ],
   imports: [
     SharedModule,
