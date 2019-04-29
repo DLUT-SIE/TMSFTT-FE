@@ -9,7 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TableExportComponent } from './components/table-export/table-export.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
-import { DataGraphChildComponent } from './components/data-graph/data-graph-child/data-graph-child.component';
+import { DataGraphChildComponent } from './components/data-graph-child/data-graph-child.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
