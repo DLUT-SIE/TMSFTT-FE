@@ -3,8 +3,8 @@
       <div class="col-md-2">
         <mat-form-field>
           <mat-label>选择统计类型</mat-label>
-          <mat-select [formControl]="selected_graph_type">
-            <mat-option *ngFor="let statistics of statistics_type" [value]="statistics.id">{{statistics.name}}</mat-option>
+          <mat-select [formControl]="selectedGraphType">
+            <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.id">{{statistics.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -12,38 +12,38 @@
       <div class="col-md-2">
         <mat-form-field>
           <mat-label>选择分组类型</mat-label>
-          <mat-select [formControl]="selected_group_type">
-            <mat-option *ngFor="let group_type of second_type[selected_graph_type.value]" [value]="group_type.id">{{group_type.name}}</mat-option>
+          <mat-select [formControl]="selectedGroupType">
+            <mat-option *ngFor="let groupType of secondType[selectedGraphType.value]" [value]="groupType.id">{{groupType.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div class="col-md-2">
         <mat-form-field appValidator >
           <mat-label>输入起始年份</mat-label>
-          <mat-select  [formControl]="selected_start_year" required>
+          <mat-select  [formControl]="selectedStartYear" required>
             <mat-option>--</mat-option>
-            <mat-option *ngFor="let year of start_year_list" [value]="year">{{year}}</mat-option>
+            <mat-option *ngFor="let year of startYearList" [value]="year">{{year}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="selected_start_year.hasError('required')">Please choose a right start year</mat-error>
+          <mat-error *ngIf="selectedStartYear.hasError('required')">Please choose a right start year</mat-error>
         </mat-form-field>
-        <div *ngIf="selected_graph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的开始年份</div>
+        <div *ngIf="selectedGraph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的开始年份</div>
       </div>
       <div class="col-md-2">
         <mat-form-field appValidator>
           <mat-label>输入终止年份</mat-label>
-          <mat-select [formControl]="selected_end_year" required>
+          <mat-select [formControl]="selectedEndYear" required>
             <mat-option>--</mat-option>
-            <mat-option *ngFor="let year of end_year_list" [value]="year">{{year}}</mat-option>
+            <mat-option *ngFor="let year of endYearList" [value]="year">{{year}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="selected_graph.invalid && !selected_end_year.hasError('required')">Please choose a right end year</mat-error>
+          <mat-error *ngIf="selectedGraph.invalid && !selectedEndYear.hasError('required')">Please choose a right end year</mat-error>
         </mat-form-field>
-        <div *ngIf="selected_graph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的结束年份</div>
+        <div *ngIf="selectedGraph.errors?.TimeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的结束年份</div>
       </div>
-      <div class="col-md-2" *ngIf="show_department_selector">
+      <div class="col-md-2" *ngIf="showDepartmentSelector">
         <mat-form-field>
           <mat-label>选择学院</mat-label>
-          <mat-select [formControl]="selected_department">
-            <mat-option *ngFor="let department of departments_list" [value]="department">{{department}}</mat-option>
+          <mat-select [formControl]="selectedDepartment">
+            <mat-option *ngFor="let department of departmentsList" [value]="department">{{department}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -51,16 +51,16 @@
   <div class="row">
     <div class="col-md-6">
       <div>
-        <app-data-graph-child #child2 [is_pie_grah] = "true" [graph_param]="selected_graph_values" [title_graph_names]="statistics_type"></app-data-graph-child>
+        <app-data-graph-child #child2 [isPieGraph] = "true" [graphParam]="selectedGraphValues" [titleGraphNames]="statisticsType"></app-data-graph-child>
       </div>
     </div>
     <div class="col-md-6">
         <div >
-          <app-data-graph-child #child3 [is_pie_grah] = "true" [graph_param]="selected_graph_values" [title_graph_names]="statistics_type"></app-data-graph-child>
+          <app-data-graph-child #child3 [isPieGraph] = "true" [graphParam]="selectedGraphValues" [titleGraphNames]="statisticsType"></app-data-graph-child>
         </div>
     </div>
   </div>
   <div>
-    <app-data-graph-child #child1 [is_pie_grah] = "false" [graph_param]="selected_graph_values" [title_graph_names]="statistics_type"></app-data-graph-child>
+    <app-data-graph-child #child1 [isPieGraph] = "false" [graphParam]="selectedGraphValues" [titleGraphNames]="statisticsType"></app-data-graph-child>
   </div>
 </div>

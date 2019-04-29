@@ -13,22 +13,23 @@ import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
 
 
 export class DataGraphChildComponent implements OnInit {
-  @ViewChild('myCharts') myCharts:ElementRef;
+  @ViewChild('myCharts') myCharts: ElementRef;
 
-  @Input() title_graph_names?: Graph[];
-  @Input() is_pie_grah: boolean;
+  @Input() titleGraphNames?: Graph[];
+  @Input() isPieGraph: boolean;
 
-  private title_year : string;
-  private title_department :string;
-  private pie_graph_data?: PieGraphData[] = [];
-  chartOption ?: EChartOption;
+  private titleYear: string;
+  private titleDepartment: string;
+  private pieGraphData?: PieGraphData[] = [];
+
+  chartOption?: EChartOption;
   title: string;
-  xAxis_list : string[] = ['a', 'b', 'c', 'd', 'e'];
-  series_data: GraphData[] = [{id:0, data:[120, 101, 90, 134, 230, 132, 210]},{id:1, data: [320, 301, 390, 302, 330, 320, 334]}];
+  xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
+  seriesData: GraphData[] = [{id:0, data: [120, 101, 90, 134, 230, 132, 210]}, {id:1, data: [320, 301, 390, 302, 330, 320, 334]}];
 
-  double_bar_chartOption: EChartOption = {
+  doubleBarChartOption: EChartOption = {
     legend: {
-        data:['总人数','参加培训人数'],
+        data: ['总人数','参加培训人数'],
         x: '10%',
         y: '0%'
     },
@@ -49,7 +50,7 @@ export class DataGraphChildComponent implements OnInit {
     },
     xAxis: {
         type: 'category',
-        data: this.xAxis_list,
+        data: this.xAxisList,
         axisLabel: {
             interval: 0,
             rotate: 0
@@ -58,7 +59,7 @@ export class DataGraphChildComponent implements OnInit {
             show: false
         }
     },
-    series: [ {
+    series: [{
         name: '总人数',
         type: 'bar',
         barGap: 0,
@@ -74,7 +75,7 @@ export class DataGraphChildComponent implements OnInit {
                 show: true
             }
         },
-        data: this.series_data[0].data
+        data: this.seriesData[0].data
     }, {
         name: '参加培训人数',
         type: 'bar',
@@ -90,11 +91,11 @@ export class DataGraphChildComponent implements OnInit {
                 show: true
             }
         },
-        data: this.series_data[1].data
+        data: this.seriesData[1].data
     }]
 };
 
-bar_chartOption: EChartOption = {
+barChartOption: EChartOption = {
     legend: {
         data: ['总人数', '培训人数']
     },
@@ -110,13 +111,13 @@ bar_chartOption: EChartOption = {
     },
     xAxis: {
         type: 'category',
-        data: this.xAxis_list
+        data: this.xAxisList
     },
-    tooltip : {
-    trigger: 'axis',
-    formatter:function(c){
-    return Math.round(c[0].value/c[1].value * 100)+"%";
-    }
+    tooltip: {
+        trigger: 'axis',
+        formatter: function(c){
+          return Math.round(c[0].value/c[1].value * 100)+"%";
+        }
     },
     series: [
         {
@@ -129,7 +130,7 @@ bar_chartOption: EChartOption = {
                     position: 'insideTop'
                 }
             },
-            data: this.series_data[0].data
+            data: this.seriesData[0].data
         },
         {
             name: '总人数',
@@ -141,11 +142,11 @@ bar_chartOption: EChartOption = {
                     position: 'insideTop'
                 }
             },
-            data: this.series_data[1].data
+            data: this.seriesData[1].data
         }
     ]
 };
-pie_chartOption: EChartOption = {
+pieChartOption: EChartOption = {
 
     title: [{
         text: this.title,
@@ -156,7 +157,7 @@ pie_chartOption: EChartOption = {
         }
     }],
 
-    tooltip : {
+    tooltip: {
         trigger: 'item',
         formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
@@ -169,13 +170,13 @@ pie_chartOption: EChartOption = {
             colorLightness: [0, 1]
         }
     }],
-    series : [
+    series: [
         {
             name:'访问来源',
             type:'pie',
-            radius : '55%',
+            radius: '55%',
             center: ['50%', '50%'],
-            data: this.pie_graph_data,
+            data: this.pieGraphData,
             roseType: 'radius',
 
             animationType: 'scale',
@@ -187,22 +188,22 @@ pie_chartOption: EChartOption = {
     ]
 };
 
-  @Input() set graph_param(val:any){
+  @Input() set graphParam(val:any){
     if(!(val && Object.keys(val)))return;
-    this.title_year = val.selected_start_year === val.selected_end_year ? 
-        `${val.selected_start_year}`: `${val.selected_start_year}-${val.selected_end_year}`;
-    this.title_department = val.selected_department;
-    this.title = `${this.title_year} ${this.title_department} ${this.title_graph_names[val.selected_graph_type].name}`;
+    this.titleYear = val.selectedStartYear === val.selectedEndYear ? 
+        `${val.selectedStartYear}`: `${val.selectedStartYear}-${val.selectedEndYear}`;
+    this.titleDepartment = val.selectedDepartment;
+    this.title = `${this.titleYear} ${this.titleDepartment} ${this.titleGraphNames[val.selectedGraphType].name}`;
 
-    if(this.is_pie_grah){
-        var data:number[] = this.series_data[0].data;
-        var i:number;
-        this.pie_graph_data = [];
+    if(this.isPieGraph){
+        var data: number[] = this.seriesData[0].data;
+        var i: number;
+        this.pieGraphData = [];
         for(i = 0; i < data.length;i ++){
-            this.pie_graph_data.push(<PieGraphData>{value:data[i], name:this.xAxis_list[i]});
+            this.pieGraphData.push(<PieGraphData>{value:data[i], name:this.xAxisList[i]});
         }
-        this.pie_graph_data.sort(function (a, b) { return a.value - b.value; });
-        this.pie_chartOption.title = [{
+        this.pieGraphData.sort(function (a, b) { return a.value - b.value; });
+        this.pieChartOption.title = [{
           text: this.title,
           left: 'center',
           top: 20,
@@ -210,31 +211,31 @@ pie_chartOption: EChartOption = {
               color: '#cccc'
           }
         }];
-        this.pie_chartOption.series = [
+        this.pieChartOption.series = [
           {
               name:'访问来源',
               type:'pie',
-              radius : '55%',
+              radius: '55%',
               center: ['50%', '50%'],
-              data: this.pie_graph_data,
+              data: this.pieGraphData,
               roseType: 'radius',
   
               animationType: 'scale',
               animationEasing: 'elasticOut',
-              animationDelay: function (idx) {
+              animationDelay: function () {
                   return Math.random() * 200;
               }
           }
         ];
-        echarts.getInstanceByDom(this.myCharts.nativeElement).setOption(this.pie_chartOption);
+        echarts.getInstanceByDom(this.myCharts.nativeElement).setOption(this.pieChartOption);
     }
     else{
-      if(val.selected_graph_type === 0 || val.selected_graph_type === 2)this.chartOption = this.double_bar_chartOption;
-      else this.chartOption = this.bar_chartOption;
+      if(val.selectedGraphType === 0 || val.selectedGraphType === 2)this.chartOption = this.doubleBarChartOption;
+      else this.chartOption = this.barChartOption;
     }
   }
   constructor() { }
   ngOnInit() {
-    this.chartOption = this.pie_chartOption;
+    this.chartOption = this.pieChartOption;
   }
 }
