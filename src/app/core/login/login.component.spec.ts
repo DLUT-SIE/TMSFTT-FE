@@ -15,7 +15,6 @@ describe('LoginComponent', () => {
   let navigate: jasmine.Spy;
   let navigateByUrl: jasmine.Spy;
   let login: jasmine.Spy;
-  let removeJWT: jasmine.Spy;
   let retrieveJWT: jasmine.Spy;
   let queryParamMapGet: jasmine.Spy;
   let redirect: jasmine.Spy;
@@ -32,12 +31,11 @@ describe('LoginComponent', () => {
     navigate = jasmine.createSpy('navigate');
     navigateByUrl = jasmine.createSpy('navigateByUrl');
     const authService = jasmine.createSpyObj('AuthService',
-      ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT', 'removeJWT']);
+      ['login', 'verifyJWT', 'refreshJWT', 'retrieveJWT']);
     login = authService.login;
     authService.verifyJWT.and.returnValue(verifyJWT$);
     authService.refreshJWT.and.returnValue(refreshJWT$);
     retrieveJWT = authService.retrieveJWT.and.returnValue(retrieveJWT$);
-    removeJWT = authService.removeJWT;
 
     TestBed.configureTestingModule({
       imports: [
@@ -107,11 +105,11 @@ describe('LoginComponent', () => {
   });
 
   it('should call retrieveJWT if ticket and serviceURL are presented', () => {
-    queryParamMapGet.and.returnValues('', 'ticket', 'service url');
+    queryParamMapGet.and.returnValues('', 'ticket', '/service/url/?next=/abc/efg');
     verifyJWT$.next(false);
 
     expect(component.loginStatus).toBe(component.LoginStatus.VERIFYING_CAS_TICKET);
-    expect(retrieveJWT).toHaveBeenCalledWith('ticket', 'service url');
+    expect(retrieveJWT).toHaveBeenCalledWith('ticket', '/service/url/?next=/abc/efg');
   });
 
   it('should not proceed if ticket is invalid', () => {
@@ -120,7 +118,6 @@ describe('LoginComponent', () => {
     retrieveJWT$.next(false);
 
     expect(component.loginStatus).toBe(component.LoginStatus.INVALID_CAS_TICKET);
-    expect(removeJWT).toHaveBeenCalled();
   });
 
   it('should redirect if ticket is valid', () => {
