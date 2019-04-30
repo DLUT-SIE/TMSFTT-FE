@@ -6,5 +6,5 @@ export interface Program {
     department?: Department|number;
     category?: number;
     form?: number[];
-    category_detail?: string;
+    category_str?: string;
 }

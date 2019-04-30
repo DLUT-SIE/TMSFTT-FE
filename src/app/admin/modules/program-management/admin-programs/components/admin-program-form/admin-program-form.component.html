@@ -24,7 +24,7 @@
             <mat-form-field appearance="outline">
               <mat-icon matPrefix>note_add</mat-icon>
               <mat-select placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
-                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.val">
+                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.type">
                   {{ programCategory.name }}
                 </mat-option>
               </mat-select>
