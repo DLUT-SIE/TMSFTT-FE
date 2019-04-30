@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WindowService } from 'src/app/shared/services/window.service';
+import { LoggerService } from 'src/app/shared/services/logger.service';
 
 @Component({
     selector: 'app-table-export',
@@ -14,7 +15,8 @@ export class TableExportComponent implements OnInit {
     constructor(
         private readonly tableExportService: TableExportService,
         private readonly snackBar: MatSnackBar,
-        private readonly windowService: WindowService) {
+        private readonly windowService: WindowService,
+        private readonly loggerService: LoggerService) {
 
     }
 
@@ -30,7 +32,7 @@ export class TableExportComponent implements OnInit {
                 this.snackBar.open('导出成功', '确定', {duration: 3000});
             },
             (error: HttpErrorResponse) => {
-                console.log(error);
+                this.loggerService.log(error);
                 this.snackBar.open(error.statusText, '关闭');
             });
     }

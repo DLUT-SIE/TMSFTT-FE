@@ -1,38 +1,33 @@
 import { LoggerService } from './logger.service';
-import { environment } from 'src/environments/environment';
 
 describe('LoggerService Test', () => {
-    const testLoggerService: LoggerService = new LoggerService();
+    let testLoggerService: LoggerService;
     beforeEach(() => {
         spyOn(console, 'log');
         spyOn(console, 'error');
     });
 
     it('should be called', () => {
+        const devEnvironmentService = jasmine.createSpyObj('EnvironmentService', ['getProduction']);
+        const stubValue = false;
+        devEnvironmentService.getProduction.and.returnValue(stubValue);
+        testLoggerService = new LoggerService(devEnvironmentService);
         testLoggerService.log('TESTing LOG');
-        if (!environment.production) {
-            expect(console.log).toHaveBeenCalled();
-        }
+        testLoggerService.error('TESTing ERROR');
+        expect(console.log).toHaveBeenCalled();
+        expect(console.log).toHaveBeenCalledWith('TESTing LOG', []);
+        expect(console.error).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalledWith('TESTing ERROR', []);
     });
 
-    it('should be called with correct arguments', () => {
+    it('should not be called', () => {
+        const prodEnvironmentService = jasmine.createSpyObj('EnvironmentService', ['getProduction']);
+        const stubValue = true;
+        prodEnvironmentService.getProduction.and.returnValue(stubValue);
+        testLoggerService = new LoggerService(prodEnvironmentService);
         testLoggerService.log('TESTing LOG');
-        if (!environment.production) {
-            expect(console.log).toHaveBeenCalledWith('TESTing LOG', []);
-        }
-    });
-
-    it('should be called', () => {
         testLoggerService.error('TESTing ERROR');
-        if (!environment.production) {
-            expect(console.error).toHaveBeenCalled();
-        }
-    });
-
-    it('should be called with correct arguments', () => {
-        testLoggerService.error('TESTing ERROR');
-        if (!environment.production) {
-            expect(console.error).toHaveBeenCalledWith('TESTing ERROR', []);
-        }
+        expect(console.log).not.toHaveBeenCalled();
+        expect(console.error).not.toHaveBeenCalled();
     });
 });
