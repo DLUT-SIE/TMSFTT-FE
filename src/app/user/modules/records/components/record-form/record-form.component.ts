@@ -48,8 +48,8 @@ export class RecordFormComponent implements OnInit {
   attachments: File[] = [];
   record: Record;
   originalAttachments: RecordAttachment[] = [];
-  hasOriginalAttachments: boolean;
-  toUpdate: boolean;
+  hasOriginalAttachments = false;
+  isUpdateMode: boolean;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -82,38 +82,17 @@ export class RecordFormComponent implements OnInit {
     if (this.route.snapshot.queryParams.record_id !== undefined) {
       const recordID = this.route.snapshot.queryParams.record_id;
       this.recordService.getRecordWithDetail(recordID).subscribe(
-        record => {
-          this.toUpdate = true;
-          this.record = record;
-          this.record.off_campus_event = record.off_campus_event as OffCampusEvent;
-          this.name.setValue(this.record.off_campus_event.name);
-          this.time.setValue(this.record.off_campus_event.time);
-          this.location.setValue(this.record.off_campus_event.location);
-          this.numHours.setValue(this.record.off_campus_event.num_hours);
-          this.numParticipants.setValue(this.record.off_campus_event.num_participants);
-          this.record.contents = record.contents as RecordContent[];
-          this.record.contents.map(content => {
-            switch (content.content_type) {
-              case ContentType.CONTENT_TYPE_SUMMARY: {
-                this.summary.setValue(content.content);
-                break;
-              }
-              case ContentType.CONTENT_TYPE_CONTENT: {
-                this.content.setValue(content.content);
-                break;
-              }
-              default: {
-                this.feedback.setValue(content.content);
-                break;
-              }
-            }
-          });
-          if (record.attachments.length !== 0) {
-            this.originalAttachments = record.attachments as RecordAttachment[];
-            this.hasOriginalAttachments = true;
+        (record: Record) => {
+          this.isUpdateMode = true;
+          this.setRecordValue(record);
+        },
+        (error: HttpErrorResponse) => {
+          let message = error.message;
+          if (error.error) {
+            message = error.error['detail'] + '。';
           }
-        }
-      );
+          this.snackBar.open(message, '关闭');
+        });
     }
   }
 
@@ -124,6 +103,37 @@ export class RecordFormComponent implements OnInit {
   private _filter(prefix: string) {
     const params = new Map<string, {}>([['name__startswith', prefix]]);
     return this.eventService.getOffCampusEvents({ extraParams: params });
+  }
+
+  private setRecordValue(record: Record) {
+    this.record = record;
+    this.record.off_campus_event = record.off_campus_event as OffCampusEvent;
+    this.name.setValue(this.record.off_campus_event.name);
+    this.time.setValue(this.record.off_campus_event.time);
+    this.location.setValue(this.record.off_campus_event.location);
+    this.numHours.setValue(this.record.off_campus_event.num_hours);
+    this.numParticipants.setValue(this.record.off_campus_event.num_participants);
+    this.record.contents = record.contents as RecordContent[];
+    this.record.contents.map(content => {
+      switch (content.content_type) {
+        case ContentType.CONTENT_TYPE_SUMMARY: {
+          this.summary.setValue(content.content);
+          break;
+        }
+        case ContentType.CONTENT_TYPE_CONTENT: {
+          this.content.setValue(content.content);
+          break;
+        }
+        default: {
+          this.feedback.setValue(content.content);
+          break;
+        }
+      }
+    });
+    if (record.attachments.length !== 0) {
+      this.originalAttachments = record.attachments as RecordAttachment[];
+      this.hasOriginalAttachments = true;
+    }
   }
 
   /** Access the name field of the form. */
@@ -225,26 +235,23 @@ export class RecordFormComponent implements OnInit {
     };
   }
 
+  private buildRequest(): Record {
+    return {
+      id: this.isUpdateMode ? this.record.id : undefined,
+      off_campus_event: this.isUpdateMode ?
+                        this.buildOffCampusEventToUpdate() :
+                        this.buildOffCampusEventToCreate(),
+      user: this.authService.userID,
+      contents: this.buildContents(),
+      attachments: this.attachments,
+    };
+  }
+
   onSubmit() {
-    let targetRecord: Observable<Record>;
-    if (this.toUpdate) {
-      const updateReq: Record = {
-        id: this.record.id,
-        off_campus_event: this.buildOffCampusEventToUpdate(),
-        user: this.authService.userID,
-        contents: this.buildContents(),
-        attachments: this.attachments,
-      };
-      targetRecord = this.recordService.updateOffCampusRecord(updateReq);
-    } else {
-      const createReq: Record = {
-        off_campus_event: this.buildOffCampusEventToCreate(),
-        user: this.authService.userID,
-        contents: this.buildContents(),
-        attachments: this.attachments,
-      };
-      targetRecord = this.recordService.createOffCampusRecord(createReq);
-    }
+    const req: Record = this.buildRequest();
+    const targetRecord: Observable<Record> = this.isUpdateMode ?
+                                           this.recordService.updateOffCampusRecord(req) :
+                                           this.recordService.createOffCampusRecord(req);
     targetRecord.subscribe(
       record => {
         this.router.navigate(['user/off-campus-event-records/', record.id]);

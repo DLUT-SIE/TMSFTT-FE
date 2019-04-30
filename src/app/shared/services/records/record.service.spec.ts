@@ -136,7 +136,7 @@ describe('RecordService', () => {
     service.updateOffCampusRecord(updateReq).subscribe();
     const req = httpTestingController.expectOne(
       `${environment.API_URL}/records/1/`);
-    expect(req.request.method).toBe('PUT');
+    expect(req.request.method).toBe('PATCH');
     req.flush({});
   });
 

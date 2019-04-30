@@ -19,7 +19,7 @@ export class RecordDetailComponent implements OnInit {
   record: Record;
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
-  couldEditStauts: boolean;
+  editable: boolean;
   feedback: string;
 
   constructor(
@@ -36,7 +36,7 @@ export class RecordDetailComponent implements OnInit {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
       this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
-      this.couldEditStauts = this.record.status === RecordStatus.STATUS_SUBMITTED ||
+      this.editable = this.record.status === RecordStatus.STATUS_SUBMITTED ||
                              this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED;
 
     });
