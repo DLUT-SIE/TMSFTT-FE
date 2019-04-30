@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: 'admin',
     canLoad: [AdminGuard],
-    loadChildren: './admin/admin.module#AdminModule',
+    loadChildren: './admin/admin.module#AdminModule'
   },
   // Load this module if user is authenticated.
   {
