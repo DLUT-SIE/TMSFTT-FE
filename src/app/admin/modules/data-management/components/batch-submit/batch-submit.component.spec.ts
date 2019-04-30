@@ -22,7 +22,7 @@ describe('BatchSubmitComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BatchSubmitComponent ],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         {
