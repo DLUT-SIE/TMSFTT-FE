@@ -54,7 +54,7 @@ export class RecordService extends GenericListService {
 
   updateOffCampusRecord(req: Record) {
     const data = this.buildRecordFormData(req);
-    return this.http.put<Record>(
+    return this.http.patch<Record>(
       `${environment.API_URL}/records/${req.id}/`, data);
   }
 

@@ -211,6 +211,17 @@ describe('RecordFormComponent', () => {
     expect(component.record).toBe(dummyRecord);
   });
 
+  it('should display errors when failed to get record.', () => {
+    getRecordWithDetail$.error({
+      message: 'Raw error message',
+      error: {
+        detail: ['can\'t find record'],
+      },
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('can\'t find record。', '关闭');
+  });
+
   it('should add new FormControl to FormArray.', () => {
     component.addFile();
     component.addFile();
@@ -276,7 +287,7 @@ describe('RecordFormComponent', () => {
   });
 
   it('should navigate when updation succeed.', () => {
-    component.toUpdate = true;
+    component.isUpdateMode = true;
     component.record = {
       id: 1,
       off_campus_event: {id: 1},
