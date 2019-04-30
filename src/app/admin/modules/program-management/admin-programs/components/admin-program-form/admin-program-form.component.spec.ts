@@ -34,7 +34,7 @@ describe('AdminProgramFormComponent', () => {
   let snackBarOpen: jasmine.Spy;
 
   const dummyProgramCategory: ProgramCategory = {
-    val: 1,
+    type: 1,
     name: 'sender',
   };
 

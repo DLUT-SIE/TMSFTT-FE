@@ -1,4 +1,4 @@
 export interface ProgramCategory {
-    val?: number;
+    type?: number;
     name?: string;
 }

@@ -113,6 +113,9 @@ describe('ProgramService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush([{val: 1, name: 'test1'}, {val: 2, name: 'test2'}]);
 
+    service.getProgramCategories().subscribe((data: ProgramCategory[]) => {
+      expect(data.length).toEqual(2);
+    });
   });
 
   it('should use default if no value provided', () => {

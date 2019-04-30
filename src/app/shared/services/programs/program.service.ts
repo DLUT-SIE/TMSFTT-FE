@@ -16,7 +16,7 @@ import { Observable, of as observableOf } from 'rxjs';
 })
 export class ProgramService extends GenericListService {
 
-  private cachedProgramCategories: ProgramCategory[];
+  private cachedProgramCategories: ProgramCategory[] = [];
 
   constructor(
     private readonly departmentService: DepartmentService,
@@ -55,19 +55,14 @@ export class ProgramService extends GenericListService {
   }
 
   getProgramCategories() {
-    if (this.cachedProgramCategories === undefined) {
-      return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/`).pipe(
-        tap(
-          data => {
-          this.cachedProgramCategories = [];
-          for (let i = 0; i < data.length; i++) {
-            this.cachedProgramCategories[i] = data[i];
-          }})
-      );
-    }
-    /* istanbul ignore next  */
+    if (this.cachedProgramCategories.length !== 0) {
       return observableOf(this.cachedProgramCategories);
-  }
+    }
+    return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/`).pipe(
+      tap(
+        data =>
+        this.cachedProgramCategories = data));
+    }
 
   /** create admin-program-form. */
   createProgram(req: Program) {
