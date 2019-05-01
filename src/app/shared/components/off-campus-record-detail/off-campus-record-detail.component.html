@@ -30,7 +30,7 @@
     fxLayoutGap="15px">
     <span class="item-title" fxFlex="1 0 20%">培训学时</span>
     <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.num_hours | number:"1.0-2" }}</p>
+      <p>{{ record.off_campus_event.num_hours | number:"1.1-1" }}</p>
     </div>
     <div fxFlex="1 0 2%"></div>
   </div>
@@ -128,7 +128,7 @@
           </mat-form-field>
         </div>
         <div fxLayout="row" fxFlex="1 1 20%" fxLayoutAlign="end center">
-          <button mat-raised-button type="submit" (click)="onSubmit()" class="btn btn-danger">提交</button>
+          <button mat-raised-button color="warn" type="submit" (click)="onSubmit()">提交</button>
         </div>
       </div>
     </div>
