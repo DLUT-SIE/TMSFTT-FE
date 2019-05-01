@@ -1,19 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+<<<<<<< 210177d5667ad1673c628aef9aad6f9096074cc6:src/app/admin/modules/data-management/components/data-graph/data-graph.component.spec.ts
 import { DataGraphComponent, timeValidator } from './data-graph.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
+=======
+import { VisualGraphParamSelectorComponent, timeValidator } from './visual-graph-param-selector.component';
+import { VisualGraphBuilderComponent } from '../visual-graph-builder/visual-graph-builder.component';
+>>>>>>> After review fix many bug.:src/app/admin/modules/data-management/components/visual-graph-param-selector/visual-graph-param-selector.component.spec.ts
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('DataGraphComponent', () => {
-  let component: DataGraphComponent;
-  let fixture: ComponentFixture<DataGraphComponent>;
+describe('VisualGraphParamSelectorComponent', () => {
+  let component: VisualGraphParamSelectorComponent;
+  let fixture: ComponentFixture<VisualGraphParamSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+<<<<<<< 210177d5667ad1673c628aef9aad6f9096074cc6:src/app/admin/modules/data-management/components/data-graph/data-graph.component.spec.ts
       declarations: [ DataGraphComponent, DataGraphCanvasComponent ],
+=======
+      declarations: [ VisualGraphParamSelectorComponent, VisualGraphBuilderComponent ],
+>>>>>>> After review fix many bug.:src/app/admin/modules/data-management/components/visual-graph-param-selector/visual-graph-param-selector.component.spec.ts
       imports: [
         MatFormFieldModule,
         MatSelectModule,
@@ -26,7 +35,7 @@ describe('DataGraphComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataGraphComponent);
+    fixture = TestBed.createComponent(VisualGraphParamSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
