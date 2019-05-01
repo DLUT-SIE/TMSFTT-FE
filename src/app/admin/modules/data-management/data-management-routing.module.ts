@@ -6,7 +6,7 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataManagementComponent } from './data-management.component';
 import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
-import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
 
 const routes: Routes = [
   {
@@ -34,8 +34,8 @@ const routes: Routes = [
         component: BatchSubmitComponent,
       },
       {
-        path: 'data-graph',
-        component: DataGraphComponent,
+        path: 'visual-graph',
+        component: VisualGraphParamSelectorComponent,
       },
       {
         path: '',

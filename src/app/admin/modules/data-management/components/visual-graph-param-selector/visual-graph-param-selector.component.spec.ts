@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataGraphComponent, timeValidator } from './data-graph.component';
-import { DataGraphChildComponent } from '../data-graph-child/data-graph-child.component';
+import { VisualGraphParamSelectorComponent, timeValidator } from './visual-graph-param-selector.component';
+import { VisualGraphBuilderComponent } from '../visual-graph-builder/visual-graph-builder.component';
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('DataGraphComponent', () => {
-  let component: DataGraphComponent;
-  let fixture: ComponentFixture<DataGraphComponent>;
+describe('VisualGraphParamSelectorComponent', () => {
+  let component: VisualGraphParamSelectorComponent;
+  let fixture: ComponentFixture<VisualGraphParamSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataGraphComponent, DataGraphChildComponent ],
+      declarations: [ VisualGraphParamSelectorComponent, VisualGraphBuilderComponent ],
       imports: [
         MatFormFieldModule,
         MatSelectModule,
@@ -26,7 +26,7 @@ describe('DataGraphComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataGraphComponent);
+    fixture = TestBed.createComponent(VisualGraphParamSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -63,39 +63,39 @@ describe('DataGraphComponent', () => {
 
   it('should hide the departmentSelector', () => {
     const testFormGroup = component.selectedGraph;
-    component.Docheck();
-    testFormGroup.patchValue({selectedGraphType: 3});
-    expect(component.selectedGroupType.value).toBe(null);
+    component.SelectedParamChangingCheck();
+    testFormGroup.patchValue({selectedStatisticsType: 3});
+    expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedDepartment.value).toBe('全校');
+    expect(component.selectedGraph.get('selectedDepartment').value).toBe('全校');
 
     testFormGroup.patchValue({selectedGroupType: 2});
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedDepartment.value).toBe('全校');
+    expect(component.selectedGraph.get('selectedDepartment').value).toBe('全校');
 
-    testFormGroup.patchValue({selectedGraphType: 2, selectedGroupType: 0});
+    testFormGroup.patchValue({selectedStatisticsType: 2, selectedGroupType: 0});
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedDepartment.value).toBe('全校');
+    expect(component.selectedGraph.get('selectedDepartment').value).toBe('全校');
   });
 
   it('should display the departmentSelector', () => {
     const testFormGroup = component.selectedGraph;
-    component.Docheck();
-    testFormGroup.patchValue({selectedGraphType: 2});
-    expect(component.selectedGroupType.value).toBe(null);
+    component.SelectedParamChangingCheck();
+    testFormGroup.patchValue({selectedStatisticsType: 2});
+    expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeTruthy();
-    expect(component.selectedDepartment.value).toBe('全校');
+    expect(component.selectedGraph.get('selectedDepartment').value).toBe('全校');
 
     testFormGroup.patchValue({selectedGroupType: 2});
     expect(component.showDepartmentSelector).toBeTruthy();
-    expect(component.selectedDepartment.value).toBe('全校');
+    expect(component.selectedGraph.get('selectedDepartment').value).toBe('全校');
   });
 
   it('should get selectedGraphValues', () => {
     const testFormGroup = component.selectedGraph;
-    component.Docheck();
+    component.SelectedParamChangingCheck();
     testFormGroup.patchValue({
-      selectedGraphType: null,
+      selectedStatisticsType: null,
       selectedGroupType: null,
       selectedStartYear: null,
       selectedEndYear: null,
@@ -104,7 +104,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedGraphValues).toBe(null);
 
     testFormGroup.patchValue({
-      selectedGraphType: 1,
+      selectedStatisticsType: 1,
       selectedGroupType: 2,
       selectedStartYear: 2019,
       selectedEndYear: 2019,
@@ -113,7 +113,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedGraphValues).toEqual(testFormGroup.value);
 
     testFormGroup.patchValue({
-      selectedGraphType: 1,
+      selectedStatisticsType: 1,
       selectedGroupType: 2,
       selectedStartYear: 2019,
       selectedEndYear: 2018,
@@ -122,7 +122,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
     testFormGroup.patchValue({
-      selectedGraphType: 1,
+      selectedStatisticsType: 1,
       selectedGroupType: null,
       selectedStartYear: 2014,
       selectedEndYear: 2018,
@@ -131,7 +131,7 @@ describe('DataGraphComponent', () => {
     expect(component.selectedGraphValues === testFormGroup.value).toBeFalsy();
 
     testFormGroup.patchValue({
-      selectedGraphType: 3,
+      selectedStatisticsType: 3,
       selectedGroupType: 3,
       selectedStartYear: 2014,
       selectedEndYear: 2018,

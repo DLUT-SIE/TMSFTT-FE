@@ -7,8 +7,8 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataReviewComponent } from './components/data-review/data-review.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
-import { DataGraphComponent } from './components/data-graph/data-graph.component';
-import { DataGraphChildComponent } from './components/data-graph-child/data-graph-child.component';
+import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
+import { VisualGraphBuilderComponent } from './components/visual-graph-builder/visual-graph-builder.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -18,8 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RecordListComponent,
     DataReviewComponent,
     BatchSubmitComponent,
-    DataGraphComponent,
-    DataGraphChildComponent,
+    VisualGraphParamSelectorComponent,
+    VisualGraphBuilderComponent,
   ],
   imports: [
     SharedModule,
