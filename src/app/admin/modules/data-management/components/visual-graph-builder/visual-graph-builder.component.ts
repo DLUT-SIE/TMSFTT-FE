@@ -13,15 +13,15 @@ import { ParamSelector } from 'src/app/shared/interfaces/visual-graph-param-sele
 
 export class VisualGraphBuilderComponent implements OnInit {
 
-  @Input() titleGraphNames: string = '';
+  @Input() titleGraphNames: string;
   @Input() isPieGraph: boolean;
 
   chartOption?: EChartOption;
   echartsInstance: echarts.ECharts;
   pieGraphData: PieGraphData[] = [];
-  test: any = this.isPieGraph;
   title: string;
-  //Following two variables should be assigned by calling relevant services
+
+  // Following two variables should be assigned by calling relevant services
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
   seriesData: GraphData[] = [{id: 0, data: [120, 101, 90, 134, 230, 132, 210]}, {id: 1, data: [320, 301, 390, 302, 330, 320, 334]}];
 
@@ -176,10 +176,7 @@ export class VisualGraphBuilderComponent implements OnInit {
             type: 'pie',
             radius: '55%',
             center: ['50%', '50%'],
-            data: [
-                {value:1, name:'22'},
-                {value:2, name:'11'}
-            ],
+            data: [],
             roseType: 'radius',
 
             animationType: 'scale',
