@@ -59,8 +59,9 @@ export class ProgramService extends GenericListService {
       return observableOf(this.cachedProgramCategories);
     }
     return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/`).pipe(
-      tap(data => this.cachedProgramCategories = data));
-    }
+      tap(data => this.cachedProgramCategories = data),
+    );
+  }
 
   /** create admin-program-form. */
   createProgram(req: Program) {
