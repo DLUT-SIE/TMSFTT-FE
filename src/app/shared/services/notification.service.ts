@@ -62,16 +62,6 @@ export class NotificationService extends GenericListService {
 
   /** Mark all notifications for user as read. */
   markAllNotificationsAsRead() {
-    const action = 'read-all';
-    const url = `${environment.API_URL}/notifications/actions/${action}/`;
-    return this.http.post(url, {});
+    return this.http.post(`${environment.API_URL}/notifications/mark-all-as-read/`, {});
   }
-
-  /** Delete all notifications for user. */
-  deleteAllNotifications() {
-    const action = 'delete-all';
-    const url = `${environment.API_URL}/notifications/actions/${action}/`;
-    return this.http.post(url, {});
-  }
-
 }
