@@ -17,8 +17,6 @@ import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
-import { ProgramFormService} from 'src/app/shared/services/programs/program-form.service';
-import { ProgramCategoryService} from 'src/app/shared/services/programs/program-category.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
@@ -27,7 +25,7 @@ describe('AdminProgramFormComponent', () => {
   let fixture: ComponentFixture<AdminProgramFormComponent>;
   let getProgramForms$: Subject<PaginatedResponse<ProgramForm>>;
   let getProgramForms: jasmine.Spy;
-  let getProgramCategories$: Subject<PaginatedResponse<ProgramCategory>>;
+  let getProgramCategories$: Subject<ProgramCategory[]>;
   let getProgramCategories: jasmine.Spy;
   let getProgram$: Subject<Program>;
   let getProgram: jasmine.Spy;
@@ -35,13 +33,8 @@ describe('AdminProgramFormComponent', () => {
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
 
-  const dummyProgramForm: ProgramForm = {
-    id: 1,
-    name: 'sender',
-  };
-
   const dummyProgramCategory: ProgramCategory = {
-    id: 1,
+    type: 1,
     name: 'sender',
   };
 
@@ -50,7 +43,7 @@ describe('AdminProgramFormComponent', () => {
     getProgramForms$ = new Subject<PaginatedResponse<ProgramForm>>();
     getProgramForms = jasmine.createSpy();
     getProgramForms.and.returnValue(getProgramForms$);
-    getProgramCategories$ = new Subject<PaginatedResponse<ProgramCategory>>();
+    getProgramCategories$ = new Subject<ProgramCategory[]>();
     getProgramCategories = jasmine.createSpy();
     getProgramCategories.and.returnValue(getProgramCategories$);
     getProgram$ = new Subject<Program>();
@@ -82,19 +75,8 @@ describe('AdminProgramFormComponent', () => {
           provide: ProgramService,
           useValue: {
             createProgram: () => createProgramForm$,
+            getProgramCategories: () => getProgramCategories$,
             getProgram,
-          }
-        },
-        {
-          provide: ProgramFormService,
-          useValue: {
-            getProgramForms,
-          }
-        },
-        {
-          provide: ProgramCategoryService,
-          useValue: {
-            getProgramCategories,
           }
         },
         {
@@ -129,27 +111,19 @@ describe('AdminProgramFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load admin-program-forms', () => {
-    const count = 100;
-    const results: ProgramForm[] = [dummyProgramForm, dummyProgramForm];
-    getProgramForms$.next({ count, results, next: '', previous: '' });
-
-    expect(component.programForms).toEqual(results);
-  });
 
   it('should load program-categories', () => {
-    const count = 100;
-    const results: ProgramCategory[] = [dummyProgramCategory, dummyProgramCategory];
-    getProgramCategories$.next({ count, results, next: '', previous: '' });
 
-    expect(component.programCategories).toEqual(results);
+    getProgramCategories$.next([dummyProgramCategory, dummyProgramCategory]);
+
+    expect(component.programCategories).toEqual([dummyProgramCategory, dummyProgramCategory]);
   });
 
   it('should navigate when creation succeed.', () => {
     component.onSubmit();
     createProgramForm$.next({ id: 5 } as Program);
 
-    expect(navigate).toHaveBeenCalledWith(['/admin/event-management/programs/events'], { queryParams: {program_id: 5}});
+    expect(navigate).toHaveBeenCalledWith(['/admin/programs/', 5]);
   });
 
   it('should load pragram', () => {

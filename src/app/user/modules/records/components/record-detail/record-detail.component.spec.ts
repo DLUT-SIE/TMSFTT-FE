@@ -33,10 +33,12 @@ describe('RecordDetailComponent', () => {
   let createFeedback: jasmine.Spy;
   let open: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
+  let navigate: jasmine.Spy;
 
   beforeEach(async(() => {
     feedBack$ = new Subject();
     afterClosed$ = new Subject();
+    navigate = jasmine.createSpy();
     createFeedback = jasmine.createSpy();
     open = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
@@ -83,7 +85,7 @@ describe('RecordDetailComponent', () => {
               contents: [],
               attachments: [],
               user: 1,
-              status: 1,
+              status: 2,
             } as Record}),
           },
         },
@@ -113,6 +115,7 @@ describe('RecordDetailComponent', () => {
           provide: Router,
           useValue: {
             createUrlTree: () => 'abc',
+            navigate,
           },
         },
       ]
@@ -142,5 +145,11 @@ describe('RecordDetailComponent', () => {
     expect(open).toHaveBeenCalled();
     expect(createFeedback).toHaveBeenCalledWith(component.record.id, '123');
     expect(component.hasFeedbackSent).toBeTruthy();
+  });
+
+  it('should navigate to form', () => {
+    component.navigateToForm();
+
+    expect(navigate).toHaveBeenCalled();
   });
 });

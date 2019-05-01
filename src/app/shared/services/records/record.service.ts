@@ -37,16 +37,25 @@ export class RecordService extends GenericListService {
     });
   }
 
-  /** Create Records along with its contents and attachments. */
-  createOffCampusRecord(req: Record) {
+  private buildRecordFormData(req: Record) {
     const data = new FormData();
     data.set('off_campus_event', JSON.stringify(req.off_campus_event));
     data.set('user', req.user.toString());
     (req.attachments as File[]).map(x => data.append('attachments', x));
     (req.contents as RecordContent[]).map(x => data.append('contents', JSON.stringify(x)));
-
+    return data;
+  }
+  /** Create Records along with its contents and attachments. */
+  createOffCampusRecord(req: Record) {
+    const data = this.buildRecordFormData(req);
     return this.http.post<Record>(
       `${environment.API_URL}/records/`, data);
+  }
+
+  updateOffCampusRecord(req: Record) {
+    const data = this.buildRecordFormData(req);
+    return this.http.patch<Record>(
+      `${environment.API_URL}/records/${req.id}/`, data);
   }
 
   deleteRecord(recordID: number) {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { RecordService } from '../../../../../shared/services/records/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
@@ -14,6 +14,8 @@ import { switchMap, map, debounceTime } from 'rxjs/operators';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
+import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -44,14 +46,20 @@ export class RecordFormComponent implements OnInit {
 
   /** The attachments to be uploaded. */
   attachments: File[] = [];
+  record: Record;
+  originalAttachments: RecordAttachment[] = [];
+  hasOriginalAttachments = false;
+  isUpdateMode: boolean;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly snackBar: MatSnackBar,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
     private readonly recordService: RecordService,
     private readonly eventService: EventService,
+    private readonly recordAttachmentService: RecordAttachmentService,
   ) { }
 
   ngOnInit() {
@@ -71,6 +79,21 @@ export class RecordFormComponent implements OnInit {
       this.numHours.setValue(offCampusEvent.num_hours);
       this.numParticipants.setValue(offCampusEvent.num_participants);
     });
+    if (this.route.snapshot.queryParams.record_id !== undefined) {
+      const recordID = this.route.snapshot.queryParams.record_id;
+      this.recordService.getRecordWithDetail(recordID).subscribe(
+        (record: Record) => {
+          this.isUpdateMode = true;
+          this.setRecordValue(record);
+        },
+        (error: HttpErrorResponse) => {
+          let message = error.message;
+          if (error.error) {
+            message = error.error['detail'] + '。';
+          }
+          this.snackBar.open(message, '关闭');
+        });
+    }
   }
 
   /**
@@ -80,6 +103,37 @@ export class RecordFormComponent implements OnInit {
   private _filter(prefix: string) {
     const params = new Map<string, {}>([['name__startswith', prefix]]);
     return this.eventService.getOffCampusEvents({ extraParams: params });
+  }
+
+  private setRecordValue(record: Record) {
+    this.record = record;
+    this.record.off_campus_event = record.off_campus_event as OffCampusEvent;
+    this.name.setValue(this.record.off_campus_event.name);
+    this.time.setValue(this.record.off_campus_event.time);
+    this.location.setValue(this.record.off_campus_event.location);
+    this.numHours.setValue(this.record.off_campus_event.num_hours);
+    this.numParticipants.setValue(this.record.off_campus_event.num_participants);
+    this.record.contents = record.contents as RecordContent[];
+    this.record.contents.map(content => {
+      switch (content.content_type) {
+        case ContentType.CONTENT_TYPE_SUMMARY: {
+          this.summary.setValue(content.content);
+          break;
+        }
+        case ContentType.CONTENT_TYPE_CONTENT: {
+          this.content.setValue(content.content);
+          break;
+        }
+        default: {
+          this.feedback.setValue(content.content);
+          break;
+        }
+      }
+    });
+    if (record.attachments.length !== 0) {
+      this.originalAttachments = record.attachments as RecordAttachment[];
+      this.hasOriginalAttachments = true;
+    }
   }
 
   /** Access the name field of the form. */
@@ -157,7 +211,7 @@ export class RecordFormComponent implements OnInit {
     ].filter((val) => val.content !== '');
   }
 
-  private buildOffCampusEvent(): OffCampusEvent {
+  private buildOffCampusEventToCreate(): OffCampusEvent {
     const value = this.recordForm.value;
     return {
       name: value.name,
@@ -168,14 +222,37 @@ export class RecordFormComponent implements OnInit {
     };
   }
 
-  onSubmit() {
-    const req: Record = {
-      off_campus_event: this.buildOffCampusEvent(),
+  private buildOffCampusEventToUpdate(): OffCampusEvent {
+    const value = this.recordForm.value;
+    const offCampusEvent = this.record.off_campus_event as OffCampusEvent;
+    return {
+      id: offCampusEvent.id,
+      name: value.name,
+      time: value.time,
+      location: value.location,
+      num_hours: value.numHours,
+      num_participants: value.numParticipants,
+    };
+  }
+
+  private buildRequest(): Record {
+    return {
+      id: this.isUpdateMode ? this.record.id : undefined,
+      off_campus_event: this.isUpdateMode ?
+                        this.buildOffCampusEventToUpdate() :
+                        this.buildOffCampusEventToCreate(),
       user: this.authService.userID,
       contents: this.buildContents(),
       attachments: this.attachments,
     };
-    this.recordService.createOffCampusRecord(req).subscribe(
+  }
+
+  onSubmit() {
+    const req: Record = this.buildRequest();
+    const targetRecord: Observable<Record> = this.isUpdateMode ?
+                                           this.recordService.updateOffCampusRecord(req) :
+                                           this.recordService.createOffCampusRecord(req);
+    targetRecord.subscribe(
       record => {
         this.router.navigate(['user/off-campus-event-records/', record.id]);
       },
@@ -194,5 +271,14 @@ export class RecordFormComponent implements OnInit {
   /** Push a new FormControl to FormArray, this supports multi files uploading. */
   addFile() {
     this.files.push(this.fb.control(null));
+  }
+
+  deleteAttachment(attachment: RecordAttachment) {
+    return this.recordAttachmentService.deleteRecordAttachment(attachment.id).subscribe(
+      () => {
+        this.originalAttachments = this.originalAttachments.filter(item => item.id !== attachment.id);
+      }
+    );
+
   }
 }

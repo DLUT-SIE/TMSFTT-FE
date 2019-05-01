@@ -6,7 +6,6 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from './program.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { ProgramCategoryService } from 'src/app/shared/services/programs/program-category.service';
 import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
@@ -14,12 +13,12 @@ import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 describe('ProgramService', () => {
   let httpTestingController: HttpTestingController;
   let getDepartment$: Subject<Department>;
-  let getProgramCategory$: Subject<ProgramCategory>;
+  let getProgramCategories$: Subject<ProgramCategory>;
   let getProgram$: Subject<{}>;
 
   beforeEach(() => {
     getDepartment$ = new Subject();
-    getProgramCategory$ = new Subject();
+    getProgramCategories$ = new Subject();
     getProgram$ = new Subject<{}>();
 
     const authenticationSucceed$ = new Subject<void>();
@@ -39,12 +38,7 @@ describe('ProgramService', () => {
           provide: DepartmentService,
           useValue: {
             getDepartment: () => getDepartment$,
-          },
-        },
-        {
-          provide: ProgramCategoryService,
-          useValue: {
-            getProgramCategory: () => getProgramCategory$,
+            getProgramCategories: () => getProgramCategories$,
           },
         },
       ]
@@ -101,12 +95,27 @@ describe('ProgramService', () => {
 
     service.getProgramWithDetail(1).subscribe((data: Program) => {
       expect(data.department).toEqual({});
-      expect(data.category).toEqual({});
     });
 
     getProgram$.next(program);
     getDepartment$.next({});
-    getProgramCategory$.next({});
+  });
+
+  it('should get program-categories.', () => {
+    const service: ProgramService = TestBed.get(ProgramService);
+
+    service.getProgramCategories().subscribe((data: ProgramCategory[]) => {
+      expect(data.length).toEqual(2);
+    });
+    const url = `${environment.API_URL}/program-categories/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush([{val: 1, name: 'test1'}, {val: 2, name: 'test2'}]);
+
+    service.getProgramCategories().subscribe((data: ProgramCategory[]) => {
+      expect(data.length).toEqual(2);
+    });
   });
 
   it('should use default if no value provided', () => {
@@ -128,7 +137,6 @@ describe('ProgramService', () => {
       department: 1,
       name: 'test',
       category: 2,
-      form: [1, 2],
     };
 
     service.createProgram(createReq).subscribe();

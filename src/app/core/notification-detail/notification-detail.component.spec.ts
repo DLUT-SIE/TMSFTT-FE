@@ -33,8 +33,8 @@ describe('NotificationDetailComponent', () => {
           useValue: {
             data: observableOf({notification: {
               id: 1,
-              sender: 2,
-              recipient: 3,
+              sender: 'sender',
+              recipient: 'recipient',
               content: 'content',
               time: '2019-01-01',
               read_time: '2019-01-01',

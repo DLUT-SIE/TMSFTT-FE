@@ -20,7 +20,17 @@
               fxLayoutGap="15px">
               <span class="item-title" fxFlex="1 0 20%">发送时间</span>
               <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ notification.time | date:'y年M月d日 H:mm::ss' }}</p>
+                <p>{{ notification.time | date:'y年M月d日 H:mm:ss' }}</p>
+              </div>
+              <div fxFlex="1 0 2%"></div>
+            </div>
+
+            <div class="detail-item" *ngIf="notification.read_time"
+                 fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+              fxLayoutGap="15px">
+              <span class="item-title" fxFlex="1 0 20%">阅读时间</span>
+              <div class="item-content" fxFlex="1 0 78%">
+                <p>{{ notification.read_time | date:'y年M月d日 H:mm:ss' }}</p>
               </div>
               <div fxFlex="1 0 2%"></div>
             </div>
@@ -36,7 +46,6 @@
 
             <mat-divider></mat-divider>
             <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-              <a mat-raised-button color="warn">删除该通知</a>
               <a mat-raised-button color="primary" (click)="location.back()">返回</a>
             </div>
           </div>

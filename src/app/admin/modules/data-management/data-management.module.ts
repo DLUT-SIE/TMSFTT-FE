@@ -10,6 +10,7 @@ import { BatchSubmitComponent } from './components/batch-submit/batch-submit.com
 import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
 import { VisualGraphBuilderComponent } from './components/visual-graph-builder/visual-graph-builder.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableExportComponent } from './components/table-export/table-export.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BatchSubmitComponent,
     VisualGraphParamSelectorComponent,
     VisualGraphBuilderComponent,
+    TableExportComponent,
   ],
   imports: [
     SharedModule,

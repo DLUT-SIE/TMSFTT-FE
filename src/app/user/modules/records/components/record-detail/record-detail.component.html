@@ -35,7 +35,7 @@
               fxLayoutGap="15px">
                 <span class="item-title" fxFlex="1 0 20%">学时</span>
                 <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.campus_event.num_hours | number:"1.0-2" }}</p>
+                  <p>{{ record.campus_event.num_hours | number:"1.1-1" }}</p>
                 </div>
                 <div fxFlex="1 0 2%"></div>
               </div>
@@ -62,9 +62,11 @@
 
           <mat-divider></mat-divider>
           <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button class="btn btn-danger" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
+            <a mat-raised-button color="warn" *ngIf="!isCampusEventRecord && editable"
+            (click)="navigateToForm()">编辑</a>
+            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
             (click)="openDialog()">提交反馈</a>
-            <a mat-raised-button class="btn btn-danger" (click)="location.back()">返回</a> 
+            <a mat-raised-button color="warn" (click)="location.back()">返回</a> 
           </div>
         </div>
       </div>

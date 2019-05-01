@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Program } from 'src/app/shared/interfaces/program';
-import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 
 @Component({
   selector: 'app-admin-program-detail',
@@ -14,7 +13,6 @@ import { ProgramForm } from 'src/app/shared/interfaces/program-form';
 export class AdminProgramDetailComponent implements OnInit {
 
   program: Program;
-  programForms: ProgramForm[] = [];
 
   constructor(
     private readonly router: Router,

@@ -7,6 +7,7 @@ import { DataManagementComponent } from './data-management.component';
 import { RecordDetailResolverService } from 'src/app/shared/services/records/record-detail-resolver.service';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
+import { TableExportComponent } from './components/table-export/table-export.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'visual-graph',
         component: VisualGraphParamSelectorComponent,
+      },
+      {
+        path: 'table-export',
+        component: TableExportComponent,
       },
       {
         path: '',

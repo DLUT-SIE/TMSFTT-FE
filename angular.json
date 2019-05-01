@@ -93,7 +93,8 @@
             "codeCoverageExclude": [
               "src/app/demo/**/*.ts",
               "src/testing/*",
-              "src/environments/*"
+              "src/environments/*",
+              "src/app/shared/services/environment.service.ts"
             ],
             "styles": [
               "src/styles.css"

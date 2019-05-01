@@ -22,8 +22,8 @@ describe('NotificationListComponent', () => {
   const dummyNotification: Notification = {
     id: 2,
     time: '2019-01-01',
-    sender: 2,
-    recipient: 3,
+    sender: 'sender',
+    recipient: 'recipient',
     content: 'content',
     read_time: '2019-01-01',
   };
@@ -108,19 +108,6 @@ describe('NotificationListComponent', () => {
     component.markAllAsRead();
 
     expect(markAllNotificationsAsRead).toHaveBeenCalled();
-    expect(forceRefresh).toHaveBeenCalled();
-  });
-
-  it('should delete all notifications.', () => {
-    const count = 100;
-    const results: Notification[] = [dummyNotification, dummyNotification];
-    const forceRefresh = spyOn(component, 'forceRefresh');
-    getNotifications$.next({ count, results, next: '', previous: '' });
-    deleteAllNotifications.and.returnValue(observableOf(null));
-
-    component.deleteAll();
-
-    expect(deleteAllNotifications).toHaveBeenCalled();
     expect(forceRefresh).toHaveBeenCalled();
   });
 

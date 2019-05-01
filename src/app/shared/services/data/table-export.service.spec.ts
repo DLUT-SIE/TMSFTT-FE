@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { TableExportService } from './table-export.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Subject } from 'rxjs';
-
-import { ProgramFormService } from './program-form.service';
-import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { AUTH_SERVICE } from '../../interfaces/auth-service';
 
-describe('ProgramFormService', () => {
+describe('TableExportService', () => {
   let httpTestingController: HttpTestingController;
-
   beforeEach(() => {
     const authenticationSucceed$ = new Subject<void>();
     TestBed.configureTestingModule({
@@ -33,18 +31,16 @@ describe('ProgramFormService', () => {
   });
 
   it('should be created', () => {
-    const service: ProgramFormService = TestBed.get(ProgramFormService);
+    const service: TableExportService = TestBed.get(TableExportService);
     expect(service).toBeTruthy();
   });
-  it('should get admin-program-forms', () => {
-    const service: ProgramFormService = TestBed.get(ProgramFormService);
 
-    service.getProgramForms({}).subscribe();
-
-    const url = `${environment.API_URL}/program-forms/?limit=10&offset=0`;
-
+  it('should export table', () => {
+    const service: TableExportService = TestBed.get(TableExportService);
+    const url = `${environment.API_URL}/data-management/table-export`;
+    service.exportTable(url).subscribe();
     const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('GET');
-    req.flush({count: 2, results: [], next: '', previous: ''});
+    expect(req.request.method).toBeTruthy('GET');
+    req.flush({});
   });
 });

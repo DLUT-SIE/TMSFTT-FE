@@ -33,11 +33,4 @@ export class NotificationListComponent extends GenericListComponent<Notification
     });
   }
 
-  /** Delete all notifications for current user. */
-  deleteAll() {
-    this.notificationService.deleteAllNotifications().subscribe(() => {
-      this.forceRefresh();
-   });
-  }
-
 }
