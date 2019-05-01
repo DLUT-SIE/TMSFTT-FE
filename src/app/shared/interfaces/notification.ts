@@ -2,8 +2,8 @@
 export interface Notification {
   id?: number;
   time?: string;
-  sender?: number;
-  recipient?: number;
+  sender?: string;
+  recipient?: string;
   content?: string;
   read_time?: string;
 }

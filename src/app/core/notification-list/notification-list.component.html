@@ -8,8 +8,7 @@
         </div>
         <div class="card-body">
           <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button color="primary" (click)="markAllAsRead()">标记所有为已读</a>
-            <a mat-raised-button color="warn" (click)="deleteAll()">清空所有通知</a>
+            <a mat-raised-button color="primary" (click)="markAllAsRead()">标记所有已读</a>
           </div>
           <div class="loading-shade" *ngIf="isLoadingResults">
             <mat-spinner></mat-spinner>

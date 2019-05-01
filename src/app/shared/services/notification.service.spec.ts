@@ -13,8 +13,8 @@ describe('NotificationService', () => {
   const dummyNotification: Notification = {
     id: 1,
     time: '2019-01-01',
-    sender: 4,
-    recipient: 5,
+    sender: 'sender',
+    recipient: 'recipient',
     content: 'content',
     read_time: '2019-01-01',
   };
@@ -150,19 +150,7 @@ describe('NotificationService', () => {
 
     service.markAllNotificationsAsRead().subscribe();
 
-    const url = `${environment.API_URL}/notifications/actions/read-all/`;
-
-    const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('POST');
-    req.flush({});
-  });
-
-  it('should delete all notifications.', () => {
-    const service: NotificationService = TestBed.get(NotificationService);
-
-    service.deleteAllNotifications().subscribe();
-
-    const url = `${environment.API_URL}/notifications/actions/delete-all/`;
+    const url = `${environment.API_URL}/notifications/mark-all-as-read/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
