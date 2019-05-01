@@ -4,8 +4,6 @@ export interface Environment {
   production: boolean;
   /** The API server address. */
   API_URL: string;
-  /** The server host address. */
-  HOST: string;
   /**
    * The key of the JWT that should be used to store the information about
    * JWT in Storage.

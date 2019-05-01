@@ -27,8 +27,7 @@ export class TableExportComponent implements OnInit {
         const url = `${environment.API_URL}/data-management/table-export`;
         this.tableExportService.exportTable(url).subscribe(
             data => {
-                const path = `${environment.HOST}${data['url']}`;
-                this.windowService.nativeWindow.open(path);
+                this.windowService.nativeWindow.open(data['url']);
                 this.snackBar.open('导出成功', '确定', {duration: 3000});
             },
             (error: HttpErrorResponse) => {
