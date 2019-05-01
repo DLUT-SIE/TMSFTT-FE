@@ -21,10 +21,6 @@ export class EnvironmentService {
     return environment.API_URL;
   }
 
-  getHost(): string {
-    return environment.HOST;
-  }
-
   getJwtKey(): string {
     return environment.JWT_KEY;
   }
