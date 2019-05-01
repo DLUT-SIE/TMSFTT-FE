@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataGraphChildComponent } from './data-graph-child.component';
+import { VisualGraphBuilderComponent } from './visual-graph-builder.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 
-describe('DataGraphChildComponent', () => {
-  let component: DataGraphChildComponent;
-  let fixture: ComponentFixture<DataGraphChildComponent>;
+describe('VisualGraphBuilderComponent', () => {
+  let component: VisualGraphBuilderComponent;
+  let fixture: ComponentFixture<VisualGraphBuilderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataGraphChildComponent ],
+      declarations: [ VisualGraphBuilderComponent ],
       imports: [ NgxEchartsModule ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataGraphChildComponent);
+    fixture = TestBed.createComponent(VisualGraphBuilderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

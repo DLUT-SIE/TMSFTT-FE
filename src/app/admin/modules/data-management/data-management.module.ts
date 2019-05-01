@@ -8,8 +8,8 @@ import { DataReviewComponent } from './components/data-review/data-review.compon
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TableExportComponent } from './components/table-export/table-export.component';
-import { DataGraphComponent } from './components/data-graph/data-graph.component';
-import { DataGraphChildComponent } from './components/data-graph-child/data-graph-child.component';
+import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
+import { VisualGraphBuilderComponent } from './components/visual-graph-builder/visual-graph-builder.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -20,8 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DataReviewComponent,
     BatchSubmitComponent,
     TableExportComponent,
-    DataGraphComponent,
-    DataGraphChildComponent,
+    VisualGraphParamSelectorComponent,
+    VisualGraphBuilderComponent,
   ],
   imports: [
     SharedModule,
