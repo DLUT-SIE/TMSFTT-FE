@@ -96,8 +96,8 @@ export class VisualGraphParamSelectorComponent implements OnInit {
       this.selectedGraph = this.fb.group({
         selectedStatisticsType: [null, Validators.required],
         selectedGroupType: [null, Validators.required],
-        selectedStartYear: [this.yearList[this.yearList.length-1], Validators.required],
-        selectedEndYear: [this.yearList[this.yearList.length-1], Validators.required],
+        selectedStartYear: [this.yearList[this.yearList.length - 1], Validators.required],
+        selectedEndYear: [this.yearList[this.yearList.length - 1], Validators.required],
         selectedDepartment: ['全校']
         }, { validator: timeValidator });
       this.selectedGraphValues = null;
