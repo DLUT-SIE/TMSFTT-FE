@@ -36,8 +36,8 @@ export class AdminProgramFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.programService.getProgramCategories().subscribe(
-      programCategories => {this.programCategories = programCategories;
+    this.programService.getProgramCategories().subscribe(programCategories => {
+      this.programCategories = programCategories;
     });
 
     /* istanbul ignore else  */
