@@ -74,6 +74,19 @@ describe('EventService', () => {
     req.flush({});
   });
 
+  it('should get off-campus event', () => {
+    const service: EventService = TestBed.get(EventService);
+    const id = 1;
+
+    service.getOffCampusEvent(id).subscribe();
+
+    const url = `${environment.API_URL}/off-campus-events/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
   it('should be created', () => {
     const service: EventService = TestBed.get(EventService);
     expect(service).toBeTruthy();

@@ -123,6 +123,23 @@ describe('RecordService', () => {
     req.flush({});
   });
 
+  it('should update off-campus-record.', () => {
+    const service: RecordService = TestBed.get(RecordService);
+    const updateReq: Record = {
+      id: 1,
+      off_campus_event: 3,
+      user: 1,
+      contents: [],
+      attachments: []
+    };
+
+    service.updateOffCampusRecord(updateReq).subscribe();
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/records/1/`);
+    expect(req.request.method).toBe('PATCH');
+    req.flush({});
+  });
+
   it('should get records', () => {
     const service: RecordService = TestBed.get(RecordService);
 
