@@ -147,7 +147,9 @@
               </div>
             </div>
 
-            <button mat-raised-button type="submit" color="primary" [disabled]="recordForm.invalid" i18n>提交</button>
+            <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+              <button mat-raised-button type="submit" color="warn" [disabled]="recordForm.invalid" i18n>提交</button>
+            </div>
           </form>
         </div>
       </div>
