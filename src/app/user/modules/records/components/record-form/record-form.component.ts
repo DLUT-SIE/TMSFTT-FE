@@ -262,7 +262,10 @@ export class RecordFormComponent implements OnInit {
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
-          message = error.error['detail'] + '。';
+          message = '';
+          for (const key of Object.keys(error.error)) {
+            message += error.error[key].join(',') + '。';
+          }
         }
         this.snackBar.open(message, '关闭');
       });

@@ -303,7 +303,7 @@ describe('RecordFormComponent', () => {
     createOffCampusRecord$.error({
       message: 'Raw error message',
       error: {
-        detail: 'Invalid number of attachments',
+        attachments_data: ['Invalid number of attachments'],
       },
     } as HttpErrorResponse);
 
