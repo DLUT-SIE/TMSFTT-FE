@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-list-component',
@@ -93,6 +94,9 @@ describe('GenericListComponent', () => {
 
     it('should load data', () => {
         const results = [dummyResponse, dummyResponse, dummyResponse];
+        const postActions = spyOn(
+            component, 'performActionsAfterResultsRetrieved');
+        postActions.and.returnValue(observableOf(null));
         getResults$.next({
             results,
             count: 100,
@@ -103,14 +107,20 @@ describe('GenericListComponent', () => {
         expect(component.isLoadingResults).toBeFalsy();
         expect(component.results).toEqual(results);
         expect(component.resultsLength).toEqual(100);
+        expect(postActions).toHaveBeenCalled();
     });
 
     it('should empty data if an error encountered.', () => {
-        getResults$.error('abc');
+        const postActions = spyOn(
+            component, 'performActionsAfterResultsRetrieved');
+        postActions.and.returnValue(observableOf(null));
+        const err = new HttpErrorResponse({error: '123'});
+        getResults$.error(err);
 
         expect(component.isLoadingResults).toBeFalsy();
         expect(component.results).toEqual([]);
         expect(component.resultsLength).toEqual(0);
+        expect(postActions).toHaveBeenCalledWith(err);
     });
 
     it('should navigate to detail', () => {

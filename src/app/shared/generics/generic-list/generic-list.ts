@@ -7,6 +7,7 @@ import { switchMap, map, catchError, startWith } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 /** Implement generic logic for displaying list of objects. */
@@ -27,8 +28,22 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
   /**
    * Indicate how to get paginated results.
    * Implementation is required in derived Components.
+   * @param offset - How many items should be skipped in results' queryset.
+   * @param limit - How many items should be in one page.
    */
   abstract getResults(offset: number, limit: number): Observable<PaginatedResponse<T>>;
+
+  /**
+   * Perform custom actions after results retrieved. By befault this function does nothing.
+   * Override this function to suport custom logic.
+   * @param err - Error occured during results retrieving process. If no error
+   * occured, then it will be `null`.
+   * @returns obs - An observable, any async operations should be defined in the pipe
+   * of this observable.
+   */
+  performActionsAfterResultsRetrieved(err: HttpErrorResponse): Observable<{}> {
+    return observableOf(null);
+  }
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -60,15 +75,14 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
       }),
       map(data => {
         this.resultsLength = data.count;
-        return data.results;
+        this.results = data.results;
+        return null;
       }),
-      catchError((err) => {
-        return observableOf([]);
+      catchError((err: HttpErrorResponse) => {
+        return observableOf(err);
       }),
-    ).subscribe(results => {
-      this.isLoadingResults = false;
-      this.results = results;
-    });
+      switchMap(err => this.performActionsAfterResultsRetrieved(err)),
+    ).subscribe(() => this.isLoadingResults = false);
   }
 
   /** Trigger page refresh manually. */
