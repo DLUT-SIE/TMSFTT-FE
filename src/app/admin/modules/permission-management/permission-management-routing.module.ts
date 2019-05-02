@@ -6,6 +6,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentManagementComponent } from './components/department-management/department-management.component';
+import { DepartmentGroupDetailComponent } from './components/department-group-detail/department-group-detail.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
           {
             path: 'departments/:id',
             component: DepartmentDetailComponent,
+          },
+          {
+            path: 'groups/:id',
+            component: DepartmentGroupDetailComponent,
           },
           {
             path: '',

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { PermissionService } from './permission.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { UserPermission } from 'src/app/shared/interfaces/permission';
+import { UserPermission, GroupPermission } from 'src/app/shared/interfaces/permission';
 import { Subject } from 'rxjs';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { UserService } from './user.service';
@@ -44,7 +44,7 @@ describe('PermissionService', () => {
     service.getPermissions().subscribe(() => { });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/permissions/`);
+      `${environment.API_URL}/permissions/?limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});
@@ -56,7 +56,7 @@ describe('PermissionService', () => {
     service.getPermissions().subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/permissions/`);
+      `${environment.API_URL}/permissions/?limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});
@@ -83,7 +83,7 @@ describe('PermissionService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/user-permissions/?user=${userId}`);
+      `${environment.API_URL}/user-permissions/?user=${userId}&limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush(dummyResponse);
@@ -169,5 +169,29 @@ describe('PermissionService', () => {
     service.createUserPermissions([]).subscribe(res => {
       expect(res.length).toBe(0);
     });
+  });
+
+  it('should get all group permissions', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+    const groupId = 1;
+    const dummyResponse: GroupPermission[] = [
+      {
+        group: null,
+        permission: null,
+      },
+      {
+        group: null,
+        permission: null,
+      },
+    ];
+    service.getGroupPermissions(groupId).subscribe(res => {
+      expect(res.length).toBe(dummyResponse.length);
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.API_URL}/group-permissions/?group=${groupId}&limit=-1`);
+
+    expect(req.request.method).toEqual('GET');
+    req.flush(dummyResponse);
   });
 });
