@@ -37,6 +37,7 @@ describe('TableExportComponent', () => {
       ]
     })
     .compileComponents();
+    spyOn(window, 'open').and.callFake((url: string) => {});
   }));
 
   beforeEach(() => {
