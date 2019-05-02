@@ -33,6 +33,7 @@
               <mat-label i18n>参加时间</mat-label>
               <input matInput [matDatepicker]="picker" placeholder="请告诉我们您所参加培训的时间" formControlName="time"
                 i18n-placeholder required>
+              <mat-hint align="end">您可以使用日期选择器快速选择一个日期 ^</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
               <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
@@ -129,7 +130,7 @@
                 <button mat-button type="button" color="primary" (click)="addFile()" [disabled]="files.length > 2"
                   i18n>添加新附件</button>
               </h3>
-              <div *ngIf='hasOriginalAttachments'>
+              <div *ngIf="hasOriginalAttachments">
                 <div *ngFor="let attachment of originalAttachments">
                   <label><span i18n>文件名:</span>{{ attachment.path.name }}</label>
                   <button mat-button type="button" color="warn" *ngIf="attachment.path.name" (click)="deleteAttachment(attachment)"
