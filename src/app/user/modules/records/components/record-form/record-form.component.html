@@ -134,16 +134,16 @@
                 <div *ngFor="let attachment of originalAttachments">
                   <a [href]="attachment.path.url"><span i18n>文件名:</span>{{ attachment.path.name }}</a>
                   <button mat-button type="button" color="warn" (click)="deleteAttachment(attachment)"
-                  i18n>删除附件</button>
+                    i18n>删除附件</button>
                 </div>
               </div>
               <div *ngFor="let file of files.controls; let i=index">
                 <label><span i18n>文件名:</span>{{ file.value }}</label>
                 <input hidden type="file" #uploadFileInput (change)="onFileAdd($event)" [formControlName]="i" />
                 <button mat-button type="button" *ngIf="!file.value" (click)="uploadFileInput.click()"
-                i18n>选择附件</button>
+                  i18n>选择附件</button>
                 <button mat-button type="button" color="warn" *ngIf="file.value" (click)="onFileRemove(i)"
-                i18n>删除附件</button>
+                  i18n>删除附件</button>
               </div>
               <p class="text-danger" *ngIf="files.length > 2-originalAttachments.length">您最多能上传3个附件。</p>
             </div>
