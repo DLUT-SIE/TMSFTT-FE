@@ -5,16 +5,18 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material';
 import { TableExportService } from 'src/app/shared/services/data/table-export.service';
 import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { WindowService } from 'src/app/shared/services/window.service';
 
 describe('TableExportComponent', () => {
   let component: TableExportComponent;
   let fixture: ComponentFixture<TableExportComponent>;
   let exportTableSubject$ = new Subject<{'url': string}>();
   let snackBarOpen: jasmine.Spy;
-
+  let windowOpen: jasmine.Spy;
   beforeEach(async(() => {
     exportTableSubject$ = new Subject<{'url': string}>();
     snackBarOpen = jasmine.createSpy();
+    windowOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [ TableExportComponent ],
       imports: [
@@ -34,6 +36,12 @@ describe('TableExportComponent', () => {
             open: snackBarOpen,
           }
         },
+        {
+          provide: WindowService,
+          useValue: {
+            open: windowOpen,
+          }
+        }
       ]
     })
     .compileComponents();
@@ -64,6 +72,8 @@ describe('TableExportComponent', () => {
     exportTableSubject$.next({
       url: '/path/to/file',
     } as {url: string});
+    expect(windowOpen).toHaveBeenCalled();
+    expect(windowOpen).toHaveBeenCalledWith('/path/to/file');
     expect(snackBarOpen).toHaveBeenCalled();
     expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '确定', {duration: 3000});
   });
