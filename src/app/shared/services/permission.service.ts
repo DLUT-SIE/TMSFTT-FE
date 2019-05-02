@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, zip, of as observableOf } from 'rxjs';
-import { Permission, UserPermission } from '../interfaces/permission';
+import { Permission, UserPermission, GroupPermission } from '../interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class PermissionService {
     if (this.permissions.length !== 0) {
       return observableOf(this.permissions);
     }
-    return this.http.get<Permission[]>(`${environment.API_URL}/permissions/`).pipe(
+    return this.http.get<Permission[]>(`${environment.API_URL}/permissions/?limit=-1`).pipe(
       tap((permissions: Permission[]) => {
         this.permissions = permissions;
       })
@@ -32,7 +32,7 @@ export class PermissionService {
   /** Retrieve user's permissions. */
   getUserPermissions(userId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
-      `${environment.API_URL}/user-permissions/?user=${userId}`);
+      `${environment.API_URL}/user-permissions/?user=${userId}&limit=-1`);
   }
 
   createUserPermission(req: UserPermission) {
@@ -53,5 +53,10 @@ export class PermissionService {
     // TODO(youchen): Evaluate the performance cost.
     if (permissionIds.length === 0) return observableOf([]);
     return zip(...permissionIds.map(id => this.deleteUserPermission(id)));
+  }
+
+  getGroupPermissions(groupId: number): Observable<GroupPermission[]> {
+    return this.http.get<GroupPermission[]>(
+      `${environment.API_URL}/group-permissions/?group=${groupId}&limit=-1`);
   }
 }

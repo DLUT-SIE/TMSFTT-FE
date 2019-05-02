@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentGroupComponent } from './department-group.component';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
 import { Department } from 'src/app/shared/interfaces/department';
@@ -31,6 +32,20 @@ describe('DepartmentGroupComponent', () => {
           useValue: {
             getGroupByDepartmentName: () => getGroupByDepartmentName$,
           },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            },
+          },
+        },
+        {
+          provide: Router,
+          useValue: {},
         },
       ]
     })
