@@ -7,6 +7,11 @@ export interface RecordAttachment {
   update_time?: string;
   record?: number;
   attachment_type?: AttachmentType;
-  path?: File | string;
+  path?: File | Path;
+}
+
+export interface Path {
+  name: string;
+  url: string;
 }
 

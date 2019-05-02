@@ -26,7 +26,7 @@ export class OffCampusRecordDetailComponent extends GenericListComponent<ReviewN
     user?: number;
     status?: number;
     feedback?: number;
-    attachments?: File[] | RecordAttachment[];
+    attachments?: RecordAttachment[];
     contents?: RecordContent[];
   };
   reviewnotecontent: string;
