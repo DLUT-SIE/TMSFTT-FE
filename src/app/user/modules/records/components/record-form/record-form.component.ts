@@ -14,7 +14,7 @@ import { switchMap, map, debounceTime } from 'rxjs/operators';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { EventService } from 'src/app/shared/services/events/event.service';
-import { RecordAttachment, Path } from 'src/app/shared/interfaces/record-attachment';
+import { RecordAttachment, SecuredPath } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 
 interface FileChangeEvent extends Event {
@@ -47,7 +47,7 @@ export class RecordFormComponent implements OnInit {
   /** The attachments to be uploaded. */
   attachments: File[] = [];
   record: Record;
-  originalAttachments: RecordAttachment[] = [];
+  originalAttachments: {id: number, path: SecuredPath}[] = [];
   hasOriginalAttachments = false;
   isUpdateMode: boolean;
 
@@ -131,9 +131,8 @@ export class RecordFormComponent implements OnInit {
       }
     });
     if (record.attachments.length !== 0) {
-      this.originalAttachments = record.attachments as RecordAttachment[];
-      this.originalAttachments.map( attachment => {
-        attachment.path = attachment.path as Path;
+      (record.attachments as RecordAttachment[]).map(attachment => {
+        this.originalAttachments.push({id: attachment.id, path: attachment.path as SecuredPath});
       });
       this.hasOriginalAttachments = true;
     }
@@ -276,7 +275,7 @@ export class RecordFormComponent implements OnInit {
     this.files.push(this.fb.control(null));
   }
 
-  deleteAttachment(attachment: RecordAttachment) {
+  deleteAttachment(attachment: {id: number, path: SecuredPath}) {
     return this.recordAttachmentService.deleteRecordAttachment(attachment.id).subscribe(
       () => {
         this.originalAttachments = this.originalAttachments.filter(item => item.id !== attachment.id);
