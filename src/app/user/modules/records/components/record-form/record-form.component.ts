@@ -14,7 +14,7 @@ import { switchMap, map, debounceTime } from 'rxjs/operators';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { EventService } from 'src/app/shared/services/events/event.service';
-import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
+import { RecordAttachment, Path } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 
 interface FileChangeEvent extends Event {
@@ -132,6 +132,9 @@ export class RecordFormComponent implements OnInit {
     });
     if (record.attachments.length !== 0) {
       this.originalAttachments = record.attachments as RecordAttachment[];
+      this.originalAttachments.map( attachment => {
+        attachment.path = attachment.path as Path;
+      });
       this.hasOriginalAttachments = true;
     }
   }
@@ -259,10 +262,7 @@ export class RecordFormComponent implements OnInit {
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
+          message = error.error['detail'] + '。';
         }
         this.snackBar.open(message, '关闭');
       });
@@ -279,6 +279,6 @@ export class RecordFormComponent implements OnInit {
         this.originalAttachments = this.originalAttachments.filter(item => item.id !== attachment.id);
       }
     );
-
   }
+
 }

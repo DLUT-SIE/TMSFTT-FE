@@ -19,7 +19,7 @@ export class RecordAttachmentService {
   createRecordAttachment(req: RecordAttachment) {
     const data = new FormData();
     data.set('record', req.record.toString());
-    data.set('path', req.path, (req.path as File).name);
+    data.set('path', req.path as File);
     return this.http.post<RecordAttachment>(
       `${environment.API_URL}/record-attachments/`, data);
   }
