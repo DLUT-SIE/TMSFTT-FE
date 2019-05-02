@@ -16,6 +16,7 @@ import { ListRequest } from 'src/app/shared/interfaces/list-request';
 export class NotificationService extends GenericListService {
   /** Latest unread notifications. */
   unreadNotifications: Notification[] = [];
+  unreadNotificationsLength = 0;
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
@@ -30,13 +31,13 @@ export class NotificationService extends GenericListService {
         switchMap(() => this.getUnReadNotifications({offset: 0})),
         map(res => {
           this.unreadNotifications = res.results;
-          this.unreadNotificationsLoaded = true;
+          this.unreadNotificationsLength = res.count;
         }),
         catchError(() => {
-          this.unreadNotificationsLoaded = true;
+          this.unreadNotificationsLength = 0;
           return observableOf(null);
         }),
-      ).subscribe();
+      ).subscribe(() => this.unreadNotificationsLoaded = true);
     });
   }
 
