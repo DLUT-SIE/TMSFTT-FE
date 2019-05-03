@@ -57,9 +57,9 @@ describe('ThemePickerComponent', () => {
   });
 
   it('should set theme', () => {
-    component.installTheme('purple-green');
-    expect(setStyle).toHaveBeenCalledWith('theme', 'assets/css/purple-green.css');
-    expect(storeTheme).toHaveBeenCalledWith(component.themes[3]);
+    component.installTheme('deeppurple-amber');
+    expect(setStyle).toHaveBeenCalledWith('theme', 'assets/css/deeppurple-amber.css');
+    expect(storeTheme).toHaveBeenCalledWith(component.themes[0]);
   });
 
 });
