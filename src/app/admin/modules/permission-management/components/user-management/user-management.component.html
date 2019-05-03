@@ -1,106 +1,101 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">用户管理</h4>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">用户管理</h4>
+    </div>
+    <div class="card-body" fxLayout="column" fxLayoutAlign="start stretch">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner *ngIf="isLoading" color="primary" mode="indeterminate">
+        </mat-spinner>
+      </div>
+
+      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px" *ngIf="!isLoading">
+        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
+          fxLayoutGap="15px" fxLayoutAlign.xs="start start">
+          <span class="item-title" fxFlex="1 0 20%" fxFlexAlign.xs="start">用户名</span>
+          <div class="item-content" fxFlex="1 0 78%" fxFlexAlign.xs="stretch">
+            <form fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column"
+              fxLayoutAlign.xs="start stretch" (ngSubmit)="retrieveUserPermissions()">
+              <mat-form-field>
+                <input matInput type="text" name="username" [(ngModel)]="username" #usernameModel="ngModel" required>
+                <mat-error *ngIf="usernameModel.hasError('required')">请输入用户名。</mat-error>
+              </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+                <button mat-raised-button type="submit" color="primary" [disabled]="usernameModel.invalid">检索</button>
+                <button mat-raised-button type="button" color="accent" (click)="updatePermissions()"
+                  *ngIf="!isLoading && originalPermissions.length !== 0">保存</button>
+              </div>
+            </form>
+          </div>
+          <div fxFlex="1 0 2%"></div>
         </div>
-        <div class="card-body" fxLayout="column" fxLayoutAlign="start stretch">
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-spinner *ngIf="isLoading" color="warn" mode="indeterminate">
-            </mat-spinner>
+
+        <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+        <mat-divider></mat-divider>
+
+        <ng-container *ngIf="user">
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">ID</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.id }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
           </div>
 
-          <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px"
-            *ngIf="!isLoading">
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
-              fxLayoutGap="15px" fxLayoutAlign.xs="start start">
-              <span class="item-title" fxFlex="1 0 20%" fxFlexAlign.xs="start">用户名</span>
-              <div class="item-content" fxFlex="1 0 78%" fxFlexAlign.xs="stretch">
-                <form fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column" fxLayoutAlign.xs="start stretch"
-                  (ngSubmit)="retrieveUserPermissions()">
-                  <mat-form-field>
-                    <input matInput type="text" name="username" [(ngModel)]="username" #usernameModel="ngModel"
-                      required>
-                    <mat-error *ngIf="usernameModel.hasError('required')">请输入用户名。</mat-error>
-                  </mat-form-field>
-                  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
-                    <button mat-raised-button type="submit" color="primary"
-                      [disabled]="usernameModel.invalid">检索</button>
-                    <button mat-raised-button type="button" color="warn" (click)="updatePermissions()"
-                      *ngIf="!isLoading && originalPermissions.length !== 0">保存</button>
-                  </div>
-                </form>
-              </div>
-              <div fxFlex="1 0 2%"></div>
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">姓名</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.first_name }}
             </div>
-
-            <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
-
-            <mat-divider></mat-divider>
-
-            <ng-container *ngIf="user">
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-                fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">ID</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  {{ user.id }}
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-                fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">姓名</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  {{ user.first_name }}
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-                fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">所属部门及身份</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <mat-chip-list>
-                    <mat-chip color="primary" *ngFor="let group of groups" selected>{{group.name}}</mat-chip>
-                  </mat-chip-list>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-            </ng-container>
-
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px" *ngIf="!isLoading && newPermissions.length !== 0">
-              <span class="item-title" fxFlex="1 0 20%">用户权限</span>
-              <div class="table-responsive" fxFlex="1 0 78%">
-                <table class="table">
-                  <thead class="text-primary">
-                    <th>
-                      权限名称
-                    </th>
-                    <th>
-                      是否拥有该权限？
-                    </th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let perm of newPermissions">
-                      <td>
-                        {{perm.permission.label}}
-                      </td>
-                      <td>
-                        <mat-checkbox [(ngModel)]="perm.hasPermission"></mat-checkbox>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
+            <div fxFlex="1 0 2%"></div>
           </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">所属部门及身份</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <mat-chip-list>
+                <mat-chip color="primary" *ngFor="let group of groups" selected>{{group.name}}</mat-chip>
+              </mat-chip-list>
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+        </ng-container>
+
+        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+          fxLayoutGap="15px" *ngIf="!isLoading && newPermissions.length !== 0">
+          <span class="item-title" fxFlex="1 0 20%">用户权限</span>
+          <div class="table-responsive" fxFlex="1 0 78%">
+            <table class="table">
+              <thead class="text-primary">
+                <th>
+                  权限名称
+                </th>
+                <th>
+                  是否拥有该权限？
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let perm of newPermissions">
+                  <td>
+                    {{perm.permission.label}}
+                  </td>
+                  <td>
+                    <mat-checkbox [(ngModel)]="perm.hasPermission"></mat-checkbox>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div fxFlex="1 0 2%"></div>
         </div>
       </div>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>

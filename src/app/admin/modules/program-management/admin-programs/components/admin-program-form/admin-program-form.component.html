@@ -1,45 +1,43 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">培训项目填报</h4>
-          <p class="card-category">此表单只能提交校内的培训项目</p>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">培训项目填报</h4>
+      <p class="card-category">此表单只能提交校内的培训项目</p>
+    </div>
+    <div class="card-body">
+      <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="programForm" fxLayout="column">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>note_add</mat-icon>
+          <mat-label i18n>培训名称</mat-label>
+          <input matInput type="text" placeholder="请提供培训项目的名称" formControlName="name" i18n-placeholder required>
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+            <span *ngIf="!!name.errors.required" i18n>
+              您需要提供培训项目的名称。
+            </span>
+            <span *ngIf="!!name.errors.maxlength" i18n>
+              培训项目的名称不能超过50个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>note_add</mat-icon>
+          <mat-select placeholder="请培训项目的类别" formControlName="categoryId" required>
+            <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.type">
+              {{ programCategory.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
+            <span *ngIf="!!categoryId.errors.required" i18n>
+              您需要提供培训项目的类别。
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+          <button mat-raised-button type="submit" color="primary" [disabled]="programForm.invalid" i18n>提交</button>
         </div>
-        <div class="card-body">
-          <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="programForm" fxLayout="column">
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>note_add</mat-icon>
-              <mat-label i18n>培训名称</mat-label>
-              <input matInput type="text" placeholder="请告诉我们您要创建培训项目的名称" formControlName="name" i18n-placeholder required>
-              <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
-                <span *ngIf="!!name.errors.required" i18n>
-                  您需要提供培训项目的名称。
-                </span>
-                <span *ngIf="!!name.errors.maxlength" i18n>
-                  培训项目的名称不能超过50个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>note_add</mat-icon>
-              <mat-select placeholder="请告诉我们您要创建培训项目的培训类别" formControlName="categoryId" required>
-                <mat-option *ngFor="let programCategory of programCategories" [value]="programCategory.type">
-                  {{ programCategory.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
-                <span *ngIf="!!categoryId.errors.required" i18n>
-                  您需要提供培训项目的类别。
-                </span>
-              </mat-error>
-            </mat-form-field>
-            <button mat-raised-button type="submit" color="primary"  i18n>提交</button>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
-
-

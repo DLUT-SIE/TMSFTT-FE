@@ -1,56 +1,53 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">通知详情</h4>
-        </div>
-        <div class="card-body">
-          <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">发送人</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ notification.sender }}</p>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">发送时间</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ notification.time | date:'y年M月d日 H:mm:ss' }}</p>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-
-            <div class="detail-item" *ngIf="notification.read_time"
-                 fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">阅读时间</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ notification.read_time | date:'y年M月d日 H:mm:ss' }}</p>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-
-            <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-              <span class="item-title" fxFlex="1 0 20%">通知内容</span>
-              <div class="item-content" fxFlex="1 0 78%">
-                <p>{{ notification.content }}</p>
-              </div>
-              <div fxFlex="1 0 2%"></div>
-            </div>
-
-            <mat-divider></mat-divider>
-            <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-              <a mat-raised-button color="primary" (click)="location.back()">返回</a>
-            </div>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">通知详情</h4>
+    </div>
+    <div class="card-body">
+      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+          fxLayoutGap="15px">
+          <span class="item-title" fxFlex="1 0 20%">发送人</span>
+          <div class="item-content" fxFlex="1 0 78%">
+            <p>{{ notification.sender }}</p>
           </div>
+          <div fxFlex="1 0 2%"></div>
+        </div>
+
+        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+          fxLayoutGap="15px">
+          <span class="item-title" fxFlex="1 0 20%">发送时间</span>
+          <div class="item-content" fxFlex="1 0 78%">
+            <p>{{ notification.time | date:'y年M月d日 H:mm:ss' }}</p>
+          </div>
+          <div fxFlex="1 0 2%"></div>
+        </div>
+
+        <div class="detail-item" *ngIf="notification.read_time" fxLayout="row" fxLayout.xs="column"
+          fxLayoutAlign="space-between start" fxLayoutGap="15px">
+          <span class="item-title" fxFlex="1 0 20%">阅读时间</span>
+          <div class="item-content" fxFlex="1 0 78%">
+            <p>{{ notification.read_time | date:'y年M月d日 H:mm:ss' }}</p>
+          </div>
+          <div fxFlex="1 0 2%"></div>
+        </div>
+
+        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+          fxLayoutGap="15px">
+          <span class="item-title" fxFlex="1 0 20%">通知内容</span>
+          <div class="item-content" fxFlex="1 0 78%">
+            <p>{{ notification.content }}</p>
+          </div>
+          <div fxFlex="1 0 2%"></div>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+          <a mat-raised-button color="primary" (click)="location.back()">返回</a>
         </div>
       </div>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>

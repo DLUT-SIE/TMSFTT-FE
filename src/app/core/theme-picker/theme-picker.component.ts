@@ -6,6 +6,7 @@ import {
 import {StyleManager} from 'src/app/shared/services/style-manager.service';
 import { SiteTheme } from 'src/app/shared/interfaces/theme';
 import { ThemeStorage } from './theme-storage.service';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -47,13 +48,14 @@ export class ThemePickerComponent {
   ];
 
   constructor(
-    public styleManager: StyleManager,
+    readonly styleManager: StyleManager,
+    private readonly snackBar: MatSnackBar,
     private readonly themeStorage: ThemeStorage,
   ) {
-    this.installTheme(this.themeStorage.getStoredThemeName());
+    this.installTheme(this.themeStorage.getStoredThemeName(), true);
   }
 
-  installTheme(themeName: string) {
+  installTheme(themeName: string, disableNotify?: boolean) {
     const theme = this.themes.find(currentTheme => currentTheme.name === themeName);
 
     if (!theme) {
@@ -71,6 +73,10 @@ export class ThemePickerComponent {
 
     if (this.currentTheme) {
       this.themeStorage.storeTheme(this.currentTheme);
+    }
+    /* istanbul ignore next */
+    if (!disableNotify) {
+      this.snackBar.open('主题变更成功!', '关闭', {duration: 1500});
     }
   }
 }
