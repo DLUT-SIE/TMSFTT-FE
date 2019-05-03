@@ -11,6 +11,7 @@ import { PermissionDeniedComponent } from './permission-denied/permission-denied
 import { NotificationDetailComponent } from './notification-detail/notification-detail.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ThemePickerComponent } from './theme-picker/theme-picker.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { NotificationComponent } from './notification/notification.component';
     NotificationDetailComponent,
     NotificationListComponent,
     NotificationComponent,
+    ThemePickerComponent,
   ],
   exports: [
     FooterComponent,

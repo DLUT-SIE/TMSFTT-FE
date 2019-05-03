@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { WindowService } from 'src/app/shared/services/window.service';
+import { AppThemePickerDirectiveStub } from 'src/testing/app-theme-picker-stub';
 
 @Component({
   selector: '<app-test-navbar>',
@@ -46,6 +47,7 @@ describe('NavbarComponent', () => {
       declarations: [
         NavbarComponent,
         TestNavbarComponent,
+        AppThemePickerDirectiveStub,
       ],
       providers: [
         {
