@@ -310,7 +310,7 @@ describe('RecordService', () => {
 
     service.batchSubmitRecord(new File([], 'a.xlsx')).subscribe();
 
-    const url = `${environment.API_URL}/records/actions/batch-submit/`;
+    const url = `${environment.API_URL}/records/batch-submit/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
