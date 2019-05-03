@@ -63,7 +63,6 @@ describe('TableExportComponent', () => {
     exportTableSubject$.error({
       statusText: 'Raw error message',
     } as HttpErrorResponse);
-    expect(snackBarOpen).toHaveBeenCalled();
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 
@@ -72,9 +71,7 @@ describe('TableExportComponent', () => {
     exportTableSubject$.next({
       url: '/path/to/file',
     } as {url: string});
-    expect(windowOpen).toHaveBeenCalled();
     expect(windowOpen).toHaveBeenCalledWith('/path/to/file');
-    expect(snackBarOpen).toHaveBeenCalled();
     expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '确定', {duration: 3000});
   });
 });
