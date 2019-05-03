@@ -363,10 +363,10 @@ describe('RecordFormComponent', () => {
   });
 
   it('should delete attachment when edit it.', () => {
-    component.originalAttachments = [{id: 1}, {id: 2}];
-    component.deleteAttachment({id: 2});
-    deleteRecordAttachment$.next({id: 2});
+    component.originalAttachments = [{id: 1, path: {name: 'sdsdj', url: '1433223'}}];
+    component.deleteAttachment({id: 1, path: {name: 'sdsdj', url: '1433223'}});
+    deleteRecordAttachment$.next({});
 
-    expect(component.originalAttachments).toEqual([{id: 1}]);
+    expect(component.originalAttachments.length).toEqual(0);
   });
 });

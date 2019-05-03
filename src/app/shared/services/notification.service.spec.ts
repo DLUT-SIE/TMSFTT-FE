@@ -107,11 +107,12 @@ describe('NotificationService', () => {
     authenticationSucceed$.next();
     const getUnReadNotifications = spyOn(service, 'getUnReadNotifications');
 
-    getUnReadNotifications.and.returnValue(observableOf({ results: [{}, {}] }));
+    getUnReadNotifications.and.returnValue(observableOf({ count: 20, results: [{}, {}] }));
 
     tick(1000);
 
     expect(service.unreadNotifications.length).toBe(2);
+    expect(service.unreadNotificationsLength).toBe(20);
 
     discardPeriodicTasks();
   }));
