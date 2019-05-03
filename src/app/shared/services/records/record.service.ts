@@ -139,7 +139,7 @@ export class RecordService extends GenericListService {
   }
 
   getNumberOfRecordsWithoutFeedback() {
-    return this.http.get<{'count': number}>(`${environment.API_URL}/records/get-number-of-records-without-feedback/`);
+    return this.http.get<{'count': number}>(`${environment.API_URL}/records/no-feedback-records-count/`);
   }
 
   batchSubmitRecord(file: File) {
