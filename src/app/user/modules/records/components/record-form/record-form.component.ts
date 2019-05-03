@@ -47,7 +47,7 @@ export class RecordFormComponent implements OnInit {
   /** The attachments to be uploaded. */
   attachments: File[] = [];
   record: Record;
-  originalAttachments: {id: number, path: SecuredPath}[] = [];
+  originalAttachments: Array<{id: number, path: SecuredPath}> = [];
   hasOriginalAttachments = false;
   isUpdateMode: boolean;
 
