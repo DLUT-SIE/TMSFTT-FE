@@ -155,15 +155,15 @@ export class RecordService extends GenericListService {
     return this.http.post(`/campus-event-feedbacks/`, data);
   }
 
-  updateRecordStatus(record: Record, is_approved: boolean, isDepartmentAdmin: boolean, isSchoolAdmin: boolean) {
+  updateRecordStatus(record: Record, isApproved: boolean, isDepartmentAdmin: boolean, isSchoolAdmin: boolean) {
     const data = {
       id: record.id,
       user: record.user,
       contents: [],
       attachments: [],
       feedback: null,
-      is_approved: is_approved
-    }
+      is_approved: isApproved
+    };
     if ((isDepartmentAdmin) && (!isSchoolAdmin)) {
       return this.http.post(`${environment.API_URL}/records/${record.id}/department-admin-review/`, data);
     }

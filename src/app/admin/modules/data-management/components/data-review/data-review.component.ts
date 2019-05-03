@@ -26,10 +26,10 @@ export class DataReviewComponent implements OnInit {
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
-  statuschange(is_approved: boolean) {
+  statuschange(isApproved: boolean) {
     const isDepartmentAdmin = this.authService.isDepartmentAdmin;
     const isSchoolAdmin = this.authService.isSchoolAdmin;
-    this.recordService.updateRecordStatus(this.record, is_approved, isDepartmentAdmin, isSchoolAdmin)
+    this.recordService.updateRecordStatus(this.record, isApproved, isDepartmentAdmin, isSchoolAdmin)
     .subscribe(() => {
       this.snackBar.open('状态已更改！', '关闭');
       },
