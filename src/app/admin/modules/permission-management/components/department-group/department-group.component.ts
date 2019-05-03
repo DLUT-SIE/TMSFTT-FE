@@ -18,9 +18,9 @@ export class DepartmentGroupComponent implements OnInit {
   departmentGroup: Group[] = [];
 
   constructor(
-    protected readonly route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private readonly groupService: GroupService,
-    protected readonly router: Router,
+    private readonly router: Router,
   ) { }
 
   @Input()

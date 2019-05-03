@@ -20,9 +20,9 @@ export interface UserPermission {
 
 /** GroupPermission objects are related to specific group. */
 export interface GroupPermission {
-    /** The id of the user-permission. */
+    /** The id of the group-permission. */
     id?: number;
-    /** The id of the user. */
+    /** The id of the group. */
     group?: number;
     /** The id of the permission. */
     permission?: number;
