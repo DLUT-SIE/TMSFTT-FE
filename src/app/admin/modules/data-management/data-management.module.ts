@@ -11,9 +11,6 @@ import { DataGraphComponent } from './components/data-graph/data-graph.component
 import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-graph-canvas.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableExportComponent } from './components/table-export/table-export.component';
-import { DataGraphComponent } from './components/data-graph/data-graph.component';
-import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-graph-canvas.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
