@@ -9,6 +9,9 @@ import { DepartmentManagementComponent } from './components/department-managemen
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentListComponent } from './components/department-list/department-list.component';
 import { DepartmentGroupComponent } from './components/department-group/department-group.component';
+import { DepartmentGroupDetailComponent } from './components/department-group-detail/department-group-detail.component';
+import { DepartmentGroupUserComponent } from './components/department-group-user/department-group-user.component';
+import { DepartmentGroupPermissionComponent } from './components/department-group-permission/department-group-permission.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { DepartmentGroupComponent } from './components/department-group/departme
     DepartmentDetailComponent,
     DepartmentListComponent,
     DepartmentGroupComponent,
+    DepartmentGroupDetailComponent,
+    DepartmentGroupUserComponent,
+    DepartmentGroupPermissionComponent,
   ],
   imports: [
     SharedModule,

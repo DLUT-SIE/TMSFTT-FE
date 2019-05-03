@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let group of departmentGroup">
-            <td>{{ group.name }}</td>
+            <td (click)="navigateToDetail(group)">{{ group.name }}</td>
           </tr>
         </tbody>
       </table>

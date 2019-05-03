@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Group } from 'src/app/shared/interfaces/group';
 import { Department } from 'src/app/shared/interfaces/department';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
@@ -17,7 +18,9 @@ export class DepartmentGroupComponent implements OnInit {
   departmentGroup: Group[] = [];
 
   constructor(
+    private readonly route: ActivatedRoute,
     private readonly groupService: GroupService,
+    private readonly router: Router,
   ) { }
 
   @Input()
@@ -35,5 +38,10 @@ export class DepartmentGroupComponent implements OnInit {
     ).subscribe(res => {
       this.departmentGroup = res.results;
     });
+  }
+
+  /** Navigate to detail page which is related to current route. */
+  navigateToDetail(row: Group) {
+    this.router.navigate(['../groups', row.id], { relativeTo: this.route });
   }
 }

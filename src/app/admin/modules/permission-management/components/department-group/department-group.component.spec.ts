@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentGroupComponent } from './department-group.component';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
 import { Department } from 'src/app/shared/interfaces/department';
-import { Subject } from 'rxjs';
+import { of as observableOf, Subject } from 'rxjs';
 import { Group } from 'src/app/shared/interfaces/group';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
@@ -15,13 +16,27 @@ function generatePaginatedGroups(n?: number): PaginatedResponse<Group> {
   const res = { count: n, previous: '', next: '', results: group};
   return res;
 }
-
 describe('DepartmentGroupComponent', () => {
   let component: DepartmentGroupComponent;
   let fixture: ComponentFixture<DepartmentGroupComponent>;
   let getGroupByDepartmentName$: Subject<{}>;
+  let navigate: jasmine.Spy;
+  const route = {
+    queryParams: observableOf({ group_id: 1 }),
+    snapshot: {
+      queryParamMap: {
+        get: () => '1',
+      },
+    }
+  };
+
+  const dummyGroup: Group = {
+    id: 1,
+    name: 'name',
+  };
 
   beforeEach(async(() => {
+    navigate = jasmine.createSpy();
     getGroupByDepartmentName$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [ DepartmentGroupComponent ],
@@ -30,6 +45,16 @@ describe('DepartmentGroupComponent', () => {
           provide: GroupService,
           useValue: {
             getGroupByDepartmentName: () => getGroupByDepartmentName$,
+          },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: route,
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate,
           },
         },
       ]
@@ -54,5 +79,12 @@ describe('DepartmentGroupComponent', () => {
     getGroupByDepartmentName$.next(generatePaginatedGroups(n));
 
     expect(component.departmentGroup.length).toBe(n);
+  });
+
+  it('should navigate to detail', () => {
+    component.navigateToDetail(dummyGroup);
+
+    expect(navigate).toHaveBeenCalledWith(
+      ['../groups', dummyGroup.id], { relativeTo: route });
   });
 });
