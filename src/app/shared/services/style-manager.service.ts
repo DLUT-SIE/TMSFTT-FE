@@ -1,48 +1,22 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { SiteTheme } from '../interfaces/theme';
+import { Observable, ReplaySubject } from 'rxjs';
 
 
-/**
- * Class for managing stylesheets. Stylesheets are loaded into named slots so that they can be
- * removed or changed later.
- */
+/** Class for managing stylesheets. */
 @Injectable({
   providedIn: 'root'
 })
 export class StyleManager {
-  /**
-   * Set the stylesheet with the specified key.
-   */
-  setStyle(key: string, href: string) {
-    getLinkElementForKey(key).setAttribute('href', href);
+  themeChanged: Observable<SiteTheme>;
+
+  private readonly themeChanged$ = new ReplaySubject<SiteTheme>();
+
+  constructor() {
+    this.themeChanged = this.themeChanged$;
   }
 
-  /**
-   * Remove the stylesheet with the specified key.
-   */
-  removeStyle(key: string) {
-    const existingLinkElement = getExistingLinkElementByKey(key);
-    if (existingLinkElement) {
-      document.head.removeChild(existingLinkElement);
-    }
+  setTheme(theme: SiteTheme) {
+    this.themeChanged$.next(theme);
   }
-}
-
-function getLinkElementForKey(key: string) {
-  return getExistingLinkElementByKey(key) || createLinkElementWithKey(key);
-}
-
-function getExistingLinkElementByKey(key: string) {
-  return document.head.querySelector(`link[rel="stylesheet"].${getClassNameForKey(key)}`);
-}
-
-function createLinkElementWithKey(key: string) {
-  const linkEl = document.createElement('link');
-  linkEl.setAttribute('rel', 'stylesheet');
-  linkEl.classList.add(getClassNameForKey(key));
-  document.head.appendChild(linkEl);
-  return linkEl;
-}
-
-function getClassNameForKey(key: string) {
-  return `style-manager-${key}`;
 }

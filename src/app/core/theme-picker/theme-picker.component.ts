@@ -24,27 +24,24 @@ export class ThemePickerComponent {
       primary: '#673AB7',
       accent: '#FFC107',
       name: 'deeppurple-amber',
-      isDark: false,
     },
     {
       primary: '#3F51B5',
       accent: '#E91E63',
       name: 'indigo-pink',
-      isDark: false,
-      isDefault: true,
     },
-  //   {
-  //     primary: '#E91E63',
-  //     accent: '#607D8B',
-  //     name: 'pink-bluegrey',
-  //     isDark: true,
-  //   },
-  //   {
-  //     primary: '#9C27B0',
-  //     accent: '#4CAF50',
-  //     name: 'purple-green',
-  //     isDark: true,
-  //   },
+    // {
+    //   primary: '#E91E63',
+    //   accent: '#607D8B',
+    //   name: 'pink-bluegrey',
+    //   isDark: true,
+    // },
+    // {
+    //   primary: '#9C27B0',
+    //   accent: '#4CAF50',
+    //   name: 'purple-green',
+    //   isDark: true,
+    // },
   ];
 
   constructor(
@@ -64,16 +61,12 @@ export class ThemePickerComponent {
     }
 
     this.currentTheme = theme;
-
-    if (theme.isDefault) {
-      this.styleManager.removeStyle('theme');
-    } else {
-      this.styleManager.setStyle('theme', `assets/css/${theme.name}.css`);
-    }
+    this.styleManager.setTheme(theme);
 
     if (this.currentTheme) {
       this.themeStorage.storeTheme(this.currentTheme);
     }
+
     /* istanbul ignore next */
     if (!disableNotify) {
       this.snackBar.open('主题变更成功!', '关闭', {duration: 1500});

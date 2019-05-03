@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Location, PopStateEvent, DOCUMENT } from '@angular/common';
 import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -7,20 +7,25 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { PlatformService } from './shared/services/platform.service';
 import { PlatformType } from './shared/enums/platform-type.enum';
 import { WindowService } from './shared/services/window.service';
+import { StyleManager } from './shared/services/style-manager.service';
+import { SiteTheme } from './shared/interfaces/theme';
 
 /** Root component. */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css', './app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('themeContainer') themeContainer: ElementRef;
   /** Record the last popped url. */
   private lastPoppedUrl: string;
   /** Record the y-axis state for all routes */
   private yScrollStack: number[] = [];
 
   constructor(
+    readonly styleManager: StyleManager,
     private readonly location: Location,
     private readonly platformService: PlatformService,
     private readonly router: Router,
@@ -29,6 +34,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.styleManager.themeChanged.subscribe((theme: SiteTheme) => {
+      (this.themeContainer.nativeElement as HTMLElement).classList.value = theme.name;
+    });
+
     if (this.platformService.platformType === PlatformType.WINDOWS
       && !this.document.body.classList.contains('sidebar-mini')) {
       // if we are on windows OS we activate the perfectScrollbar function
