@@ -3,30 +3,25 @@ import * as echarts from 'echarts';
 import { EChartOption } from 'echarts';
 import { GraphData } from 'src/app/shared/interfaces/graph-data';
 import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
-import { ParamSelector } from 'src/app/shared/interfaces/visual-graph-param-selector';
+import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
+import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 
 @Component({
-  selector: 'app-visual-graph-builder',
-  templateUrl: './visual-graph-builder.component.html',
-  styleUrls: ['./visual-graph-builder.component.css']
+  selector: 'app-data-graph-canvas',
+  templateUrl: './data-graph-canvas.component.html',
+  styleUrls: ['./data-graph-canvas.component.css']
 })
+export class DataGraphCanvasComponent implements OnInit {
 
-export class VisualGraphBuilderComponent implements OnInit {
-
-  @Input() titleGraphNames: string;
+  @Input() graphTypeName: string;
   @Input() isPieGraph: boolean;
 
   chartOption?: EChartOption;
   echartsInstance: echarts.ECharts;
-  pieGraphData: PieGraphData[] = [];
-  title: string;
 
-  // Following two variables should be assigned by calling relevant services
+  // TODO(wangyang): Following two variables should be assigned by calling relevant services
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
-  seriesData: GraphData[] = [{id: 0, data: [120, 101, 90, 134, 230, 132, 210]}, {id: 1, data: [320, 301, 390, 302, 330, 320, 334]}];
-
-  private titleYear: string;
-  private titleDepartment: string;
+  seriesData: GraphData[] = [{seriesNum: 0, data: [120, 101, 90, 134, 230, 132, 210]}, {seriesNum: 1, data: [320, 301, 390, 302, 330, 320, 334]}];
 
   doubleBarChartOption: EChartOption = {
     legend: {
@@ -38,7 +33,7 @@ export class VisualGraphBuilderComponent implements OnInit {
     formatter: '{c0}'
     },
     title: {
-        text: this.title,
+        text: '',
         left: '50%',
         textAlign: 'center'
     },
@@ -149,7 +144,7 @@ export class VisualGraphBuilderComponent implements OnInit {
   };
   pieChartOption: EChartOption = {
     title: [{
-        text: this.title,
+        text: '',
         left: 'center',
         top: 20,
         textStyle: {
@@ -188,26 +183,30 @@ export class VisualGraphBuilderComponent implements OnInit {
     ]
   };
 
-  @Input() set graphParam(val: ParamSelector) {
+  @Input() set graphParam(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
-    this.titleYear = val.selectedStartYear === val.selectedEndYear ?
+    const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
-    this.titleDepartment = val.selectedDepartment;
-    this.title = `${this.titleYear} ${this.titleDepartment} ${this.titleGraphNames}`;
+    const title = `${titleYear} ${val.selectedDepartment} ${this.graphTypeName}`;
 
     if (this.isPieGraph) {
         const data: number[] = this.seriesData[0].data;
-        this.pieGraphData = [];
-        for (let i = 0; i < data.length; i ++) {
-            this.pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+        let pieGraphData: PieGraphData[] = [];
+        for (let i = 0; i < data.length; i++) {
+            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
-        this.pieGraphData.sort( (a, b) => a.value - b.value);
-        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = this.title;
-        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].data = this.pieGraphData;
+        pieGraphData.sort( (a, b) => a.value - b.value);
+        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].data = pieGraphData;
         this.chartOption = this.pieChartOption;
     } else {
-      if (val.selectedStatisticsType === 0 || val.selectedStatisticsType === 2)this.chartOption = this.doubleBarChartOption;
-      else this.chartOption = this.barChartOption;
+        if (val.selectedStatisticsType === StatisticsType.STAFF_STATISTICS ||
+            val.selectedStatisticsType === StatisticsType.FULL_TIME_TEACHER_TRAINED_COVERAGE) {
+            this.chartOption = this.doubleBarChartOption;
+        }
+        else {
+            this.chartOption = this.barChartOption;
+        }
     }
     if (this.echartsInstance) this.echartsInstance.setOption(this.chartOption);
   }

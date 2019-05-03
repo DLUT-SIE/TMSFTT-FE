@@ -1,4 +1,4 @@
-export interface MatOptionType {
+export interface OptionType {
     type?: number;
     name?: string;
  }
