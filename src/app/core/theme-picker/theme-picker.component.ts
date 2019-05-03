@@ -32,18 +32,18 @@ export class ThemePickerComponent {
       isDark: false,
       isDefault: true,
     },
-    {
-      primary: '#E91E63',
-      accent: '#607D8B',
-      name: 'pink-bluegrey',
-      isDark: true,
-    },
-    {
-      primary: '#9C27B0',
-      accent: '#4CAF50',
-      name: 'purple-green',
-      isDark: true,
-    },
+  //   {
+  //     primary: '#E91E63',
+  //     accent: '#607D8B',
+  //     name: 'pink-bluegrey',
+  //     isDark: true,
+  //   },
+  //   {
+  //     primary: '#9C27B0',
+  //     accent: '#4CAF50',
+  //     name: 'purple-green',
+  //     isDark: true,
+  //   },
   ];
 
   constructor(
