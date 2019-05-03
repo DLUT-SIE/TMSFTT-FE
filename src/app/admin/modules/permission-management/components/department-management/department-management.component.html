@@ -1,11 +1,9 @@
-<div class="container-fluid">
-  <div class="row" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center"
-    fxLayoutGap="15px" fxLayoutAlign.xs="start start">
-    <div fxFlex="50">
-      <app-department-list (departmentSelect)="onchanged($event)"></app-department-list>
-    </div>
-    <div fxFlex="30">
-      <app-department-group [departmentSelected]="departmentSelected"></app-department-group>
-    </div>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start"
+  fxLayoutGap="15px" fxLayoutAlign.xs="stretch">
+  <div fxFlex="grow">
+    <app-department-list (departmentSelect)="onchanged($event)"></app-department-list>
+  </div>
+  <div fxFlex="grow">
+    <app-department-group [departmentSelected]="departmentSelected"></app-department-group>
   </div>
 </div>
