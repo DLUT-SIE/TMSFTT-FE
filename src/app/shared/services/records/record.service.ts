@@ -145,7 +145,7 @@ export class RecordService extends GenericListService {
   batchSubmitRecord(file: File) {
     const data = new FormData();
     data.set('file', file);
-    return this.http.post<{'count': number}>(`${environment.API_URL}/records/actions/batch-submit/`, data);
+    return this.http.post<{'count': number}>(`${environment.API_URL}/records/batch-submit/`, data);
   }
 
   createFeedback(recordID: number, feedbackData: string) {
