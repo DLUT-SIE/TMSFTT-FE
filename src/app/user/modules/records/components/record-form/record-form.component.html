@@ -1,159 +1,156 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">培训记录填报</h4>
-          <p class="card-category">此表单只能填写提交教师参加校外培训的记录,校内培训记录将由组织培训的部门进行录入。</p>
-        </div>
-        <div class="card-body">
-          <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="recordForm" fxLayout="column">
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>note_add</mat-icon>
-              <mat-label i18n>培训名称</mat-label>
-              <input matInput type="text" placeholder="请告诉我们您所参加培训的名称" [matAutocomplete]="auto" formControlName="name"
-                i18n-placeholder required>
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                  <span>培训：{{ option.name }} | 时间：{{ option.time | date:'y年M月d日' }} | 地点：{{ option.location }}</span>
-                </mat-option>
-              </mat-autocomplete>
-              <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
-                <span *ngIf="!!name.errors.required" i18n>
-                  您需要提供所参加培训的名称。
-                </span>
-                <span *ngIf="!!name.errors.maxlength" i18n>
-                  参加培训的名称不能超过50个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">培训记录填报</h4>
+      <p class="card-category">此表单只能填写提交教师参加校外培训的记录,校内培训记录将由组织培训的部门进行录入。</p>
+    </div>
+    <div class="card-body">
+      <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="recordForm" fxLayout="column">
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>note_add</mat-icon>
+          <mat-label i18n>培训名称</mat-label>
+          <input matInput type="text" placeholder="请告诉我们您所参加培训的名称" [matAutocomplete]="auto" formControlName="name"
+            i18n-placeholder required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              <span>培训：{{ option.name }} | 时间：{{ option.time | date:'y年M月d日' }} |
+                地点：{{ option.location }}</span>
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+            <span *ngIf="!!name.errors.required" i18n>
+              您需要提供所参加培训的名称。
+            </span>
+            <span *ngIf="!!name.errors.maxlength" i18n>
+              参加培训的名称不能超过50个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>calendar_today</mat-icon>
-              <mat-label i18n>参加时间</mat-label>
-              <input matInput [matDatepicker]="picker" placeholder="请告诉我们您所参加培训的时间" formControlName="time"
-                i18n-placeholder required>
-              <mat-hint align="end">您可以使用日期选择器快速选择一个日期 ^</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
-              <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
-                <span *ngIf="!!time.errors.required" i18n>
-                  您需要提供您所参加培训的时间。
-                </span>
-                <span *ngIf="!!time.errors.maxlength" i18n>
-                  参加培训的时间不能超过30个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <mat-label i18n>参加时间</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="请告诉我们您所参加培训的时间" formControlName="time" i18n-placeholder
+            required>
+          <mat-hint align="end">您可以使用日期选择器快速选择一个日期 ^</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+          <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
+            <span *ngIf="!!time.errors.required" i18n>
+              您需要提供您所参加培训的时间。
+            </span>
+            <span *ngIf="!!time.errors.maxlength" i18n>
+              参加培训的时间不能超过30个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>place</mat-icon>
-              <mat-label i18n>参加地点</mat-label>
-              <input matInput type="text" placeholder="请告诉我们您所参加校内培训活动的地点" formControlName="location" i18n-placeholder
-                required>
-              <mat-error *ngIf="location.invalid && (location.dirty || location.touched)">
-                <span *ngIf="!!location.errors.required" i18n>
-                  您需要提供您所参加的校内培训活动的地点。
-                </span>
-                <span *ngIf="!!location.errors.maxlength" i18n>
-                  参加校内培训活动的地点不能超过50个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>place</mat-icon>
+          <mat-label i18n>参加地点</mat-label>
+          <input matInput type="text" placeholder="请告诉我们您所参加校内培训活动的地点" formControlName="location" i18n-placeholder
+            required>
+          <mat-error *ngIf="location.invalid && (location.dirty || location.touched)">
+            <span *ngIf="!!location.errors.required" i18n>
+              您需要提供您所参加的校内培训活动的地点。
+            </span>
+            <span *ngIf="!!location.errors.maxlength" i18n>
+              参加校内培训活动的地点不能超过50个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>access_time</mat-icon>
-              <mat-label i18n>参加学时</mat-label>
-              <input matInput type="number" placeholder="请告诉我们您所参加培训的时长" formControlName="numHours" i18n-placeholder
-                required>
-              <mat-error *ngIf="numHours.invalid && (numHours.dirty || numHours.touched)">
-                <span *ngIf="!!numHours.errors.required" i18n>
-                  您需要提供您所参加培训的时长。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>access_time</mat-icon>
+          <mat-label i18n>参加学时</mat-label>
+          <input matInput type="number" placeholder="请告诉我们您所参加培训的时长" formControlName="numHours" i18n-placeholder
+            required>
+          <mat-error *ngIf="numHours.invalid && (numHours.dirty || numHours.touched)">
+            <span *ngIf="!!numHours.errors.required" i18n>
+              您需要提供您所参加培训的时长。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>people</mat-icon>
-              <mat-label i18n>参加人数</mat-label>
-              <input matInput type="number" placeholder="请告诉我们您所参加培训的参加人数" formControlName="numParticipants"
-                i18n-placeholder required>
-              <mat-error *ngIf="numParticipants.invalid && (numParticipants.dirty || numParticipants.touched)">
-                <span *ngIf="!!numParticipants.errors.required" i18n>
-                  您需要提供您所参加培训的参加人数。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>people</mat-icon>
+          <mat-label i18n>参加人数</mat-label>
+          <input matInput type="number" placeholder="请告诉我们您所参加培训的参加人数" formControlName="numParticipants"
+            i18n-placeholder required>
+          <mat-error *ngIf="numParticipants.invalid && (numParticipants.dirty || numParticipants.touched)">
+            <span *ngIf="!!numParticipants.errors.required" i18n>
+              您需要提供您所参加培训的参加人数。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>assignment</mat-icon>
-              <mat-label i18n>培训内容</mat-label>
-              <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder
-                required></textarea>
-              <mat-error *ngIf="content.invalid && (content.dirty || content.touched)">
-                <span *ngIf="!!content.errors.required" i18n>
-                  您需要提供您所参加培训的培训内容。
-                </span>
-                <span *ngIf="!!content.errors.maxlength" i18n>
-                  参加培训的培训内容不能超过200个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>assignment</mat-icon>
+          <mat-label i18n>培训内容</mat-label>
+          <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder
+            required></textarea>
+          <mat-error *ngIf="content.invalid && (content.dirty || content.touched)">
+            <span *ngIf="!!content.errors.required" i18n>
+              您需要提供您所参加培训的培训内容。
+            </span>
+            <span *ngIf="!!content.errors.maxlength" i18n>
+              参加培训的培训内容不能超过200个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>assignment</mat-icon>
-              <mat-label i18n>培训总结</mat-label>
-              <textarea matInput placeholder="请告诉我们您对本次培训的总结，您也可以通过上传附件的形式提交该部分内容" formControlName="summary"
-                i18n-placeholder></textarea>
-              <mat-error *ngIf="summary.invalid && (summary.dirty || summary.touched)">
-                <span *ngIf="!!summary.errors.maxlength" i18n>
-                  参加培训的培训总结不能超过200个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>assignment</mat-icon>
+          <mat-label i18n>培训总结</mat-label>
+          <textarea matInput placeholder="请告诉我们您对本次培训的总结，您也可以通过上传附件的形式提交该部分内容" formControlName="summary"
+            i18n-placeholder></textarea>
+          <mat-error *ngIf="summary.invalid && (summary.dirty || summary.touched)">
+            <span *ngIf="!!summary.errors.maxlength" i18n>
+              参加培训的培训总结不能超过200个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-icon matPrefix>assignment</mat-icon>
-              <mat-label i18n>培训反馈</mat-label>
-              <textarea matInput placeholder="请告诉我们您对本次培训的一些意见，您也可以通过上传附件的形式提交该部分内容" formControlName="feedback"
-                i18n-placeholder></textarea>
-              <mat-error *ngIf="feedback.invalid && (feedback.dirty || feedback.touched)">
-                <span *ngIf="!!feedback.errors.maxlength" i18n>
-                  参加培训的培训反馈不能超过200个字符。
-                </span>
-              </mat-error>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>assignment</mat-icon>
+          <mat-label i18n>培训反馈</mat-label>
+          <textarea matInput placeholder="请告诉我们您对本次培训的一些意见，您也可以通过上传附件的形式提交该部分内容" formControlName="feedback"
+            i18n-placeholder></textarea>
+          <mat-error *ngIf="feedback.invalid && (feedback.dirty || feedback.touched)">
+            <span *ngIf="!!feedback.errors.maxlength" i18n>
+              参加培训的培训反馈不能超过200个字符。
+            </span>
+          </mat-error>
+        </mat-form-field>
 
-            <div formArrayName="files">
-              <h3>
-                <span i18n>附件</span>
-                <button mat-button type="button" color="primary" (click)="addFile()" [disabled]="files.length > 2-originalAttachments.length"
-                  i18n>添加新附件</button>
-              </h3>
-              <p class="text-danger" *ngIf="files.length > 2-originalAttachments.length">您最多能上传3个附件。</p>
-              <div *ngIf="hasOriginalAttachments">
-                <div *ngFor="let attachment of originalAttachments">
-                  <a [href]="attachment.path.url"><span i18n>文件名:</span>{{ attachment.path.name }}</a>
-                  <button mat-button type="button" color="warn" (click)="deleteAttachment(attachment)"
-                    i18n>删除附件</button>
-                </div>
-              </div>
-              <div *ngFor="let file of files.controls; let i=index">
-                <label><span i18n>文件名:</span>{{ file.value }}</label>
-                <input hidden type="file" #uploadFileInput (change)="onFileAdd($event)" [formControlName]="i" />
-                <button mat-button type="button" *ngIf="!file.value" (click)="uploadFileInput.click()"
-                  i18n>选择附件</button>
-                <button mat-button type="button" color="warn" *ngIf="file.value" (click)="onFileRemove(i)"
-                  i18n>删除附件</button>
-              </div>
+        <div formArrayName="files">
+          <h3>
+            <span i18n>附件</span>
+            <button mat-button type="button" color="primary" (click)="addFile()"
+              [disabled]="files.length > 2-originalAttachments.length" i18n>添加新附件</button>
+          </h3>
+          <p class="text-danger" *ngIf="files.length > 2-originalAttachments.length">您最多能上传3个附件。</p>
+          <div *ngIf="hasOriginalAttachments">
+            <div *ngFor="let attachment of originalAttachments">
+              <a [href]="attachment.path.url"><span i18n>文件名:</span>{{ attachment.path.name }}</a>
+              <button mat-button type="button" color="warn" (click)="deleteAttachment(attachment)" i18n>删除附件</button>
             </div>
-
-            <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-              <button mat-raised-button type="submit" color="warn" [disabled]="recordForm.invalid" i18n>提交</button>
-            </div>
-          </form>
+          </div>
+          <div *ngFor="let file of files.controls; let i=index">
+            <label><span i18n>文件名:</span>{{ file.value }}</label>
+            <input hidden type="file" #uploadFileInput (change)="onFileAdd($event)" [formControlName]="i" />
+            <button mat-button type="button" *ngIf="!file.value" (click)="uploadFileInput.click()" i18n>选择附件</button>
+            <button mat-button type="button" color="warn" *ngIf="file.value" (click)="onFileRemove(i)"
+              i18n>删除附件</button>
+          </div>
         </div>
-      </div>
+
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+          <button mat-raised-button type="submit" color="primary" [disabled]="recordForm.invalid" i18n>提交</button>
+        </div>
+      </form>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>

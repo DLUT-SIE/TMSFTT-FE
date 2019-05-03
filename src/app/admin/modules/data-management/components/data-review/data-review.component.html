@@ -1,22 +1,19 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">培训数据详情</h4>
-        </div>
-        <div class="card-body">
-          <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
-          <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-            <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-              <button mat-raised-button class="btn btn-danger">通过</button>
-              <button mat-raised-button class="btn btn-danger">不通过</button>
-              <button mat-raised-button class="btn btn-danger" (click)="location.back()">返回</button>
-            </div>
-
-          </div>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">培训数据详情</h4>
+    </div>
+    <div class="card-body">
+      <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
+      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+          <button mat-raised-button color="primary">通过</button>
+          <button mat-raised-button color="primary">不通过</button>
+          <button mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </div>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>

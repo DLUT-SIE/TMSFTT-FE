@@ -6,6 +6,7 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
+/** TODO(youchen): Fix broken component. */
 @Component({
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',

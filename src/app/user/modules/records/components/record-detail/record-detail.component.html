@@ -1,75 +1,72 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">培训数据详情</h4>
-        </div>
-        <div class="card-body">
-          <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
-          <ng-template #thenBlock>
-            <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
-          </ng-template>
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title">培训数据详情</h4>
+    </div>
+    <div class="card-body">
+      <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
+      </ng-template>
 
-          <ng-template #elseBlock>
-            <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">项目名称</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.campus_event.name }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">时间</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.campus_event.time | date:'y.M.d H:mm' }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">学时</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.campus_event.num_hours | number:"1.1-1" }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">人数</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.campus_event.num_participants }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
-
-              <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-              fxLayoutGap="15px">
-                <span class="item-title" fxFlex="1 0 20%">人员信息</span>
-                <div class="item-content" fxFlex="1 0 78%">
-                  <p>{{ record.user }}</p>
-                </div>
-                <div fxFlex="1 0 2%"></div>
-              </div>
+      <ng-template #elseBlock>
+        <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">项目名称</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <p>{{ record.campus_event.name }}</p>
             </div>
-          </ng-template>
+            <div fxFlex="1 0 2%"></div>
+          </div>
 
-          <mat-divider></mat-divider>
-          <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-            <a mat-raised-button color="warn" *ngIf="!isCampusEventRecord && editable"
-            (click)="navigateToForm()">编辑</a>
-            <a mat-raised-button color="warn" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
-            (click)="openDialog()">提交反馈</a>
-            <a mat-raised-button color="warn" (click)="location.back()">返回</a> 
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">时间</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <p>{{ record.campus_event.time | date:'y.M.d H:mm' }}</p>
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">学时</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <p>{{ record.campus_event.num_hours | number:"1.1-1" }}</p>
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">人数</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <p>{{ record.campus_event.num_participants }}</p>
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">人员信息</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              <p>{{ record.user }}</p>
+            </div>
+            <div fxFlex="1 0 2%"></div>
           </div>
         </div>
+      </ng-template>
+
+      <mat-divider></mat-divider>
+      <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
+        <a mat-raised-button color="primary" *ngIf="!isCampusEventRecord && editable" (click)="navigateToForm()">编辑</a>
+        <a mat-raised-button color="primary" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
+          (click)="openDialog()">提交反馈</a>
+        <a mat-raised-button color="primary" (click)="location.back()">返回</a>
       </div>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
