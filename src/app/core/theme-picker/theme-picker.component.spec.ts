@@ -10,14 +10,12 @@ describe('ThemePickerComponent', () => {
   let fixture: ComponentFixture<ThemePickerComponent>;
   let getStoredThemeName: jasmine.Spy;
   let storeTheme: jasmine.Spy;
-  let removeStyle: jasmine.Spy;
-  let setStyle: jasmine.Spy;
+  let setTheme: jasmine.Spy;
 
   beforeEach(async(() => {
     getStoredThemeName = jasmine.createSpy().and.returnValue('indigo-pink');
     storeTheme = jasmine.createSpy();
-    removeStyle = jasmine.createSpy();
-    setStyle = jasmine.createSpy();
+    setTheme = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
@@ -26,7 +24,7 @@ describe('ThemePickerComponent', () => {
         {
           provide: StyleManager,
           useValue: {
-            removeStyle, setStyle,
+            setTheme,
           },
         },
         {
@@ -57,14 +55,13 @@ describe('ThemePickerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should remove default theme', () => {
-    component.installTheme('indigo-pink');
-    expect(removeStyle).toHaveBeenCalledWith('theme');
-  });
-
   it('should set theme', () => {
     component.installTheme('deeppurple-amber');
-    expect(setStyle).toHaveBeenCalledWith('theme', 'assets/css/deeppurple-amber.css');
+    expect(setTheme).toHaveBeenCalledWith({
+      primary: '#673AB7',
+      accent: '#FFC107',
+      name: 'deeppurple-amber',
+    });
     expect(storeTheme).toHaveBeenCalledWith(component.themes[0]);
   });
 

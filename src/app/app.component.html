@@ -1,13 +1,15 @@
-<div class="wrapper">
-    <div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/dlut-2.jpeg">
-        <app-sidebar></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(./assets/img/dlut-2.jpeg)"></div>
-    </div>
-    <div class="main-panel">
-        <app-navbar></app-navbar>
-        <div class="main-content">
-            <router-outlet></router-outlet>
+<div #themeContainer>
+    <div class="wrapper">
+        <div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/dlut-2.jpeg">
+            <app-sidebar></app-sidebar>
+            <div class="sidebar-background" style="background-image: url(./assets/img/dlut-2.jpeg)"></div>
         </div>
-        <app-footer></app-footer>
+        <div class="main-panel">
+            <app-navbar></app-navbar>
+            <div class="main-content">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
+        </div>
     </div>
 </div>
