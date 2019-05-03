@@ -21,7 +21,10 @@ export class DataGraphCanvasComponent implements OnInit {
 
   // TODO(wangyang): Following two variables should be assigned by calling relevant services
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
-  seriesData: GraphData[] = [{seriesNum: 0, data: [120, 101, 90, 134, 230, 132, 210]}, {seriesNum: 1, data: [320, 301, 390, 302, 330, 320, 334]}];
+  seriesData: GraphData[] = [
+    {seriesNum: 0, data: [120, 101, 90, 134, 230, 132, 210]},
+    {seriesNum: 1, data: [320, 301, 390, 302, 330, 320, 334]}
+  ];
 
   doubleBarChartOption: EChartOption = {
     legend: {
@@ -191,7 +194,7 @@ export class DataGraphCanvasComponent implements OnInit {
 
     if (this.isPieGraph) {
         const data: number[] = this.seriesData[0].data;
-        let pieGraphData: PieGraphData[] = [];
+        const pieGraphData: PieGraphData[] = [];
         for (let i = 0; i < data.length; i++) {
             pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
@@ -203,8 +206,7 @@ export class DataGraphCanvasComponent implements OnInit {
         if (val.selectedStatisticsType === StatisticsType.STAFF_STATISTICS ||
             val.selectedStatisticsType === StatisticsType.FULL_TIME_TEACHER_TRAINED_COVERAGE) {
             this.chartOption = this.doubleBarChartOption;
-        }
-        else {
+        } else {
             this.chartOption = this.barChartOption;
         }
     }
