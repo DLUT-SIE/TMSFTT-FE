@@ -1,0 +1,68 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" [formGroup]="selectedGraph">
+      <div fxFlex="1 1 20%">
+        <mat-form-field>
+          <mat-label>选择统计类型</mat-label>
+          <mat-select formControlName="selectedStatisticsType">
+            <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="1 1 20%" *ngIf="selectedGraph.get('selectedStatisticsType').value !== null">
+        <mat-form-field>
+          <mat-label>选择分组类型</mat-label>
+          <mat-select formControlName="selectedGroupType">
+            <mat-option *ngFor="let groupType of secondType[selectedGraph.get('selectedStatisticsType').value]" [value]="groupType.type">{{groupType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="1 1 20%">
+        <mat-form-field>
+          <mat-label>输入起始年份</mat-label>
+          <mat-select  formControlName="selectedStartYear" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="selectedGraph.get('selectedStartYear').hasError('required')">您必须选择一个开始年份</mat-error>
+        </mat-form-field>
+        <div *ngIf="selectedGraph.errors?.timeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的开始年份</div>
+      </div>
+      <div fxFlex="1 1 20%">
+        <mat-form-field>
+          <mat-label>输入终止年份</mat-label>
+          <mat-select formControlName="selectedEndYear" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="selectedGraph.get('selectedEndYear').hasError('required')">您必须选择一个结束年份</mat-error>
+        </mat-form-field>
+        <div *ngIf="selectedGraph.errors?.timeValidator" class="cross-validation-error-message alert alert-danger">请选择正确的结束年份</div>
+      </div>
+      <div fxFlex="1 1 20%" *ngIf="showDepartmentSelector">
+        <mat-form-field>
+          <mat-label>选择学院</mat-label>
+          <mat-select formControlName="selectedDepartment">
+            <mat-option *ngFor="let department of departmentsList" [value]="department">{{department}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  </div>
+  <div *ngIf="selectedGraphValues">
+    <div fxLayout="row">
+      <div fxFlex="1 1 50%">
+        <div>
+          <app-data-graph-canvas [isPieGraph]="true" [graphParam]="selectedGraphValues" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
+        </div>
+      </div>
+      <div fxFlex="1 1 50%">
+          <div >
+            <app-data-graph-canvas [isPieGraph]="true" [graphParam]="selectedGraphValues" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
+          </div>
+      </div>
+    </div>
+    <div>
+      <app-data-graph-canvas [isPieGraph]="false" [graphParam]="selectedGraphValues" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
+    </div>
+  </div>
+</div>
