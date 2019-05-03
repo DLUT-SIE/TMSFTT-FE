@@ -9,6 +9,7 @@ import { PlatformService } from 'src/app/shared/services/platform.service';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { RecordService } from 'src/app/shared/services/records/record.service';
+import { AppThemePickerDirectiveStub } from 'src/testing/app-theme-picker-stub';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -25,6 +26,7 @@ describe('SidebarComponent', () => {
       ],
       declarations: [
         SidebarComponent,
+        AppThemePickerDirectiveStub,
       ],
       providers: [
         {
