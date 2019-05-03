@@ -1,4 +1,4 @@
 export interface GraphData {
-    id?: number;
+    seriesNum?: number;
     data?: number[];
  }

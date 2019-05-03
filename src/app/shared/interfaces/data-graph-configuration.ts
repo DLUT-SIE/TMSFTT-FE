@@ -1,4 +1,4 @@
-export interface ParamSelector {
+export interface DataGraphConfiguration {
   selectedStatisticsType?: number;
   selectedGroupType?: number;
   selectedStartYear?: number;
