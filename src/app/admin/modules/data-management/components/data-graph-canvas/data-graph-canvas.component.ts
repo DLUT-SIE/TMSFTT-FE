@@ -15,6 +15,32 @@ export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
   @Input() isPieGraph: boolean;
+  @Input() set graphParam(val: DataGraphConfiguration) {
+    if (!(val && Object.keys(val)))return;
+    const titleYear = val.selectedStartYear === val.selectedEndYear ?
+        `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
+    const title = `${titleYear} ${val.selectedDepartment} ${this.graphTypeName}`;
+
+    if (this.isPieGraph) {
+        const data: number[] = this.seriesData[0].data;
+        const pieGraphData: PieGraphData[] = [];
+        for (let i = 0; i < data.length; i++) {
+            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+        }
+        pieGraphData.sort( (a, b) => a.value - b.value);
+        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].data = pieGraphData;
+        this.chartOption = this.pieChartOption;
+    } else {
+        if (val.selectedStatisticsType === StatisticsType.STAFF_STATISTICS ||
+            val.selectedStatisticsType === StatisticsType.FULL_TIME_TEACHER_TRAINED_COVERAGE) {
+            this.chartOption = this.doubleBarChartOption;
+        } else {
+            this.chartOption = this.barChartOption;
+        }
+    }
+    if (this.echartsInstance) this.echartsInstance.setOption(this.chartOption);
+  }
 
   chartOption?: EChartOption;
   echartsInstance: echarts.ECharts;
@@ -185,33 +211,6 @@ export class DataGraphCanvasComponent implements OnInit {
         }
     ]
   };
-
-  @Input() set graphParam(val: DataGraphConfiguration) {
-    if (!(val && Object.keys(val)))return;
-    const titleYear = val.selectedStartYear === val.selectedEndYear ?
-        `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
-    const title = `${titleYear} ${val.selectedDepartment} ${this.graphTypeName}`;
-
-    if (this.isPieGraph) {
-        const data: number[] = this.seriesData[0].data;
-        const pieGraphData: PieGraphData[] = [];
-        for (let i = 0; i < data.length; i++) {
-            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
-        }
-        pieGraphData.sort( (a, b) => a.value - b.value);
-        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].data = pieGraphData;
-        this.chartOption = this.pieChartOption;
-    } else {
-        if (val.selectedStatisticsType === StatisticsType.STAFF_STATISTICS ||
-            val.selectedStatisticsType === StatisticsType.FULL_TIME_TEACHER_TRAINED_COVERAGE) {
-            this.chartOption = this.doubleBarChartOption;
-        } else {
-            this.chartOption = this.barChartOption;
-        }
-    }
-    if (this.echartsInstance) this.echartsInstance.setOption(this.chartOption);
-  }
 
   onChartInit(ec: echarts.ECharts) {
       this.echartsInstance = ec;
