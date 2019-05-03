@@ -12,8 +12,8 @@
     <div *ngIf="platformService.isMobile">
         <ul class="nav navbar-nav nav-mobile-menu">
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <i class="material-icons">notifications</i>
                     <span class="notification">{{ notificationService.unreadNotificationsLength }}</span>
                     <p>
@@ -28,12 +28,23 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+                <a class="nav-link">
                     <i class="material-icons">person</i>
                     <p>
-                        <span class="d-lg-none d-md-block">Account</span>
+                        <span class="d-lg-none d-md-block">用户: {{authService.username}}</span>
                     </p>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="material-icons">business</i>
+                    <p>
+                        <span class="d-lg-none d-md-block">院系: {{authService.departmentName}}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <app-theme-picker></app-theme-picker>
             </li>
         </ul>
     </div>
@@ -44,8 +55,10 @@
         <li routerLinkActive="active" *ngFor="let menuItem of regularUserRouteItems"
             class="{{ menuItem.class }} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
-                <ng-container *ngIf="menuItem.title === '个人培训记录' && recordService.numberOfRecordsWithoutFeedback !== 0; else itemWithoutBadge">
-                    <i [matBadge]="recordService.numberOfRecordsWithoutFeedback" matBadgeColor="warn" class="material-icons">{{ menuItem.icon }}</i>
+                <ng-container
+                    *ngIf="menuItem.title === '个人培训记录' && recordService.numberOfRecordsWithoutFeedback !== 0; else itemWithoutBadge">
+                    <i [matBadge]="recordService.numberOfRecordsWithoutFeedback" matBadgeColor="warn"
+                        class="material-icons">{{ menuItem.icon }}</i>
                 </ng-container>
                 <ng-template #itemWithoutBadge>
                     <i class="material-icons">{{ menuItem.icon }}</i>
