@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ThemePickerComponent } from './theme-picker.component';
-import { MatIconModule, MatSnackBarModule } from '@angular/material';
+import { MatIconModule, MatSnackBar } from '@angular/material';
 import { StyleManager } from 'src/app/shared/services/style-manager.service';
 import { ThemeStorage } from './theme-storage.service';
 
@@ -21,7 +21,6 @@ describe('ThemePickerComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
-        MatSnackBarModule,
       ],
       providers: [
         {
@@ -34,6 +33,12 @@ describe('ThemePickerComponent', () => {
           provide: ThemeStorage,
           useValue: {
             getStoredThemeName, storeTheme,
+          },
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: () => {},
           },
         },
       ],
