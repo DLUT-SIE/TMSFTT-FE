@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start"
   fxLayoutGap="15px" fxLayoutAlign.xs="stretch">
   <div fxFlex="grow">
-    <app-department-list (departmentSelect)="onchanged($event)"></app-department-list>
+    <app-department-group-user [groupId]="groupId"></app-department-group-user>
   </div>
   <div fxFlex="grow">
-    <app-department-group [departmentSelected]="departmentSelected"></app-department-group>
+    <app-department-group-permission [groupId]="groupId"></app-department-group-permission>
   </div>
 </div>

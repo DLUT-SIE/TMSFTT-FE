@@ -18,6 +18,16 @@ export interface UserPermission {
     permission?: number;
 }
 
+/** GroupPermission objects are related to specific group. */
+export interface GroupPermission {
+    /** The id of the group-permission. */
+    id?: number;
+    /** The id of the group. */
+    group?: number;
+    /** The id of the permission. */
+    permission?: number;
+}
+
 /** The status of user for specific permission, it's temporary object. */
 export interface UserPermissionStatus {
     /** The id of the user-permission. */
