@@ -24,7 +24,7 @@ export class DataGraphComponent implements OnInit {
 
   selectedGraphValues: DataGraphConfiguration = null;
   selectedGraph: FormGroup;
-  showDepartmentSelector: boolean = true;
+  showDepartmentSelector = true;
   yearList: number[] = [];
 
   // TODO(wangyang): create a service to archieve department data from the backend.
