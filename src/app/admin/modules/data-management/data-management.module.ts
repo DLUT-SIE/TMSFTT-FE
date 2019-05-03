@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { TableExportComponent } from './components/table-export/table-export.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-graph-canvas.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BatchSubmitComponent,
     TableExportComponent,
     DataGraphComponent,
+    DataGraphCanvasComponent,
   ],
   imports: [
     SharedModule,
