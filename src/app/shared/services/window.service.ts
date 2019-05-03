@@ -11,6 +11,11 @@ export class WindowService {
     window.location.href = url;
   }
 
+  /* istanbul ignore next */
+  open(url: string) {
+    window.open(url);
+  }
+
   /** Get the native window object. */
   get nativeWindow() {
     return window;
