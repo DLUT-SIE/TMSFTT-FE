@@ -1,6 +1,6 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Subject, throwError } from 'rxjs';
+import { Subject, throwError, of as observableOf } from 'rxjs';
 
 import { RecordService } from './record.service';
 import { RecordContentService } from './record-content.service';
@@ -289,12 +289,21 @@ describe('RecordService', () => {
     getRecordContents$.next([]);
   });
 
-  it('should return 0 if getNumberOfRecordsWithoutFeedback() fail', fakeAsync(() => {
+  it('should return count of records without feedback,', fakeAsync(() => {
     const service: RecordService = TestBed.get(RecordService);
 
-    tick(1000);
+    const spy = spyOn(service, 'getNumberOfRecordsWithoutFeedback');
+    spy.and.returnValue(observableOf({count: 10}));
+
+    tick(environment.REFRESH_INTERVAL);
 
     expect(service.numberOfRecordsWithoutFeedback).toBe(10);
+
+    discardPeriodicTasks();
+  }));
+
+  it('should return 0 if getNumberOfRecordsWithoutFeedback() fail', fakeAsync(() => {
+    const service: RecordService = TestBed.get(RecordService);
 
     const spy = spyOn(service, 'getNumberOfRecordsWithoutFeedback');
 

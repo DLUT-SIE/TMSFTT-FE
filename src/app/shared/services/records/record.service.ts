@@ -31,9 +31,9 @@ export class RecordService extends GenericListService {
     super(http);
     timer(0, environment.REFRESH_INTERVAL).pipe(
       switchMap(() => this.getNumberOfRecordsWithoutFeedback()),
-      catchError(() => observableOf(0)),
-    ).subscribe(cnt => {
-      this.numberOfRecordsWithoutFeedback = cnt;
+      catchError(() => observableOf({count: 0})),
+    ).subscribe((cnt: {count: number}) => {
+      this.numberOfRecordsWithoutFeedback = cnt.count;
     });
   }
 
@@ -139,7 +139,7 @@ export class RecordService extends GenericListService {
   }
 
   getNumberOfRecordsWithoutFeedback() {
-    return observableOf(10);
+    return this.http.get<{'count': number}>(`${environment.API_URL}/records/get-number-of-records-without-feedback/`);
   }
 
   batchSubmitRecord(file: File) {
