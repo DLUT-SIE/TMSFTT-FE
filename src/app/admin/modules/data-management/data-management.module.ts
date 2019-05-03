@@ -7,8 +7,8 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataReviewComponent } from './components/data-review/data-review.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
-import { VisualGraphParamSelectorComponent } from './components/visual-graph-param-selector/visual-graph-param-selector.component';
-import { VisualGraphBuilderComponent } from './components/visual-graph-builder/visual-graph-builder.component';
+import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-graph-canvas.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableExportComponent } from './components/table-export/table-export.component';
 
@@ -19,8 +19,8 @@ import { TableExportComponent } from './components/table-export/table-export.com
     RecordListComponent,
     DataReviewComponent,
     BatchSubmitComponent,
-    VisualGraphParamSelectorComponent,
-    VisualGraphBuilderComponent,
+    DataGraphComponent,
+    DataGraphCanvasComponent,
     TableExportComponent,
   ],
   imports: [

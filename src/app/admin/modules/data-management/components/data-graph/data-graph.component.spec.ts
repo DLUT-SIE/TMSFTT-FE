@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualGraphParamSelectorComponent, timeValidator } from './visual-graph-param-selector.component';
-import { VisualGraphBuilderComponent } from '../visual-graph-builder/visual-graph-builder.component';
+import { DataGraphComponent, timeValidator } from './data-graph.component';
+import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('VisualGraphParamSelectorComponent', () => {
-  let component: VisualGraphParamSelectorComponent;
-  let fixture: ComponentFixture<VisualGraphParamSelectorComponent>;
+describe('DataGraphComponent', () => {
+  let component: DataGraphComponent;
+  let fixture: ComponentFixture<DataGraphComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VisualGraphParamSelectorComponent, VisualGraphBuilderComponent ],
+      declarations: [ DataGraphComponent, DataGraphCanvasComponent ],
       imports: [
         MatFormFieldModule,
         MatSelectModule,
@@ -26,7 +26,7 @@ describe('VisualGraphParamSelectorComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisualGraphParamSelectorComponent);
+    fixture = TestBed.createComponent(DataGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

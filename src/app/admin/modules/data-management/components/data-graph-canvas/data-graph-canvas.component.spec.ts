@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualGraphBuilderComponent } from './visual-graph-builder.component';
+import { DataGraphCanvasComponent } from './data-graph-canvas.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 
-describe('VisualGraphBuilderComponent', () => {
-  let component: VisualGraphBuilderComponent;
-  let fixture: ComponentFixture<VisualGraphBuilderComponent>;
+describe('DataGraphCanvasComponent', () => {
+  let component: DataGraphCanvasComponent;
+  let fixture: ComponentFixture<DataGraphCanvasComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VisualGraphBuilderComponent ],
+      declarations: [ DataGraphCanvasComponent ],
       imports: [ NgxEchartsModule ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisualGraphBuilderComponent);
+    fixture = TestBed.createComponent(DataGraphCanvasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
