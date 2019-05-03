@@ -4,7 +4,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Subject } from 'rxjs';
+import { of as observableOf, Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { PlatformService } from './shared/services/platform.service';
@@ -12,6 +12,7 @@ import { RouterLinkDirectiveStub } from 'src/testing/router-link-directive-stub'
 import { AUTH_SERVICE } from './shared/interfaces/auth-service';
 import { WindowService } from './shared/services/window.service';
 import { PlatformType } from './shared/enums/platform-type.enum';
+import { StyleManager } from './shared/services/style-manager.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -89,6 +90,12 @@ describe('AppComponent(Windows)', () => {
           useValue: location$,
         },
         {
+          provide: StyleManager,
+          useValue: {
+            themeChanged: observableOf({name: 'indigo-pink'}),
+          },
+        },
+        {
           provide: WindowService,
           useValue: {
             nativeWindow: {
@@ -122,6 +129,11 @@ describe('AppComponent(Windows)', () => {
 
     // If we are on WINDOWS.
     expect(document.body.classList).toContain('perfect-scrollbar-on');
+  });
+
+  it('should set theme class', () => {
+    const element = app.themeContainer.nativeElement as HTMLElement;
+    expect(element.classList.contains('indigo-pink')).toBeTruthy();
   });
 
   it('should set y scroll to its previous position.', () => {
