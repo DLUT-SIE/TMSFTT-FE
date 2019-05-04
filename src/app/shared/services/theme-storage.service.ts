@@ -25,10 +25,10 @@ export class ThemeStorage {
 
   getStoredThemeName(): string | null {
     try {
-      return this.storageService.getItem(ThemeStorage.storageKey) || /* istanbul ignore next */ null;
+      return this.storageService.getItem(ThemeStorage.storageKey) || /* istanbul ignore next */ 'indigo-pink';
     } catch {
       /* istanbul ignore next */
-      return null;
+      return 'indigo-pink';
     }
   }
 
