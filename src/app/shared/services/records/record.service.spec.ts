@@ -19,8 +19,8 @@ import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response'
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
   let authenticationSucceed$: Subject<void>;
-  let getRecordAttachments$: Subject<RecordAttachment[]>;
-  let getRecordContents$: Subject<RecordContent[]>;
+  let getRecordAttachments$: Subject<PaginatedResponse<RecordAttachment>>;
+  let getRecordContents$: Subject<PaginatedResponse<RecordContent>>;
   let getEvent$: Subject<CampusEvent>;
   let getOffCampusEvent$: Subject<OffCampusEvent>;
   let getRecords$: Subject<PaginatedResponse<Record>>;
@@ -249,8 +249,8 @@ describe('RecordService', () => {
     const offCampusEventRecord: Record = {
       off_campus_event: 3,
       user: 1,
-      contents: [],
-      attachments: [],
+      contents: {count: 0, next: '', previous: '', results: []},
+      attachments: {count: 0, next: '', previous: '', results: []},
     };
     const getRecord = spyOn(service, 'getRecord');
     getRecord.and.returnValue(getRecord$);
@@ -262,8 +262,8 @@ describe('RecordService', () => {
     });
     getRecord$.next(offCampusEventRecord);
     getOffCampusEvent$.next({});
-    getRecordAttachments$.next([]);
-    getRecordContents$.next([]);
+    getRecordAttachments$.next({count: 0, next: '', previous: '', results: []});
+    getRecordContents$.next({count: 0, next: '', previous: '', results: []});
   });
 
   it('shoule get campus-event record with detail data', () => {
@@ -285,8 +285,8 @@ describe('RecordService', () => {
     });
     getRecord$.next(campusEventRecord);
     getEvent$.next({});
-    getRecordAttachments$.next([]);
-    getRecordContents$.next([]);
+    getRecordAttachments$.next({count: 0, next: '', previous: '', results: []});
+    getRecordContents$.next({count: 0, next: '', previous: '', results: []});
   });
 
   it('should return count of records without feedback,', fakeAsync(() => {
