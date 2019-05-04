@@ -6,45 +6,7 @@
       <p class="card-category">您可以查看所有历史培训记录</p>
     </div>
     <div class="card-body">
-      <div class="loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner></mat-spinner>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-hover text-center">
-          <thead class="text-primary">
-            <tr>
-              <th>项目名称</th>
-              <th>时间</th>
-              <th>地点</th>
-              <th>学时</th>
-              <th>人数</th>
-              <th>审核状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let record of results" (click)="navigateToDetail(record)">
-              <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
-              <ng-template #thenBlock>
-                <td>{{ record.off_campus_event.name }}</td>
-                <td>{{ record.off_campus_event.time | date:'y.M.d H:mm' }}</td>
-                <td>{{ record.off_campus_event.location }}</td>
-                <td>{{ record.off_campus_event.num_hours | number:"1.0-2" }}</td>
-                <td>{{ record.off_campus_event.num_participants }}</td>
-                <td>{{ record.status_str }}</td>
-              </ng-template>
-              <ng-template #elseBlock>
-                <td>{{ record.campus_event.name }}</td>
-                <td>{{ record.campus_event.time | date:'y.M.d H:mm' }}</td>
-                <td>{{ record.campus_event.location }}</td>
-                <td>{{ record.campus_event.num_hours | number:"1.0-2" }}</td>
-                <td>{{ record.campus_event.num_participants }}</td>
-                <td>{{ record.status_str }}</td>
-              </ng-template>
-            </tr>
-          </tbody>
-        </table>
-        <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
-      </div>
+      <app-shared-record-list [recordListType]="recordListType"></app-shared-record-list>
     </div>
   </div>
   <div fxFlex.lg="1 1 calc(1em)"></div>
