@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@mixin sidebar-theme($theme, $extra-theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  li.active a.nav-link {
+      background-color: mat-color($primary, 400);
+      box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px mat-color($primary);
+  }
+}

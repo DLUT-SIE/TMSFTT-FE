@@ -1,7 +1,11 @@
 @import '../../app/app.component';
 @import '../../app/user/components/dashboard/dashboard.component';
+@import '../../app/core/sidebar/sidebar.component';
+@import '../../app/core/navbar/navbar.component';
 
-@mixin component-themes($theme) {
-  @include app-theme($theme);
-  @include dashboard-theme($theme);
+@mixin component-themes($theme, $extra-theme) {
+  @include app-theme($theme, $extra-theme);
+  @include dashboard-theme($theme, $extra-theme);
+  @include sidebar-theme($theme, $extra-theme);
+  @include navbar-theme($theme, $extra-theme);
 }

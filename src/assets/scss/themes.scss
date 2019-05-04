@@ -3,22 +3,30 @@
 
 @include mat-core();
 
-.indigo-pink {
+.indigo-blue {
   $primary: mat-palette($mat-indigo);
-  $accent: mat-palette($mat-pink);
-  $warn: mat-palette($mat-red);
-  $indigo-pink-theme: mat-light-theme($primary, $accent, $warn);
-
-  @include angular-material-theme($indigo-pink-theme);
-  @include component-themes($indigo-pink-theme);
-}
-
-.deeppurple-amber {
-  $primary: mat-palette($mat-deep-purple);
   $accent: mat-palette($mat-teal);
   $warn: mat-palette($mat-red);
+  $indigo-pink-theme: mat-light-theme($primary, $accent, $warn);
+  $primary-2: mat-palette($mat-blue);
+  $accent-2: mat-palette($mat-cyan);
+  $warn-2: mat-palette($mat-orange);
+  $extra-theme: mat-light-theme($primary-2, $accent-2, $warn-2);
+
+  @include angular-material-theme($indigo-pink-theme);
+  @include component-themes($indigo-pink-theme, $extra-theme);
+}
+
+.pink-deep-purple {
+  $primary: mat-palette($mat-pink);
+  $accent: mat-palette($mat-purple);
+  $warn: mat-palette($mat-red);
   $deeppurple-amber-theme: mat-light-theme($primary, $accent, $warn);
+  $primary-2: mat-palette($mat-deep-purple);
+  $accent-2: mat-palette($mat-amber);
+  $warn-2: mat-palette($mat-orange);
+  $extra-theme: mat-light-theme($primary-2, $accent-2, $warn-2);
 
   @include angular-material-theme($deeppurple-amber-theme);
-  @include component-themes($deeppurple-amber-theme);
+  @include component-themes($deeppurple-amber-theme, $extra-theme);
 }

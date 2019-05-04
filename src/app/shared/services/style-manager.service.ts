@@ -14,14 +14,14 @@ import { MatSnackBar } from '@angular/material';
 export class StyleManager {
   readonly themes: SiteTheme[] = [
     {
-      primary: '#3F51B5',
-      accent: '#E91E63',
-      name: 'indigo-pink',
+      primary: 'rgb(99, 114, 191)',
+      accent: 'rgb(78, 169, 242)',
+      name: 'indigo-blue',
     },
     {
-      primary: '#673AB7',
-      accent: '#FFC107',
-      name: 'deeppurple-amber',
+      primary: 'rgb(232, 73, 127)',
+      accent: 'rgb(131, 98, 193)',
+      name: 'pink-deep-purple',
     },
     // {
     //   primary: '#E91E63',
@@ -54,8 +54,8 @@ export class StyleManager {
   }
 
   setTheme(themeName: string) {
-    const theme = this.themes.find(currentTheme => currentTheme.name === themeName);
-    if (!theme || (this.currentTheme && theme.name === this.currentTheme.name)) {
+    const theme = this.themes.find(currentTheme => currentTheme.name === themeName) || this.themes[0];
+    if (this.currentTheme && theme.name === this.currentTheme.name) {
       return;
     }
     const isFirstSet = !this.currentTheme;
@@ -81,24 +81,12 @@ export class StyleManager {
     return this.divsMap.get(colorName);
   }
 
-  private getColor(colorName: string) {
+  getColor(colorName: string) {
     const div = this.getHelperDivForColor(colorName);
     if (!div) {
       /* istanbul ignore next */
       return this.currentTheme.primary;
     }
     return this.windowService.getComputedStyle(div).color;
-  }
-
-  get primaryColor() {
-    return this.getColor('primary');
-  }
-
-  get accentColor() {
-    return this.getColor('accent');
-  }
-
-  get warnColor() {
-    return this.getColor('warn');
   }
 }

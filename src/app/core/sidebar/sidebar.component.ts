@@ -26,7 +26,7 @@ export const REGULAR_USER_ROUTE_ITEMS: RouteInfo[] = [
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.css']
+    styleUrls: ['./sidebar.component.scss', './sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
     superAdminRouteItems = SUPERADMIN_ROUTE_ITEMS;

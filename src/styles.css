@@ -60,14 +60,7 @@ tr:hover {
     font-family: sans-serif;
     font-size: 1.5em;
     font-weight: bold;
-    color: rgb(232, 73, 73);
 }
-
-tr.selected {
-  background-color: rgb(232, 73, 73) !important;
-  color: white;
-}
-
 
 mat-divider {
     margin-top: 5px !important;
