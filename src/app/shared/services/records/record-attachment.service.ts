@@ -26,10 +26,9 @@ export class RecordAttachmentService {
   /** Get multiple attachments. */
   getRecordAttachments(ids: number[]) {
     if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
-    const params = new Map<string, string>();
-    params.set('id__in', ids.toString());
-    const queryParams = Array.from(params.keys()).sort().map(
-      key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
+
+    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
+
     return this.http.get<PaginatedResponse<RecordAttachment>>(
       `${environment.API_URL}/record-attachments/?${queryParams}`);
   }
