@@ -54,6 +54,15 @@ describe('DataGraphCanvasComponent', () => {
     component.echartsInstance = echarts.init(fixture.nativeElement.querySelector('div'));
     component.graphParam = graphParam;
     expect(component.chartOption).toBe(component.pieChartOption);
+    const graphParam2: DataGraphConfiguration = {
+      selectedStatisticsType: 0,
+      selectedDepartment: '全校',
+      selectedStartYear: 2015,
+      selectedEndYear: 2019,
+      selectedGroupType: 2
+    };
+    component.graphParam = graphParam2;
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015-2019 全校 1234');
   });
 
   it('should get a double bar graph', () => {
