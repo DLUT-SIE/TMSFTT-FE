@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { EChartOption } from 'echarts';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { EChartOption, ECharts } from 'echarts';
+import { StyleManager } from 'src/app/shared/services/style-manager.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   chartOption: EChartOption = {
     xAxis: {
       type: 'category',
@@ -33,7 +36,39 @@ export class DashboardComponent implements OnInit {
     },
   };
 
-  constructor() { }
+  recordsGrowthChart: ECharts;
+  private readonly destroyed = new Subject<void>();
 
-  ngOnInit() { }
+  constructor(
+    private readonly styleManager: StyleManager,
+  ) { }
+
+  ngOnInit() {
+    this.styleManager.themeChanged.pipe(
+      takeUntil(this.destroyed),
+    ).subscribe(() => {
+      this.updateChart();
+    });
+  }
+
+  updateChart() {
+    if (!this.recordsGrowthChart) {
+      /* istanbul ignore next */
+      return;
+    }
+    const series = this.chartOption.series;
+    for (const s of series) {
+      (s as EChartOption.SeriesBar).itemStyle.normal.color = this.styleManager.accentColor;
+    }
+    this.recordsGrowthChart.setOption(this.chartOption);
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
+  }
+
+  chartInit(chart: ECharts) {
+    this.recordsGrowthChart = chart;
+    this.updateChart();
+  }
 }

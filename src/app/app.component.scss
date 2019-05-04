@@ -4,6 +4,23 @@
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
-  $background-color: mat-color($background, card);
+
+  .background-color-primary {
+      background: linear-gradient(60deg, mat-color($primary, 300), mat-color($primary, 400));
+  }
+  .color-primary {
+      color: mat-color($primary, 400);
+  }
+  .background-color-accent {
+      background: linear-gradient(60deg, mat-color($accent, 300), mat-color($accent, 400));
+  }
+  .color-accent {
+      color: mat-color($accent, 400);
+  }
+  .background-color-warn {
+      background: linear-gradient(60deg, mat-color($warn, 300), mat-color($warn, 400));
+  }
+  .color-warn {
+      color: mat-color($warn, 400);
+  }
 }

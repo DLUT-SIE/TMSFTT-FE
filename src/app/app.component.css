@@ -46,3 +46,7 @@ a.sidenav-router-link.active-link {
 a.sidenav-router-link:hover {
   background-color: rgb(218, 220, 224);
 }
+
+.hidden {
+  display: hidden;
+}

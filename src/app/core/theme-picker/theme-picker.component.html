@@ -1,6 +1,6 @@
 <div class="theme-picker-menu" fxLayout="row" fxLayoutAlign="space-around stretch">
-  <div class="theme-picker-swatch" *ngFor="let theme of themes" (click)="installTheme(theme.name)">
-    <mat-icon class="theme-chosen-icon" *ngIf="currentTheme === theme">check_circle</mat-icon>
+  <div class="theme-picker-swatch" *ngFor="let theme of styleManager.themes" (click)="styleManager.setTheme(theme.name)">
+    <mat-icon class="theme-chosen-icon" *ngIf="styleManager.currentTheme && styleManager.currentTheme.name === theme.name">check_circle</mat-icon>
     <div class="theme-picker-primary" [style.background]="theme.primary"></div>
   </div>
 </div>

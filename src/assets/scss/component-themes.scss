@@ -1,5 +1,7 @@
 @import '../../app/app.component';
+@import '../../app/user/components/dashboard/dashboard.component';
 
 @mixin component-themes($theme) {
   @include app-theme($theme);
+  @include dashboard-theme($theme);
 }
