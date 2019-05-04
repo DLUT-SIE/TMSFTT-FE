@@ -39,7 +39,7 @@ describe('DataGraphCanvasComponent', () => {
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
-    component.graphTypeName = '123';
+    component.graphTypeName = '1234';
     component.isPieGraph = true;
     component.graphParam = graphParam;
     expect(component.chartOption).toBe(component.pieChartOption);
