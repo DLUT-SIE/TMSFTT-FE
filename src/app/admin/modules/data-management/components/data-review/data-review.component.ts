@@ -30,12 +30,12 @@ export class DataReviewComponent implements OnInit {
     const isDepartmentAdmin = this.authService.isDepartmentAdmin;
     this.recordService.updateRecordStatus(this.record.id, isApproved, isDepartmentAdmin)
     .subscribe(() => {
-      this.snackBar.open('状态已更改！', '关闭');
+      this.snackBar.open('操作成功！', '关闭');
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
-          message = '更改失败！';
+          message = '操作失败！';
         }
         this.snackBar.open(message, '关闭');
       }
@@ -43,15 +43,14 @@ export class DataReviewComponent implements OnInit {
   }
 
   closeRecord() {
-    const isSchoolAdmin = this.authService.isSchoolAdmin;
-    this.recordService.closeRecord(this.record.id, isSchoolAdmin)
+    this.recordService.closeRecord(this.record.id)
     .subscribe(() => {
-      this.snackBar.open('培训记录已关闭！', '关闭');
+      this.snackBar.open('操作成功！', '关闭');
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
-          message = '关闭失败！';
+          message = '操作失败！';
         }
         this.snackBar.open(message, '关闭');
       }

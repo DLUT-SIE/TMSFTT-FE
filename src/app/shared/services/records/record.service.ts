@@ -162,9 +162,7 @@ export class RecordService extends GenericListService {
     return this.http.post(`${environment.API_URL}/records/${recordId}/school-admin-review/`, {});
   }
 
-  closeRecord(recordId: number, isSchoolAdmin: boolean) {
-    if (isSchoolAdmin) {
-      return this.http.post(`${environment.API_URL}/records/${recordId}/closed/`, {});
-    }
+  closeRecord(recordId: number) {
+    return this.http.post(`${environment.API_URL}/records/${recordId}/close/`, {});
   }
 }
