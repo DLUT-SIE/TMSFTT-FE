@@ -3,7 +3,6 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 
 import { RecordContentService } from './record-content.service';
 
-import { environment } from 'src/environments/environment';
 
 describe('RecordContentService', () => {
   let httpTestingController: HttpTestingController;
@@ -27,7 +26,7 @@ describe('RecordContentService', () => {
 
     service.getRecordContent(id).subscribe();
 
-    const url = `${environment.API_URL}/record-contents/${id}/`;
+    const url = `/record-contents/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -40,7 +39,7 @@ describe('RecordContentService', () => {
     service.getRecordContents([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/record-contents/?id__in=1%2C2`);
+      `/record-contents/?id__in=1%2C2`);
 
     expect(req.request.method).toEqual('GET');
 

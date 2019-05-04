@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { PermissionService } from './permission.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
 import { UserPermission, GroupPermission } from 'src/app/shared/interfaces/permission';
 import { Subject } from 'rxjs';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
@@ -44,7 +43,7 @@ describe('PermissionService', () => {
     service.getPermissions().subscribe(() => { });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/permissions/?limit=-1`);
+      `/permissions/?limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});
@@ -56,7 +55,7 @@ describe('PermissionService', () => {
     service.getPermissions().subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/permissions/?limit=-1`);
+      `/permissions/?limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});
@@ -83,7 +82,7 @@ describe('PermissionService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/user-permissions/?user=${userId}&limit=-1`);
+      `/user-permissions/?user=${userId}&limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush(dummyResponse);
@@ -98,7 +97,7 @@ describe('PermissionService', () => {
     }).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/user-permissions/`);
+      `/user-permissions/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({});
@@ -119,7 +118,7 @@ describe('PermissionService', () => {
     ]).subscribe();
 
     const req = httpTestingController.match(
-      `${environment.API_URL}/user-permissions/`);
+      `/user-permissions/`);
 
     expect(req.length).toBe(2);
     expect(req[0].request.method).toEqual('POST');
@@ -134,7 +133,7 @@ describe('PermissionService', () => {
     service.deleteUserPermission(permissionId).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/user-permissions/${permissionId}/`);
+      `/user-permissions/${permissionId}/`);
 
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
@@ -148,7 +147,7 @@ describe('PermissionService', () => {
 
     permissionIds.map(x => {
       const req = httpTestingController.expectOne(
-        `${environment.API_URL}/user-permissions/${x}/`);
+        `/user-permissions/${x}/`);
 
       expect(req.request.method).toEqual('DELETE');
       req.flush({});
@@ -189,7 +188,7 @@ describe('PermissionService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/group-permissions/?group=${groupId}&limit=-1`);
+      `/group-permissions/?group=${groupId}&limit=-1`);
 
     expect(req.request.method).toEqual('GET');
     req.flush(dummyResponse);

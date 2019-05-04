@@ -6,7 +6,6 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService } from './program.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
@@ -60,7 +59,7 @@ describe('ProgramService', () => {
 
     service.getPrograms({}).subscribe();
 
-    const url = `${environment.API_URL}/programs/?limit=10&offset=0`;
+    const url = `/programs/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -73,7 +72,7 @@ describe('ProgramService', () => {
 
     service.getProgram(id).subscribe();
 
-    const url = `${environment.API_URL}/programs/${id}/`;
+    const url = `/programs/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -107,7 +106,7 @@ describe('ProgramService', () => {
     service.getProgramCategories().subscribe((data: ProgramCategory[]) => {
       expect(data.length).toEqual(2);
     });
-    const url = `${environment.API_URL}/program-categories/`;
+    const url = `/program-categories/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -123,7 +122,7 @@ describe('ProgramService', () => {
 
     service.getPrograms({}).subscribe();
 
-    const url = `${environment.API_URL}/programs/?limit=10&offset=0`;
+    const url = `/programs/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -142,7 +141,7 @@ describe('ProgramService', () => {
     service.createProgram(createReq).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/programs/`);
+      `/programs/`);
     expect(req.request.method).toBe('POST');
     req.flush({});
   });

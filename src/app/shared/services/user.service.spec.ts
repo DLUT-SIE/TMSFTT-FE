@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { UserService } from './user.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
 
 describe('UserService', () => {
   let httpTestingController: HttpTestingController;
@@ -31,7 +30,7 @@ describe('UserService', () => {
     service.getUserById(id).subscribe(() => {});
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/users/${id}/`);
+      `/users/${id}/`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});
@@ -44,7 +43,7 @@ describe('UserService', () => {
     service.getUserByUsername(username).subscribe(() => {});
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/users/?username=${username}`);
+      `/users/?username=${username}`);
 
     expect(req.request.method).toEqual('GET');
     req.flush({});

@@ -48,7 +48,7 @@ describe('GenericListService', () => {
         const url = 'abc';
         service.getObjects(`/${url}/`, {}).subscribe();
 
-        const expectedUrl = `${environment.API_URL}/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0`;
+        const expectedUrl = `/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0`;
 
         const req = httpTestingController.expectOne(expectedUrl);
         expect(req.request.method).toBe('GET');
@@ -60,7 +60,7 @@ describe('GenericListService', () => {
         const extraParams = new Map<string, {}>([['name', 'def']]);
         service.getObjects(`/${url}/`, { extraParams }).subscribe();
 
-        const expectedUrl = `${environment.API_URL}/${url}/?limit=${environment.PAGINATION_SIZE}&name=def&offset=0`;
+        const expectedUrl = `/${url}/?limit=${environment.PAGINATION_SIZE}&name=def&offset=0`;
 
         const req = httpTestingController.expectOne(expectedUrl);
         expect(req.request.method).toBe('GET');

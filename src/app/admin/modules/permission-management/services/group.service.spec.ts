@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
 import { Department } from 'src/app/shared/interfaces/department';
 import { GroupService } from './group.service';
 
@@ -29,7 +28,7 @@ describe('GroupService', () => {
     const id = 5;
     service.getGroupById(5).subscribe();
 
-    const url = `${environment.API_URL}/groups/${id}/`;
+    const url = `/groups/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -41,7 +40,7 @@ describe('GroupService', () => {
     service.getGroupByDepartmentName(department.name).subscribe();
 
     const params = `name__startswith=${department.name}`;
-    const url = `${environment.API_URL}/groups/?${params}`;
+    const url = `/groups/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');

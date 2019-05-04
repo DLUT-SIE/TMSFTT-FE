@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Subject } from 'rxjs';
 
 import { EventService } from './event.service';
-import { environment } from 'src/environments/environment';
 import {
   OffCampusEvent,
   CampusEvent,
@@ -42,7 +41,7 @@ describe('EventService', () => {
 
     service.getCampusEvents({}).subscribe();
 
-    const url = `${environment.API_URL}/campus-events/?limit=10&offset=0`;
+    const url = `/campus-events/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -54,7 +53,7 @@ describe('EventService', () => {
 
     service.getOffCampusEvents({}).subscribe();
 
-    const url = `${environment.API_URL}/off-campus-events/?limit=10&offset=0`;
+    const url = `/off-campus-events/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -67,7 +66,7 @@ describe('EventService', () => {
 
     service.getEvent(id).subscribe();
 
-    const url = `${environment.API_URL}/campus-events/${id}/`;
+    const url = `/campus-events/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -80,7 +79,7 @@ describe('EventService', () => {
 
     service.getOffCampusEvent(id).subscribe();
 
-    const url = `${environment.API_URL}/off-campus-events/${id}/`;
+    const url = `/off-campus-events/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -103,7 +102,7 @@ describe('EventService', () => {
       num_participants: 50,
     } as OffCampusEvent).subscribe();
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/off-campus-events/`);
+      `/off-campus-events/`);
     expect(req.request.method).toEqual('POST');
     req.flush({
       name: 'name',
@@ -120,7 +119,7 @@ describe('EventService', () => {
 
     service.deleteOffCampusEvent(id).subscribe();
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/off-campus-events/${id}/`);
+      `/off-campus-events/${id}/`);
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
   });
@@ -142,7 +141,7 @@ describe('EventService', () => {
     service.createCampusEvent(createReq).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/campus-events/`);
+      `/campus-events/`);
     expect(req.request.method).toBe('POST');
     req.flush({});
   });

@@ -1,6 +1,5 @@
 import { OnInit, Component } from '@angular/core';
 import { TableExportService } from 'src/app/shared/services/data/table-export.service';
-import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WindowService } from 'src/app/shared/services/window.service';
@@ -24,7 +23,7 @@ export class TableExportComponent implements OnInit {
     }
 
     doTableExport() {
-        const url = `${environment.API_URL}/data-management/table-export`;
+        const url = `/data-management/table-export`;
         this.tableExportService.exportTable(url).subscribe(
             data => {
                 this.windowService.open(data['url']);
