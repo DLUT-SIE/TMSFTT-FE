@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { zip, of as observableOf, Observable } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
+import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Provide services for RecordContent. */
 @Injectable({
@@ -15,18 +16,6 @@ export class RecordContentService {
     private readonly http: HttpClient,
   ) { }
 
-  /** Create single content. */
-  createRecordContent(req: RecordContent) {
-    return this.http.post<RecordContent>(
-      `${environment.API_URL}/record-contents/`, req);
-  }
-
-  /** Create multiple contents. */
-  createRecordContents(reqs: RecordContent[]) {
-    if (reqs.length === 0) return observableOf([]);
-    return zip(...reqs.map(req => this.createRecordContent(req)));
-  }
-
   /** Get single content. */
   getRecordContent(id: number) {
     return this.http.get<RecordContent>(
@@ -35,8 +24,14 @@ export class RecordContentService {
   }
 
   /** Get multiple contents. */
-  getRecordContents(ids: number[]): Observable<RecordContent[]> {
-    if (ids.length === 0) return observableOf([]);
-    return zip(...ids.map(id => this.getRecordContent(id)));
+  getRecordContents(ids: number[]) {
+    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+    const params = new Map<string, string>();
+    params.set('id__in', ids.toString());
+    const queryParams = Array.from(params.keys()).sort().map(
+      key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
+
+    return this.http.get<PaginatedResponse<RecordContent>>(
+      `${environment.API_URL}/record-contents/?${queryParams}`);
   }
 }
