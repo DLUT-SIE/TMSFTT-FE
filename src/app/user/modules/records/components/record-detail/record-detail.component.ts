@@ -37,7 +37,9 @@ export class RecordDetailComponent implements OnInit {
       this.isCampusEventRecord = Boolean(this.record.campus_event);
       this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
       this.editable = this.record.status === RecordStatus.STATUS_SUBMITTED ||
-                             this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED;
+                      this.record.status === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED ||
+                      this.record.status === RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED ||
+                      this.record.status === RecordStatus.STATUS_SCHOOL_ADMIN_REJECTED;
 
     });
   }
