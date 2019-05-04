@@ -27,10 +27,11 @@ import { RouterModule } from '@angular/router';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
+import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
 
 
 @NgModule({
-  declarations: [ OffCampusRecordDetailComponent],
+  declarations: [ OffCampusRecordDetailComponent, SharedRecordListComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -87,6 +88,7 @@ import { OffCampusRecordDetailComponent } from './components/off-campus-record-d
     MatSnackBarModule,
 
     OffCampusRecordDetailComponent,
+    SharedRecordListComponent,
 
     NgxEchartsModule,
   ],

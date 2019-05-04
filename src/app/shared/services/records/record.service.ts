@@ -97,20 +97,12 @@ export class RecordService extends GenericListService {
     );
   }
 
-  getRecords(req: ListRequest) {
-    return this.list<Record>('records', req);
+  getRecords(url: string, req: ListRequest) {
+    return this.list<Record>(url, req);
   }
 
-  getRecordsWithDetail(req: ListRequest) {
-    return this.getDetailOfRecords(this.getRecords(req));
-  }
-
-  getReviewedRecords(req: ListRequest) {
-    return this.list<Record>('records/reviewed', req);
-  }
-
-  getReviewedRecordsWithDetail(req: ListRequest) {
-    return this.getDetailOfRecords(this.getReviewedRecords(req));
+  getRecordsWithDetail(url: string, req: ListRequest) {
+    return this.getDetailOfRecords(this.getRecords(url, req));
   }
 
   private getDetailOfRecords(records: Observable<PaginatedResponse<Record>>): Observable<PaginatedResponse<Record>> {

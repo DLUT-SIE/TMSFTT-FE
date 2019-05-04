@@ -1,10 +1,6 @@
 import { Component} from '@angular/core';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { Record } from 'src/app/shared/interfaces/record';
-import { RecordService } from 'src/app/shared/services/records/record.service';
-import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { RecordListType } from 'src/app/shared/enums/record-list-type.enum';
 
 /** Display a list of Records. */
 @Component({
@@ -12,18 +8,8 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.css']
 })
-export class RecordListComponent extends GenericListComponent<Record> {
-  constructor(
-    protected readonly route: ActivatedRoute,
-    protected readonly router: Router,
-    protected readonly location: Location,
-    private readonly recordService: RecordService,
-  ) {
-    super(route, router, location);
-  }
 
-  getResults(offset: number, limit: number) {
-    return this.recordService.getRecordsWithDetail({offset, limit});
-  }
-
+export class RecordListComponent {
+  recordListType: RecordListType = RecordListType.ReviewedRecords;
+  constructor() { }
 }
