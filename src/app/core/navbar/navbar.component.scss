@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+
+@mixin navbar-theme($theme, $extra-theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  ul:not(.nav-mobile-menu) {
+    span.notification {
+      background-color: mat-color($warn);
+    }
+  }
+}

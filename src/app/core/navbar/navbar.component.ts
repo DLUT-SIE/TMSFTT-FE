@@ -15,7 +15,7 @@ import { WindowService } from 'src/app/shared/services/window.service';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css']
+    styleUrls: ['./navbar.component.css', './navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
     superAdminRouteItems = SUPERADMIN_ROUTE_ITEMS;

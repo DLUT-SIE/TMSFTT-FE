@@ -1,26 +1,69 @@
 @import '~@angular/material/theming';
 
-@mixin app-theme($theme) {
+@function card-icon($type) {
+    @return ".card .card-header-#{$type} .card-icon";
+}
+@function card-header($type) {
+    @return ".card-header-#{$type}:not(.card-header-icon):not(.card-header-text)";
+}
+@function text($type) {
+    @return ".text-#{$type}";
+}
+
+@mixin app-theme($theme, $extra-theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
+  $primary-2: map-get($extra-theme, primary);
+  $accent-2: map-get($extra-theme, accent);
+  $warn-2: map-get($extra-theme, warn);
+  $bootstrapColorsMap: (
+      primary: $primary,
+      info: $primary-2,
+      success: $accent,
+      warning: $warn-2,
+      danger: $warn,
+  );
+  $colorNames: primary, accent, warn, primary-2, accent-2, warn-2;
+  $colors: $primary, $accent, $warn, $primary-2, $accent-2, $warn-2;
 
-  .background-color-primary {
-      background: linear-gradient(60deg, mat-color($primary, 300), mat-color($primary, 400));
+  @each $bootstrapColorName, $color in $bootstrapColorsMap {
+      #{card-icon($bootstrapColorName)},#{card-header($bootstrapColorName)} { 
+          background: linear-gradient(300deg, mat-color($color, 300), mat-color($color, 400) 10%);
+          box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px mat-color($color);
+      }
+      #{text($bootstrapColorName)} {
+          color: mat-color($color, 400) !important;
+      }
   }
-  .color-primary {
+
+  @for $i from 1 through length($colors) {
+      $colorName: nth($colorNames, $i);
+      $color: nth($colors, $i);
+      .color-#{$colorName} {
+          color: mat-color($color, 400);
+      }
+      .mat-raised-button.mat-#{$colorName} {
+          background-color: mat-color($color, 400);
+      }
+  }
+
+  .item-title {
       color: mat-color($primary, 400);
   }
-  .background-color-accent {
-      background: linear-gradient(60deg, mat-color($accent, 300), mat-color($accent, 400));
-  }
-  .color-accent {
+
+  a {
       color: mat-color($accent, 400);
   }
-  .background-color-warn {
-      background: linear-gradient(60deg, mat-color($warn, 300), mat-color($warn, 400));
+
+  tr.selected {
+    background-color: mat-color($primary, 300) !important;
+    color: white;
   }
-  .color-warn {
-      color: mat-color($warn, 400);
+
+  .dropdown-menu a:hover {
+      background-color: mat-color($primary, 400);
+      box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px mat-color($primary);
+      color: #FFFFFF;
   }
 }

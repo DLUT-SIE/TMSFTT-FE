@@ -37,22 +37,22 @@ describe('StyleManager', () => {
 
   it('should set theme', () => {
     styleManager.themeChanged.subscribe((theme) => {
-      expect(theme.name).toBe('indigo-pink');
+      expect(theme.name).toBe('indigo-blue');
     });
 
-    styleManager.setTheme('indigo-pink');
+    styleManager.setTheme('indigo-blue');
   });
+
+  it('should set theme (fallback to default)', () => {
+    styleManager.themeChanged.subscribe((theme) => {
+      expect(theme.name).toBe('indigo-blue');
+    });
+
+    styleManager.setTheme('not-exist');
+  });
+
 
   it('should get primary color', () => {
-    expect(styleManager.primaryColor).toEqual('rgb(255, 0, 0)');
+    expect(styleManager.getColor('primary')).toEqual('rgb(255, 0, 0)');
   });
-
-  it('should get accent color', () => {
-    expect(styleManager.accentColor).toEqual('rgb(0, 255, 0)');
-  });
-
-  it('should get warn color', () => {
-    expect(styleManager.warnColor).toEqual('rgb(0, 0, 255)');
-  });
-
 });

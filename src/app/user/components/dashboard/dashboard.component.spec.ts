@@ -12,10 +12,11 @@ describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let themeChanged: Subject<SiteTheme>;
-  const accentColor = 'accent';
+  let getColor: jasmine.Spy;
 
   beforeEach(async(() => {
     themeChanged = new Subject();
+    getColor = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         DashboardComponent,
@@ -27,7 +28,7 @@ describe('DashboardComponent', () => {
           provide: StyleManager,
           useValue: {
             themeChanged,
-            accentColor
+            getColor,
           }
         }
       ]
@@ -50,10 +51,12 @@ describe('DashboardComponent', () => {
     const chart = {} as ECharts;
     chart.setOption = setOption;
     component.recordsGrowthChart = chart;
+    const color = 'rgb(1, 2, 3)';
+    getColor.and.returnValue(color);
     themeChanged.next({primary: 'primary', accent: 'accent', name: 'name'});
 
     const newColor = (component.chartOption.series[0] as EChartOption.SeriesBar).itemStyle.normal.color;
-    expect(newColor).toEqual('accent');
+    expect(newColor).toEqual(color);
     expect(setOption).toHaveBeenCalledWith(component.chartOption);
   });
 

@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
     const series = this.chartOption.series;
     for (const s of series) {
-      (s as EChartOption.SeriesBar).itemStyle.normal.color = this.styleManager.accentColor;
+      (s as EChartOption.SeriesBar).itemStyle.normal.color = this.styleManager.getColor('primary');
     }
     this.recordsGrowthChart.setOption(this.chartOption);
   }

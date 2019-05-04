@@ -22,7 +22,7 @@
                     </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationsDropdown">
-                    <p class="dropdown-header text-primary">未读通知</p>
+                    <p class="dropdown-header color-primary">未读通知</p>
                     <a class="dropdown-item"
                         *ngFor="let notification of notificationService.unreadNotifications | slice:0:4"
                         [routerLink]="['/notifications', notification.id]">
