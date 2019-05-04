@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import './component-themes';
 
 @include mat-core();
 
@@ -9,6 +10,7 @@
   $indigo-pink-theme: mat-light-theme($primary, $accent, $warn);
 
   @include angular-material-theme($indigo-pink-theme);
+  @include component-themes($indigo-pink-theme);
 }
 
 .deeppurple-amber {
@@ -18,4 +20,5 @@
   $deeppurple-amber-theme: mat-light-theme($primary, $accent, $warn);
 
   @include angular-material-theme($deeppurple-amber-theme);
+  @include component-themes($deeppurple-amber-theme);
 }

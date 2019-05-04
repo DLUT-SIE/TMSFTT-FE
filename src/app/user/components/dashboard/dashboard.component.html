@@ -2,11 +2,11 @@
     <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="10px"
          fxLayout.gt-sm="row">
         <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon">
+            <div class="card-header card-header-icon">
+                <div class="card-icon background-color-primary">
                     <i class="material-icons">content_copy</i>
                 </div>
-                <p class="card-category">培训记录数量</p>
+                <p class="card-category">培训记录</p>
                 <h3 class="card-title">2658</h3>
             </div>
             <div class="card-footer">
@@ -17,11 +17,11 @@
             </div>
         </div>
         <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
+            <div class="card-header card-header-icon">
+                <div class="card-icon background-color-accent">
                     <i class="material-icons">store</i>
                 </div>
-                <p class="card-category">进行中活动数量</p>
+                <p class="card-category">进行中活动</p>
                 <h3 class="card-title">38</h3>
             </div>
             <div class="card-footer">
@@ -32,11 +32,11 @@
             </div>
         </div>
         <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
+            <div class="card-header card-header-color-warn card-header-icon">
+                <div class="card-icon background-color-warn">
                     <i class="material-icons">info_outline</i>
                 </div>
-                <p class="card-category">人均培训记录数量</p>
+                <p class="card-category">人均培训记录</p>
                 <h3 class="card-title">16</h3>
             </div>
             <div class="card-footer">
@@ -47,11 +47,11 @@
             </div>
         </div>
         <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
+            <div class="card-header card-header-color-primary card-header-icon">
+                <div class="card-icon background-color-primary">
                     <i class="material-icons">access_time</i>
                 </div>
-                <p class="card-category">本月新增记录数量</p>
+                <p class="card-category">本月新增记录</p>
                 <h3 class="card-title">+245</h3>
             </div>
             <div class="card-footer">
@@ -65,7 +65,7 @@
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px"
          fxLayout.gt-sm="row">
         <div class="card">
-            <div class="card-header card-header-warning">
+            <div class="card-header card-header-title background-color-primary">
                 <h4 class="card-title">各学部学院最近30天培训记录新增情况</h4>
                 <p class="card-category">
                     （只计算审核通过的有效培训记录数量）
@@ -73,10 +73,10 @@
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover text-center">
-                    <thead class="text-warning">
+                    <thead class="color-primary">
                         <th>学部/学院</th>
                         <th>总人数</th>
-                        <th>新增培训记录数量</th>
+                        <th>新增培训记录</th>
                     </thead>
                     <tbody>
                         <tr>
@@ -130,14 +130,14 @@
             </div>
         </div>
         <div class="card card-chart">
-            <div class="card-header card-header-success">
+            <div class="card-header card-header-title background-color-accent">
                 <h4 class="card-title">全校月度培训记录新增情况</h4>
                 <p class="card-category">
                     本月培训记录新增数量同比&nbsp;增加55%
                 </p>
             </div>
             <div class="card-body">
-                <div echarts [options]="chartOption"></div>
+                <div echarts [options]="chartOption" (chartInit)="chartInit($event)"></div>
             </div>
             <div class="card-footer">
                 <div class="stats">

@@ -16,6 +16,11 @@ export class WindowService {
     window.open(url);
   }
 
+  /* istanbul ignore next */
+  getComputedStyle(elt: Element) {
+    return window.getComputedStyle(elt);
+  }
+
   /** Get the native window object. */
   get nativeWindow() {
     return window;
