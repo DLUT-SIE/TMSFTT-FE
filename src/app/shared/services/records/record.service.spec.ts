@@ -362,9 +362,9 @@ describe('RecordService', () => {
   it('should close record if school admin approved', () => {
     const service: RecordService = TestBed.get(RecordService);
 
-    service.closeRecord(1, true).subscribe();
+    service.closeRecord(1).subscribe();
 
-    const url = `${environment.API_URL}/records/1/closed/`;
+    const url = `${environment.API_URL}/records/1/close/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');

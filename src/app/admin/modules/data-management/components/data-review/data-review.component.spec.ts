@@ -52,7 +52,6 @@ describe('DataReviewComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isDepartmentAdmin: true,
-            isSchoolAdmin: true
           },
         },
         {
@@ -134,7 +133,7 @@ describe('DataReviewComponent', () => {
     component.changeStatus(true);
     updateRecordStatus$.next();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('状态已更改！', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('操作成功！', '关闭');
   });
 
   it('should display errors when updation failed.', () => {
@@ -147,7 +146,7 @@ describe('DataReviewComponent', () => {
 
     component.changeStatus(true);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('更改失败！', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('操作失败！', '关闭');
   });
 
   it('should display raw errors when updation failed.', () => {
@@ -165,7 +164,7 @@ describe('DataReviewComponent', () => {
     component.closeRecord();
     closeRecord$.next();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('培训记录已关闭！', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('操作成功！', '关闭');
   });
 
   it('should display errors when updation failed.', () => {
@@ -178,7 +177,7 @@ describe('DataReviewComponent', () => {
 
     component.closeRecord();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('关闭失败！', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('操作失败！', '关闭');
   });
 
   it('should display raw errors when updation failed.', () => {
