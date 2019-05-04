@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { zip, of as observableOf, Observable } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
+import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Export services for RecordAttachment. */
 @Injectable({
@@ -15,21 +16,6 @@ export class RecordAttachmentService {
     private readonly http: HttpClient,
   ) { }
 
-  /** Create single attachment. */
-  createRecordAttachment(req: RecordAttachment) {
-    const data = new FormData();
-    data.set('record', req.record.toString());
-    data.set('path', req.path as File, (req.path as File).name);
-    return this.http.post<RecordAttachment>(
-      `${environment.API_URL}/record-attachments/`, data);
-  }
-
-  /** Create multiple attachments. */
-  createRecordAttachments(reqs: RecordAttachment[]) {
-    if (reqs.length === 0) return observableOf([]);
-    return zip(...reqs.map(req => this.createRecordAttachment(req)));
-  }
-
   /** Get single attachment. */
   getRecordAttachment(id: number) {
     return this.http.get<RecordAttachment>(
@@ -38,9 +24,13 @@ export class RecordAttachmentService {
   }
 
   /** Get multiple attachments. */
-  getRecordAttachments(ids: number[]): Observable<RecordAttachment[]> {
-    if (ids.length === 0) return observableOf([]);
-    return zip(...ids.map(id => this.getRecordAttachment(id)));
+  getRecordAttachments(ids: number[]) {
+    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+
+    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
+
+    return this.http.get<PaginatedResponse<RecordAttachment>>(
+      `${environment.API_URL}/record-attachments/?${queryParams}`);
   }
 
   deleteRecordAttachment(id: number) {

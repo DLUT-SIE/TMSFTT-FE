@@ -130,7 +130,7 @@ export class RecordFormComponent implements OnInit {
         }
       }
     });
-    if (record.attachments.length !== 0) {
+    if ((record.attachments as RecordAttachment[]).length !== 0) {
       (record.attachments as RecordAttachment[]).map(attachment => {
         this.originalAttachments.push({id: attachment.id, path: attachment.path as SecuredPath});
       });
