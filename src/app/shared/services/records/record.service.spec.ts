@@ -47,7 +47,6 @@ describe('RecordService', () => {
             authenticationSucceed: authenticationSucceed$,
             isAuthenticated: true,
             isDepartmentAdmin: true,
-            isSchoolAdmin: false,
           },
         },
         {
@@ -342,16 +341,8 @@ describe('RecordService', () => {
 
   it('should update record status if admin approved', () => {
     const service: RecordService = TestBed.get(RecordService);
-    const record: Record = {
-      id: 1,
-      off_campus_event: 3,
-      user: 1,
-      contents: [],
-      attachments: [],
-      feedback: null
-    };
 
-    service.updateRecordStatus(record, true, true, false).subscribe();
+    service.updateRecordStatus(1, true, true).subscribe();
 
     const url1 = `${environment.API_URL}/records/1/department-admin-review/`;
 
@@ -359,12 +350,24 @@ describe('RecordService', () => {
     expect(req1.request.method).toEqual('POST');
     req1.flush({});
 
-    service.updateRecordStatus(record, true, false, true).subscribe();
+    service.updateRecordStatus(1, true, false).subscribe();
 
     const url2 = `${environment.API_URL}/records/1/school-admin-review/`;
 
     const req2 = httpTestingController.expectOne(url2);
     expect(req2.request.method).toEqual('POST');
     req2.flush({});
+  });
+
+  it('should close record if school admin approved', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.closeRecord(1, true).subscribe();
+
+    const url = `${environment.API_URL}/records/1/closed/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
   });
 });

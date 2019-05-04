@@ -27,10 +27,12 @@ describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
   let fixture: ComponentFixture<DataReviewComponent>;
   let updateRecordStatus$: Subject<void>;
+  let closeRecord$: Subject<void>;
   let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
     updateRecordStatus$ = new Subject();
+    closeRecord$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [ DataReviewComponent, OffCampusRecordDetailComponent ],
@@ -50,7 +52,7 @@ describe('DataReviewComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isDepartmentAdmin: true,
-            isSchoolAdmin: false,
+            isSchoolAdmin: true
           },
         },
         {
@@ -99,6 +101,7 @@ describe('DataReviewComponent', () => {
           provide: RecordService,
           useValue: {
             updateRecordStatus: () => updateRecordStatus$,
+            closeRecord: () => closeRecord$,
           }
         },
         {
@@ -128,7 +131,7 @@ describe('DataReviewComponent', () => {
 
   it('should call snackbar when updation succeed.', () => {
 
-    component.statuschange(true);
+    component.changeStatus(true);
     updateRecordStatus$.next();
 
     expect(snackBarOpen).toHaveBeenCalledWith('状态已更改！', '关闭');
@@ -138,11 +141,11 @@ describe('DataReviewComponent', () => {
     updateRecordStatus$.error({
       message: 'Raw error message',
       error: {
-        statuschange_data: ['Invalid content'],
+        changestatus_data: ['Invalid content'],
       },
     } as HttpErrorResponse);
 
-    component.statuschange(true);
+    component.changeStatus(true);
 
     expect(snackBarOpen).toHaveBeenCalledWith('更改失败！', '关闭');
   });
@@ -152,7 +155,38 @@ describe('DataReviewComponent', () => {
       message: 'Raw error message',
     } as HttpErrorResponse);
 
-    component.statuschange(true);
+    component.changeStatus(true);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+  });
+
+  it('should call snackbar when close succeed.', () => {
+
+    component.closeRecord();
+    closeRecord$.next();
+
+    expect(snackBarOpen).toHaveBeenCalledWith('培训记录已关闭！', '关闭');
+  });
+
+  it('should display errors when updation failed.', () => {
+    closeRecord$.error({
+      message: 'Raw error message',
+      error: {
+        closerecord_data: ['Invalid content'],
+      },
+    } as HttpErrorResponse);
+
+    component.closeRecord();
+
+    expect(snackBarOpen).toHaveBeenCalledWith('关闭失败！', '关闭');
+  });
+
+  it('should display raw errors when updation failed.', () => {
+    closeRecord$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    component.closeRecord();
 
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
