@@ -155,20 +155,16 @@ export class RecordService extends GenericListService {
     return this.http.post(`/campus-event-feedbacks/`, data);
   }
 
-  updateRecordStatus(record: Record, isApproved: boolean, isDepartmentAdmin: boolean, isSchoolAdmin: boolean) {
-    const data = {
-      id: record.id,
-      user: record.user,
-      contents: [],
-      attachments: [],
-      feedback: null,
-      is_approved: isApproved
-    };
-    if ((isDepartmentAdmin) && (!isSchoolAdmin)) {
-      return this.http.post(`${environment.API_URL}/records/${record.id}/department-admin-review/`, data);
+  updateRecordStatus(recordId: number, isApproved: boolean, isDepartmentAdmin: boolean) {
+    if (isDepartmentAdmin) {
+      return this.http.post(`${environment.API_URL}/records/${recordId}/department-admin-review/`, {});
     }
+    return this.http.post(`${environment.API_URL}/records/${recordId}/school-admin-review/`, {});
+  }
+
+  closeRecord(recordId: number, isSchoolAdmin: boolean) {
     if (isSchoolAdmin) {
-      return this.http.post(`${environment.API_URL}/records/${record.id}/school-admin-review/`, data);
+      return this.http.post(`${environment.API_URL}/records/${recordId}/closed/`, {});
     }
   }
 }

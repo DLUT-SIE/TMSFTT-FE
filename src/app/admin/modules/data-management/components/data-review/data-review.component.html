@@ -8,8 +8,9 @@
       <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
       <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <button mat-raised-button color="primary" (click)="statuschange(true)">通过</button>
-          <button mat-raised-button color="primary" (click)="statuschange(false)">不通过</button>
+          <button mat-raised-button color="primary" (click)="closeRecord()">关闭此记录</button>
+          <button mat-raised-button color="primary" (click)="changeStatus(true)">通过</button>
+          <button mat-raised-button color="primary" (click)="changeStatus(false)">不通过</button>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </div>

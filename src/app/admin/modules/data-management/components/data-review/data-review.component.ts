@@ -26,10 +26,9 @@ export class DataReviewComponent implements OnInit {
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 
-  statuschange(isApproved: boolean) {
+  changeStatus(isApproved: boolean) {
     const isDepartmentAdmin = this.authService.isDepartmentAdmin;
-    const isSchoolAdmin = this.authService.isSchoolAdmin;
-    this.recordService.updateRecordStatus(this.record, isApproved, isDepartmentAdmin, isSchoolAdmin)
+    this.recordService.updateRecordStatus(this.record.id, isApproved, isDepartmentAdmin)
     .subscribe(() => {
       this.snackBar.open('状态已更改！', '关闭');
       },
@@ -43,6 +42,21 @@ export class DataReviewComponent implements OnInit {
     );
   }
 
+  closeRecord() {
+    const isSchoolAdmin = this.authService.isSchoolAdmin;
+    this.recordService.closeRecord(this.record.id, isSchoolAdmin)
+    .subscribe(() => {
+      this.snackBar.open('培训记录已关闭！', '关闭');
+      },
+      (error: HttpErrorResponse) => {
+        let message = error.message;
+        if (error.error) {
+          message = '关闭失败！';
+        }
+        this.snackBar.open(message, '关闭');
+      }
+    );
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data: { record: Record}) => {
