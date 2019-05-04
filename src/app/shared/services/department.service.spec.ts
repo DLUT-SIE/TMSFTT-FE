@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { DepartmentService } from './department.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
 
 describe('DepartmentService', () => {
   let httpTestingController: HttpTestingController;
@@ -32,7 +31,7 @@ describe('DepartmentService', () => {
     service.getDepartments({ limit, offset }).subscribe();
 
     const params = `limit=${limit}&offset=${offset}`;
-    const url = `${environment.API_URL}/departments/?${params}`;
+    const url = `/departments/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -44,7 +43,7 @@ describe('DepartmentService', () => {
     const id = 5;
     service.getDepartment(id).subscribe();
 
-    const url = `${environment.API_URL}/departments/${id}/`;
+    const url = `/departments/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');

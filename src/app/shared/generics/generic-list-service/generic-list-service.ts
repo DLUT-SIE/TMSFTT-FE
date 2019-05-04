@@ -23,7 +23,7 @@ export class GenericListService {
             key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
 
         // Construct final URL
-        const url = `${environment.API_URL}/${resourceURL}/?${queryParams}`;
+        const url = `/${resourceURL}/?${queryParams}`;
         return this.http.get<PaginatedResponse<T>>(url);
     }
 }

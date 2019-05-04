@@ -106,7 +106,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/login/`);
+      `/login/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush(dummyResponse);
@@ -122,7 +122,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/login/`);
+      `/login/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
@@ -142,7 +142,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/jwt-verify/`);
+      `/jwt-verify/`);
     expect(req.request.method).toEqual('POST');
 
     req.flush(dummyResponse);
@@ -164,7 +164,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/jwt-verify/`);
+      `/jwt-verify/`);
     expect(req.request.method).toEqual('POST');
 
     const dummyResponseWithoutDepartmentName: JWTResponse = {
@@ -213,7 +213,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/jwt-verify/`);
+      `/jwt-verify/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });
@@ -229,7 +229,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/jwt-refresh/`);
+      `/jwt-refresh/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush(dummyResponse);
@@ -255,7 +255,7 @@ describe('HTTPAuthService', () => {
     });
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/jwt-refresh/`);
+      `/jwt-refresh/`);
 
     expect(req.request.method).toEqual('POST');
     req.flush({ msg: 'invalid' }, { status: 400, statusText: 'failed' });

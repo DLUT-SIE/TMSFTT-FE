@@ -3,7 +3,6 @@ import { GenericListService } from '../generics/generic-list-service/generic-lis
 import { HttpClient } from '@angular/common/http';
 import { ListRequest } from '../interfaces/list-request';
 import { Department } from '../interfaces/department';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +20,6 @@ export class DepartmentService extends GenericListService {
   }
 
   getDepartment(id: Department|number) {
-    return this.http.get<Department>(`${environment.API_URL}/departments/${id}/`);
+    return this.http.get<Department>(`/departments/${id}/`);
   }
 }

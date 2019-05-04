@@ -101,7 +101,7 @@ describe('RecordService', () => {
     service.createOffCampusRecord(createReq).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/records/`);
+      `/records/`);
     expect(req.request.method).toBe('POST');
     const form = req.request.body as FormData;
     expect(form.has('off_campus_event')).toBeTruthy();
@@ -118,7 +118,7 @@ describe('RecordService', () => {
     service.deleteRecord(id).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/records/${id}/`);
+      `/records/${id}/`);
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
@@ -135,7 +135,7 @@ describe('RecordService', () => {
 
     service.updateOffCampusRecord(updateReq).subscribe();
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/records/1/`);
+      `/records/1/`);
     expect(req.request.method).toBe('PATCH');
     req.flush({});
   });
@@ -145,7 +145,7 @@ describe('RecordService', () => {
 
     service.getRecords({}).subscribe();
 
-    const url = `${environment.API_URL}/records/?limit=10&offset=0`;
+    const url = `/records/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -213,7 +213,7 @@ describe('RecordService', () => {
 
     service.getReviewedRecords({}).subscribe();
 
-    const url = `${environment.API_URL}/records/reviewed/?limit=10&offset=0`;
+    const url = `/records/reviewed/?limit=10&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -236,7 +236,7 @@ describe('RecordService', () => {
 
     service.getRecord(id).subscribe();
 
-    const url = `${environment.API_URL}/records/${id}/`;
+    const url = `/records/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -319,7 +319,7 @@ describe('RecordService', () => {
 
     service.batchSubmitRecord(new File([], 'a.xlsx')).subscribe();
 
-    const url = `${environment.API_URL}/records/batch-submit/`;
+    const url = `/records/batch-submit/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -331,7 +331,7 @@ describe('RecordService', () => {
 
     service.createFeedback(1, '').subscribe();
 
-    const url = `${environment.API_URL}/campus-event-feedbacks/`;
+    const url = `/campus-event-feedbacks/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');

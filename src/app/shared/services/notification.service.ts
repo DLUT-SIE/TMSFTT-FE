@@ -43,7 +43,7 @@ export class NotificationService extends GenericListService {
 
   getNotification(id: number) {
     return this.http.get<Notification>(
-      `${environment.API_URL}/notifications/${id}/`);
+      `/notifications/${id}/`);
   }
 
   /** API for retrieving notifications. */
@@ -63,6 +63,6 @@ export class NotificationService extends GenericListService {
 
   /** Mark all notifications for user as read. */
   markAllNotificationsAsRead() {
-    return this.http.post(`${environment.API_URL}/notifications/mark-all-as-read/`, {});
+    return this.http.post(`/notifications/mark-all-as-read/`, {});
   }
 }

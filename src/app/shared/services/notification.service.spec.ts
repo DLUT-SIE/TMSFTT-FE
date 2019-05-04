@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { of as observableOf, throwError, Subject } from 'rxjs';
 
 import { NotificationService } from './notification.service';
-import { environment } from 'src/environments/environment';
 import { Notification } from 'src/app/shared/interfaces/notification';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
@@ -63,7 +62,7 @@ describe('NotificationService', () => {
       res => { expect(res.results.length).toEqual(2); });
 
     const params = `limit=${limit}&offset=${offset}`;
-    const url = `${environment.API_URL}/notifications/read/?${params}`;
+    const url = `/notifications/read/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -81,7 +80,7 @@ describe('NotificationService', () => {
       });
 
     const params = `limit=${limit}&offset=${offset}`;
-    const url = `${environment.API_URL}/notifications/unread/?${params}`;
+    const url = `/notifications/unread/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -126,7 +125,7 @@ describe('NotificationService', () => {
       });
 
     const params = `limit=10&offset=0`;
-    const url = `${environment.API_URL}/notifications/?${params}`;
+    const url = `/notifications/?${params}`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -139,7 +138,7 @@ describe('NotificationService', () => {
 
     service.getNotification(id).subscribe();
 
-    const url = `${environment.API_URL}/notifications/${id}/`;
+    const url = `/notifications/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -151,7 +150,7 @@ describe('NotificationService', () => {
 
     service.markAllNotificationsAsRead().subscribe();
 
-    const url = `${environment.API_URL}/notifications/mark-all-as-read/`;
+    const url = `/notifications/mark-all-as-read/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');

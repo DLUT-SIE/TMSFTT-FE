@@ -18,6 +18,8 @@ import { SharedModule } from './shared/shared.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { APIHostInterceptor } from './core/api-host-interceptor/apihost-interceptor.interceptor';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
@@ -67,6 +69,11 @@ export function tokenGetter() {
     {
       provide: DOCUMENT,
       useValue: document,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: APIHostInterceptor,
+      multi: true,
     },
     CookieService,
   ],

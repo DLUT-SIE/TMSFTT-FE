@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, zip, of as observableOf } from 'rxjs';
 import { Permission, UserPermission, GroupPermission } from '../interfaces/permission';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
 
 /** This service manages Permission objects and UserPermission objects. */
@@ -22,7 +21,7 @@ export class PermissionService {
     if (this.permissions.length !== 0) {
       return observableOf(this.permissions);
     }
-    return this.http.get<Permission[]>(`${environment.API_URL}/permissions/?limit=-1`).pipe(
+    return this.http.get<Permission[]>(`/permissions/?limit=-1`).pipe(
       tap((permissions: Permission[]) => {
         this.permissions = permissions;
       })
@@ -32,11 +31,11 @@ export class PermissionService {
   /** Retrieve user's permissions. */
   getUserPermissions(userId: number): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
-      `${environment.API_URL}/user-permissions/?user=${userId}&limit=-1`);
+      `/user-permissions/?user=${userId}&limit=-1`);
   }
 
   createUserPermission(req: UserPermission) {
-    return this.http.post(`${environment.API_URL}/user-permissions/`, req);
+    return this.http.post(`/user-permissions/`, req);
   }
 
   createUserPermissions(reqs: UserPermission[]) {
@@ -46,7 +45,7 @@ export class PermissionService {
   }
 
   deleteUserPermission(permissionId: number) {
-    return this.http.delete(`${environment.API_URL}/user-permissions/${permissionId}/`);
+    return this.http.delete(`/user-permissions/${permissionId}/`);
   }
 
   deleteUserPermissions(permissionIds: number[]) {
@@ -57,6 +56,6 @@ export class PermissionService {
 
   getGroupPermissions(groupId: number): Observable<GroupPermission[]> {
     return this.http.get<GroupPermission[]>(
-      `${environment.API_URL}/group-permissions/?group=${groupId}&limit=-1`);
+      `/group-permissions/?group=${groupId}&limit=-1`);
   }
 }

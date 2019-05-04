@@ -49,22 +49,22 @@ export class RecordService extends GenericListService {
   createOffCampusRecord(req: Record) {
     const data = this.buildRecordFormData(req);
     return this.http.post<Record>(
-      `${environment.API_URL}/records/`, data);
+      `/records/`, data);
   }
 
   updateOffCampusRecord(req: Record) {
     const data = this.buildRecordFormData(req);
     return this.http.patch<Record>(
-      `${environment.API_URL}/records/${req.id}/`, data);
+      `/records/${req.id}/`, data);
   }
 
   deleteRecord(recordID: number) {
-    return this.http.delete(`${environment.API_URL}/records/${recordID}/`);
+    return this.http.delete(`/records/${recordID}/`);
   }
 
   getRecord(id: number) {
     return this.http.get<Record>(
-      `${environment.API_URL}/records/${id}/`);
+      `/records/${id}/`);
   }
 
   getRecordWithDetail(id: number) {
@@ -139,19 +139,19 @@ export class RecordService extends GenericListService {
   }
 
   getNumberOfRecordsWithoutFeedback() {
-    return this.http.get<{'count': number}>(`${environment.API_URL}/records/no-feedback-records-count/`);
+    return this.http.get<{'count': number}>(`/records/no-feedback-records-count/`);
   }
 
   batchSubmitRecord(file: File) {
     const data = new FormData();
     data.set('file', file);
-    return this.http.post<{'count': number}>(`${environment.API_URL}/records/batch-submit/`, data);
+    return this.http.post<{'count': number}>(`/records/batch-submit/`, data);
   }
 
   createFeedback(recordID: number, feedbackData: string) {
     const data = new FormData();
     data.set('record', recordID.toString());
     data.set('content', feedbackData);
-    return this.http.post(`${environment.API_URL}/campus-event-feedbacks/`, data);
+    return this.http.post(`/campus-event-feedbacks/`, data);
   }
 }

@@ -84,7 +84,7 @@ export class HTTPAuthService implements AuthService {
   retrieveJWT(ticket: string, service: string): Observable<boolean> {
     const payload = { ticket, service };
     return this.http.post<JWTResponse>(
-      `${environment.API_URL}/login/`, payload).pipe(
+      `/login/`, payload).pipe(
       map(response => {
         this.authenticate(response);
         return true;
@@ -114,11 +114,11 @@ export class HTTPAuthService implements AuthService {
 
   /* Request server to verify the JWT. */
   verifyJWT(): Observable<boolean> {
-    return this.sendJWT(`${environment.API_URL}/jwt-verify/`);
+    return this.sendJWT(`/jwt-verify/`);
   }
 
   /* Request server to refresh the JWT. */
   refreshJWT(): Observable<boolean> {
-    return this.sendJWT(`${environment.API_URL}/jwt-refresh/`);
+    return this.sendJWT(`/jwt-refresh/`);
   }
 }

@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RecordAttachmentService } from './record-attachment.service';
-import { environment } from 'src/environments/environment';
 
 
 describe('RecordAttachmentService', () => {
@@ -26,7 +25,7 @@ describe('RecordAttachmentService', () => {
 
     service.getRecordAttachment(id).subscribe();
 
-    const url = `${environment.API_URL}/record-attachments/${id}/`;
+    const url = `/record-attachments/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
@@ -39,7 +38,7 @@ describe('RecordAttachmentService', () => {
     service.getRecordAttachments([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
-      `${environment.API_URL}/record-attachments/?id__in=1%2C2`);
+      `/record-attachments/?id__in=1%2C2`);
 
     expect(req.request.method).toEqual('GET');
 
@@ -60,7 +59,7 @@ describe('RecordAttachmentService', () => {
 
     service.deleteRecordAttachment(id).subscribe();
 
-    const url = `${environment.API_URL}/record-attachments/${id}/`;
+    const url = `/record-attachments/${id}/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('DELETE');

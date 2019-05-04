@@ -33,7 +33,7 @@ describe('ReviewNoteService', () => {
 
     service.getReviewNotes({ extraParams }).subscribe();
 
-    const expectedUrl = `${environment.API_URL}/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0&record=3&user=87`;
+    const expectedUrl = `/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0&record=3&user=87`;
 
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('GET');
@@ -56,7 +56,7 @@ describe('ReviewNoteService', () => {
 
     service.createReviewNote(dres, notecontent).subscribe();
 
-    const req = httpTestingController.expectOne(`${environment.API_URL}/review-notes/`);
+    const req = httpTestingController.expectOne(`/review-notes/`);
     expect(req.request.method).toBe('POST');
     const form = req.request.body as FormData;
     expect(form.has('content')).toBeTruthy();

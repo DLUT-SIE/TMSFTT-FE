@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { Record } from 'src/app/shared/interfaces/record';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
@@ -30,6 +29,6 @@ export class ReviewNoteService extends GenericListService {
     data.set('record', dres.id.toString());
     data.set('user', dres.user.toString());
     return this.http.post<ReviewNote>(
-      `${environment.API_URL}/review-notes/`, data);
+      `/review-notes/`, data);
   }
 }

@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TableExportService } from './table-export.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs';
 import { AUTH_SERVICE } from '../../interfaces/auth-service';
 
@@ -37,7 +36,7 @@ describe('TableExportService', () => {
 
   it('should export table', () => {
     const service: TableExportService = TestBed.get(TableExportService);
-    const url = `${environment.API_URL}/data-management/table-export`;
+    const url = `/data-management/table-export`;
     service.exportTable(url).subscribe();
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toBeTruthy('GET');

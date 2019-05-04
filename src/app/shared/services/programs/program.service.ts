@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { environment } from 'src/environments/environment';
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 
@@ -33,7 +32,7 @@ export class ProgramService extends GenericListService {
   /** get the information of one program from the background. */
   getProgram(id: number) {
     return this.http.get<Program>(
-      `${environment.API_URL}/programs/${id}/`);
+      `/programs/${id}/`);
   }
 
   getProgramWithDetail(id: number) {
@@ -58,7 +57,7 @@ export class ProgramService extends GenericListService {
     if (this.cachedProgramCategories.length !== 0) {
       return observableOf(this.cachedProgramCategories);
     }
-    return this.http.get<ProgramCategory[]>(`${environment.API_URL}/program-categories/`).pipe(
+    return this.http.get<ProgramCategory[]>(`/program-categories/`).pipe(
       tap(data => this.cachedProgramCategories = data),
     );
   }
@@ -66,6 +65,6 @@ export class ProgramService extends GenericListService {
   /** create admin-program-form. */
   createProgram(req: Program) {
     return this.http.post<Program>(
-      `${environment.API_URL}/programs/`, req);
+      `/programs/`, req);
   }
 }
