@@ -268,7 +268,7 @@ describe('RecordService', () => {
 
   it('should return count of records without feedback,', fakeAsync(() => {
     const service: RecordService = TestBed.get(RecordService);
-
+    authenticationSucceed$.next();
     const spy = spyOn(service, 'getNumberOfRecordsWithoutFeedback');
     spy.and.returnValue(observableOf({count: 10}));
 
