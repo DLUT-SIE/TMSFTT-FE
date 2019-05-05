@@ -102,6 +102,7 @@ describe('DataGraphComponent', () => {
       selectedDepartment: null
     });
     expect(component.selectedGraphValues).toBe(null);
+    expect(component.graphTypeName).toBe('');
 
     testFormGroup.patchValue({
       selectedStatisticsType: 1,
@@ -111,6 +112,7 @@ describe('DataGraphComponent', () => {
       selectedDepartment: '创新创业学院'
     });
     expect(component.selectedGraphValues).toEqual(testFormGroup.value);
+    expect(component.graphTypeName).toEqual(component.statisticsType[component.selectedGraphValues.selectedStatisticsType].name);
 
     testFormGroup.patchValue({
       selectedStatisticsType: 1,
