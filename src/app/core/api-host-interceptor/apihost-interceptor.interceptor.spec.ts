@@ -4,6 +4,8 @@ import { APIHostInterceptor } from './apihost-interceptor.interceptor';
 import { HttpRequest, HttpHandler } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+
+/* tslint:disable:no-any */
 describe('APIHostInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
