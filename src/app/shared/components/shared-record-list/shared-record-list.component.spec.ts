@@ -69,7 +69,7 @@ describe('SharedRecordListComponent', () => {
   });
 
   it('should get all records with detail.', () => {
-    component.recordListType = RecordListType.AllRecords;
+    component.recordListType = RecordListType.ALL_RECORDS;
     const limit = 0;
     const offset = 10;
 
@@ -79,7 +79,7 @@ describe('SharedRecordListComponent', () => {
   });
 
   it('should get reviewed records with detail.', () => {
-    component.recordListType = RecordListType.ReviewedRecords;
+    component.recordListType = RecordListType.REVIEWED_RECORDS;
     const limit = 0;
     const offset = 10;
 
@@ -89,7 +89,7 @@ describe('SharedRecordListComponent', () => {
   });
 
   it('should get off-campus-event records with detail.', () => {
-    component.recordListType = RecordListType.OffCampusEventRecords;
+    component.recordListType = RecordListType.OFF_CAMPUS_EVENT_RECORDS;
     const limit = 0;
     const offset = 10;
     const extraParams = new Map<string, string>();
@@ -99,4 +99,13 @@ describe('SharedRecordListComponent', () => {
 
     expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit, extraParams});
   });
+
+  it('should get all records if recordListType is undefined.', () => {
+    const limit = 0;
+    const offset = 10;
+
+    component.getResults(offset, limit);
+
+    expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit});
+  })
 });

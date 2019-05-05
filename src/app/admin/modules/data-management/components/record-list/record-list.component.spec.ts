@@ -1,11 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 import { Location } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RecordListComponent } from './record-list.component';
-import { SharedRecordListComponent } from 'src/app/shared/components/shared-record-list/shared-record-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 describe('RecordListComponent', () => {
@@ -16,13 +14,9 @@ describe('RecordListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
-        SharedRecordListComponent,
       ],
       imports: [
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
-        HttpClientTestingModule,
+        SharedModule,
       ],
       providers: [
         {
