@@ -107,5 +107,5 @@ describe('SharedRecordListComponent', () => {
     component.getResults(offset, limit);
 
     expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit});
-  })
+  });
 });
