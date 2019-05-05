@@ -3,9 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { RecordListComponent } from './record-list.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-
-
+import { AppSharedRecordListDirectiveStub } from 'src/testing/app-shared-record-list-stub';
 describe('RecordListComponent', () => {
   let component: RecordListComponent;
   let fixture: ComponentFixture<RecordListComponent>;
@@ -14,9 +12,7 @@ describe('RecordListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RecordListComponent,
-      ],
-      imports: [
-        SharedModule,
+        AppSharedRecordListDirectiveStub,
       ],
       providers: [
         {
