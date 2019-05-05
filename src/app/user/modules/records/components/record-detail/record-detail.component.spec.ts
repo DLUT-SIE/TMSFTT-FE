@@ -1,15 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf, Subject } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { MatCardModule,
-         MatIconModule,
-         MatPaginatorModule,
-         MatFormFieldModule,
-         MatSelectModule,
-         MatSnackBar,
-         MatInputModule,
-         MatDividerModule,
-         MatDialogModule,
+import { MatSnackBar,
          MatDialog,
          MatDialogRef,
         } from '@angular/material';
@@ -22,7 +13,7 @@ import { RecordDetailComponent } from './record-detail.component';
 import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { FeedbackDialogComponent } from 'src/app/user/modules/records/components/feedback-dialog/feedback-dialog.component';
-import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('RecordDetailComponent', () => {
   let component: RecordDetailComponent;
@@ -44,19 +35,11 @@ describe('RecordDetailComponent', () => {
     snackBarOpen = jasmine.createSpy();
     dialogRef = jasmine.createSpyObj('', ['afterClosed']);
     TestBed.configureTestingModule({
-      declarations: [ RecordDetailComponent, OffCampusRecordDetailComponent ],
+      declarations: [ RecordDetailComponent ],
       imports: [
-        MatCardModule,
-        MatIconModule,
-        MatPaginatorModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatInputModule,
-        MatDividerModule,
-        MatDialogModule,
-        FormsModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
+        SharedModule,
       ],
       providers: [
         {

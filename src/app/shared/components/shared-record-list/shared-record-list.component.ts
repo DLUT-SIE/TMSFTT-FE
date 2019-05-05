@@ -13,7 +13,7 @@ import { RecordListType } from '../../enums/record-list-type.enum';
   styleUrls: ['./shared-record-list.component.css']
 })
 export class SharedRecordListComponent extends GenericListComponent<Record> {
-  @Input() recordListType: RecordListType;
+  @Input() recordListType?: RecordListType;
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -27,17 +27,20 @@ export class SharedRecordListComponent extends GenericListComponent<Record> {
   getResults(offset: number, limit: number) {
     let url = 'records';
     switch (this.recordListType) {
-      case RecordListType.AllRecords: {
+      case RecordListType.ALL_RECORDS: {
         return this.recordService.getRecordsWithDetail(url, {offset, limit});
       }
-      case RecordListType.ReviewedRecords: {
+      case RecordListType.REVIEWED_RECORDS: {
         url = 'records/reviewed';
         return this.recordService.getRecordsWithDetail(url, {offset, limit});
       }
-      default: {
+      case RecordListType.OFF_CAMPUS_EVENT_RECORDS: {
         const extraParams = new Map<string, string>();
         extraParams.set('off_campus_event__isnull', 'false');
         return this.recordService.getRecordsWithDetail(url, {offset, limit, extraParams});
+      }
+      default: {
+        return this.recordService.getRecordsWithDetail(url, {offset, limit});
       }
     }
   }
