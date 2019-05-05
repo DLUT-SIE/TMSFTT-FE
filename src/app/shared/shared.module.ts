@@ -28,10 +28,15 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
 import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 
 @NgModule({
-  declarations: [ OffCampusRecordDetailComponent, SharedRecordListComponent ],
+  declarations: [
+    OffCampusRecordDetailComponent,
+    SharedRecordListComponent,
+    TruncatePipe,
+  ],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -91,6 +96,8 @@ import { SharedRecordListComponent } from './components/shared-record-list/share
     SharedRecordListComponent,
 
     NgxEchartsModule,
+
+    TruncatePipe,
   ],
 })
 export class SharedModule { }
