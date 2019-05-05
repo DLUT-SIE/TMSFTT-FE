@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timer, of as observableOf, Observable, zip } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Record } from 'src/app/shared/interfaces/record';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { switchMap, catchError, map } from 'rxjs/operators';
+import { switchMap, catchError, map, takeWhile } from 'rxjs/operators';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
@@ -14,6 +14,7 @@ import { RecordContentService } from 'src/app/shared/services/records/record-con
 import { EventService } from '../events/event.service';
 import { OffCampusEvent, CampusEvent } from '../../interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 
 /** Provide services for Record. */
 @Injectable({
@@ -27,13 +28,17 @@ export class RecordService extends GenericListService {
     private readonly recordAttachmentService: RecordAttachmentService,
     private readonly recordContentSerice: RecordContentService,
     private readonly eventService: EventService,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) {
     super(http);
-    timer(0, environment.REFRESH_INTERVAL).pipe(
-      switchMap(() => this.getNumberOfRecordsWithoutFeedback()),
-      catchError(() => observableOf({count: 0})),
-    ).subscribe((cnt: {count: number}) => {
-      this.numberOfRecordsWithoutFeedback = cnt.count;
+    this.authService.authenticationSucceed.subscribe(() => {
+      timer(0, environment.REFRESH_INTERVAL).pipe(
+        takeWhile(() => this.authService.isAuthenticated),
+        switchMap(() => this.getNumberOfRecordsWithoutFeedback()),
+        catchError(() => observableOf({count: 0})),
+      ).subscribe((cnt: {count: number}) => {
+        this.numberOfRecordsWithoutFeedback = cnt.count;
+      });
     });
   }
 
