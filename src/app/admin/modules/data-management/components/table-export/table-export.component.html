@@ -1,13 +1,13 @@
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
     <div fxFlex="8 8 calc(8em)" class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-primary">
         <h4 class="card-title">基本数据导出</h4>
         <p class="card-category">您可以选择并导出教师的基本数据</p>
       </div>
       <div class="card-body">
           <div align="center">
-            <button *ngFor='let t of tables_basic' class="btn btn-lg btn-danger active" aria-pressed="true" (click)="doTableExport(t)">导出{{t.name}}</button>
+            <button *ngFor='let t of tablesBasic' mat-raised-button color="primary" (click)="doTableExport(t)">导出{{t.name}}</button>
           </div>
       </div>
     </div>
@@ -17,13 +17,13 @@
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
     <div fxFlex="8 8 calc(8em)" class="card">
-      <div class="card-header card-header-danger">
+      <div class="card-header card-header-primary">
         <h4 class="card-title">教师培训数据导出</h4>
         <p class="card-category">您可以选择并导出教师培训情况数据</p>
       </div>
       <div class="card-body">
           <div align="center">
-              <button *ngFor='let t of tables_training' class="btn btn-lg btn-danger active" aria-pressed="true" (click)="doTableExport(t)">导出{{t.name}}</button>
+              <button *ngFor='let t of tablesTraining' mat-raised-button color="primary" (click)="doTableExport(t)">导出{{t.name}}</button>
           </div>
       </div>
     </div>
