@@ -61,7 +61,6 @@ export class DataGraphComponent implements OnInit {
     this.trainingHoursWorkloadGroupingType
   ];
 
-  /* istanbul ignore next */
   get graphTypeName() {
     return this.selectedGraphValues === null ? '' : this.statisticsType[this.selectedGraphValues.selectedStatisticsType].name;
   }
