@@ -10,6 +10,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-servic
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { AppThemePickerDirectiveStub } from 'src/testing/app-theme-picker-stub';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -27,6 +28,7 @@ describe('SidebarComponent', () => {
       declarations: [
         SidebarComponent,
         AppThemePickerDirectiveStub,
+        TruncatePipe,
       ],
       providers: [
         {
