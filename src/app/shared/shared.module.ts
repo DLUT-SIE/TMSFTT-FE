@@ -31,7 +31,7 @@ import { SharedRecordListComponent } from './components/shared-record-list/share
 
 
 @NgModule({
-  declarations: [ OffCampusRecordDetailComponent, SharedRecordListComponent],
+  declarations: [ OffCampusRecordDetailComponent, SharedRecordListComponent ],
   imports: [
     CommonModule,
     FlexLayoutModule,
