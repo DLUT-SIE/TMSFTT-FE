@@ -140,6 +140,7 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     tooltip: {
         trigger: 'axis',
+        /* istanbul ignore next */
         formatter:  (c) => {
             return Math.round(c[0].value / c[1].value * 100) + '%';
         }
@@ -205,6 +206,7 @@ export class DataGraphCanvasComponent implements OnInit {
 
             animationType: 'scale',
             animationEasing: 'elasticOut',
+            /* istanbul ignore next */
             animationDelay:  () => {
                 return Math.random() * 200;
             }
