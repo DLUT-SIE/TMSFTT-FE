@@ -7,6 +7,8 @@ import {
 } from 'src/app/shared/interfaces/event';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
+import { of as observableOf } from 'rxjs';
+import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Provide services for Event. */
 @Injectable({
@@ -31,6 +33,16 @@ export class EventService extends GenericListService {
     return this.list<CampusEvent>('campus-events', req);
   }
 
+  /** Retrieve campus events on ID */
+  getCampusEventsByIds(ids: number[]) {
+    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+
+    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
+
+    return this.http.get<PaginatedResponse<CampusEvent>>(
+      `/campus-events/?${queryParams}`);
+  }
+
   /** Create an off-campus event. */
   createOffCampusEvent(req: OffCampusEvent) {
     return this.http.post<OffCampusEvent>(
@@ -48,6 +60,15 @@ export class EventService extends GenericListService {
       `/off-campus-events/${eventID}/`);
   }
 
+  /** Retrieve off-campus events on ID */
+  getOffCampusEventsByIds(ids: number[]) {
+    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+
+    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
+
+    return this.http.get<PaginatedResponse<OffCampusEvent>>(
+      `/off-campus-events/?${queryParams}`);
+  }
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
     return this.list<OffCampusEvent>('off-campus-events', req);
