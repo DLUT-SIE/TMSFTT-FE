@@ -24,12 +24,18 @@ describe('AddminCampusEventDetailComponent', () => {
         {
           provide: Router,
           useValue: {
+            createUrlTree: () => 'abc',
             navigate,
-          }
+          },
         },
         {
           provide: ActivatedRoute,
           useValue: {
+            snapshot: {
+              queryParamMap: {
+                get: () => '1',
+              },
+            },
             data: observableOf({item: {
                 id: 601,
                 program_detail: {
@@ -84,7 +90,6 @@ describe('AddminCampusEventDetailComponent', () => {
   it('should navigate to event form', () => {
     component.navigateToChangeEvent();
 
-    expect(navigate).toHaveBeenCalledWith(
-      ['/admin/event-management/programs/events/event-form']);
+    expect(navigate).toHaveBeenCalled();
   });
 });
