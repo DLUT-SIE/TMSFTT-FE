@@ -2,9 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-
 import { OffCampusEventRecordListComponent } from './off-campus-event-record-list.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { AppSharedRecordListDirectiveStub } from 'src/testing/app-shared-record-list-stub';
 
 describe('OffCampusEventRecordListComponent', () => {
   let component: OffCampusEventRecordListComponent;
@@ -16,9 +15,7 @@ describe('OffCampusEventRecordListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         OffCampusEventRecordListComponent,
-      ],
-      imports: [
-        SharedModule,
+        AppSharedRecordListDirectiveStub,
       ],
       providers: [
         {
