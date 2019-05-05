@@ -31,7 +31,9 @@
                 <a class="nav-link">
                     <i class="material-icons">person</i>
                     <p>
-                        <span class="d-lg-none d-md-block">用户: {{authService.username}}</span>
+                        <span class="d-lg-none d-md-block" *ngIf="authService.firstName; let name">
+                            {{ name | truncate:5 }}
+                        </span>
                     </p>
                 </a>
             </li>
@@ -39,7 +41,9 @@
                 <a class="nav-link">
                     <i class="material-icons">business</i>
                     <p>
-                        <span class="d-lg-none d-md-block">院系: {{authService.departmentName}}</span>
+                        <span class="d-lg-none d-md-block" *ngIf="authService.departmentName; let name">
+                            {{ name | truncate:11 }}
+                        </span>
                     </p>
                 </a>
             </li>

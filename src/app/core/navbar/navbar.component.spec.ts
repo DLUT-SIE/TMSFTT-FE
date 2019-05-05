@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { AppThemePickerDirectiveStub } from 'src/testing/app-theme-picker-stub';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 @Component({
   selector: '<app-test-navbar>',
@@ -48,6 +49,7 @@ describe('NavbarComponent', () => {
         NavbarComponent,
         TestNavbarComponent,
         AppThemePickerDirectiveStub,
+        TruncatePipe,
       ],
       providers: [
         {

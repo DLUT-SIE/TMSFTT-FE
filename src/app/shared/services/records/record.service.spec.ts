@@ -25,7 +25,6 @@ describe('RecordService', () => {
   let getOffCampusEvent$: Subject<OffCampusEvent>;
   let getRecords$: Subject<PaginatedResponse<Record>>;
   let getRecord$: Subject<Record>;
-  let getReviewedRecords$: Subject<PaginatedResponse<Record>>;
 
   beforeEach(() => {
     authenticationSucceed$ = new Subject<void>();
@@ -35,7 +34,6 @@ describe('RecordService', () => {
     getOffCampusEvent$ = new Subject();
     getRecords$ = new Subject();
     getRecord$ = new Subject();
-    getReviewedRecords$ = new Subject();
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -144,7 +142,7 @@ describe('RecordService', () => {
   it('should get records', () => {
     const service: RecordService = TestBed.get(RecordService);
 
-    service.getRecords({}).subscribe();
+    service.getRecords('records', {}).subscribe();
 
     const url = `/records/?limit=10&offset=0`;
 
@@ -170,7 +168,7 @@ describe('RecordService', () => {
     const getRecords = spyOn(service, 'getRecords');
     getRecords.and.returnValue(getRecords$);
 
-    service.getRecordsWithDetail({}).subscribe(data => {
+    service.getRecordsWithDetail('', {}).subscribe(data => {
       expect(data.results.length).toBe(2);
       expect(data.results[0].off_campus_event).toEqual({});
       expect(data.results[1].off_campus_event).toEqual({});
@@ -198,7 +196,7 @@ describe('RecordService', () => {
     const getRecords = spyOn(service, 'getRecords');
     getRecords.and.returnValue(getRecords$);
 
-    service.getRecordsWithDetail({}).subscribe(data => {
+    service.getRecordsWithDetail('', {}).subscribe(data => {
       expect(data.results.length).toBe(2);
       expect(data.results[0].campus_event).toEqual({});
       expect(data.results[1].campus_event).toEqual({});
@@ -207,28 +205,6 @@ describe('RecordService', () => {
     getRecords$.next(campusEventRecords);
     getEvent$.next({});
     getEvent$.next({});
-  });
-
-  it('should get reviewed records', () => {
-    const service: RecordService = TestBed.get(RecordService);
-
-    service.getReviewedRecords({}).subscribe();
-
-    const url = `/records/reviewed/?limit=10&offset=0`;
-
-    const req = httpTestingController.expectOne(url);
-    expect(req.request.method).toEqual('GET');
-    req.flush({ count: 2 });
-  });
-
-  it('should get reviewed records with detail data', () => {
-    const service: RecordService = TestBed.get(RecordService);
-    const getReviewedRecords = spyOn(service, 'getReviewedRecords');
-    getReviewedRecords.and.returnValue(getReviewedRecords$);
-
-    service.getReviewedRecordsWithDetail({}).subscribe();
-
-    expect(getReviewedRecords).toHaveBeenCalled();
   });
 
   it('should get record', () => {

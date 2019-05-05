@@ -40,7 +40,7 @@ export class DataExportComponent extends GenericListComponent<Record> {
       ['startTime', value.startTime],
       ['endTime', value.endTime],
     ]);
-    return this.recordService.getRecords({offset, limit, extraParams: params});
+    return this.recordService.getRecords('records', {offset, limit, extraParams: params});
   }
 
 }
