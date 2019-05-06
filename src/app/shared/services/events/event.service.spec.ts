@@ -188,4 +188,25 @@ describe('EventService', () => {
     req.flush({});
   });
 
+  it('should update event-form.', () => {
+    const service: EventService = TestBed.get(EventService);
+    const updateReq: CampusEvent = {
+      id: 1,
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+
+    service.updateCampusEvent(updateReq).subscribe();
+    const req = httpTestingController.expectOne(
+      `/campus-events/1/`);
+    expect(req.request.method).toBe('PATCH');
+    req.flush({});
+  });
+
 });

@@ -80,4 +80,10 @@ export class EventService extends GenericListService {
       `/campus-events/`, req);
   }
 
+ /** Update campus event */
+  updateCampusEvent(req: CampusEvent) {
+    return this.http.patch<CampusEvent>(
+      `/campus-events/${req.id}/`, req);
+  }
+
 }
