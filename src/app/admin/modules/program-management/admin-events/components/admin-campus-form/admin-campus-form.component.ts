@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -14,6 +15,8 @@ import { EventService } from 'src/app/shared/services/events/event.service';
 })
 export class AdminCampusFormComponent implements OnInit {
   programId: number;
+  isUpdateMode: boolean;
+  event: CampusEvent;
 
   eventForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -24,6 +27,7 @@ export class AdminCampusFormComponent implements OnInit {
     deadline: ['', [Validators.required, Validators.maxLength(30)]],
     description: ['', [Validators.required, Validators.maxLength(200)]],
   });
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly snackBar: MatSnackBar,
@@ -36,9 +40,37 @@ export class AdminCampusFormComponent implements OnInit {
     this.route.queryParams.subscribe(queryParams => {
       this.programId = queryParams.program_id;
     });
+
+    if (this.route.snapshot.queryParams.event_id !== undefined) {
+      const eventID = this.route.snapshot.queryParams.event_id;
+      this.eventService.getEvent(eventID).subscribe(
+        (event: CampusEvent) => {
+          this.isUpdateMode = true;
+          this.setEventValue(event);
+        },
+        (error: HttpErrorResponse) => {
+          let message = error.message;
+          if (error.error) {
+            message = error.error['detail'] + '。';
+          }
+          this.snackBar.open(message, '关闭');
+        });
+    }
   }
 
-  /** 新增加的get函数 */
+  private setEventValue(event: CampusEvent) {
+    this.event = event;
+    this.name.setValue(this.event.name);
+    this.time.setValue(this.event.time);
+    this.location.setValue(this.event.location);
+    this.numHours.setValue(this.event.num_hours);
+    this.numParticipants.setValue(this.event.num_participants);
+    this.deadline.setValue(this.event.deadline);
+    this.description.setValue(this.event.description);
+
+
+  }
+
   get name() {
     return this.eventForm.get('name');
   }
@@ -66,8 +98,10 @@ export class AdminCampusFormComponent implements OnInit {
   get description() {
     return this.eventForm.get('description');
   }
+
   onSubmit() {
     const req: CampusEvent = {
+      id: this.isUpdateMode ? this.event.id : undefined,
       program: this.programId,
       name: this.eventForm.value.name,
       time: this.eventForm.value.time,
@@ -77,9 +111,12 @@ export class AdminCampusFormComponent implements OnInit {
       deadline: this.eventForm.value.deadline,
       description: this.eventForm.value.description,
     };
-    this.eventService.createCampusEvent(req).subscribe(
+    const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
+                                             this.eventService.updateCampusEvent(req) :
+                                             this.eventService.createCampusEvent(req);
+    targetEvent.subscribe(
       event => {
-        this.router.navigate(['../event-detail/', event.program]);
+        this.router.navigate(['/admin/events/', event.id]);
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
