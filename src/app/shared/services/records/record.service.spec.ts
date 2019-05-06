@@ -203,34 +203,6 @@ describe('RecordService', () => {
     getOffCampusEventsByIds$.next(offCampusEvents);
   });
 
-  // it('should get campus-event records with detail data.', () => {
-  //   const service: RecordService = TestBed.get(RecordService);
-  //   const campusEventRecord: Record = {
-  //     campus_event: 3,
-  //     user: 1,
-  //     contents: [],
-  //     attachments: [],
-  //   };
-  //   const campusEventRecords: PaginatedResponse<Record> = {
-  //     count: 2,
-  //     next: '',
-  //     previous: '',
-  //     results: [campusEventRecord, campusEventRecord]
-  //   };
-  //   const getRecords = spyOn(service, 'getRecords');
-  //   getRecords.and.returnValue(getRecords$);
-
-  //   service.getRecordsWithDetail('', {}).subscribe(data => {
-  //     expect(data.results.length).toBe(2);
-  //     expect(data.results[0].campus_event).toEqual({});
-  //     expect(data.results[1].campus_event).toEqual({});
-  //   }
-  //   );
-  //   getRecords$.next(campusEventRecords);
-  //   getEvent$.next({});
-  //   getEvent$.next({});
-  // });
-
   it('should get record', () => {
     const service: RecordService = TestBed.get(RecordService);
     const id = 1;
