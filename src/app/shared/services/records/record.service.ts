@@ -115,21 +115,33 @@ export class RecordService extends GenericListService {
     return records.pipe(
       switchMap((data) => {
         paginatedRecords = data;
-        return zip(...paginatedRecords.results.map(record => {
-          return record.off_campus_event ?
-          this.eventService.getOffCampusEvent(record.off_campus_event as number) :
-          this.eventService.getEvent(record.campus_event as number);
-        }
-        ));
-      }),
-      map((val: Array<CampusEvent | OffCampusEvent>) => {
-        for (let index = 0; index < val.length; index++) {
-          if (paginatedRecords.results[index].off_campus_event) {
-            paginatedRecords.results[index].off_campus_event = val[index] as OffCampusEvent;
+        const campusEventIDs: number[] = [];
+        const offCampusEventIDs: number[] = [];
+        paginatedRecords.results.map(record => {
+          if (record.off_campus_event) {
+            offCampusEventIDs.push(record.off_campus_event as number);
           } else {
-            paginatedRecords.results[index].campus_event = val[index] as CampusEvent;
+            campusEventIDs.push(record.campus_event as number);
           }
-        }
+        });
+        return zip(
+          this.eventService.getCampusEventsByIds(campusEventIDs),
+          this.eventService.getOffCampusEventsByIds(offCampusEventIDs),
+        );
+      }),
+      map((val: [PaginatedResponse<CampusEvent>, PaginatedResponse<OffCampusEvent>]) => {
+        const campusEventsMap = new Map<number, CampusEvent>();
+        const offCampusEventsMap = new Map<number, OffCampusEvent>();
+        val[0].results.map(x => campusEventsMap.set(x.id, x));
+        val[1].results.map(x => offCampusEventsMap.set(x.id, x));
+        paginatedRecords.results.map(record => {
+          if (record.off_campus_event) {
+            record.off_campus_event = offCampusEventsMap.get(record.off_campus_event as number);
+          } else {
+            record.campus_event = campusEventsMap.get(record.campus_event as number);
+          }
+        });
+
         return paginatedRecords;
       }),
     );
