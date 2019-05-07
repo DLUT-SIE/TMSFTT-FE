@@ -19,7 +19,7 @@ export class CampusEventDetailComponent implements OnInit {
   department: string;
   category: string;
   programName: string;
-  isLoadDate = false;
+  isLoading = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -42,7 +42,7 @@ export class CampusEventDetailComponent implements OnInit {
       }),
       map(deparment => {
         this.department = deparment.name;
-        this.isLoadDate = true;
+        this.isLoading = true;
       })
     ).subscribe();
   }
