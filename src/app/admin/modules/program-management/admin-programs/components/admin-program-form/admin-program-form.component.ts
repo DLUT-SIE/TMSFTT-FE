@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { Location } from '@angular/common';
 
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
@@ -32,6 +33,7 @@ export class AdminProgramFormComponent implements OnInit {
     private readonly programService: ProgramService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    readonly location: Location,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) { }
 

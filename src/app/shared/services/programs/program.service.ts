@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
-import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { Observable, of as observableOf } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 @Injectable({
@@ -19,7 +18,6 @@ export class ProgramService extends GenericListService {
   private cachedProgramCategories: ProgramCategory[] = [];
 
   constructor(
-    private readonly departmentService: DepartmentService,
     protected readonly http: HttpClient,
   ) {
       super(http);
@@ -34,24 +32,6 @@ export class ProgramService extends GenericListService {
   getProgram(id: number) {
     return this.http.get<Program>(
       `/programs/${id}/`);
-  }
-
-  getProgramWithDetail(id: number) {
-    return this.getDetailProgram(this.getProgram(id));
-  }
-
-  private getDetailProgram(program: Observable<Program>) {
-    let programWithDetail: Program;
-    return program.pipe(
-      switchMap((data) => {
-        programWithDetail = data;
-        return  this.departmentService.getDepartment(data.department);
-      }),
-      map((data) => {
-        programWithDetail.department = data;
-        return programWithDetail;
-      }),
-    );
   }
 
   getProgramCategories() {

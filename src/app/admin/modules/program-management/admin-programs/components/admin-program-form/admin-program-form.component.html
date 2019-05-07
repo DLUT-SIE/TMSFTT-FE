@@ -6,7 +6,7 @@
       <p class="card-category">此表单只能提交校内的培训项目</p>
     </div>
     <div class="card-body">
-      <form class="form-container" (ngSubmit)="onSubmit()" [formGroup]="programForm" fxLayout="column">
+      <form class="form-container" [formGroup]="programForm" fxLayout="column">
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>note_add</mat-icon>
           <mat-label i18n>培训名称</mat-label>
@@ -34,7 +34,8 @@
           </mat-error>
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <button mat-raised-button type="submit" color="primary" [disabled]="programForm.invalid" i18n>提交</button>
+          <button mat-raised-button (click)="onSubmit()" color="primary" [disabled]="programForm.invalid" i18n>提交</button>
+          <button mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </form>
     </div>

@@ -5,14 +5,14 @@ import { ProgramDetailResolverService } from './program-detail-resolver.service'
 import { ProgramService } from './program.service';
 
 describe('ProgramDetailResolverService', () => {
-  let getProgramWithDetail: jasmine.Spy;
+  let getProgram: jasmine.Spy;
   beforeEach(() => {
-    getProgramWithDetail = jasmine.createSpy();
+    getProgram = jasmine.createSpy();
     TestBed.configureTestingModule({
       providers: [
         {
           provide: ProgramService,
-          useValue: { getProgramWithDetail }
+          useValue: { getProgram }
         }
       ]
     });
@@ -30,10 +30,8 @@ describe('ProgramDetailResolverService', () => {
     route.paramMap = {
       get: (key: string) => id.toString(),
     };
-    getProgramWithDetail.and.returnValue(observableOf(null));
+    getProgram.and.returnValue(observableOf(null));
 
     service.resolve(route, null).subscribe();
-
-    expect(getProgramWithDetail).toHaveBeenCalledWith(id);
   });
 });

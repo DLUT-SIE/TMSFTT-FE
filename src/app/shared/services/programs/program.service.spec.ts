@@ -13,12 +13,10 @@ describe('ProgramService', () => {
   let httpTestingController: HttpTestingController;
   let getDepartment$: Subject<Department>;
   let getProgramCategories$: Subject<ProgramCategory>;
-  let getProgram$: Subject<{}>;
 
   beforeEach(() => {
     getDepartment$ = new Subject();
     getProgramCategories$ = new Subject();
-    getProgram$ = new Subject<{}>();
 
     const authenticationSucceed$ = new Subject<void>();
     TestBed.configureTestingModule({
@@ -77,27 +75,6 @@ describe('ProgramService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
     req.flush({});
-  });
-
-  it('should get program with detail data.', () => {
-    const service: ProgramService = TestBed.get(ProgramService);
-    const program: Program = {
-      id: 1,
-      name: 'test',
-      department: 2,
-      category: 5,
-      form: [],
-    };
-
-    const getProgram = spyOn(service, 'getProgram');
-    getProgram.and.returnValue(getProgram$);
-
-    service.getProgramWithDetail(1).subscribe((data: Program) => {
-      expect(data.department).toEqual({});
-    });
-
-    getProgram$.next(program);
-    getDepartment$.next({});
   });
 
   it('should get program-categories.', () => {
