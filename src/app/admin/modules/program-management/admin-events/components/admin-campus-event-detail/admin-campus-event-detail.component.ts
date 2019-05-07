@@ -26,7 +26,6 @@ export class AdminCampusEventDetailComponent implements OnInit {
   }
 
   navigateToChangeEvent() {
-    console.log(this.item);
     this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.item.id } });
   }
 
