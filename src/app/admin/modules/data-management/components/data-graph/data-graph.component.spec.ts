@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 
 import { DataGraphComponent, timeValidator } from './data-graph.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
-import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service'
+import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 
 describe('DataGraphComponent', () => {
@@ -52,97 +52,97 @@ describe('DataGraphComponent', () => {
   it('should create', () => {
     getOptions$.next([
       {
-          "type": 0,
-          "option": {
-              "name": "教职工人数统计",
-              "subOption": [
+          type: 0,
+          option: {
+              name: '教职工人数统计',
+              subOption: [
                   {
-                      "type": 0,
-                      "name": "按学院"
+                      type: 0,
+                      name: '按学院'
                   },
                   {
-                      "type": 1,
-                      "name": "按人员类别"
+                      type: 1,
+                      name: '按人员类别'
                   },
                   {
-                      "type": 1,
-                      "name": "按职称"
+                      type: 1,
+                      name: '按职称'
                   },
                   {
-                      "type": 3,
-                      "name": "按最高学位"
+                      type: 3,
+                      name: '按最高学位'
                   },
                   {
-                      "type": 2,
-                      "name": "按年龄分布"
+                      type: 2,
+                      name: '按年龄分布'
                   }
               ]
           }
       },
       {
-          "type": 1,
-          "option": {
-              "name": "培训人数统计",
-              "subOption": [
+          type: 1,
+          option: {
+              name: '培训人数统计',
+              subOption: [
                   {
-                      "type": 0,
-                      "name": "按学院"
+                      type: 0,
+                      name: '按学院'
                   },
                   {
-                      "type": 1,
-                      "name": "按职称"
+                      type: 1,
+                      name: '按职称'
                   },
                   {
-                      "type": 2,
-                      "name": "按年龄分布"
+                      type: 2,
+                      name: '按年龄分布'
                   }
               ]
           }
       },
       {
-          "type": 2,
-          "option": {
-              "name": "专任教师培训覆盖率统计",
-              "subOption": [
+          type: 2,
+          option: {
+              name: '专任教师培训覆盖率统计',
+              subOption: [
                   {
-                      "type": 0,
-                      "name": "按学院"
+                      type: 0,
+                      name: '按学院'
                   },
                   {
-                      "type": 1,
-                      "name": "按职称"
+                      type: 1,
+                      name: '按职称'
                   },
                   {
-                      "type": 2,
-                      "name": "按年龄分布"
+                      type: 2,
+                      name: '按年龄分布'
                   }
               ]
           }
       },
       {
-          "type": 3,
-          "option": {
-              "name": "培训学时与工作量统计",
-              "subOption": [
+          type: 3,
+          option: {
+              name: '培训学时与工作量统计',
+              subOption: [
                   {
-                      "type": 0,
-                      "name": "按总人数"
+                      type: 0,
+                      name: '按总人数'
                   },
                   {
-                      "type": 1,
-                      "name": "按总培训学时"
+                      type: 1,
+                      name: '按总培训学时'
                   },
                   {
-                      "type": 2,
-                      "name": "按人均培训学时"
+                      type: 2,
+                      name: '按人均培训学时'
                   },
                   {
-                      "type": 3,
-                      "name": "按总工作量"
+                      type: 3,
+                      name: '按总工作量'
                   },
                   {
-                      "type": 4,
-                      "name": "按人均工作量"
+                      type: 4,
+                      name: '按人均工作量'
                   }
               ]
           }
@@ -191,7 +191,7 @@ describe('DataGraphComponent', () => {
 
     testFormGroup.patchValue({selectedStatisticsType: 2, selectedGroupType: 0});
     // TODO(wangyang): this test will be change after backend changed.
-    //expect(component.showDepartmentSelector).toBeTruthy();
+    // expect(component.showDepartmentSelector).toBeTruthy();
     expect(component.selectedGraph.get('selectedDepartment').value).toEqual(0);
   });
 
@@ -230,11 +230,11 @@ describe('DataGraphComponent', () => {
     });
     expect(component.selectedGraphValues).toEqual(testFormGroup.value);
     // TODO(wangyang): this test will be change after backend changed.
-    //expect(component.graphTypeName).toEqual(component.statisticsType[
-      //component.selectedGraphValues.selectedStatisticsType].option.name);
-    //expect(component.selectedDepartmentName).toEqual(component.departmentsList[
-      //component.selectedGraphValues.selectedDepartment].name);
-    //expect(component.isCoverageGraph).toBeTruthy();
+    // expect(component.graphTypeName).toEqual(component.statisticsType[
+      // component.selectedGraphValues.selectedStatisticsType].option.name);
+    // expect(component.selectedDepartmentName).toEqual(component.departmentsList[
+      // component.selectedGraphValues.selectedDepartment].name);
+    // expect(component.isCoverageGraph).toBeTruthy();
 
     testFormGroup.patchValue({
       selectedStatisticsType: 1,

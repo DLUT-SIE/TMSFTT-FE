@@ -20,14 +20,14 @@ export class DataGraphCanvasComponent implements OnInit {
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
     const title = `${titleYear} ${this.selectedDepartmentName} ${this.graphTypeName}`;
-    for(let i = 0; i < this.seriesData.length; i++){
-        const data: number[] = this.seriesData[i].data;
+    for (let j = 0; j < this.seriesData.length; j++) {
+        const data: number[] = this.seriesData[j].data;
         const pieGraphData: PieGraphData[] = [];
         for (let i = 0; i < data.length; i++) {
             pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
         pieGraphData.sort( (a, b) => a.value - b.value);
-        (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[i].data = pieGraphData;
+        (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[j].data = pieGraphData;
     }
     this.pieChartOption = this.basePieChartOption;
     (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;

@@ -3,7 +3,7 @@ import { FormBuilder, Validators, ValidatorFn, FormGroup, ValidationErrors} from
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { Department } from 'src/app/shared/interfaces/department';
-import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service'
+import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -30,7 +30,7 @@ export class DataGraphComponent implements OnInit {
   yearList: number[] = [];
 
   // TODO(wangyang): create a service to archieve department data from the backend.
-  departmentsList: Department[] = [{id:0, name: '全校'} as Department];
+  departmentsList: Department[] = [{id: 0, name: '全校'} as Department];
   statisticsType: OptionType[];
 
   get graphTypeName() {
@@ -39,7 +39,7 @@ export class DataGraphComponent implements OnInit {
   }
 
   get isCoverageGraph() {
-    return this.selectedGraphValues === null ? false : 
+    return this.selectedGraphValues === null ? false :
       this.selectedGraphValues.selectedStatisticsType === this.statisticsType[2].type;
   }
 
@@ -92,7 +92,7 @@ export class DataGraphComponent implements OnInit {
       this.departmentService.getDepartments({})
           .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments.results));
       this.canvasOptionsService.getCanvasOptions()
-          .subscribe(options => this.statisticsType = options)
+          .subscribe(options => this.statisticsType = options);
       this.SelectedParamChangingCheck();
   }
 }
