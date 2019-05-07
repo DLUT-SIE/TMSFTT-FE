@@ -10,6 +10,7 @@ import {
 } from '@angular/material';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { AdminProgramFormComponent } from './admin-program-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -61,6 +62,12 @@ describe('AdminProgramFormComponent', () => {
         MatSelectModule,
       ],
       providers: [
+        {
+          provide: Location,
+          useValue: {
+            back: () => {},
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {
