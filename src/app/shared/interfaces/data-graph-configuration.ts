@@ -3,5 +3,5 @@ export interface DataGraphConfiguration {
   selectedGroupType?: number;
   selectedStartYear?: number;
   selectedEndYear?: number;
-  selectedDepartment?: string;
+  selectedDepartment?: number;
 }

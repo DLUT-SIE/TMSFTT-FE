@@ -14,45 +14,48 @@ import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
-  @Input() isPieGraph: boolean;
+  @Input() selectedDepartmentName: string;
   @Input() set graphParam(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
+    this.showPieGraph = val.selectedStatisticsType === StatisticsType
+        .FULL_TIME_TEACHER_TRAINED_COVERAGE ? false : true;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
-    const title = `${titleYear} ${val.selectedDepartment} ${this.graphTypeName}`;
-
-    if (this.isPieGraph) {
-        const data: number[] = this.seriesData[0].data;
-        const pieGraphData: PieGraphData[] = [];
-        for (let i = 0; i < data.length; i++) {
-            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+    const title = `${titleYear} ${this.selectedDepartmentName} ${this.graphTypeName}`;
+    if (this.showPieGraph) {
+        for(let i = 0; i < this.seriesData.length; i++){
+            const data: number[] = this.seriesData[i].data;
+            const pieGraphData: PieGraphData[] = [];
+            for (let i = 0; i < data.length; i++) {
+                pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+            }
+            pieGraphData.sort( (a, b) => a.value - b.value);
+            (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[i].data = pieGraphData;
         }
-        pieGraphData.sort( (a, b) => a.value - b.value);
+        this.pieChartOption = this.basePieChartOption;
         (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].data = pieGraphData;
-        this.chartOption = this.pieChartOption;
-    } else {
-        if (val.selectedStatisticsType === StatisticsType.STAFF_STATISTICS ||
-            val.selectedStatisticsType === StatisticsType.FULL_TIME_TEACHER_TRAINED_COVERAGE) {
-            this.chartOption = this.doubleBarChartOption;
-        } else {
-            this.chartOption = this.barChartOption;
-        }
+        if (this.pieEchartsInstance) this.pieEchartsInstance.setOption(this.pieChartOption);
     }
-    if (this.echartsInstance) this.echartsInstance.setOption(this.chartOption);
+    this.barChartOption = val.selectedStatisticsType === StatisticsType
+        .FULL_TIME_TEACHER_TRAINED_COVERAGE ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
+    (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
+    if (this.barEchartsInstance) this.barEchartsInstance.setOption(this.barChartOption);
   }
 
-  chartOption?: EChartOption;
-  echartsInstance: echarts.ECharts;
+  showPieGraph = true;
+  barChartOption?: EChartOption;
+  pieChartOption?: EChartOption;
+  pieEchartsInstance: echarts.ECharts;
+  barEchartsInstance: echarts.ECharts;
 
   // TODO(wangyang): Following two variables should be assigned by calling relevant services
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
   seriesData: GraphData[] = [
-    {seriesNum: 0, data: [120, 101, 90, 134, 230, 132, 210]},
-    {seriesNum: 1, data: [320, 301, 390, 302, 330, 320, 334]}
+    {seriesNum: 0, data: [120, 101, 90, 134, 230]},
+    {seriesNum: 1, data: [320, 301, 390, 302, 330]}
   ];
 
-  doubleBarChartOption: EChartOption = {
+  baseDoubleBarChartOption: EChartOption = {
     legend: {
         data: ['总人数', '参加培训人数'],
         x: '10%',
@@ -61,14 +64,14 @@ export class DataGraphCanvasComponent implements OnInit {
     tooltip: {
     formatter: '{c0}'
     },
-    title: {
+    title: [{
         text: '',
         left: '50%',
         textAlign: 'center'
-    },
+    }],
     yAxis: {
         type: 'value',
-        max: 8000,
+        max: 500,
         splitLine: {
             show: false
         }
@@ -120,16 +123,17 @@ export class DataGraphCanvasComponent implements OnInit {
     }]
   };
 
-  barChartOption: EChartOption = {
+  baseCoverageBarChartOption: EChartOption = {
     legend: {
-        data: ['总人数', '培训人数']
+        data: ['总人数', '培训人数'],
+        x: '10%',
+        y: '0%'
     },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
+    title: [{
+        text: '',
+        left: '50%',
+        textAlign: 'center'
+    }],
     yAxis:  {
         type: 'value',
         data: ['asd', 'qwe', '111', '3', '4', '12344', '555']
@@ -140,8 +144,8 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     tooltip: {
         trigger: 'axis',
-        /* istanbul ignore next */
         formatter:  (c) => {
+            /* istanbul ignore next */
             return Math.round(c[0].value / c[1].value * 100) + '%';
         }
     },
@@ -172,52 +176,61 @@ export class DataGraphCanvasComponent implements OnInit {
         }
     ]
   };
-  pieChartOption: EChartOption = {
+  basePieChartOption: EChartOption = {
     title: [{
         text: '',
         left: 'center',
         top: 20,
-        textStyle: {
-            color: '#cccc'
-        }
     }],
 
     tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
-
-    visualMap: [{
-        show: false,
-        min: 80,
-        max: 600,
-        inRange: {
-            colorLightness: [0, 1]
-        }
-    }],
     series: [
         {
             name: '访问来源',
             type: 'pie',
             radius: '55%',
-            center: ['50%', '50%'],
+            center: ['25%', '50%'],
             data: [],
             roseType: 'radius',
 
             animationType: 'scale',
             animationEasing: 'elasticOut',
-            /* istanbul ignore next */
             animationDelay:  () => {
+                /* istanbul ignore next */
+                return Math.random() * 200;
+            }
+        },
+        {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['75%', '50%'],
+            data: [],
+            roseType: 'radius',
+
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay:  () => {
+                /* istanbul ignore next */
                 return Math.random() * 200;
             }
         }
     ]
   };
 
-  onChartInit(ec: echarts.ECharts) {
-      this.echartsInstance = ec;
-      this.echartsInstance.setOption(this.chartOption);
+  onPieChartInit(ec: echarts.ECharts) {
+      this.pieEchartsInstance = ec;
+      this.pieEchartsInstance.setOption(this.pieChartOption);
   }
+
+  onBarChartInit(ec: echarts.ECharts) {
+    this.barEchartsInstance = ec;
+    this.barEchartsInstance.setOption(this.barChartOption);
+  }
+
   constructor() { }
   ngOnInit() {
   }
