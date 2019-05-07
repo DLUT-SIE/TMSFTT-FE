@@ -12,7 +12,10 @@ export class CanvasOptionsService {
   ) { }
 
   getCanvasOptions() {
-    const url = '/canvas-data/canvas-options/'
-    return this.http.get<OptionType[]>(url);
+    return this.http.get<OptionType[]>('/canvas-data/canvas-options/');
+  }
+
+  isByDepartment(options: OptionType[], graphNum: number, groupNum: number): boolean {
+    return options[graphNum].option.subOption[groupNum].name === '按学院';
   }
 }

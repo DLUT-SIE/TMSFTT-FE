@@ -4,7 +4,6 @@ import { EChartOption } from 'echarts';
 import { GraphData } from 'src/app/shared/interfaces/graph-data';
 import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
-import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 
 @Component({
   selector: 'app-data-graph-canvas',
@@ -14,30 +13,29 @@ import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
+  @Input() isCoverageGraph: boolean;
   @Input() selectedDepartmentName: string;
   @Input() set graphParam(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
-    this.showPieGraph = val.selectedStatisticsType === StatisticsType
-        .FULL_TIME_TEACHER_TRAINED_COVERAGE ? false : true;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
     const title = `${titleYear} ${this.selectedDepartmentName} ${this.graphTypeName}`;
-    if (this.showPieGraph) {
-        for(let i = 0; i < this.seriesData.length; i++){
-            const data: number[] = this.seriesData[i].data;
-            const pieGraphData: PieGraphData[] = [];
-            for (let i = 0; i < data.length; i++) {
-                pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
-            }
-            pieGraphData.sort( (a, b) => a.value - b.value);
-            (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[i].data = pieGraphData;
+    for(let i = 0; i < this.seriesData.length; i++){
+        const data: number[] = this.seriesData[i].data;
+        const pieGraphData: PieGraphData[] = [];
+        for (let i = 0; i < data.length; i++) {
+            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
-        this.pieChartOption = this.basePieChartOption;
-        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-        if (this.pieEchartsInstance) this.pieEchartsInstance.setOption(this.pieChartOption);
+        pieGraphData.sort( (a, b) => a.value - b.value);
+        (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[i].data = pieGraphData;
     }
-    this.barChartOption = val.selectedStatisticsType === StatisticsType
-        .FULL_TIME_TEACHER_TRAINED_COVERAGE ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
+    this.pieChartOption = this.basePieChartOption;
+    (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
+    if (this.pieEchartsInstance && !this.isCoverageGraph && this.showPieGraph) {
+        this.pieEchartsInstance.setOption(this.pieChartOption);
+    }
+    this.showPieGraph = this.isCoverageGraph ? false : true;
+    this.barChartOption = this.isCoverageGraph ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
     (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
     if (this.barEchartsInstance) this.barEchartsInstance.setOption(this.barChartOption);
   }
@@ -185,7 +183,7 @@ export class DataGraphCanvasComponent implements OnInit {
 
     tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)'
+        formatter: '{c} ({d}%)'
     },
     series: [
         {
