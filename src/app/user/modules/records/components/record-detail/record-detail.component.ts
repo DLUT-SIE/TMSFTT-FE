@@ -7,7 +7,6 @@ import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
-import { isString } from 'util';
 
 /** Display a record in detail. */
 @Component({
@@ -50,11 +49,11 @@ export class RecordDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (isString(result)) {
+      if (result) {
         this.recordService.createFeedback(this.record.id, result).subscribe(() => {
           this.hasFeedbackSent = true;
         });
-      } else {}
+      }
     });
   }
 

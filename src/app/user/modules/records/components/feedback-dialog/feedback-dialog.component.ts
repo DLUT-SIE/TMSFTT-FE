@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component} from '@angular/core';
+import { MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-feedback-dialog',
@@ -7,10 +7,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./feedback-dialog.component.css']
 })
 export class FeedbackDialogComponent {
+  data: string;
 
   constructor(
     public dialogRef: MatDialogRef<FeedbackDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string) {}
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
