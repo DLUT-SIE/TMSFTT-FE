@@ -1,6 +1,6 @@
 <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
   fxLayoutGap="15px" fxLayoutAlign.xs="start start">
-  <span class="item-title" fxFlex="1 0 20%" fxFlexAlign.xs="start">请检索要加入组的用户</span>
+  <span class="item-title" fxFlex="1 0 20%" fxFlexAlign.xs="start">职工号</span>
   <div class="item-content" fxFlex="1 0 78%" fxFlexAlign.xs="stretch">
     <form fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column"
       fxLayoutAlign.xs="start stretch" (ngSubmit)="retrieveUser()">
@@ -10,9 +10,6 @@
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
         <button mat-raised-button type="submit" color="primary" [disabled]="usernameModel.invalid">检索</button>
-        <button mat-raised-button type="button" color="accent" [mat-dialog-close]="user.id"
-          *ngIf="!isLoading && user">保存</button>
-        <button mat-raised-button type="button" color="primary"(click)="onNoClick()">取消</button>
       </div>
     </form>
   </div>
@@ -31,3 +28,12 @@
     <div fxFlex="1 0 2%"></div>
   </div>
 </ng-container>
+
+<mat-divider></mat-divider>
+
+<div mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end center"
+  fxLayoutGap="15px" fxLayoutAlign.xs="start start">
+  <button mat-raised-button type="button" color="primary" [mat-dialog-close]="user.id"
+    *ngIf="!isLoading && user">保存</button>
+  <button mat-raised-button type="button" color="primary"(click)="onNoClick()">取消</button>
+</div>
