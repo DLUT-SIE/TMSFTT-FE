@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ValidatorFn, FormGroup, ValidationErrors} from '@angular/forms';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
-import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 import { Department } from 'src/app/shared/interfaces/department';
 import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service'
 import { DepartmentService } from 'src/app/shared/services/department.service';
@@ -15,7 +14,8 @@ export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
            { timeValidator: true } : null;
 };
 const WHOLE_SCHOOL = 0;
-const BY_DEPARTMENT = 0;
+// TODO(wangyang): this will be remove after backend changed.
+const HOUR_WORKLOAD = 3;
 
 @Component({
   selector: 'app-data-graph',
@@ -38,6 +38,11 @@ export class DataGraphComponent implements OnInit {
       this.selectedGraphValues.selectedStatisticsType].option.name;
   }
 
+  get isCoverageGraph() {
+    return this.selectedGraphValues === null ? false : 
+      this.selectedGraphValues.selectedStatisticsType === this.statisticsType[2].type;
+  }
+
   get selectedDepartmentName() {
     return this.selectedGraphValues === null ? '' : this.departmentsList[
       this.selectedGraphValues.selectedDepartment].name;
@@ -45,17 +50,17 @@ export class DataGraphComponent implements OnInit {
 
   SelectedParamChangingCheck() {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
-        this.showDepartmentSelector = val === StatisticsType.TRAINING_HOURS_WORKLOAD_STATISTICS ? false : true;
+        this.showDepartmentSelector = val === HOUR_WORKLOAD ? false : true;
         this.selectedGraph.patchValue({selectedGroupType: null, selectedDepartment: WHOLE_SCHOOL});
     });
     this.selectedGraph.get('selectedGroupType').valueChanges.subscribe(val => {
       if (val === null) {
         return;
       }
-      if (this.selectedGraph.get('selectedStatisticsType').value === StatisticsType.TRAINING_HOURS_WORKLOAD_STATISTICS ||
-          val === BY_DEPARTMENT && this.selectedGraph.get('selectedStatisticsType').value < StatisticsType
-            .TRAINING_HOURS_WORKLOAD_STATISTICS || val === BY_DEPARTMENT &&
-            this.selectedGraph.get('selectedStatisticsType').value < StatisticsType.TRAINING_HOURS_WORKLOAD_STATISTICS) {
+      if (this.selectedGraph.get('selectedStatisticsType').value === HOUR_WORKLOAD ||
+            this.canvasOptionsService.isByDepartment(this.statisticsType, this.selectedGraph.get(
+              'selectedStatisticsType').value, val) && this.selectedGraph.get(
+                'selectedStatisticsType').value < HOUR_WORKLOAD) {
           this.showDepartmentSelector = false;
           this.selectedGraph.patchValue({selectedDepartment: WHOLE_SCHOOL});
       } else {

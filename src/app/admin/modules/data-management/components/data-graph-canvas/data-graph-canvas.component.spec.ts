@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataGraphCanvasComponent } from './data-graph-canvas.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { StatisticsType } from 'src/app/shared/enums/statistics-type.enum';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import * as echarts from 'echarts';
 
@@ -32,48 +31,60 @@ describe('DataGraphCanvasComponent', () => {
     expect(component.graphParam = null).toBe(null);
   });
 
-  it('should get a echartsInstance and call the setOption function', () => {
+  it('should get a pieEchartsInstance and call the setOption function', () => {
     const setOption = jasmine.createSpy();
     const chart = {} as echarts.ECharts;
     chart.setOption = setOption;
-    component.onChartInit(chart);
-    expect(component.echartsInstance).toBe(chart);
-    expect(component.echartsInstance.setOption).toHaveBeenCalled();
+    component.onPieChartInit(chart);
+    expect(component.pieEchartsInstance).toBe(chart);
+    expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
+  });
+
+  it('should get a barEchartsInstance and call the setOption function', () => {
+    const setOption = jasmine.createSpy();
+    const chart = {} as echarts.ECharts;
+    chart.setOption = setOption;
+    component.onBarChartInit(chart);
+    expect(component.barEchartsInstance).toBe(chart);
+    expect(component.barEchartsInstance.setOption).toHaveBeenCalled();
   });
 
   it('should get a pieGraph', () => {
     const graphParam: DataGraphConfiguration = {
-      selectedStatisticsType: 0,
-      selectedDepartment: '全校',
+      selectedStatisticsType: 2,
+      selectedDepartment: 0,
       selectedStartYear: 2019,
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
+    const setOption = jasmine.createSpy();
+    const chart = {} as echarts.ECharts;
+    chart.setOption = setOption;
     component.graphTypeName = '1234';
-    component.isPieGraph = true;
-    component.echartsInstance = echarts.init(fixture.nativeElement.querySelector('div'));
+    component.isCoverageGraph = true;
+    component.pieEchartsInstance = chart;
+    component.barEchartsInstance = chart;
+    component.selectedDepartmentName = '全校';
     component.graphParam = graphParam;
-    expect(component.chartOption).toBe(component.pieChartOption);
+    expect(component.barEchartsInstance.setOption).toHaveBeenCalled();
+    expect(component.pieChartOption).toBe(component.basePieChartOption);
+    expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
+    expect(component.showPieGraph).toBeFalsy();
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019 全校 1234');
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019 全校 1234');
     const graphParam2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
-      selectedDepartment: '全校',
+      selectedDepartment: 0,
       selectedStartYear: 2015,
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
+    component.isCoverageGraph = false;
     component.graphParam = graphParam2;
+    expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
+    expect(component.barChartOption).toBe(component.baseDoubleBarChartOption);
+    expect(component.showPieGraph).toBeTruthy();
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015-2019 全校 1234');
-  });
-
-  it('should get a double bar graph', () => {
-    component.isPieGraph = false;
-    component.graphParam = {selectedStatisticsType: StatisticsType.STAFF_STATISTICS} as DataGraphConfiguration;
-    expect(component.chartOption).toBe(component.doubleBarChartOption);
-  });
-
-  it('should get a bar graph', () => {
-    component.isPieGraph = false;
-    component.graphParam = {selectedStatisticsType: StatisticsType.TRAINEE_STATISTICS} as DataGraphConfiguration;
-    expect(component.chartOption).toBe(component.barChartOption);
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015-2019 全校 1234');
   });
 });
