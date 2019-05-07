@@ -47,29 +47,29 @@ describe('CanvasOptionsService', () => {
 
   it('should judge is ByDepartment', () => {
     const options: OptionType[] = [{
-      "type": 0,
-      "option": {
-          "name": "教职工人数统计",
-          "subOption": [
+      type: 0,
+      option: {
+          name: "教职工人数统计",
+          subOption: [
               {
-                  "type": 0,
-                  "name": "按学院"
+                  type: 0,
+                  name: "按学院"
               },
               {
-                  "type": 1,
-                  "name": "按人员类别"
+                  type: 1,
+                  name: "按人员类别"
               },
               {
-                  "type": 1,
-                  "name": "按职称"
+                  type: 1,
+                  name: "按职称"
               },
               {
-                  "type": 3,
-                  "name": "按最高学位"
+                  type: 3,
+                  name: "按最高学位"
               },
               {
-                  "type": 2,
-                  "name": "按年龄分布"
+                  type: 2,
+                  name: "按年龄分布"
               }
           ]
       }
