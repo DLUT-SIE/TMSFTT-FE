@@ -62,7 +62,7 @@
       <mat-divider></mat-divider>
       <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
         <a mat-raised-button color="primary" *ngIf="!isCampusEventRecord && editable" (click)="navigateToForm()">编辑</a>
-        <a mat-raised-button color="primary" *ngIf="isCampusEventRecord && !hasFeedbackSent && !feedback"
+        <a mat-raised-button color="primary" *ngIf="isCampusEventRecord && !hasFeedbackSent"
           (click)="openDialog()">提交反馈</a>
         <a mat-raised-button color="primary" (click)="location.back()">返回</a>
       </div>
