@@ -23,22 +23,34 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of results; let i = index">
-              <div *ngIf="i>2; then thenBlock else elseBlock"></div>
+              <div *ngIf="item.enrollments_status; then thenBlock else elseBlock"></div>
               <ng-template #thenBlock>
                 <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
                 <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
                 <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
                 <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
                 <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
-                <td scope="col"><button mat-raised-button color="primary">报名</button></td>
+                <td scope="col">已报名</td>
               </ng-template>
               <ng-template #elseBlock>
-                <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
-                <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
-                <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
-                <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
-                <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
-                <td scope="col">已报名</td>
+                  <div *ngIf="item.overdue_status; then thenBlockTime else elseBlockTime"></div>
+                  <ng-template #thenBlockTime>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
+                      <td scope="col">已截止</td>
+                  </ng-template>
+                  <ng-template #elseBlockTime>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
+                      <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
+                      <td scope="col"><button mat-raised-button color="primary">报名</button></td>
+                  </ng-template>
+
               </ng-template>
             </tr>
           </tbody>

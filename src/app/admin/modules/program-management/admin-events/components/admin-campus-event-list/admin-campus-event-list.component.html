@@ -1,18 +1,16 @@
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
   <div fxFlex="8 8 calc(8em)" class="card">
-    <div class="card-header card-header-danger" *ngIf="program">
+    <div class="card-header card-header-primary" *ngIf="program">
       <h4 class="card-title">项目名称:{{ program.name }}</h4>
       <p class="card-category">开设单位:{{ program.department }}</p>
     </div>
     <div class="card-body">
       <div class="float-left">
-        <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true"
-          (click)="navigateToProgramDetail()">查看项目详情</a>
+        <button mat-raised-button color="primary" (click)="navigateToProgramDetail()">查看项目详情</button>
       </div>
       <div class="float-right">
-        <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true"
-          (click)="navigateToCreateForm()">创建新活动</a>
+        <button mat-raised-button color="primary" (click)="navigateToCreateForm()">创建新活动</button>
       </div>
       <div class="loading-shade" *ngIf="isLoadingResults">
         <mat-spinner></mat-spinner>
