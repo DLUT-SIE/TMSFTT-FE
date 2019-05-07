@@ -262,6 +262,18 @@ describe('RecordService', () => {
     getRecordContents$.next({count: 0, next: '', previous: '', results: []});
   });
 
+  it('should get number of records without feedback', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.getNumberOfRecordsWithoutFeedback().subscribe();
+
+    const url = `/records/no-feedback-records-count/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
   it('should return count of records without feedback,', fakeAsync(() => {
     const service: RecordService = TestBed.get(RecordService);
     authenticationSucceed$.next();
@@ -277,7 +289,7 @@ describe('RecordService', () => {
 
   it('should return 0 if getNumberOfRecordsWithoutFeedback() fail', fakeAsync(() => {
     const service: RecordService = TestBed.get(RecordService);
-
+    authenticationSucceed$.next();
     const spy = spyOn(service, 'getNumberOfRecordsWithoutFeedback');
 
     spy.and.returnValue(throwError(''));
