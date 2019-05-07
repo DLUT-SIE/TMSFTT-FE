@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 import { User } from 'src/app/shared/interfaces/user';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -23,7 +23,6 @@ export class AdduserDialogComponent {
   constructor(
     private readonly userService: UserService,
     public dialogRef: MatDialogRef<AdduserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {username: string},
   ) {}
 
 
