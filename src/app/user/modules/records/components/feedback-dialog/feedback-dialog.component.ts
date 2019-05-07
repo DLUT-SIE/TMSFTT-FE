@@ -10,7 +10,7 @@ export class FeedbackDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<FeedbackDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {}) {}
+    @Inject(MAT_DIALOG_DATA) public data: string) {}
 
   onNoClick(): void {
     this.dialogRef.close();
