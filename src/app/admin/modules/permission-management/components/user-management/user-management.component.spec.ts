@@ -17,7 +17,6 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 import { UserPermissionStatus, Permission, UserPermission } from 'src/app/shared/interfaces/permission';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/app/shared/services/user.service';
-import { DepartmentService } from 'src/app/shared/services/department.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { User } from 'src/app/shared/interfaces/user';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
@@ -56,7 +55,6 @@ describe('UserManagementComponent', () => {
   let component: UserManagementComponent;
   let fixture: ComponentFixture<UserManagementComponent>;
   let getUserByUsername$: Subject<PaginatedResponse<User>>;
-  let getDepartment$: Subject<{}>;
   let getGroupById$: Subject<{}>;
   let createUserPermissions$: Subject<Array<{}>>;
   let deleteUserPermissions$: Subject<Array<{}>>;
@@ -66,7 +64,6 @@ describe('UserManagementComponent', () => {
 
   beforeEach(async(() => {
     getUserByUsername$ = new Subject();
-    getDepartment$ = new Subject();
     getGroupById$ = new Subject();
     createUserPermissions$ = new Subject();
     deleteUserPermissions$ = new Subject();
@@ -106,12 +103,6 @@ describe('UserManagementComponent', () => {
           }
         },
         {
-          provide: DepartmentService,
-          useValue: {
-            getDepartment: () => getDepartment$,
-          }
-        },
-        {
           provide: PermissionService,
           useValue: {
             getPermissions: () => getPermissions$,
@@ -143,8 +134,7 @@ describe('UserManagementComponent', () => {
 
     expect(component.isLoading).toBeTruthy();
 
-    getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ department: 1, id: 1, groups: [1, 2]} as User] });
-    getDepartment$.next({});
+    getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: [1, 2]} as User] });
     getGroupById$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));
@@ -163,8 +153,7 @@ describe('UserManagementComponent', () => {
     const n = 5;
     const k = 2;
 
-    getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ department: 1, id: 1, groups: []} as User] });
-    getDepartment$.next({});
+    getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: []} as User] });
     getGroupById$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));

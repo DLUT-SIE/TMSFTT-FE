@@ -10,7 +10,6 @@ import { User } from 'src/app/shared/interfaces/user';
 import { Group } from 'src/app/shared/interfaces/group';
 import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
-import { DepartmentService } from 'src/app/shared/services/department.service';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
 
 /** UserManagementComponent allows admins manage users' accounts, permissions. */
@@ -34,7 +33,6 @@ export class UserManagementComponent implements OnInit {
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly userService: UserService,
-    private readonly departmentService: DepartmentService,
     private readonly permissionService: PermissionService,
     private readonly groupService: GroupService,
   ) { }
@@ -62,12 +60,6 @@ export class UserManagementComponent implements OnInit {
           return throwError({message : '系统中无此用户!'});
         }
         this.user = res.results[0];
-        return this.departmentService.getDepartment(this.user.department);
-      }),
-      map((department: Department) => {
-        this.department = department;
-      }),
-      switchMap(() => {
         if (this.user.groups.length === 0) return observableOf([]);
         return zip(...this.user.groups.map(
           x => this.groupService.getGroupById(x)));
