@@ -7,6 +7,7 @@ import { PermissionManagementComponent } from './permission-management.component
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentManagementComponent } from './components/department-management/department-management.component';
 import { DepartmentGroupDetailComponent } from './components/department-group-detail/department-group-detail.component';
+import { GroupResolverService } from 'src/app/admin/modules/permission-management/services/group-resolver.service';
 
 const routes: Routes = [
   {
@@ -30,6 +31,9 @@ const routes: Routes = [
           },
           {
             path: 'groups/:id',
+            resolve: {
+              group: GroupResolverService,
+            },
             component: DepartmentGroupDetailComponent,
           },
           {
