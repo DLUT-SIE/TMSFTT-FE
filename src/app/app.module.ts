@@ -23,6 +23,11 @@ import { APIHostInterceptor } from './core/api-host-interceptor/apihost-intercep
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
+/** How do we get JWT. */
+export function tokenGetter() {
+  return localStorage.getItem(environment.JWT_KEY);
+}
+
 /* tslint:disable-next-line:variable-name */
 export let AppInjector: Injector;
 
@@ -37,9 +42,7 @@ export let AppInjector: Injector;
 
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem(environment.JWT_KEY);
-        },
+        tokenGetter,
         whitelistedDomains: environment.WHITE_LIST_DOMAINS,
       }
     }),
