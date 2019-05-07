@@ -97,8 +97,7 @@
         <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">描述</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.description }}</p>
+          <div class="item-content" fxFlex="1 0 78%" [innerHTML]="description">
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>

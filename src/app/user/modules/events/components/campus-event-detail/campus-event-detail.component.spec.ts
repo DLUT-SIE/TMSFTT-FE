@@ -4,12 +4,15 @@ import { CampusEventDetailComponent } from './campus-event-detail.component';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 describe('CampusEventDetailComponent', () => {
   let component: CampusEventDetailComponent;
   let fixture: ComponentFixture<CampusEventDetailComponent>;
+  let bypassSecurityTrustHtml: jasmine.Spy;
 
   beforeEach(async(() => {
+    bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
     TestBed.configureTestingModule({
       declarations: [
         CampusEventDetailComponent
@@ -18,6 +21,13 @@ describe('CampusEventDetailComponent', () => {
         {
           provide: Location,
           useValue: {},
+        },
+        {
+          provide: DomSanitizer,
+          useValue: {
+            bypassSecurityTrustHtml,
+            sanitize: () => 'abc',
+          },
         },
         {
           provide: ActivatedRoute,
@@ -72,4 +82,14 @@ describe('CampusEventDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should bypass sanitizing.', () => {
+    const description = '<p class="abc">abc</p>';
+    component.item.description = description;
+    bypassSecurityTrustHtml.and.returnValue(description);
+
+    expect(component.description).toBe(description);
+    expect(bypassSecurityTrustHtml).toHaveBeenCalledWith(description);
+  });
+
 });

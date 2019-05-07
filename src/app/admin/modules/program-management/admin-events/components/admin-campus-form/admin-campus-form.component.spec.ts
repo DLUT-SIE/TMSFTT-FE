@@ -9,6 +9,7 @@ import {
   MatSnackBar,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatDividerModule,
 } from '@angular/material';
 import { of as observableOf, Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +18,8 @@ import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { CKEditorDirectiveStub } from 'src/testing/ckeditor-stub';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 
 describe('AdminCampusFormComponent', () => {
   let component: AdminCampusFormComponent;
@@ -44,6 +47,7 @@ describe('AdminCampusFormComponent', () => {
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatDividerModule,
       ],
       providers: [
         {
@@ -79,7 +83,7 @@ describe('AdminCampusFormComponent', () => {
           },
         },
       ],
-      declarations: [ AdminCampusFormComponent ]
+      declarations: [ AdminCampusFormComponent, CKEditorDirectiveStub ]
     })
     .compileComponents();
   }));
@@ -124,6 +128,7 @@ describe('AdminCampusFormComponent', () => {
   });
 
   it('should navigate when creation succeed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createEventForm$.next({ id: 1 } as CampusEvent);
 
@@ -142,6 +147,7 @@ describe('AdminCampusFormComponent', () => {
   });
 
   it('should display errors when creation failed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createEventForm$.error({
       message: 'Raw error message',
@@ -155,6 +161,7 @@ describe('AdminCampusFormComponent', () => {
   });
 
   it('should display raw errors when creation failed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createEventForm$.error({
       message: 'Raw error message',
@@ -162,5 +169,17 @@ describe('AdminCampusFormComponent', () => {
 
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
     expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('should update description on editor change.', () => {
+    const data = 'abccc';
+    const getData = jasmine.createSpy().and.returnValue(data);
+    /* tslint:disable-next-line:no-any */
+    const editor = {getData} as any;
+    const event = {} as CKEditor5.EventInfo<'change:data'>;
+
+    component.descriptionChange({editor, event });
+
+    expect(component.description.value).toEqual(data);
   });
 });

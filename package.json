@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "^7.2.7",
     "@angular/router": "^7.2.7",
     "@auth0/angular-jwt": "^2.1.0",
+    "@ckeditor/ckeditor5-angular": "^1.1.0",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^12.1.0",
     "arrive": "^2.4.1",
     "bootstrap": "^4.2.1",
     "bootstrap-material-design": "^4.1.1",

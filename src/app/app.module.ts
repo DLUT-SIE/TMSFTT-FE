@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, Injector } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
 import { registerLocaleData, DOCUMENT } from '@angular/common';
 import localeZhHans from '@angular/common/locales/zh-Hans';
@@ -23,10 +23,8 @@ import { APIHostInterceptor } from './core/api-host-interceptor/apihost-intercep
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
-/** How do we get our JWT. */
-export function tokenGetter() {
-  return localStorage.getItem(environment.JWT_KEY);
-}
+/* tslint:disable-next-line:variable-name */
+export let AppInjector: Injector;
 
 /** Describe how our app looks. */
 @NgModule({
@@ -39,7 +37,9 @@ export function tokenGetter() {
 
     JwtModule.forRoot({
       config: {
-        tokenGetter,
+        tokenGetter: () => {
+          return localStorage.getItem(environment.JWT_KEY);
+        },
         whitelistedDomains: environment.WHITE_LIST_DOMAINS,
       }
     }),
@@ -79,4 +79,8 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    AppInjector = this.injector;
+  }
+ }

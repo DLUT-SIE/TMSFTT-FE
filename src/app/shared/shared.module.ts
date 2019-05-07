@@ -26,6 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
 import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
@@ -63,6 +65,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     MatProgressBarModule,
 
     NgxEchartsModule,
+    CKEditorModule,
   ],
   exports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     SharedRecordListComponent,
 
     NgxEchartsModule,
+    CKEditorModule,
 
     TruncatePipe,
   ],

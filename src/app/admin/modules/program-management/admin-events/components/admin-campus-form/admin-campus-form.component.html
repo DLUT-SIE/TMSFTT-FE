@@ -88,20 +88,12 @@
             </span>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-icon matPrefix>assignment</mat-icon>
-          <mat-label i18n>活动描述</mat-label>
-          <textarea matInput placeholder="请提供校内培训活动的描述" formControlName="description" i18n-placeholder
-            required></textarea>
-          <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">
-            <span *ngIf="!!description.errors.required" i18n>
-              您需要提供校内培训活动的活动的描述。
-            </span>
-            <span *ngIf="!!description.errors.maxlength" i18n>
-              参加校内培训活动的活动内容不能超过200个字符。
-            </span>
-          </mat-error>
-        </mat-form-field>
+        <ng-container *ngIf="!isUpdateMode || (isUpdateMode && event)">
+          <ckeditor [editor]="editor" [config]="editorConfig" (ready)="onDescriptionEditorReady($event)"
+                    [data]="description.value" (change)="descriptionChange($event)"
+                    ></ckeditor>
+        </ng-container>
+        <mat-divider></mat-divider>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
           <button mat-raised-button type="submit" color="primary" [disabled]="eventForm.invalid" i18n>提交</button>
         </div>
