@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { DomSanitizer } from '@angular/platform-browser';
+import { map, switchMap } from 'rxjs/operators';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+
 
 @Component({
   selector: 'app-campus-event-detail',
@@ -12,17 +16,35 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class CampusEventDetailComponent implements OnInit {
 
   item: CampusEvent;
+  department: string;
+  category: string;
+  programName: string;
+  isLoadDate = false;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly sanitizer: DomSanitizer,
+    private readonly programService: ProgramService,
+    private readonly departmentService: DepartmentService,
     readonly location: Location,
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { item: CampusEvent}) => {
-      this.item = data.item;
-    });
+    this.route.data.pipe(
+      switchMap(data => {
+        this.item = data.item;
+        return this.programService.getProgram(Number(this.item.program));
+      }),
+      switchMap(program => {
+        this.programName = program.name;
+        this.category = program.category_str;
+        return  this.departmentService.getDepartment(program.department);
+      }),
+      map(deparment => {
+        this.department = deparment.name;
+        this.isLoadDate = true;
+      })
+    ).subscribe();
   }
 
   get description() {

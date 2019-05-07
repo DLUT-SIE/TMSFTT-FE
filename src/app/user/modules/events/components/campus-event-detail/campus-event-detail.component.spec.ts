@@ -5,19 +5,53 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { Subject } from 'rxjs';
+import { Program } from 'src/app/shared/interfaces/program';
 
 describe('CampusEventDetailComponent', () => {
   let component: CampusEventDetailComponent;
   let fixture: ComponentFixture<CampusEventDetailComponent>;
   let bypassSecurityTrustHtml: jasmine.Spy;
+  let getProgram$: Subject<Program>;
+  let getDepartment$: Subject<{}>;
+  let getProgram: jasmine.Spy;
+  let getDepartment: jasmine.Spy;
+
+  const dummyProgram: Program = {
+    id: 1,
+    name: 'sender',
+    department: 2,
+    category: 3,
+    form: [],
+  };
 
   beforeEach(async(() => {
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
+    getProgram$ = new Subject<Program>();
+    getProgram = jasmine.createSpy();
+    getDepartment$ = new Subject<{}>();
+    getDepartment = jasmine.createSpy();
+    getProgram.and.returnValue(getProgram$);
+    getDepartment.and.returnValue(getDepartment$);
     TestBed.configureTestingModule({
       declarations: [
         CampusEventDetailComponent
       ],
       providers: [
+        {
+          provide: ProgramService,
+          useValue: {
+            getProgram,
+          }
+        },
+        {
+          provide: DepartmentService,
+          useValue: {
+            getDepartment,
+          }
+        },
         {
           provide: Location,
           useValue: {},
@@ -83,6 +117,12 @@ describe('CampusEventDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load program', () => {
+    getProgram$.next(dummyProgram);
+    getDepartment$.next({});
+    expect(component.isLoadDate).toBeTruthy ();
+  });
+
   it('should bypass sanitizing.', () => {
     const description = '<p class="abc">abc</p>';
     component.item.description = description;
@@ -91,5 +131,4 @@ describe('CampusEventDetailComponent', () => {
     expect(component.description).toBe(description);
     expect(bypassSecurityTrustHtml).toHaveBeenCalledWith(description);
   });
-
 });
