@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TableExportComponent } from './table-export.component';
+import { TableExportComponent, Table } from './table-export.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material';
 import { TableExportService } from 'src/app/shared/services/data/table-export.service';
@@ -7,12 +7,17 @@ import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WindowService } from 'src/app/shared/services/window.service';
 
+
 describe('TableExportComponent', () => {
   let component: TableExportComponent;
   let fixture: ComponentFixture<TableExportComponent>;
   let exportTableSubject$ = new Subject<{'url': string}>();
   let snackBarOpen: jasmine.Spy;
   let windowOpen: jasmine.Spy;
+  const table: Table = {
+    id: 1,
+    name: '测试表'
+  };
   beforeEach(async(() => {
     exportTableSubject$ = new Subject<{'url': string}>();
     snackBarOpen = jasmine.createSpy();
@@ -45,7 +50,6 @@ describe('TableExportComponent', () => {
       ]
     })
     .compileComponents();
-    spyOn(window, 'open').and.callFake((url: string) => {});
   }));
 
   beforeEach(() => {
@@ -59,15 +63,15 @@ describe('TableExportComponent', () => {
   });
 
   it('should occure error', () => {
-    component.doTableExport();
+    component.doTableExport(table);
     exportTableSubject$.error({
-      statusText: 'Raw error message',
+      error: {detail: 'Raw error message'},
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 
   it('should load data', () => {
-    component.doTableExport();
+    component.doTableExport(table);
     exportTableSubject$.next({
       url: '/path/to/file',
     } as {url: string});

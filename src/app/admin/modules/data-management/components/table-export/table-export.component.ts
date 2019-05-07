@@ -5,12 +5,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { LoggerService } from 'src/app/shared/services/logger.service';
 
+export interface Table {
+    id: number;
+    name: string;
+}
+
 @Component({
     selector: 'app-table-export',
     templateUrl: './table-export.component.html',
     styleUrls: ['./table-export.component.css'],
 })
 export class TableExportComponent implements OnInit {
+    readonly tablesBasic: Table[] = [
+        {id: 1, name: '教职工表'},
+        {id: 2, name: '专任教师表'}
+    ];
+
+    readonly tablesTraining: Table[] = [
+        {id: 3, name: '培训总体情况表'},
+        {id: 4, name: '专任教师培训覆盖率表'},
+        {id: 5, name: '培训学时与工作量表'},
+    ];
+
     constructor(
         private readonly tableExportService: TableExportService,
         private readonly snackBar: MatSnackBar,
@@ -22,8 +38,8 @@ export class TableExportComponent implements OnInit {
     ngOnInit() {
     }
 
-    doTableExport() {
-        const url = `/data-management/table-export`;
+    doTableExport(table: Table) {
+        const url = `/data-management/table-export/?id=${table.id}`;
         this.tableExportService.exportTable(url).subscribe(
             data => {
                 this.windowService.open(data['url']);
@@ -31,7 +47,7 @@ export class TableExportComponent implements OnInit {
             },
             (error: HttpErrorResponse) => {
                 this.loggerService.log(error);
-                this.snackBar.open(error.statusText, '关闭');
+                this.snackBar.open(error.error['detail'], '关闭');
             });
     }
 }
