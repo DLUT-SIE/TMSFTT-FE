@@ -51,6 +51,7 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
       })
     ).subscribe(program => {
       this.program = program;
+      console.log(this.program.department);
     });
     super.ngOnInit();
   }

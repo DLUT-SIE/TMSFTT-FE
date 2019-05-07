@@ -4,19 +4,63 @@ import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.com
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ProgramService } from 'src/app/shared/services/programs/program.service';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { Subject } from 'rxjs';
+import { Program } from 'src/app/shared/interfaces/program';
 
 describe('AddminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
   let fixture: ComponentFixture<AdminCampusEventDetailComponent>;
   let navigate: jasmine.Spy;
+  let bypassSecurityTrustHtml: jasmine.Spy;
+  let getProgram$: Subject<Program>;
+  let getDepartment$: Subject<{}>;
+  let getProgram: jasmine.Spy;
+  let getDepartment: jasmine.Spy;
+
+  const dummyProgram: Program = {
+    id: 1,
+    name: 'sender',
+    department: 2,
+    category: 3,
+    form: [],
+  };
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
+    bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
+    getProgram$ = new Subject<Program>();
+    getProgram = jasmine.createSpy();
+    getDepartment$ = new Subject<{}>();
+    getDepartment = jasmine.createSpy();
+    getProgram.and.returnValue(getProgram$);
+    getDepartment.and.returnValue(getDepartment$);
     TestBed.configureTestingModule({
       declarations: [
         AdminCampusEventDetailComponent
       ],
       providers: [
+        {
+          provide: ProgramService,
+          useValue: {
+            getProgram,
+          }
+        },
+        {
+          provide: DepartmentService,
+          useValue: {
+            getDepartment,
+          }
+        },
+        {
+          provide: DomSanitizer,
+          useValue: {
+            bypassSecurityTrustHtml,
+            sanitize: () => 'abc',
+          },
+        },
         {
           provide: Location,
           useValue: {},
@@ -87,9 +131,24 @@ describe('AddminCampusEventDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load program', () => {
+    getProgram$.next(dummyProgram);
+    getDepartment$.next({});
+    expect(component.isLoadDate).toBeTruthy ();
+  });
+
   it('should navigate to event form', () => {
     component.navigateToChangeEvent();
 
     expect(navigate).toHaveBeenCalled();
+  });
+
+  it('should bypass sanitizing.', () => {
+    const description = '<p class="abc">abc</p>';
+    component.item.description = description;
+    bypassSecurityTrustHtml.and.returnValue(description);
+
+    expect(component.description).toBe(description);
+    expect(bypassSecurityTrustHtml).toHaveBeenCalledWith(description);
   });
 });
