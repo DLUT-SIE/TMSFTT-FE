@@ -31,7 +31,14 @@ export class GroupService extends GenericListService {
   }
 
   addUserGroup(userId: number, groupId: number) {
+<<<<<<< HEAD
     return this.http.post(`/user-groups/`, {user: userId, group: groupId});
+=======
+    const data = new FormData();
+    data.set('user', userId.toString());
+    data.set('group', groupId.toString());
+    return this.http.post(`/user-groups/`, data);
+>>>>>>> CRUD function of userGroup
   }
 
   removeUserByUserGroupId(userGroupId: number) {
