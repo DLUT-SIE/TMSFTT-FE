@@ -134,7 +134,7 @@ describe('AddminCampusEventDetailComponent', () => {
   it('should load program', () => {
     getProgram$.next(dummyProgram);
     getDepartment$.next({});
-    expect(component.isLoadDate).toBeTruthy ();
+    expect(component.isLoading).toBeTruthy ();
   });
 
   it('should navigate to event form', () => {

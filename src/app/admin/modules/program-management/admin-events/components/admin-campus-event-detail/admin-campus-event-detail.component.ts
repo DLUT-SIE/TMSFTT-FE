@@ -18,7 +18,7 @@ export class AdminCampusEventDetailComponent implements OnInit {
   department: string;
   category: string;
   programName: string;
-  isLoadDate = false;
+  isLoading = false;
 
   constructor(
     readonly location: Location,
@@ -42,7 +42,7 @@ export class AdminCampusEventDetailComponent implements OnInit {
       }),
       map(deparment => {
         this.department = deparment.name;
-        this.isLoadDate = true;
+        this.isLoading = true;
       })
     ).subscribe();
   }
