@@ -20,7 +20,6 @@ export class RecordDetailComponent implements OnInit {
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
   editable: boolean;
-  feedback: string;
   readonly editableStatus = new Set([RecordStatus.STATUS_SUBMITTED,
                                      RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED,
                                      RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED,
@@ -47,13 +46,14 @@ export class RecordDetailComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(FeedbackDialogComponent, {
       width: '250px',
-      data: {feedback: this.feedback},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.recordService.createFeedback(this.record.id, result).subscribe(() => {
-        this.hasFeedbackSent = true;
-      });
+      if (result) {
+        this.recordService.createFeedback(this.record.id, result).subscribe(() => {
+          this.hasFeedbackSent = true;
+        });
+      }
     });
   }
 

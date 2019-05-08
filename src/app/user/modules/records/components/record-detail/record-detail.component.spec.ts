@@ -147,6 +147,17 @@ describe('RecordDetailComponent', () => {
     expect(component.hasFeedbackSent).toBeTruthy();
   });
 
+  it('should do nothing if no input', () => {
+    open.and.returnValue(dialogRef);
+    dialogRef.afterClosed.and.returnValue(afterClosed$);
+
+    component.openDialog();
+
+    afterClosed$.next();
+    expect(open).toHaveBeenCalled();
+    expect(component.hasFeedbackSent).toBeFalsy();
+  });
+
   it('should navigate to form', () => {
     component.navigateToForm();
 
