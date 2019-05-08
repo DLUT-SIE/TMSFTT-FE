@@ -102,7 +102,7 @@ describe('DataGraphComponent', () => {
     }, {
       id: 1,
       name: '111'
-    }]
+    }];
     expect(component).toBeTruthy();
     expect(component.departmentsList).toEqual(departmentResult as Department[]);
   });
