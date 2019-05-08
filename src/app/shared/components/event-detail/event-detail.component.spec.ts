@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
-import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Subject } from 'rxjs';
 import { Program } from 'src/app/shared/interfaces/program';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
@@ -17,15 +16,14 @@ describe('AddminCampusEventDetailComponent', () => {
   let navigate: jasmine.Spy;
   let bypassSecurityTrustHtml: jasmine.Spy;
   let getProgram$: Subject<Program>;
-  let getDepartment$: Subject<{}>;
   let getProgram: jasmine.Spy;
-  let getDepartment: jasmine.Spy;
 
   const dummyProgram: Program = {
     id: 1,
     name: 'sender',
-    department: 2,
+    department: 'department',
     category: 3,
+    category_str: 'category_str',
     form: [],
   };
 
@@ -34,10 +32,7 @@ describe('AddminCampusEventDetailComponent', () => {
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
     getProgram$ = new Subject<Program>();
     getProgram = jasmine.createSpy();
-    getDepartment$ = new Subject<{}>();
-    getDepartment = jasmine.createSpy();
     getProgram.and.returnValue(getProgram$);
-    getDepartment.and.returnValue(getDepartment$);
     TestBed.configureTestingModule({
       declarations: [
         EventDetailComponent
@@ -47,12 +42,6 @@ describe('AddminCampusEventDetailComponent', () => {
           provide: ProgramService,
           useValue: {
             getProgram,
-          }
-        },
-        {
-          provide: DepartmentService,
-          useValue: {
-            getDepartment,
           }
         },
         {
@@ -135,15 +124,13 @@ describe('AddminCampusEventDetailComponent', () => {
   it('should load program by admin', () => {
     component.eventDetailType = EventDetailType.ADMIN;
     getProgram$.next(dummyProgram);
-    getDepartment$.next({});
-    expect(component.isLoading).toBeTruthy ();
+    expect(component.program).toEqual(dummyProgram);
   });
 
   it('should load program by user', () => {
     component.eventDetailType = EventDetailType.USER;
     getProgram$.next(dummyProgram);
-    getDepartment$.next({});
-    expect(component.isLoading).toBeTruthy ();
+    expect(component.program).toEqual(dummyProgram);
   });
 
   it('should navigate to event form by admin', () => {
