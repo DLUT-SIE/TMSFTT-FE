@@ -81,27 +81,6 @@ export class DataGraphCanvasComponent implements OnInit {
         name: '',
         type: 'bar',
         barGap: 0,
-        itemStyle: {
-            normal: {
-                color: '#003366'
-            }
-        },
-        z: 3,
-        label: {
-            normal: {
-                position: 'top',
-                show: true
-            }
-        },
-        data: []
-    }, {
-        name: '',
-        type: 'bar',
-        itemStyle: {
-            normal: {
-                color: '#e5323e'
-            }
-        },
         z: 3,
         label: {
             normal: {
@@ -135,22 +114,11 @@ export class DataGraphCanvasComponent implements OnInit {
         trigger: 'axis',
         formatter:  (c) => {
             /* istanbul ignore next */
-            return Math.round(c[0].value / c[1].value * 100) + '%';
+            return Math.round((c[0]).value / (
+                c[0].value + c[1].value) * 100) + '%';
         }
     },
     series: [
-        {
-            name: '',
-            type: 'bar',
-            stack: '1',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'insideTop'
-                }
-            },
-            data: []
-        },
         {
             name: '',
             type: 'bar',
@@ -168,13 +136,7 @@ export class DataGraphCanvasComponent implements OnInit {
   basePieChartOption: EChartOption = {
     title: [{
         text: '',
-        left: '25%',
-        textAlign: 'center',
-        top: 20,
-    },
-    {
-        text: '',
-        left: '75%',
+        left: '',
         textAlign: 'center',
         top: 20,
     }],
@@ -189,21 +151,6 @@ export class DataGraphCanvasComponent implements OnInit {
             type: 'pie',
             radius: '55%',
             center: ['25%', '50%'],
-            data: [],
-            roseType: 'radius',
-
-            animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay:  () => {
-                /* istanbul ignore next */
-                return Math.random() * 200;
-            }
-        },
-        {
-            name: '访问来源',
-            type: 'pie',
-            radius: '55%',
-            center: ['75%', '50%'],
             data: [],
             roseType: 'radius',
 
@@ -229,31 +176,59 @@ export class DataGraphCanvasComponent implements OnInit {
 
   buildPieChartOption(title: string) {
     this.pieChartOption = this.basePieChartOption;
-    for (let j = 0; j < this.seriesData.length; j++) {
+    // Expand the series by the length of seriesData which obtained from backend.
+    const pieNum = this.seriesData.length;
+    const pieSeries = this.pieChartOption.series[0];
+    const pieTitle = this.pieChartOption.title[0];
+    const pieSeriesLength = this.pieChartOption.series.length;
+    for (let j = 0; j < pieNum; j++) {
+        // computing the position of graph center: 25%, 50%.
+        const position = ((1/(pieNum*2)+j*(1/pieNum))*100).toString() + '%';
+        // build pieSeriesData based on seriesData.
         const data: number[] = this.seriesData[j].data;
         const pieGraphData: PieGraphData[] = [];
         for (let i = 0; i < data.length; i++) {
             pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
         }
         pieGraphData.sort( (a, b) => a.value - b.value);
-        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j].data = pieGraphData;
-        (this.pieChartOption.title as echarts.EChartTitleOption[])[j].text = title + '-' + this.seriesData[j].seriesName;
-    }
-    if (this.seriesData.length === 1) {
-        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].left = '50%';
-        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].center = ['50%', '50%'];
+        // Add a series when the length of the current series small than seriesData's length.
+        if (j >= pieSeriesLength) {
+            (this.pieChartOption.title as echarts.EChartTitleOption[]).push(
+                JSON.parse(JSON.stringify(pieTitle)));
+            (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])
+                .push(JSON.parse(JSON.stringify(pieSeries)));
+        }
+        // Assign the prepared data to pieChartOption.
+        this.pieChartOption.title[j].left = position;
+        this.pieChartOption.title[j].text = title + '-' + this.seriesData[j].seriesName;
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
+            .center = [position, '50%'];
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
+            .data = pieGraphData;
     }
   }
 
   buildBarChartOption(title: string) {
-    this.barChartOption = this.isCoverageGraph ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
+    this.barChartOption = this.isCoverageGraph ?
+        this.baseCoverageBarChartOption: this.baseDoubleBarChartOption;
     (this.barChartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-    for (let i = 0;i < this.seriesData.length; i++) {
-        (this.barChartOption.legend as echarts.EChartOption.SeriesBar).data[i] = this.seriesData[i].seriesName;
-        (this.barChartOption.series as echarts.EChartOption.SeriesBar)[i].name = this.seriesData[i].seriesName;
-        (this.barChartOption.series as echarts.EChartOption.SeriesBar)[i].data = this.seriesData[i].data;
+    // Expand the series based on the length of seriesData which obtained from backend.
+    const barSeriesLength = this.barChartOption.series.length;
+    const barSeries = this.barChartOption.series[0];
+    const legendList: string[] = [];
+    for (let i = 0; i < this.seriesData.length; i++) {
+        legendList.push(this.seriesData[i].seriesName);
+        // Add a series when the length of the current series small than seriesData's length.
+        if (i >= barSeriesLength) {
+            this.barChartOption.series.push(JSON.parse(JSON.stringify(barSeries)));
+        }
+        (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i]
+            .name = this.seriesData[i].seriesName;
+        (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i]
+            .data = this.seriesData[i].data;
     }
+    (this.barChartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
   }
 
   constructor() { }
