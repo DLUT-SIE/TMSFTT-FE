@@ -8,6 +8,7 @@ import { Notification } from 'src/app/shared/interfaces/notification';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
+import { PaginatedResponse } from '../interfaces/paginated-response';
 
 
 @Injectable({
@@ -48,17 +49,17 @@ export class NotificationService extends GenericListService {
 
   /** API for retrieving notifications. */
   getNotifications(req: ListRequest) {
-    return this.list<Notification>('notifications', req);
+    return this.list<PaginatedResponse<Notification>>('notifications', req);
   }
 
   /** API for retrieving notifications which have been read. */
   getReadNotifications(req: ListRequest) {
-    return this.list<Notification>('notifications/read', req);
+    return this.list<PaginatedResponse<Notification>>('notifications/read', req);
   }
 
   /** API for retrieving notifications which haven't been read. */
   getUnReadNotifications(req: ListRequest) {
-    return this.list<Notification>('notifications/unread', req);
+    return this.list<PaginatedResponse<Notification>>('notifications/unread', req);
   }
 
   /** Mark all notifications for user as read. */

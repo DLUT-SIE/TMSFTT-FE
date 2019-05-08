@@ -3,6 +3,7 @@ import { GenericListService } from '../generics/generic-list-service/generic-lis
 import { HttpClient } from '@angular/common/http';
 import { ListRequest } from '../interfaces/list-request';
 import { Department } from '../interfaces/department';
+import { PaginatedResponse } from '../interfaces/paginated-response';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class DepartmentService extends GenericListService {
   }
 
   getDepartments (req: ListRequest) {
-    return this.list<Department>('departments', req);
+    return this.list<PaginatedResponse<Department>>('departments', req);
   }
 
   getDepartment(id: Department|number) {

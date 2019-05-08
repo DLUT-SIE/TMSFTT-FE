@@ -103,7 +103,7 @@ export class RecordService extends GenericListService {
   }
 
   getRecords(url: string, req: ListRequest) {
-    return this.list<Record>(url, req);
+    return this.list<PaginatedResponse<Record>>(url, req);
   }
 
   getRecordsWithDetail(url: string, req: ListRequest) {
