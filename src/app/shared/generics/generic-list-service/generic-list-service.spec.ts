@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { GenericListService } from './generic-list-service';
 import { environment } from 'src/environments/environment';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
+import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ class ListService extends GenericListService {
     }
 
     getObjects(url: string, req: ListRequest) {
-        return this.list<{}>(url, req);
+        return this.list<PaginatedResponse<{}>>(url, req);
     }
 }
 

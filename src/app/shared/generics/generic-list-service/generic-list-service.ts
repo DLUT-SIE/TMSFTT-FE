@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { PaginatedResponse } from '../../interfaces/paginated-response';
 import { ListRequest } from '../../interfaces/list-request';
 
 /** Implement generic logic for retrieving list of objects. */
@@ -24,6 +23,6 @@ export class GenericListService {
 
         // Construct final URL
         const url = `/${resourceURL}/?${queryParams}`;
-        return this.http.get<PaginatedResponse<T>>(url);
+        return this.http.get<T>(url);
     }
 }

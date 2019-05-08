@@ -30,7 +30,7 @@ export class EventService extends GenericListService {
   /** Retrieve campus events. */
   /** TODO(youchen): Rename this function */
   getCampusEvents(req: ListRequest) {
-    return this.list<CampusEvent>('campus-events', req);
+    return this.list<PaginatedResponse<CampusEvent>>('campus-events', req);
   }
 
   /** Retrieve campus events on ID */
@@ -71,7 +71,7 @@ export class EventService extends GenericListService {
   }
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
-    return this.list<OffCampusEvent>('off-campus-events', req);
+    return this.list<PaginatedResponse<OffCampusEvent>>('off-campus-events', req);
   }
 
   /**  Admin create campus event */
