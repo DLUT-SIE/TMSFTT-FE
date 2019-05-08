@@ -14,8 +14,4 @@ export class CanvasOptionsService {
   getCanvasOptions() {
     return this.http.get<OptionType[]>('/canvas-data/canvas-options/');
   }
-
-  isByDepartment(options: OptionType[], graphNum: number, groupNum: number): boolean {
-    return options[graphNum].option.subOption[groupNum].name === '按学院';
-  }
 }

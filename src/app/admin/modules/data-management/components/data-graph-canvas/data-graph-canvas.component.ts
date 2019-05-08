@@ -18,29 +18,21 @@ export class DataGraphCanvasComponent implements OnInit {
   @Input() set graphParam(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
-        `${val.selectedStartYear}` : `${val.selectedStartYear}-${val.selectedEndYear}`;
-    const title = `${titleYear} ${this.selectedDepartmentName} ${this.graphTypeName}`;
-    for (let j = 0; j < this.seriesData.length; j++) {
-        const data: number[] = this.seriesData[j].data;
-        const pieGraphData: PieGraphData[] = [];
-        for (let i = 0; i < data.length; i++) {
-            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
-        }
-        pieGraphData.sort( (a, b) => a.value - b.value);
-        (this.basePieChartOption.series as echarts.EChartOption.SeriesPie[])[j].data = pieGraphData;
+        `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
+    const title = `${titleYear}-${this.selectedDepartmentName}-${this.graphTypeName}`;
+    if (this.isCoverageGraph) {
+        this.pieEchartsInstance = null;
     }
-    this.pieChartOption = this.basePieChartOption;
-    (this.pieChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-    if (this.pieEchartsInstance && !this.isCoverageGraph && this.showPieGraph) {
+    this.buildPieChartOption(title);
+    this.buildBarChartOption(title);
+    if (this.pieEchartsInstance && this.pieEchartsInstance !== null) {
         this.pieEchartsInstance.setOption(this.pieChartOption);
     }
-    this.showPieGraph = this.isCoverageGraph ? false : true;
-    this.barChartOption = this.isCoverageGraph ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
-    (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
-    if (this.barEchartsInstance) this.barEchartsInstance.setOption(this.barChartOption);
+    if (this.barEchartsInstance) {
+        this.barEchartsInstance.setOption(this.barChartOption);
+    }
   }
 
-  showPieGraph = true;
   barChartOption?: EChartOption;
   pieChartOption?: EChartOption;
   pieEchartsInstance: echarts.ECharts;
@@ -49,15 +41,15 @@ export class DataGraphCanvasComponent implements OnInit {
   // TODO(wangyang): Following two variables should be assigned by calling relevant services
   xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
   seriesData: GraphData[] = [
-    {seriesNum: 0, data: [120, 101, 90, 134, 230]},
-    {seriesNum: 1, data: [320, 301, 390, 302, 330]}
+    {seriesNum: 0, seriesName: '专任教师', data: [120, 101, 90, 134, 230]},
+    {seriesNum: 1, seriesName: '其他', data: [320, 301, 390, 302, 330]}
   ];
 
   baseDoubleBarChartOption: EChartOption = {
     legend: {
-        data: ['总人数', '参加培训人数'],
+        data: ['', ''],
         x: '10%',
-        y: '0%'
+        y: '7%'
     },
     tooltip: {
     formatter: '{c0}'
@@ -76,7 +68,7 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     xAxis: {
         type: 'category',
-        data: this.xAxisList,
+        data: [],
         axisLabel: {
             interval: 0,
             rotate: 0
@@ -86,7 +78,7 @@ export class DataGraphCanvasComponent implements OnInit {
         }
     },
     series: [{
-        name: '总人数',
+        name: '',
         type: 'bar',
         barGap: 0,
         itemStyle: {
@@ -101,9 +93,9 @@ export class DataGraphCanvasComponent implements OnInit {
                 show: true
             }
         },
-        data: this.seriesData[0].data
+        data: []
     }, {
-        name: '参加培训人数',
+        name: '',
         type: 'bar',
         itemStyle: {
             normal: {
@@ -117,15 +109,15 @@ export class DataGraphCanvasComponent implements OnInit {
                 show: true
             }
         },
-        data: this.seriesData[1].data
+        data: []
     }]
   };
 
   baseCoverageBarChartOption: EChartOption = {
     legend: {
-        data: ['总人数', '培训人数'],
+        data: ['', ''],
         x: '10%',
-        y: '0%'
+        y: '7%'
     },
     title: [{
         text: '',
@@ -133,12 +125,11 @@ export class DataGraphCanvasComponent implements OnInit {
         textAlign: 'center'
     }],
     yAxis:  {
-        type: 'value',
-        data: ['asd', 'qwe', '111', '3', '4', '12344', '555']
+        type: 'value'
     },
     xAxis: {
         type: 'category',
-        data: this.xAxisList
+        data: []
     },
     tooltip: {
         trigger: 'axis',
@@ -149,7 +140,7 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     series: [
         {
-            name: '培训人数',
+            name: '',
             type: 'bar',
             stack: '1',
             label: {
@@ -158,10 +149,10 @@ export class DataGraphCanvasComponent implements OnInit {
                     position: 'insideTop'
                 }
             },
-            data: this.seriesData[0].data
+            data: []
         },
         {
-            name: '总人数',
+            name: '',
             type: 'bar',
             stack: '1',
             label: {
@@ -170,14 +161,21 @@ export class DataGraphCanvasComponent implements OnInit {
                     position: 'insideTop'
                 }
             },
-            data: this.seriesData[1].data
+            data: []
         }
     ]
   };
   basePieChartOption: EChartOption = {
     title: [{
         text: '',
-        left: 'center',
+        left: '25%',
+        textAlign: 'center',
+        top: 20,
+    },
+    {
+        text: '',
+        left: '75%',
+        textAlign: 'center',
         top: 20,
     }],
 
@@ -227,6 +225,35 @@ export class DataGraphCanvasComponent implements OnInit {
   onBarChartInit(ec: echarts.ECharts) {
     this.barEchartsInstance = ec;
     this.barEchartsInstance.setOption(this.barChartOption);
+  }
+
+  buildPieChartOption(title: string) {
+    this.pieChartOption = this.basePieChartOption;
+    for (let j = 0; j < this.seriesData.length; j++) {
+        const data: number[] = this.seriesData[j].data;
+        const pieGraphData: PieGraphData[] = [];
+        for (let i = 0; i < data.length; i++) {
+            pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+        }
+        pieGraphData.sort( (a, b) => a.value - b.value);
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j].data = pieGraphData;
+        (this.pieChartOption.title as echarts.EChartTitleOption[])[j].text = title + '-' + this.seriesData[j].seriesName;
+    }
+    if (this.seriesData.length === 1) {
+        (this.pieChartOption.title as echarts.EChartTitleOption[])[0].left = '50%';
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[0].center = ['50%', '50%'];
+    }
+  }
+
+  buildBarChartOption(title: string) {
+    this.barChartOption = this.isCoverageGraph ? this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
+    (this.barChartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
+    (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
+    for (let i = 0;i < this.seriesData.length; i++) {
+        (this.barChartOption.legend as echarts.EChartOption.SeriesBar).data[i] = this.seriesData[i].seriesName;
+        (this.barChartOption.series as echarts.EChartOption.SeriesBar)[i].name = this.seriesData[i].seriesName;
+        (this.barChartOption.series as echarts.EChartOption.SeriesBar)[i].data = this.seriesData[i].data;
+    }
   }
 
   constructor() { }
