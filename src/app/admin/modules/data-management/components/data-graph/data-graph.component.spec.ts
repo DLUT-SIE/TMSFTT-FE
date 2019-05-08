@@ -18,7 +18,6 @@ describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
   let fixture: ComponentFixture<DataGraphComponent>;
   let getOptions$: Subject<OptionType[]>;
-  let getDepartments: jasmine.Spy;
   let getDepartments$: Subject<PaginatedResponse<Department>>;
   const options: OptionType[] = [{
     type: 0,
@@ -56,7 +55,6 @@ describe('DataGraphComponent', () => {
   beforeEach(async(() => {
     getOptions$ = new Subject();
     getDepartments$ = new Subject();
-    getDepartments = jasmine.createSpy().and.returnValue(getDepartments$);
     TestBed.configureTestingModule({
       declarations: [ DataGraphComponent, DataGraphCanvasComponent ],
       imports: [
@@ -77,7 +75,7 @@ describe('DataGraphComponent', () => {
         {
           provide: DepartmentService,
           useValue: {
-            getDepartments,
+            getDepartments: () => getDepartments$
           }
         }
       ]
@@ -93,9 +91,20 @@ describe('DataGraphComponent', () => {
 
   it('should create', () => {
     getOptions$.next(options);
-    const limit = 100, offset = 0;
-    expect(getDepartments).toHaveBeenCalledWith({offset, limit});
+    getDepartments$.next({
+      results: [{id: 1,
+        name: '111'
+      } as Department]
+    } as PaginatedResponse<Department>);
+    const departmentResult = [{
+      id: 0,
+      name: '全校'
+    }, {
+      id: 1,
+      name: '111'
+    }]
     expect(component).toBeTruthy();
+    expect(component.departmentsList).toEqual(departmentResult as Department[]);
   });
 
   it('should get null', () => {
