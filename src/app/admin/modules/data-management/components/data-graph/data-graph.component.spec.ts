@@ -15,36 +15,36 @@ describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
   let fixture: ComponentFixture<DataGraphComponent>;
   let getOptions$: Subject<OptionType[]>;
-  let options: OptionType[] = [{
-    'type': 0,
-    'name': '教职工人数统计',
-    'key': 'STAFF_STATISTICS',
-    'subOption': [{
-      'type': 0,
-      'name': '按学院',
-      'key': 'BY_DEPARTMENT'
+  const options: OptionType[] = [{
+    type: 0,
+    name: '教职工人数统计',
+    key: 'STAFF_STATISTICS',
+    subOption: [{
+      type: 0,
+      name: '按学院',
+      key: 'BY_DEPARTMENT'
     }, {
-      "type": 1,
-      "name": "按职称",
-      "key": "BY_STAFF_TITLE"
+      type: 1,
+      name: '按职称',
+      key: 'BY_STAFF_TITLE'
     }]
   }, {
-    'type': 1,
-    'name': '培训学时与工作量统计',
-    'key': 'TRAINING_HOURS_WORKLOAD_STATISTICS',
-    'subOption': [{
-      'type': 0,
-      'name': '按总人数',
-      'key': 'BY_TOTAL_STAFF_NUM'
+    type: 1,
+    name: '培训学时与工作量统计',
+    key: 'TRAINING_HOURS_WORKLOAD_STATISTICS',
+    subOption: [{
+      type: 0,
+      name: '按总人数',
+      key: 'BY_TOTAL_STAFF_NUM'
     }]
   }, {
-    'type': 2,
-    'name': '专任教师培训覆盖率统计',
-    'key': 'FULL_TIME_TEACHER_TRAINED_COVERAGE',
-    'subOption': [{
-      'type': 0,
-      'name': '按学院',
-      'key': 'BY_DEPARTMENT'
+    type: 2,
+    name: '专任教师培训覆盖率统计',
+    key: 'FULL_TIME_TEACHER_TRAINED_COVERAGE',
+    subOption: [{
+      type: 0,
+      name: '按学院',
+      key: 'BY_DEPARTMENT'
     }]
   }];
 
