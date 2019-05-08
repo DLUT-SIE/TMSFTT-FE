@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
+import { Program } from 'src/app/shared/interfaces/program';
 import { DomSanitizer } from '@angular/platform-browser';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
-import { DepartmentService } from 'src/app/shared/services/department.service';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
 
 @Component({
@@ -16,17 +16,13 @@ import { EventDetailType } from '../../enums/event-detaile-type.enum';
 export class EventDetailComponent implements OnInit {
   @Input() eventDetailType?: EventDetailType;
   item: CampusEvent;
-  department: string;
-  category: string;
-  programName: string;
-  isLoading = false;
+  program: Program;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly programService: ProgramService,
-    private readonly departmentService: DepartmentService,
     readonly location: Location,
   ) { }
 
@@ -35,17 +31,10 @@ export class EventDetailComponent implements OnInit {
       switchMap(data => {
         this.item = data.item;
         return this.programService.getProgram(this.item.program as number);
-      }),
-      switchMap(program => {
-        this.programName = program.name;
-        this.category = program.category_str;
-        return  this.departmentService.getDepartment(program.department);
-      }),
-      map(deparment => {
-        this.department = deparment.name;
-        this.isLoading = true;
       })
-    ).subscribe();
+    ).subscribe(program => {
+      this.program = program;
+    });
   }
 
   navigateToChangeEvent() {
