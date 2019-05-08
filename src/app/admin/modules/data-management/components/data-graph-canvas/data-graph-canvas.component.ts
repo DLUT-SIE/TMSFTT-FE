@@ -13,14 +13,14 @@ import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-con
 export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
-  @Input() isCoverageGraph: boolean;
+  @Input() hidePieGraph: boolean;
   @Input() selectedDepartmentName: string;
   @Input() set graphParam(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
     const title = `${titleYear}-${this.selectedDepartmentName}-${this.graphTypeName}`;
-    if (this.isCoverageGraph) {
+    if (this.hidePieGraph) {
         this.pieEchartsInstance = null;
     }
     this.buildPieChartOption(title);
@@ -183,7 +183,7 @@ export class DataGraphCanvasComponent implements OnInit {
     const pieSeriesLength = this.pieChartOption.series.length;
     for (let j = 0; j < pieNum; j++) {
         // computing the position of graph center: 25%, 50%.
-        const position = ((1/(pieNum*2)+j*(1/pieNum))*100).toString() + '%';
+        const position = ((1 / (pieNum * 2) + j * (1 / pieNum)) * 100).toString() + '%';
         // build pieSeriesData based on seriesData.
         const data: number[] = this.seriesData[j].data;
         const pieGraphData: PieGraphData[] = [];
@@ -209,8 +209,8 @@ export class DataGraphCanvasComponent implements OnInit {
   }
 
   buildBarChartOption(title: string) {
-    this.barChartOption = this.isCoverageGraph ?
-        this.baseCoverageBarChartOption: this.baseDoubleBarChartOption;
+    this.barChartOption = this.hidePieGraph ?
+        this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
     (this.barChartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     (this.barChartOption.title as echarts.EChartTitleOption[])[0].text = title;
     // Expand the series based on the length of seriesData which obtained from backend.

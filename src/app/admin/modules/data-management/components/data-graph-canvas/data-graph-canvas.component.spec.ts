@@ -61,7 +61,7 @@ describe('DataGraphCanvasComponent', () => {
     const chart = {} as echarts.ECharts;
     chart.setOption = setOption;
     component.graphTypeName = '1234';
-    component.isCoverageGraph = true;
+    component.hidePieGraph = true;
     component.barEchartsInstance = chart;
     component.selectedDepartmentName = '全校';
     component.graphParam = graphParam;
@@ -78,7 +78,7 @@ describe('DataGraphCanvasComponent', () => {
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
-    component.isCoverageGraph = false;
+    component.hidePieGraph = false;
     component.pieEchartsInstance = chart;
     component.graphParam = graphParam2;
     expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
