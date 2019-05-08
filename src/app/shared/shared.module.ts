@@ -59,6 +59,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     MatFormFieldModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatChipsModule,
     MatSnackBarModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
