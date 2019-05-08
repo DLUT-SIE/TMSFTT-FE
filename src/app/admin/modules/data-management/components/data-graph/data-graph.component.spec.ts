@@ -10,11 +10,16 @@ import { DataGraphComponent, timeValidator } from './data-graph.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
 import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
+import { DepartmentService } from 'src/app/shared/services/department.service';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { Department } from 'src/app/shared/interfaces/department';
 
 describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
   let fixture: ComponentFixture<DataGraphComponent>;
   let getOptions$: Subject<OptionType[]>;
+  let getDepartments: jasmine.Spy;
+  let getDepartments$: Subject<PaginatedResponse<Department>>;
   const options: OptionType[] = [{
     type: 0,
     name: '教职工人数统计',
@@ -50,6 +55,8 @@ describe('DataGraphComponent', () => {
 
   beforeEach(async(() => {
     getOptions$ = new Subject();
+    getDepartments$ = new Subject();
+    getDepartments = jasmine.createSpy().and.returnValue(getDepartments$);
     TestBed.configureTestingModule({
       declarations: [ DataGraphComponent, DataGraphCanvasComponent ],
       imports: [
@@ -66,6 +73,12 @@ describe('DataGraphComponent', () => {
           useValue: {
             getCanvasOptions: () => getOptions$
           }
+        },
+        {
+          provide: DepartmentService,
+          useValue: {
+            getDepartments,
+          }
         }
       ]
     })
@@ -80,6 +93,8 @@ describe('DataGraphComponent', () => {
 
   it('should create', () => {
     getOptions$.next(options);
+    const limit = 100, offset = 0;
+    expect(getDepartments).toHaveBeenCalledWith({offset, limit});
     expect(component).toBeTruthy();
   });
 
