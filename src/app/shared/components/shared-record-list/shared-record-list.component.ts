@@ -6,6 +6,7 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { RecordListType } from '../../enums/record-list-type.enum';
+import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 
 @Component({
   selector: 'app-shared-record-list',
@@ -14,7 +15,21 @@ import { RecordListType } from '../../enums/record-list-type.enum';
 })
 export class SharedRecordListComponent extends GenericListComponent<Record> {
   @Input() recordListType?: RecordListType;
-
+  warnStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_FEEDBACK_REQUIRED,
+    RecordStatus.STATUS_SCHOOL_ADMIN_REJECTED,
+    RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED,
+  ]);
+  primaryStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED,
+    RecordStatus.STATUS_FEEDBACK_SUBMITED,
+    RecordStatus.STATUS_SUBMITTED,
+    RecordStatus.STATUS_PRESUBMIT,
+  ]);
+  disabledStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_SCHOOL_ADMIN_REVIEWED,
+    RecordStatus.STATUS_CLOSED,
+  ]);
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,

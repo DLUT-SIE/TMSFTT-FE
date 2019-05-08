@@ -22,7 +22,6 @@
           <td scope="col">{{ record.off_campus_event.location }}</td>
           <td scope="col">{{ record.off_campus_event.num_hours | number:"1.1-1" }}</td>
           <td scope="col">{{ record.off_campus_event.num_participants }}</td>
-          <td scope="col">{{ record.status_str }}</td>
         </ng-template>
         <ng-template #elseBlock>
           <td scope="col">{{ record.campus_event.name }}</td>
@@ -30,9 +29,15 @@
           <td scope="col">{{ record.campus_event.location }}</td>
           <td scope="col">{{ record.campus_event.num_hours | number:"1.1-1" }}</td>
           <td scope="col">{{ record.campus_event.num_participants }}</td>
-          <td scope="col">{{ record.status_str }}</td>
         </ng-template>
-      </tr>
+        <td>
+         <mat-chip-list>
+          <mat-chip color="warn" *ngIf="warnStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+          <mat-chip color="primary" *ngIf="primaryStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+          <mat-chip color="disabled" *ngIf="disabledStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+        </mat-chip-list>
+        </td>
+     </tr>
     </tbody>
   </table>
   <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
