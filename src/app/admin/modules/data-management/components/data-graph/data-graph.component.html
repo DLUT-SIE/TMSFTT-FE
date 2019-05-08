@@ -12,7 +12,7 @@
               <mat-form-field>
                 <mat-label>选择统计类型</mat-label>
                 <mat-select formControlName="selectedStatisticsType">
-                  <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.option.name}}</mat-option>
+                  <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -20,7 +20,7 @@
               <mat-form-field>
                 <mat-label>选择分组类型</mat-label>
                 <mat-select formControlName="selectedGroupType">
-                  <mat-option *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].option.subOption" [value]="groupType.type">{{groupType.name}}</mat-option>
+                  <mat-option *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].subOption" [value]="groupType.type">{{groupType.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

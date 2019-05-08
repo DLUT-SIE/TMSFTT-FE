@@ -5,6 +5,7 @@ import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-con
 import { Department } from 'src/app/shared/interfaces/department';
 import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
+import { ListRequest } from 'src/app/shared/interfaces/list-request';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const selectedStartYear = control.get('selectedStartYear');
@@ -14,8 +15,6 @@ export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
            { timeValidator: true } : null;
 };
 const WHOLE_SCHOOL = 0;
-// TODO(wangyang): this will be remove after backend changed.
-const HOUR_WORKLOAD = 3;
 
 @Component({
   selector: 'app-data-graph',
@@ -29,18 +28,18 @@ export class DataGraphComponent implements OnInit {
   showDepartmentSelector = true;
   yearList: number[] = [];
 
-  // TODO(wangyang): create a service to archieve department data from the backend.
   departmentsList: Department[] = [{id: 0, name: '全校'} as Department];
   statisticsType: OptionType[];
 
   get graphTypeName() {
     return this.selectedGraphValues === null ? '' : this.statisticsType[
-      this.selectedGraphValues.selectedStatisticsType].option.name;
+      this.selectedGraphValues.selectedStatisticsType].name;
   }
 
   get isCoverageGraph() {
     return this.selectedGraphValues === null ? false :
-      this.selectedGraphValues.selectedStatisticsType === this.statisticsType[2].type;
+    this.statisticsType[this.selectedGraphValues.selectedStatisticsType].key ===
+      'FULL_TIME_TEACHER_TRAINED_COVERAGE';
   }
 
   get selectedDepartmentName() {
@@ -50,25 +49,36 @@ export class DataGraphComponent implements OnInit {
 
   SelectedParamChangingCheck() {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
-        this.showDepartmentSelector = val === HOUR_WORKLOAD ? false : true;
-        this.selectedGraph.patchValue({selectedGroupType: null, selectedDepartment: WHOLE_SCHOOL});
+      if (val === null) {
+        return;
+      }
+      this.showDepartmentSelector = this.statisticsType[val]
+        .key === 'TRAINING_HOURS_WORKLOAD_STATISTICS' ? false : true;
+      this.selectedGraph.patchValue({
+        selectedGroupType: null,
+        selectedDepartment: WHOLE_SCHOOL
+      });
     });
     this.selectedGraph.get('selectedGroupType').valueChanges.subscribe(val => {
       if (val === null) {
         return;
       }
-      if (this.selectedGraph.get('selectedStatisticsType').value === HOUR_WORKLOAD ||
-            this.canvasOptionsService.isByDepartment(this.statisticsType, this.selectedGraph.get(
-              'selectedStatisticsType').value, val) && this.selectedGraph.get(
-                'selectedStatisticsType').value < HOUR_WORKLOAD) {
+      const first = this.selectedGraph.get('selectedStatisticsType').value;
+      const second = this.selectedGraph.get('selectedGroupType').value;
+      if (this.statisticsType[first].key === 'TRAINING_HOURS_WORKLOAD_STATISTICS' ||
+          this.statisticsType[first].subOption[second].key === 'BY_DEPARTMENT') {
           this.showDepartmentSelector = false;
-          this.selectedGraph.patchValue({selectedDepartment: WHOLE_SCHOOL});
+          this.selectedGraph.patchValue({
+            selectedDepartment: WHOLE_SCHOOL
+          });
       } else {
           this.showDepartmentSelector = true;
       }
     });
     this.selectedGraph.statusChanges.subscribe(val => {
-        if (val === 'VALID')this.selectedGraphValues = this.selectedGraph.value;
+        if (val === 'VALID') {
+          this.selectedGraphValues = this.selectedGraph.value;
+        }
     });
   }
 
@@ -79,7 +89,7 @@ export class DataGraphComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-      for (let i = 2014; i <= (new Date()).getFullYear(); i++) {
+      for (let i = 2016; i <= (new Date()).getFullYear(); i++) {
           this.yearList.push(i);
       }
       this.selectedGraph = this.fb.group({
@@ -89,7 +99,7 @@ export class DataGraphComponent implements OnInit {
         selectedEndYear: [this.yearList[this.yearList.length - 1], Validators.required],
         selectedDepartment: [WHOLE_SCHOOL]
         }, { validator: timeValidator });
-      this.departmentService.getDepartments({})
+      this.departmentService.getDepartments({offset: 0, limit: 100} as ListRequest)
           .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments.results));
       this.canvasOptionsService.getCanvasOptions()
           .subscribe(options => this.statisticsType = options);
