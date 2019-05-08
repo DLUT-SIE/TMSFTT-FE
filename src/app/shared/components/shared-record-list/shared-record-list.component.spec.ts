@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Location } from '@angular/common';
-import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule, MatChipsModule } from '@angular/material';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ describe('SharedRecordListComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
         MatPaginatorModule,
+        MatChipsModule,
       ],
       providers: [
         {
