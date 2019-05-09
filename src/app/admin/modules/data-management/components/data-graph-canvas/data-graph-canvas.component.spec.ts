@@ -61,17 +61,16 @@ describe('DataGraphCanvasComponent', () => {
     const chart = {} as echarts.ECharts;
     chart.setOption = setOption;
     component.graphTypeName = '1234';
-    component.isCoverageGraph = true;
-    component.pieEchartsInstance = chart;
+    component.hidePieGraph = true;
     component.barEchartsInstance = chart;
     component.selectedDepartmentName = '全校';
     component.graphParam = graphParam;
     expect(component.barEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.pieChartOption).toBe(component.basePieChartOption);
     expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
-    expect(component.showPieGraph).toBeFalsy();
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019 全校 1234');
-    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019 全校 1234');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234-专任教师');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('2019-全校-1234-其他');
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234');
     const graphParam2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: 0,
@@ -79,12 +78,13 @@ describe('DataGraphCanvasComponent', () => {
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
-    component.isCoverageGraph = false;
+    component.hidePieGraph = false;
+    component.pieEchartsInstance = chart;
     component.graphParam = graphParam2;
     expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.barChartOption).toBe(component.baseDoubleBarChartOption);
-    expect(component.showPieGraph).toBeTruthy();
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015-2019 全校 1234');
-    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015-2019 全校 1234');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015~2019-全校-1234-专任教师');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('2015~2019-全校-1234-其他');
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015~2019-全校-1234');
   });
 });

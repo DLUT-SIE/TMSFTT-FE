@@ -1,2 +1,2 @@
-<div *ngIf="showPieGraph" echarts [options]="pieChartOption" (chartInit)="onPieChartInit($event)"></div>
+<div *ngIf="!hidePieGraph" echarts [options]="pieChartOption" (chartInit)="onPieChartInit($event)"></div>
 <div echarts [options]="barChartOption" (chartInit)="onBarChartInit($event)"></div>

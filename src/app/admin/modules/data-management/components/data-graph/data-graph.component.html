@@ -12,7 +12,7 @@
               <mat-form-field>
                 <mat-label>选择统计类型</mat-label>
                 <mat-select formControlName="selectedStatisticsType">
-                  <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.option.name}}</mat-option>
+                  <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -20,7 +20,7 @@
               <mat-form-field>
                 <mat-label>选择分组类型</mat-label>
                 <mat-select formControlName="selectedGroupType">
-                  <mat-option *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].option.subOption" [value]="groupType.type">{{groupType.name}}</mat-option>
+                  <mat-option *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].subOption" [value]="groupType.type">{{groupType.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -65,7 +65,7 @@
     <div fxFlex="8 8 calc(8em)" class="card">
       <div class="card-body">
         <div>
-          <app-data-graph-canvas [isCoverageGraph] = "isCoverageGraph" [graphParam]="selectedGraphValues" [selectedDepartmentName]="selectedDepartmentName" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
+          <app-data-graph-canvas [hidePieGraph] = "isCoverageGraph" [graphParam]="selectedGraphValues" [selectedDepartmentName]="selectedDepartmentName" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
         </div>
       </div>
     </div>

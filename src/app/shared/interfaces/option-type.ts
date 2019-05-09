@@ -1,14 +1,12 @@
-interface DataType {
+interface SubOptionType {
     type?: number;
     name?: string;
-}
-
-interface SubOptionType {
-    name?: string;
-    subOption?: DataType[];
+    key?: string;
 }
 
 export interface OptionType {
     type?: number;
-    option?: SubOptionType;
+    name?: string;
+    key?: string;
+    subOption?: SubOptionType[];
  }
