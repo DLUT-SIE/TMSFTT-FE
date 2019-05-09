@@ -69,10 +69,10 @@ export class DataGraphOptionsComponent implements OnInit {
           const selectedDepartmentName = this.departmentsList[selectedGraphValues
             .selectedDepartment].name;
           const options = {
-            'option': selectedGraphValues,
-            'isCoverageGraph': isCoverageGraph,
-            'graphTypeName': graphTypeName,
-            'selectedDepartmentName': selectedDepartmentName
+            option: selectedGraphValues,
+            isCoverageGraph,
+            graphTypeName,
+            selectedDepartmentName
           } as DataGraphOption;
           this.getOptions.emit(options);
         }
