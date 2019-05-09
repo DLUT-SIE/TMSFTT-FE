@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Group } from 'src/app/shared/interfaces/group';
 
 @Component({
   selector: 'app-department-group-permission',
@@ -8,7 +7,7 @@ import { Group } from 'src/app/shared/interfaces/group';
 })
 export class DepartmentGroupPermissionComponent implements OnInit {
 
-  @Input() group: Group;
+  @Input() groupId;
 
   constructor(
   ) {}
