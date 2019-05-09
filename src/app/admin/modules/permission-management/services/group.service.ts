@@ -26,8 +26,8 @@ export class GroupService extends GenericListService {
       `/groups/?name__startswith=${name}`);
   }
 
-  getUserByGroupId(req: ListRequest) {
-    return this.list<User>('user-groups', req);
+  getUsersByGroupId(req: ListRequest) {
+    return this.list<PaginatedResponse<User>>('user-groups', req);
   }
 
   addUserGroup(userId: number, groupId: number) {

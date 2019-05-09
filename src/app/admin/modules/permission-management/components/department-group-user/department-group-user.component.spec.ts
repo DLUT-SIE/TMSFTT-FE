@@ -32,8 +32,8 @@ describe('DepartmentGroupUserComponent', () => {
   let removeUserByUserGroupId: jasmine.Spy;
   let removeUserByUserGroupId$: Subject<{}>;
 
-  let getUserByGroupId: jasmine.Spy;
-  let getUserByGroupId$: Subject<PaginatedResponse<User>>;
+  let getUsersByGroupId: jasmine.Spy;
+  let getUsersByGroupId$: Subject<PaginatedResponse<User>>;
   beforeEach(async(() => {
     open = jasmine.createSpy();
     dialogRef = jasmine.createSpyObj('', ['afterClosed']);
@@ -45,9 +45,9 @@ describe('DepartmentGroupUserComponent', () => {
     removeUserByUserGroupId = jasmine.createSpy();
     removeUserByUserGroupId$ = new Subject();
 
-    getUserByGroupId = jasmine.createSpy();
-    getUserByGroupId$ = new Subject<PaginatedResponse<User>>();
-    getUserByGroupId.and.returnValue(getUserByGroupId$);
+    getUsersByGroupId = jasmine.createSpy();
+    getUsersByGroupId$ = new Subject<PaginatedResponse<User>>();
+    getUsersByGroupId.and.returnValue(getUsersByGroupId$);
 
     TestBed.configureTestingModule({
       declarations: [ DepartmentGroupUserComponent ],
@@ -82,7 +82,7 @@ describe('DepartmentGroupUserComponent', () => {
         {
           provide: GroupService,
           useValue: {
-            getUserByGroupId: () => getUserByGroupId$,
+            getUsersByGroupId: () => getUsersByGroupId$,
             addUserGroup,
             removeUserByUserGroupId,
           },
@@ -119,7 +119,7 @@ describe('DepartmentGroupUserComponent', () => {
   });
 
   it('should get results', () => {
-    expect(component.getResults(0, 0)).toBe(getUserByGroupId$);
+    expect(component.getResults(0, 0)).toBe(getUsersByGroupId$);
   });
 
   it('should on Group remove', () => {

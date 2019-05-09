@@ -31,7 +31,7 @@ export class DepartmentGroupUserComponent extends GenericListComponent<User> {
   getResults(offset: number, limit: number) {
     const extraParams = new Map();
     extraParams.set('group', this.group.id);
-    return this.groupService.getUserByGroupId({offset, limit, extraParams});
+    return this.groupService.getUsersByGroupId({offset, limit, extraParams});
   }
 
   onGroupRemove(id: number) {

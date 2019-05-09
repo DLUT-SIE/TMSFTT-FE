@@ -50,7 +50,7 @@ describe('GroupService', () => {
     const service: GroupService = TestBed.get(GroupService);
     const limit = 5;
     const offset = 10;
-    service.getUserByGroupId({ limit, offset }).subscribe();
+    service.getUsersByGroupId({ limit, offset }).subscribe();
 
     const params = `limit=${limit}&offset=${offset}`;
     const url = `/user-groups/?${params}`;
