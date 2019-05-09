@@ -89,14 +89,14 @@ export class RecordService extends GenericListService {
           this.recordAttachmentService.getRecordAttachments(data.attachments as number[]),
         );
       }),
-      map((val: [OffCampusEvent | CampusEvent, PaginatedResponse<RecordContent>, PaginatedResponse<RecordAttachment>]) => {
+      map((val: [OffCampusEvent | CampusEvent, RecordContent[], RecordAttachment[]]) => {
         if (recordWithDetail.off_campus_event) {
           recordWithDetail.off_campus_event = val[0] as OffCampusEvent;
         } else {
           recordWithDetail.campus_event = val[0] as CampusEvent;
         }
-        recordWithDetail.contents = val[1].results as RecordContent[];
-        recordWithDetail.attachments = val[2].results as RecordAttachment[];
+        recordWithDetail.contents = val[1] as RecordContent[];
+        recordWithDetail.attachments = val[2] as RecordAttachment[];
         return recordWithDetail;
       }),
     );

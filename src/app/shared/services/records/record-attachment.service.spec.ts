@@ -38,7 +38,7 @@ describe('RecordAttachmentService', () => {
     service.getRecordAttachments([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
-      `/record-attachments/?id__in=1%2C2&limit=10&offset=0`);
+      `/record-attachments/?id__in=1%2C2&limit=-1&offset=0`);
 
     expect(req.request.method).toEqual('GET');
 
@@ -49,7 +49,7 @@ describe('RecordAttachmentService', () => {
     const service: RecordAttachmentService = TestBed.get(RecordAttachmentService);
 
     service.getRecordAttachments([]).subscribe(res => {
-      expect(res.results.length).toBe(0);
+      expect(res.length).toBe(0);
     });
   });
 

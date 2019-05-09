@@ -4,7 +4,6 @@ import { of as observableOf } from 'rxjs';
 
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { GenericListService } from '../../generics/generic-list-service/generic-list-service';
-import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Provide services for RecordContent. */
 @Injectable({
@@ -27,11 +26,12 @@ export class RecordContentService extends GenericListService {
 
   /** Get multiple contents. */
   getRecordContents(ids: number[]) {
-    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+    if (ids.length === 0) return observableOf([]);
 
     const extraParams = new Map<string, string>();
     extraParams.set('id__in', ids.toString());
+    const limit = -1;
 
-    return this.list<PaginatedResponse<RecordContent>>('record-contents', {extraParams});
+    return this.list<RecordContent[]>('record-contents', {limit, extraParams});
   }
 }
