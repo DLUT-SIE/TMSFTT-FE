@@ -3,17 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
+import { GenericListService } from '../../generics/generic-list-service/generic-list-service';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Provide services for RecordContent. */
 @Injectable({
   providedIn: 'root'
 })
-export class RecordContentService {
+export class RecordContentService extends GenericListService {
 
   constructor(
-    private readonly http: HttpClient,
-  ) { }
+    protected readonly http: HttpClient,
+  ) {
+    super(http);
+  }
 
   /** Get single content. */
   getRecordContent(id: number) {
@@ -26,9 +29,9 @@ export class RecordContentService {
   getRecordContents(ids: number[]) {
     if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
 
-    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
+    const extraParams = new Map<string, string>();
+    extraParams.set('id__in', ids.toString());
 
-    return this.http.get<PaginatedResponse<RecordContent>>(
-      `/record-contents/?${queryParams}`);
+    return this.list<PaginatedResponse<RecordContent>>('record-contents', {extraParams});
   }
 }
