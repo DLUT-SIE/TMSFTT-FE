@@ -52,7 +52,7 @@ describe('DataGraphComponent', () => {
       selectedDepartmentName: '456'
     } as DataGraphOption;
     component.getOptions(options);
-    expect(component.graphParam).toEqual(options.option);
+    expect(component.graphOptions).toEqual(options.option);
     expect(component.hidePieGraph).toEqual(options.isCoverageGraph);
     expect(component.graphTypeName).toEqual(options.graphTypeName);
     expect(component.selectedDepartmentName).toEqual(options.selectedDepartmentName);
