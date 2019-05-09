@@ -12,6 +12,7 @@ import { DepartmentGroupComponent } from './components/department-group/departme
 import { DepartmentGroupDetailComponent } from './components/department-group-detail/department-group-detail.component';
 import { DepartmentGroupUserComponent } from './components/department-group-user/department-group-user.component';
 import { DepartmentGroupPermissionComponent } from './components/department-group-permission/department-group-permission.component';
+import { AdduserDialogComponent } from './components/adduser-dialog/adduser-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +26,14 @@ import { DepartmentGroupPermissionComponent } from './components/department-grou
     DepartmentGroupDetailComponent,
     DepartmentGroupUserComponent,
     DepartmentGroupPermissionComponent,
+    AdduserDialogComponent,
   ],
   imports: [
     SharedModule,
-    PermissionManagementRoutingModule,
+    PermissionManagementRoutingModule
+  ],
+  entryComponents: [
+    AdduserDialogComponent,
   ]
 })
 export class PermissionManagementModule { }

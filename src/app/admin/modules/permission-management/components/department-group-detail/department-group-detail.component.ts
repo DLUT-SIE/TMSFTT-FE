@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Group } from 'src/app/shared/interfaces/group';
+
 
 @Component({
   selector: 'app-department-group-detail',
@@ -8,13 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DepartmentGroupDetailComponent implements OnInit {
 
-  groupId: number;
+  group: Group;
+
   constructor(
     private readonly route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.groupId = +this.route.snapshot.paramMap.get('id');
+    this.route.data.subscribe((data: { group: Group}) => {
+      this.group = data.group;
+    });
   }
-
 }
