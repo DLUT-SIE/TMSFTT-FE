@@ -83,4 +83,17 @@ describe('AdduserDialogComponent', () => {
     expect(component.isLoading).toBeFalsy();
   });
 
+  it('should display error message.', () => {
+    component.username = 'abc';
+    component.retrieveUser();
+    const errorMessage = '系统中无此用户!';
+
+    expect(component.isLoading).toBeTruthy();
+
+    getUserByUsername$.next({count: 0, results: [], previous: '', next: ''});
+
+    expect(component.isLoading).toBeFalsy();
+    expect(component.errorMessage).toEqual(errorMessage);
+  });
+
 });
