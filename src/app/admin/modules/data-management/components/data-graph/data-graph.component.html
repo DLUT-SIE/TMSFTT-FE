@@ -1,10 +1,10 @@
 <app-data-graph-options (getOptions)="getOptions($event)"></app-data-graph-options>
-<div fxLayout="row" *ngIf="graphParam">
+<div fxLayout="row" *ngIf="graphOptions">
   <div fxFlex.lg="1 1 calc(1em)"></div>
     <div fxFlex="8 8 calc(8em)" class="card">
       <div class="card-body">
         <div>
-          <app-data-graph-canvas [hidePieGraph] = "hidePieGraph" [graphParam]="graphParam" [selectedDepartmentName]="selectedDepartmentName" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
+          <app-data-graph-canvas [hidePieGraph] = "hidePieGraph" [graphOptions]="graphOptions" [selectedDepartmentName]="selectedDepartmentName" [graphTypeName]="graphTypeName"></app-data-graph-canvas>
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ describe('DataGraphCanvasComponent', () => {
   });
 
   it('should get null', () => {
-    expect(component.graphParam = null).toBe(null);
+    expect(component.graphOptions = null).toBe(null);
   });
 
   it('should get a pieEchartsInstance and call the setOption function', () => {
@@ -50,7 +50,7 @@ describe('DataGraphCanvasComponent', () => {
   });
 
   it('should get a pieGraph', () => {
-    const graphParam: DataGraphConfiguration = {
+    const graphOptions: DataGraphConfiguration = {
       selectedStatisticsType: 2,
       selectedDepartment: 0,
       selectedStartYear: 2019,
@@ -64,14 +64,14 @@ describe('DataGraphCanvasComponent', () => {
     component.hidePieGraph = true;
     component.barEchartsInstance = chart;
     component.selectedDepartmentName = '全校';
-    component.graphParam = graphParam;
+    component.graphOptions = graphOptions;
     expect(component.barEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.pieChartOption).toBe(component.basePieChartOption);
     expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234-专任教师');
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('2019-全校-1234-其他');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234');
-    const graphParam2: DataGraphConfiguration = {
+    const graphOptions2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: 0,
       selectedStartYear: 2015,
@@ -80,7 +80,7 @@ describe('DataGraphCanvasComponent', () => {
     };
     component.hidePieGraph = false;
     component.pieEchartsInstance = chart;
-    component.graphParam = graphParam2;
+    component.graphOptions = graphOptions2;
     expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.barChartOption).toBe(component.baseDoubleBarChartOption);
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015~2019-全校-1234-专任教师');

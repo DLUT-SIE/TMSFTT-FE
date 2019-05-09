@@ -9,7 +9,7 @@ import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-con
 })
 export class DataGraphComponent implements OnInit {
 
-  graphParam: DataGraphConfiguration;
+  graphOptions: DataGraphConfiguration;
   hidePieGraph: boolean;
   graphTypeName: string;
   selectedDepartmentName: string;
@@ -20,7 +20,7 @@ export class DataGraphComponent implements OnInit {
   }
 
   getOptions(options: DataGraphOption) {
-    this.graphParam = options.option;
+    this.graphOptions = options.option;
     this.hidePieGraph = options.isCoverageGraph;
     this.graphTypeName = options.graphTypeName;
     this.selectedDepartmentName = options.selectedDepartmentName;

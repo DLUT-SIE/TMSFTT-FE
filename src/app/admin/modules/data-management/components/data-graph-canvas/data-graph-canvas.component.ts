@@ -15,7 +15,7 @@ export class DataGraphCanvasComponent implements OnInit {
   @Input() graphTypeName: string;
   @Input() hidePieGraph: boolean;
   @Input() selectedDepartmentName: string;
-  @Input() set graphParam(val: DataGraphConfiguration) {
+  @Input() set graphOptions(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
@@ -136,6 +136,7 @@ export class DataGraphCanvasComponent implements OnInit {
   basePieChartOption: EChartOption = {
     title: [{
         text: '',
+        subtext: '',
         left: '',
         textAlign: 'center',
         top: 20,
@@ -143,7 +144,12 @@ export class DataGraphCanvasComponent implements OnInit {
 
     tooltip: {
         trigger: 'item',
-        formatter: '{c} ({d}%)'
+        formatter: '"{a} <br/>{b}: {c} ({d}%)'
+    },
+    legend: {
+        orient: 'horizontal',
+        y: '85%',
+        data:['']
     },
     series: [
         {
@@ -153,7 +159,12 @@ export class DataGraphCanvasComponent implements OnInit {
             center: ['25%', '50%'],
             data: [],
             roseType: 'radius',
-
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                }
+            },
             animationType: 'scale',
             animationEasing: 'elasticOut',
             animationDelay:  () => {
@@ -176,6 +187,8 @@ export class DataGraphCanvasComponent implements OnInit {
 
   buildPieChartOption(title: string) {
     this.pieChartOption = this.basePieChartOption;
+    // Only SeriesBar's legend data is string[] type and then SeriesPie is number[]
+    (this.pieChartOption.legend as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     // Expand the series by the length of seriesData which obtained from backend.
     const pieNum = this.seriesData.length;
     const pieSeries = this.pieChartOption.series[0];
@@ -187,8 +200,10 @@ export class DataGraphCanvasComponent implements OnInit {
         // build pieSeriesData based on seriesData.
         const data: number[] = this.seriesData[j].data;
         const pieGraphData: PieGraphData[] = [];
+        let sum = 0;
         for (let i = 0; i < data.length; i++) {
             pieGraphData.push({value: data[i], name: this.xAxisList[i]} as PieGraphData);
+            sum += data[i];
         }
         pieGraphData.sort( (a, b) => a.value - b.value);
         // Add a series when the length of the current series small than seriesData's length.
@@ -200,11 +215,14 @@ export class DataGraphCanvasComponent implements OnInit {
         }
         // Assign the prepared data to pieChartOption.
         this.pieChartOption.title[j].left = position;
-        this.pieChartOption.title[j].text = title + '-' + this.seriesData[j].seriesName;
+        this.pieChartOption.title[j].text = this.seriesData[j].seriesName + '占比';
+        this.pieChartOption.title[j].subtext = '总计: ' + sum;
         (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
             .center = [position, '50%'];
         (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
             .data = pieGraphData;
+        (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
+            .name = this.seriesData[j].seriesName;
     }
   }
 

@@ -6,6 +6,7 @@ import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-option
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
+import { GraphTypeName } from 'src/app/shared/enums/graph-type.enum';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const selectedStartYear = control.get('selectedStartYear');
@@ -37,7 +38,7 @@ export class DataGraphOptionsComponent implements OnInit {
         return;
       }
       this.showDepartmentSelector = this.statisticsType[val]
-        .key === 'TRAINING_HOURS_WORKLOAD_STATISTICS' ? false : true;
+        .key === GraphTypeName.HOURS_STATISTICS ? false : true;
       this.selectedGraph.patchValue({
         selectedGroupType: null,
         selectedDepartment: WHOLE_SCHOOL
@@ -49,7 +50,7 @@ export class DataGraphOptionsComponent implements OnInit {
       }
       const first = this.selectedGraph.get('selectedStatisticsType').value;
       const second = this.selectedGraph.get('selectedGroupType').value;
-      if (this.statisticsType[first].key === 'TRAINING_HOURS_WORKLOAD_STATISTICS' ||
+      if (this.statisticsType[first].key === GraphTypeName.HOURS_STATISTICS ||
           this.statisticsType[first].subOption[second].key === 'BY_DEPARTMENT') {
           this.showDepartmentSelector = false;
           this.selectedGraph.patchValue({
@@ -65,7 +66,7 @@ export class DataGraphOptionsComponent implements OnInit {
           const graphTypeName = this.statisticsType[selectedGraphValues
             .selectedStatisticsType].name;
           const isCoverageGraph = this.statisticsType[selectedGraphValues
-            .selectedStatisticsType].key === 'FULL_TIME_TEACHER_TRAINED_COVERAGE';
+            .selectedStatisticsType].key === GraphTypeName.COVERAGE_STATISTICS;
           const selectedDepartmentName = this.departmentsList[selectedGraphValues
             .selectedDepartment].name;
           const options = {
