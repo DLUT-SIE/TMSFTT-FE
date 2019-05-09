@@ -7,10 +7,11 @@ import { RecordListComponent } from './components/record-list/record-list.compon
 import { DataReviewComponent } from './components/data-review/data-review.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
-import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { DataGraphOptionsComponent } from './components/data-graph-options/data-graph-options.component';
 import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-graph-canvas.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableExportComponent } from './components/table-export/table-export.component';
+import { DataGraphComponent } from './components/data-graph/data-graph.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import { TableExportComponent } from './components/table-export/table-export.com
     DataReviewComponent,
     BatchSubmitComponent,
     TableExportComponent,
-    DataGraphComponent,
+    DataGraphOptionsComponent,
     DataGraphCanvasComponent,
+    DataGraphComponent,
   ],
   imports: [
     SharedModule,
