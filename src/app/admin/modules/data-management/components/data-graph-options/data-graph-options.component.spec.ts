@@ -134,6 +134,7 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should hide the departmentSelector', () => {
     getOptions$.next(options);
+    component.selectedGraph.patchValue({selectedStatisticsType: null});
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
     expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeFalsy();

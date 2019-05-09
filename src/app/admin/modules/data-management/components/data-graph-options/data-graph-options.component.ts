@@ -5,7 +5,7 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option'
+import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const selectedStartYear = control.get('selectedStartYear');
@@ -69,10 +69,10 @@ export class DataGraphOptionsComponent implements OnInit {
           const selectedDepartmentName = this.departmentsList[selectedGraphValues
             .selectedDepartment].name;
           const options = {
-            option: selectedGraphValues,
-            isCoverageGraph: isCoverageGraph,
-            graphTypeName: graphTypeName,
-            selectedDepartmentName: selectedDepartmentName
+            'option': selectedGraphValues,
+            'isCoverageGraph': isCoverageGraph,
+            'graphTypeName': graphTypeName,
+            'selectedDepartmentName': selectedDepartmentName
           } as DataGraphOption;
           this.getOptions.emit(options);
         }

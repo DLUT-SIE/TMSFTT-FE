@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option'
+import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 
 @Component({

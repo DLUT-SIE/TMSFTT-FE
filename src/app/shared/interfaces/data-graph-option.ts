@@ -1,4 +1,4 @@
-import { DataGraphConfiguration } from './data-graph-configuration'
+import { DataGraphConfiguration } from './data-graph-configuration';
 
 export interface DataGraphOption {
     option?: DataGraphConfiguration;
