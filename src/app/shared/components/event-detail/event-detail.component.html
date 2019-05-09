@@ -102,13 +102,13 @@
            <div fxFlex="1 0 2%"></div>
        </div>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <ng-container *ngIf="eventDetailType==1;else admin">
+          <ng-container *ngIf="item.enrollments_status">
               <button mat-raised-button color="primary">取消报名</button>
           </ng-container>
-          <ng-template #admin>
-              <button mat-raised-button color="primary">导出签到表</button>
-              <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
-          </ng-template>
+          <ng-container *ngIf="eventDetailType==0">
+            <button mat-raised-button color="primary">导出签到表</button>
+            <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
+          </ng-container>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </div>
