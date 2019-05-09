@@ -82,7 +82,7 @@ describe('DepartmentGroupUserComponent', () => {
         {
           provide: GroupService,
           useValue: {
-            getUserByGroupId,
+            getUserByGroupId: () => getUserByGroupId$,
             addUserGroup,
             removeUserByUserGroupId,
           },
@@ -126,6 +126,8 @@ describe('DepartmentGroupUserComponent', () => {
     const id = 5;
     removeUserByUserGroupId.and.returnValue(removeUserByUserGroupId$);
     component.onGroupRemove(id);
+
+    removeUserByUserGroupId$.next({});
 
     expect(removeUserByUserGroupId).toHaveBeenCalledWith(id);
   });
