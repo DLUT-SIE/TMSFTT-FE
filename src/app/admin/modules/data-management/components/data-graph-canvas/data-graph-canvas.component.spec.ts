@@ -68,8 +68,8 @@ describe('DataGraphCanvasComponent', () => {
     expect(component.barEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.pieChartOption).toBe(component.basePieChartOption);
     expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234-专任教师');
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('2019-全校-1234-其他');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('其他占比');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234');
     const graphOptions2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
@@ -83,8 +83,8 @@ describe('DataGraphCanvasComponent', () => {
     component.graphOptions = graphOptions2;
     expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
     expect(component.barChartOption).toBe(component.baseDoubleBarChartOption);
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015~2019-全校-1234-专任教师');
-    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('2015~2019-全校-1234-其他');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
+    expect((component.pieChartOption.title as echarts.EChartTitleOption[])[1].text).toBe('其他占比');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2015~2019-全校-1234');
   });
 });
