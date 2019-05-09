@@ -149,7 +149,7 @@ export class DataGraphCanvasComponent implements OnInit {
     legend: {
         orient: 'horizontal',
         y: '85%',
-        data:['']
+        data: ['']
     },
     series: [
         {
