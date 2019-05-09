@@ -45,4 +45,42 @@ describe('GroupService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
   });
+
+  it('should get User By GroupID', () => {
+    const service: GroupService = TestBed.get(GroupService);
+    const limit = 5;
+    const offset = 10;
+    service.getUserByGroupId({ limit, offset }).subscribe();
+
+    const params = `limit=${limit}&offset=${offset}`;
+    const url = `/user-groups/?${params}`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
+  it('should create UserGroup', () => {
+    const service: GroupService = TestBed.get(GroupService);
+
+    service.addUserGroup(1, 1).subscribe();
+    const req =  httpTestingController.expectOne(`/user-groups/`);
+    expect(req.request.method).toEqual('POST');
+    req.flush({
+      user: '1',
+      group: '1',
+    });
+  });
+
+  it('should delete UserGroup', () => {
+    const service: GroupService = TestBed.get(GroupService);
+    const id = 5;
+
+    service.removeUserByUserGroupId(id).subscribe();
+    const req = httpTestingController.expectOne(
+      `/user-groups/${id}/`);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush({});
+  });
+
 });
