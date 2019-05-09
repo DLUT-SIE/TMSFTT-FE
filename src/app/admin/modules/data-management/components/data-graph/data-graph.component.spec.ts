@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DataGraphComponent } from './data-graph.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
 import { DataGraphOptionsComponent } from '../data-graph-options/data-graph-options.component';
-import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option'
+import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 
 describe('DataGraphComponent', () => {
