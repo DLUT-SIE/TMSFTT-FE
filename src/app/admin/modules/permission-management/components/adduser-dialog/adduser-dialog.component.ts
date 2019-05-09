@@ -23,7 +23,6 @@ export class AdduserDialogComponent {
   constructor(
     private readonly userService: UserService,
     public dialogRef: MatDialogRef<AdduserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {username: string},
   ) {}
 
 
