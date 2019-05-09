@@ -4,7 +4,6 @@ import { of as observableOf } from 'rxjs';
 
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { GenericListService } from '../../generics/generic-list-service/generic-list-service';
-import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 /** Export services for RecordAttachment. */
 @Injectable({
@@ -27,11 +26,12 @@ export class RecordAttachmentService extends GenericListService {
 
   /** Get multiple attachments. */
   getRecordAttachments(ids: number[]) {
-    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+    if (ids.length === 0) return observableOf([]);
     const extraParams = new Map<string, string>();
     extraParams.set('id__in', ids.toString());
+    const limit = -1;
 
-    return this.list<PaginatedResponse<RecordAttachment>>('record-attachments', {extraParams});
+    return this.list<RecordAttachment[]>('record-attachments', {limit, extraParams});
   }
 
   deleteRecordAttachment(id: number) {

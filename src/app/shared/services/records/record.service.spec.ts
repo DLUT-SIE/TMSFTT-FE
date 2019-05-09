@@ -21,8 +21,8 @@ describe('RecordService', () => {
   let authenticationSucceed$: Subject<void>;
   let getCampusEventsByIds$: Subject<PaginatedResponse<CampusEvent>>;
   let getOffCampusEventsByIds$: Subject<PaginatedResponse<OffCampusEvent>>;
-  let getRecordAttachments$: Subject<PaginatedResponse<RecordAttachment>>;
-  let getRecordContents$: Subject<PaginatedResponse<RecordContent>>;
+  let getRecordAttachments$: Subject<RecordAttachment[]>;
+  let getRecordContents$: Subject<RecordContent[]>;
   let getEvent$: Subject<CampusEvent>;
   let getOffCampusEvent$: Subject<OffCampusEvent>;
   let getRecords$: Subject<PaginatedResponse<Record>>;
@@ -222,8 +222,8 @@ describe('RecordService', () => {
     const offCampusEventRecord: Record = {
       off_campus_event: 3,
       user: 1,
-      contents: {count: 0, next: '', previous: '', results: []},
-      attachments: {count: 0, next: '', previous: '', results: []},
+      contents: [],
+      attachments: [],
     };
     const getRecord = spyOn(service, 'getRecord');
     getRecord.and.returnValue(getRecord$);
@@ -235,8 +235,8 @@ describe('RecordService', () => {
     });
     getRecord$.next(offCampusEventRecord);
     getOffCampusEvent$.next({});
-    getRecordAttachments$.next({count: 0, next: '', previous: '', results: []});
-    getRecordContents$.next({count: 0, next: '', previous: '', results: []});
+    getRecordAttachments$.next([]);
+    getRecordContents$.next([]);
   });
 
   it('shoule get campus-event record with detail data', () => {
@@ -258,8 +258,8 @@ describe('RecordService', () => {
     });
     getRecord$.next(campusEventRecord);
     getEvent$.next({});
-    getRecordAttachments$.next({count: 0, next: '', previous: '', results: []});
-    getRecordContents$.next({count: 0, next: '', previous: '', results: []});
+    getRecordAttachments$.next([]);
+    getRecordContents$.next([]);
   });
 
   it('should get number of records without feedback', () => {

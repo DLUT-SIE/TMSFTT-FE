@@ -39,7 +39,7 @@ describe('RecordContentService', () => {
     service.getRecordContents([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
-      `/record-contents/?id__in=1%2C2&limit=10&offset=0`);
+      `/record-contents/?id__in=1%2C2&limit=-1&offset=0`);
 
     expect(req.request.method).toEqual('GET');
 
@@ -50,7 +50,7 @@ describe('RecordContentService', () => {
     const service: RecordContentService = TestBed.get(RecordContentService);
 
     service.getRecordContents([]).subscribe(res => {
-      expect(res.results.length).toBe(0);
+      expect(res.length).toBe(0);
     });
   });
 });
