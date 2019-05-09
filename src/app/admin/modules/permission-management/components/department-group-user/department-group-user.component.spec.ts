@@ -1,10 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatCardModule,
+         MatIconModule,
+         MatPaginatorModule,
+         MatSelectModule,
+         MatInputModule,
+         MatDividerModule,
+         MatProgressSpinnerModule,
+         MatDialog,
+        } from '@angular/material';
+import { Location } from '@angular/common';
 import { DepartmentGroupUserComponent } from './department-group-user.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
+import { AdduserDialogComponent } from '../adduser-dialog/adduser-dialog.component';
+import { Subject } from 'rxjs';
+import { MatDialogRef } from '@angular/material';
+import { User } from 'src/app/shared/interfaces/user';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { HAMMER_LOADER } from '@angular/platform-browser';
 
 describe('DepartmentGroupUserComponent', () => {
   let component: DepartmentGroupUserComponent;
   let fixture: ComponentFixture<DepartmentGroupUserComponent>;
+  let open: jasmine.Spy;
+  let dialogRef: jasmine.SpyObj<MatDialogRef<AdduserDialogComponent>>;
+  let afterClosed$: Subject<string>;
+
+  let addUserGroup: jasmine.Spy;
+  let userGroup$: Subject<{}>;
+
+  let removeUserByUserGroupId: jasmine.Spy;
+  let removeUserByUserGroupId$: Subject<{}>;
 
   let getUsersByGroupId: jasmine.Spy;
   let getUsersByGroupId$: Subject<PaginatedResponse<User>>;
@@ -79,6 +105,12 @@ describe('DepartmentGroupUserComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DepartmentGroupUserComponent);
     component = fixture.componentInstance;
+    const group = {
+      id: 1,
+      user: 1,
+      group: 1,
+    };
+    component.group = group;
     fixture.detectChanges();
   });
 
