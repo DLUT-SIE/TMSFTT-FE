@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { AUTH_SERVICE } from '../../interfaces/auth-service';
 
 import { CanvasOptionsService } from './canvas-options.service';
+import { OptionType } from '../../interfaces/option-type';
 
 describe('CanvasOptionsService', () => {
   let httpTestingController: HttpTestingController;
@@ -41,6 +42,13 @@ describe('CanvasOptionsService', () => {
     service.getCanvasOptions().subscribe();
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toBeTruthy('GET');
-    req.flush({});
+    req.flush([
+      {type: 0, name: '123', subOption: []},
+      {type: 1, name: '456', subOption: []}
+    ]);
+
+    service.getCanvasOptions().subscribe((data: OptionType[]) => {
+      expect(data.length).toEqual(2);
+    });
   });
 });
