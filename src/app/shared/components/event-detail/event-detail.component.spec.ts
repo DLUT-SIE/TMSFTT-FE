@@ -38,7 +38,6 @@ describe('AddminCampusEventDetailComponent', () => {
             navigate,
           },
         },
-   
       ]
     })
     .compileComponents();

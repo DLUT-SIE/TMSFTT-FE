@@ -8,7 +8,7 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
   templateUrl: './admin-campus-event-detail.component.html',
   styleUrls: ['./admin-campus-event-detail.component.css']
 })
-export class AdminCampusEventDetailComponent implements OnInit{
+export class AdminCampusEventDetailComponent implements OnInit {
   eventDetailType: EventDetailType = EventDetailType.ADMIN;
   event: CampusEvent;
 
@@ -17,7 +17,7 @@ export class AdminCampusEventDetailComponent implements OnInit{
       this.event = data.event;
     });
   }
-  
+
   constructor(
     private readonly route: ActivatedRoute,
   ) { }

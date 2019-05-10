@@ -22,7 +22,7 @@ describe('EventDetailResolverService', () => {
 
     getEvent$ = new Subject<CampusEvent>();
     getEvent.and.returnValue(getEvent$);
-    
+
     TestBed.configureTestingModule({
       providers: [
         {
@@ -54,7 +54,7 @@ describe('EventDetailResolverService', () => {
         category_str: '青年教师助课',
         department: '飞海科技',
         name: '不过时候之间国际.',
-        category: 4     
+        category: 4
       },
       overdue_status: false,
       enrollments_status: false,
@@ -68,14 +68,14 @@ describe('EventDetailResolverService', () => {
       deadline: '2019-02-26T15:04:24.231857+08:00',
       num_enrolled: 0,
       description: '问题解决建设不同.所以任何下.',
-    } 
+    };
     getEvent.and.returnValue(observableOf(event));
     const program =  {
       id: 1,
       category_str: '青年教师助课',
       department: '飞海科技',
       name: '不过时候之间国际.',
-      category: 4     
+      category: 4
     };
     getProgram.and.returnValue(observableOf(program));
     service.resolve(route, null).subscribe();
