@@ -4,13 +4,13 @@
     <div class="card-header card-header-primary">
       <h4 class="card-title">校园培训活动详情</h4>
     </div>
-    <div class="card-body" *ngIf="program">
+    <div class="card-body">
       <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
         <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目名称</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{  program.name }}</p>
+            <p>{{  event.program.name }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -18,7 +18,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目单位</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ program.department  }}</p>
+            <p>{{ event.program.department  }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -26,7 +26,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目类别</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ program.category }}</p>
+            <p>{{ event.program.category }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -34,7 +34,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">活动名称</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.name }}</p>
+            <p>{{ event.name }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -42,7 +42,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">编号</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.id }}</p>
+            <p>{{ event.id }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -50,7 +50,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.time | date:'y年M月d日 H:mm' }}</p>
+            <p>{{ event.time | date:'y年M月d日 H:mm' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -58,7 +58,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">地点</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.location }}</p>
+            <p>{{ event.location }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -66,7 +66,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">时长</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.num_hours | number:"0.1-1"  }}</p>
+            <p>{{ event.num_hours | number:"0.1-1"  }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -74,7 +74,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">参与人数</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.num_participants }}</p>
+            <p>{{ event.num_participants }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -82,7 +82,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">截止时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.deadline | date:'y年M月d日 H:mm' }}</p>
+            <p>{{ event.deadline | date:'y年M月d日 H:mm' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -90,7 +90,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">登记数</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ item.num_enrolled }}</p>
+            <p>{{ event.num_enrolled }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -102,10 +102,10 @@
            <div fxFlex="1 0 2%"></div>
        </div>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <ng-container *ngIf="item.enrollments_status">
+          <ng-container *ngIf="event.enrollments_status && eventDetailType === checkEventDetailType.USER">
               <button mat-raised-button color="primary">取消报名</button>
           </ng-container>
-          <ng-container *ngIf="eventDetailType==0">
+          <ng-container *ngIf="eventDetailType === checkEventDetailType.ADMIN">
             <button mat-raised-button color="primary">导出签到表</button>
             <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
           </ng-container>

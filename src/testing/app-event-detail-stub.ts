@@ -7,11 +7,13 @@ import { Directive, Input } from '@angular/core';
 })
 export class AppEventDetailStub {
     @Input() eventDetailType?: EventDetailType;
+    @Input() event?: CampusEvent;
 }
 
 // Dummy module to satisfy Angular Language service. Never used.
 import { NgModule } from '@angular/core';
 import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 @NgModule({
   declarations: [

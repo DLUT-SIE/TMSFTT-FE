@@ -1,49 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { Program } from 'src/app/shared/interfaces/program';
+// import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { DomSanitizer } from '@angular/platform-browser';
-import { switchMap } from 'rxjs/operators';
-import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
+import { Program } from '../../interfaces/program';
 
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })
-export class EventDetailComponent implements OnInit {
+export class EventDetailComponent {
+  checkEventDetailType = EventDetailType;
   @Input() eventDetailType?: EventDetailType;
-  item: CampusEvent;
-  program: Program;
+  @Input() event: {
+    id?: number,
+    overdue_status?: boolean,
+    enrollments_status?: boolean,
+    create_time?: string,
+    update_time?: string,
+    name?: string,
+    time?: string,
+    location?: string,
+    num_hours?: number,
+    num_participants?: number,
+    deadline?: string,
+    num_enrolled?: number,
+    description?: string,
+    program?: number | Program
+  };
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
-    private readonly programService: ProgramService,
     readonly location: Location,
   ) { }
 
-  ngOnInit() {
-    this.route.data.pipe(
-      switchMap(data => {
-        this.item = data.item;
-        return this.programService.getProgram(this.item.program as number);
-      })
-    ).subscribe(program => {
-      this.program = program;
-    });
-  }
-
   navigateToChangeEvent() {
-    this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.item.id } });
+    this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.event.id } });
   }
 
   get description() {
     // Through this getter, we can bypass sanitizing and get raw HTML.
-    return this.sanitizer.bypassSecurityTrustHtml(this.item.description || /* istanbul ignore next */ '');
+    return this.sanitizer.bypassSecurityTrustHtml(this.event.description || /* istanbul ignore next */ '');
   }
 
 }
