@@ -31,7 +31,7 @@ describe('CampusEventDetailComponent', () => {
                   category_str: '青年教师助课',
                   epartment: '飞海科技',
                   name: '不过时候之间国际.',
-                  category: 4     
+                  category: 4
                 },
                 overdue_status: false,
                 enrollments_status: false,
