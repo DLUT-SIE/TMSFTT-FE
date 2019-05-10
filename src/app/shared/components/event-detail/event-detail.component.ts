@@ -28,7 +28,7 @@ export class EventDetailComponent {
     deadline?: string,
     num_enrolled?: number,
     description?: string,
-    program?: number | Program
+    program?: Program
   };
 
   constructor(
