@@ -5,11 +5,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {
-  MatCardModule,
   MatPaginatorModule,
   MatIconModule,
   MatFormFieldModule,
-  MatSelectModule,
   MatSnackBar,
   MatInputModule,
 } from '@angular/material';
@@ -28,6 +26,7 @@ describe('OffCampusRecordDetailComponent', () => {
   let getReviewNotes$: Subject<PaginatedResponse<ReviewNote>>;
   let createReviewNote$: Subject<ReviewNote>;
   let snackBarOpen: jasmine.Spy;
+  const dummyReviewNote = { id: 1 };
 
   beforeEach(async(() => {
     getReviewNotes$ = new Subject();
@@ -36,12 +35,10 @@ describe('OffCampusRecordDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ OffCampusRecordDetailComponent ],
       imports: [
-        MatCardModule,
         MatPaginatorModule,
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
-        MatSelectModule,
         FormsModule,
         NoopAnimationsModule
       ],
@@ -120,16 +117,14 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should get reviewnotes', () => {
-    expect(component.getResults(10, 0)).toBe(getReviewNotes$);
+    expect(component.getReviewNotes(10, 0)).toBe(getReviewNotes$);
   });
 
   it('should create reviewnote.', () => {
-    const forceRefresh = spyOn(component, 'forceRefresh');
 
     component.onSubmit();
     createReviewNote$.next();
 
-    expect(forceRefresh).toHaveBeenCalled();
   });
 
   it('should display errors when creation failed.', () => {
@@ -153,6 +148,39 @@ describe('OffCampusRecordDetailComponent', () => {
     component.onSubmit();
 
     expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
+  });
+
+  it('should load data', () => {
+    const results = [dummyReviewNote, dummyReviewNote, dummyReviewNote];
+    getReviewNotes$.next({
+      results,
+      count: 100,
+      previous: '',
+      next: ''
+    });
+
+    expect(component.isLoadingReviewNotes).toBeFalsy();
+    expect(component.reviewNotes).toEqual(results);
+    expect(component.reviewNotesLength).toEqual(100);
+  });
+
+  it('should display errors when getting reviewnotes failed.', () => {
+    getReviewNotes$.error({
+      message: 'Raw error message',
+      error: {
+        reviewnotes_data: ['Rejected'],
+      },
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Rejected。', '关闭');
+  });
+
+  it('should display raw errors when getting reviewnotes failed.', () => {
+    getReviewNotes$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 
 });
