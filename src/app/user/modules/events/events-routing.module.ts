@@ -13,7 +13,7 @@ const routes: Routes = [
       {
         path: ':id',
         resolve: {
-          item: EventDetailResolverService,
+          event: EventDetailResolverService,
         },
         component: CampusEventDetailComponent,
       },

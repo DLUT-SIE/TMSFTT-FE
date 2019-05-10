@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 @Component({
   selector: 'app-campus-event-detail',
   templateUrl: './campus-event-detail.component.html',
   styleUrls: ['./campus-event-detail.component.css']
 })
-export class CampusEventDetailComponent {
+export class CampusEventDetailComponent implements OnInit{
   eventDetailType: EventDetailType = EventDetailType.USER;
-  constructor() { }
+  event: CampusEvent;
+
+  ngOnInit() {
+    this.route.data.subscribe((data: { event: CampusEvent}) => {
+      this.event = data.event;
+    });
+  }
+  
+  constructor(
+    private readonly route: ActivatedRoute,
+  ) { }
 }
 
 

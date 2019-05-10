@@ -1,13 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of as observableOf } from 'rxjs';
 import { EventDetailComponent } from './event-detail.component';
-import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ProgramService } from 'src/app/shared/services/programs/program.service';
-import { Subject } from 'rxjs';
-import { Program } from 'src/app/shared/interfaces/program';
+
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
 
 describe('AddminCampusEventDetailComponent', () => {
@@ -15,35 +11,15 @@ describe('AddminCampusEventDetailComponent', () => {
   let fixture: ComponentFixture<EventDetailComponent>;
   let navigate: jasmine.Spy;
   let bypassSecurityTrustHtml: jasmine.Spy;
-  let getProgram$: Subject<Program>;
-  let getProgram: jasmine.Spy;
-
-  const dummyProgram: Program = {
-    id: 1,
-    name: 'sender',
-    department: 'department',
-    category: 3,
-    category_str: 'category_str',
-    form: [],
-  };
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
-    getProgram$ = new Subject<Program>();
-    getProgram = jasmine.createSpy();
-    getProgram.and.returnValue(getProgram$);
     TestBed.configureTestingModule({
       declarations: [
         EventDetailComponent
       ],
       providers: [
-        {
-          provide: ProgramService,
-          useValue: {
-            getProgram,
-          }
-        },
         {
           provide: DomSanitizer,
           useValue: {
@@ -62,50 +38,7 @@ describe('AddminCampusEventDetailComponent', () => {
             navigate,
           },
         },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              queryParamMap: {
-                get: () => '1',
-              },
-            },
-            data: observableOf({item: {
-                id: 601,
-                program_detail: {
-                  id: 157,
-                  department_detail: {
-                    id: 77,
-                    create_time: '2019-02-26T15:04:23.596821+08:00',
-                    update_time: '2019-02-26T15:04:23.628167+08:00',
-                    name: '七喜',
-                    admins: [
-                      12
-                    ]
-                  },
-                  category_detail: {
-                    id: 20,
-                    name: '其他'
-                  },
-                  name: '还是不是其中信息.',
-                  department: 77,
-                  category: 20,
-                  form: []
-                },
-                create_time: '2019-02-26T15:04:24.232265+08:00',
-                update_time: '2019-02-26T15:04:24.232288+08:00',
-                name: '介绍需要关系如此.',
-                time: '2019-04-06T01:07:39.333288+08:00',
-                location: '济南街D座',
-                num_hours: 1.155832407467451,
-                num_participants: 62,
-                deadline: '2019-02-26T15:04:24.231857+08:00',
-                num_enrolled: 0,
-                description: '问题解决建设不同.所以任何下.',
-                program: 157
-              } as CampusEvent}),
-          }
-        }
+   
       ]
     })
     .compileComponents();
@@ -114,23 +47,34 @@ describe('AddminCampusEventDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventDetailComponent);
     component = fixture.componentInstance;
+    const event =  {
+      id: 12,
+      overdue_status: true,
+      enrollments_status: true,
+      create_time: '2019-05-09T10:39:41.793039+08:0',
+      update_time: '2019-05-10T09:10:48.370559+08:00',
+      name: '1243124',
+      time: '2020-05-01T00:24:00+08:00',
+      location: '1233',
+      num_hours: 312.0,
+      num_participants: 123,
+      deadline: '2020-02-01T03:23:00+08:00',
+      num_enrolled: 123,
+      description: '<p class="abc">abc</p>',
+      program: {
+        id: 1,
+        category_str: '青年教师助课',
+        department: '飞海科技',
+        name: '不过时候之间国际.',
+        category: 4
+      }
+    };
+    component.event = event;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should load program by admin', () => {
-    component.eventDetailType = EventDetailType.ADMIN;
-    getProgram$.next(dummyProgram);
-    expect(component.program).toEqual(dummyProgram);
-  });
-
-  it('should load program by user', () => {
-    component.eventDetailType = EventDetailType.USER;
-    getProgram$.next(dummyProgram);
-    expect(component.program).toEqual(dummyProgram);
   });
 
   it('should navigate to event form by admin', () => {
@@ -142,10 +86,11 @@ describe('AddminCampusEventDetailComponent', () => {
 
   it('should bypass sanitizing.', () => {
     const description = '<p class="abc">abc</p>';
-    component.item.description = description;
+    component.event.description = description;
     bypassSecurityTrustHtml.and.returnValue(description);
 
-    expect(component.description).toBe(description);
+    expect(component.event.description).toBe(description);
+
     expect(bypassSecurityTrustHtml).toHaveBeenCalledWith(description);
   });
 });
