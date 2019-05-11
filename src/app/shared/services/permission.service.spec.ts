@@ -226,9 +226,8 @@ describe('PermissionService', () => {
     const req = httpTestingController.match(
       `/group-permissions/`);
 
-    expect(req.length).toBe(2);
+    expect(req.length).toBe(1);
     expect(req[0].request.method).toEqual('POST');
-    expect(req[1].request.method).toEqual('POST');
     req.map(x => x.flush({}));
   });
 
@@ -271,8 +270,11 @@ describe('PermissionService', () => {
   it('should return empty list if reqs is empty.', () => {
     const service: PermissionService = TestBed.get(PermissionService);
 
-    service.createGroupPermissions([]).subscribe(res => {
-      expect(res.length).toBe(0);
-    });
+    service.createGroupPermissions([]).subscribe();
+
+    const req = httpTestingController.match(
+      `/group-permissions/`);
+
+    expect(req.length).toBe(1);
   });
 });
