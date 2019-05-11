@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import {
+  MatPaginatorModule,
   MatFormFieldModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
@@ -9,9 +10,9 @@ import {
   MatInputModule,
   MatChipsModule,
   MatDividerModule,
+  MatDialog,
 } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatPaginatorModule, MatProgressSpinnerModule, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentGroupDetailComponent } from './department-group-detail.component';
 import { DepartmentGroupPermissionComponent } from '../department-group-permission/department-group-permission.component';
