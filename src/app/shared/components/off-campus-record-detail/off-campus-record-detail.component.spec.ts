@@ -23,6 +23,7 @@ import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response'
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
   let fixture: ComponentFixture<OffCampusRecordDetailComponent>;
+  let getReviewNotes: jasmine.Spy;
   let getReviewNotes$: Subject<PaginatedResponse<ReviewNote>>;
   let createReviewNote$: Subject<ReviewNote>;
   let snackBarOpen: jasmine.Spy;
@@ -88,6 +89,8 @@ describe('OffCampusRecordDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OffCampusRecordDetailComponent);
     component = fixture.componentInstance;
+    getReviewNotes = spyOn(component, 'getReviewNotes');
+    getReviewNotes.and.returnValue(getReviewNotes$);
     const record = {
       id: 1,
       create_time: '2019-01-01',
@@ -125,6 +128,27 @@ describe('OffCampusRecordDetailComponent', () => {
     component.onSubmit();
     createReviewNote$.next();
 
+  });
+
+  it('should trigger refresh (at first page)', () => {
+    const hasPreviousPage = spyOn(component.paginator, 'hasPreviousPage');
+    const firstPage = spyOn(component.paginator, 'firstPage');
+    hasPreviousPage.and.returnValue(true);
+    component.forceRefresh();
+
+    expect(hasPreviousPage).toHaveBeenCalled();
+    expect(firstPage).toHaveBeenCalled();
+  });
+
+  it('should trigger refresh (not at first page)', () => {
+    const hasPreviousPage = spyOn(component.paginator, 'hasPreviousPage');
+    const firstPage = spyOn(component.paginator, 'firstPage');
+    hasPreviousPage.and.returnValue(false);
+    component.forceRefresh();
+
+    expect(hasPreviousPage).toHaveBeenCalled();
+    expect(firstPage).not.toHaveBeenCalled();
+    expect(getReviewNotes).toHaveBeenCalled();
   });
 
   it('should display errors when creation failed.', () => {
