@@ -20,6 +20,6 @@ export interface CampusEvent extends Event {
   deadline?: string;
   num_enrolled?: number;
   description?: string;
-  overdue_status?: boolean;
-  enrollments_status?: boolean;
+  expired?: boolean;
+  enrolled?: boolean;
 }

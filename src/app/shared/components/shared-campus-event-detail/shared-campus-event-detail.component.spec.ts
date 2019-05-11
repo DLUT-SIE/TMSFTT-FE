@@ -47,8 +47,8 @@ describe('SharedCampusEventDetailComponent', () => {
     component = fixture.componentInstance;
     const event =  {
       id: 12,
-      overdue_status: true,
-      enrollments_status: true,
+      expired: true,
+      enrolled: true,
       create_time: '2019-05-09T10:39:41.793039+08:0',
       update_time: '2019-05-10T09:10:48.370559+08:00',
       name: '1243124',

@@ -102,7 +102,7 @@
            <div fxFlex="1 0 2%"></div>
        </div>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <ng-container *ngIf="event.enrollments_status && eventDetailType === checkEventDetailType.USER">
+          <ng-container *ngIf="event.enrolled && eventDetailType === checkEventDetailType.USER">
               <button mat-raised-button color="primary">取消报名</button>
           </ng-container>
           <ng-container *ngIf="eventDetailType === checkEventDetailType.ADMIN">
