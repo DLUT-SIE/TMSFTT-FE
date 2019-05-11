@@ -22,8 +22,8 @@ export class SharedCampusEventDetailComponent {
     readonly location: Location,
   ) { }
 
-  /** Prompt compiler type. */
-  identify(program: Program): Program {
+  /* tslint:disable-next-line:no-any */
+  asProgram(program: any): Program {
     return program;
   }
 
