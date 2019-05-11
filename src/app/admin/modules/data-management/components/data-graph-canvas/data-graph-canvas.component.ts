@@ -30,9 +30,11 @@ export class DataGraphCanvasComponent implements OnInit {
         this.buildPieChartOption(title);
         this.buildBarChartOption(title);
         if (this.pieEchartsInstance && this.pieEchartsInstance !== null) {
+            this.pieEchartsInstance.clear();
             this.pieEchartsInstance.setOption(this.pieChartOption);
         }
         if (this.barEchartsInstance) {
+            this.barEchartsInstance.clear();
             this.barEchartsInstance.setOption(this.barChartOption);
         }
     });
