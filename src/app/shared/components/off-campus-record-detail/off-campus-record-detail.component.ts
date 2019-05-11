@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatPaginator, PageEvent } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject, merge } from 'rxjs';
 import { switchMap, map, startWith } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
@@ -36,6 +37,8 @@ export class OffCampusRecordDetailComponent implements OnInit {
   isLoadingReviewNotes = true;
   readonly pageSize = environment.PAGINATION_SIZE;
 
+  private forceRefresh$ = new Subject<PageEvent>();
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -57,7 +60,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
   onSubmit() {
     this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent)
     .subscribe(() => {
-      this.paginator.firstPage();
+      this.forceRefresh();
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
@@ -73,7 +76,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.paginator.page.pipe(
+    merge(this.paginator.page, this.forceRefresh$).pipe(
       startWith({
         pageIndex: 0,
       }),
@@ -102,6 +105,20 @@ export class OffCampusRecordDetailComponent implements OnInit {
         }
         this.snackBar.open(message, '关闭');
       });
+  }
+
+  /** Trigger page refresh manually. */
+  forceRefresh() {
+    if (this.paginator.hasPreviousPage()) {
+      // Not at first page. Jump to first page and content will be udpated
+      // accordingly
+      this.paginator.firstPage();
+      return;
+    }
+    // At first page, just trigger content refresh
+    this.forceRefresh$.next({
+      pageIndex: 0,
+    } as PageEvent);
   }
 
 }
