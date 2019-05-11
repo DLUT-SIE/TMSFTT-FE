@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
-// import { Program } from '../../interfaces/program';
+import { Program } from '../../interfaces/program';
 import { CampusEvent } from '../../interfaces/event';
 
 @Component({
@@ -21,6 +21,11 @@ export class SharedCampusEventDetailComponent {
     private readonly sanitizer: DomSanitizer,
     readonly location: Location,
   ) { }
+
+  /** Prompt compiler type. */
+  identify(program: Program): Program {
+    return program;
+  }
 
   navigateToChangeEvent() {
     this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.event.id } });

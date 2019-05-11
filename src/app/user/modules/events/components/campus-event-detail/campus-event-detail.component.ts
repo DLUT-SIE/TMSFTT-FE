@@ -11,7 +11,7 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 export class CampusEventDetailComponent implements OnInit {
   eventDetailType: EventDetailType = EventDetailType.USER;
   event: CampusEvent;
-  
+
   constructor(
     private readonly route: ActivatedRoute,
   ) { }
