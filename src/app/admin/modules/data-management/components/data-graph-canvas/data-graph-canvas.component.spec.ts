@@ -98,8 +98,10 @@ describe('DataGraphCanvasComponent', () => {
       selectedGroupType: 2
     };
     const setOption = jasmine.createSpy();
+    const clear = jasmine.createSpy();
     const chart = {} as echarts.ECharts;
     chart.setOption = setOption;
+    chart.clear = clear;
     component.graphTypeName = '1234';
     component.hidePieGraph = true;
     component.barEchartsInstance = chart;
@@ -111,7 +113,18 @@ describe('DataGraphCanvasComponent', () => {
     expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234');
-
+    const graphOptions2: DataGraphConfiguration = {
+      selectedStatisticsType: 0,
+      selectedDepartment: 0,
+      selectedStartYear: 2015,
+      selectedEndYear: 2019,
+      selectedGroupType: 2
+    };
+    component.hidePieGraph = false;
+    component.pieEchartsInstance = chart;
+    component.graphOptions = graphOptions2;
+    expect(component.pieEchartsInstance.setOption).toHaveBeenCalled();
+    expect(component.pieEchartsInstance.clear).toHaveBeenCalled();
     canvasData.group_by_data.push({
       seriesNum: 1,
       seriesName: '其他',
