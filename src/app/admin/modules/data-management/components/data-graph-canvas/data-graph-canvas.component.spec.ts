@@ -111,5 +111,14 @@ describe('DataGraphCanvasComponent', () => {
     expect(component.barChartOption).toBe(component.baseCoverageBarChartOption);
     expect((component.pieChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-全校-1234');
+
+    canvasData.group_by_data.push({
+      seriesNum: 1,
+      seriesName: '其他',
+      data: [22, 35, 28, 10, 20, 14, 47, 8]
+    });
+    getCanvasData$.next(canvasData);
+    canvasData.group_by_data.pop();
+    getCanvasData$.next(canvasData);
   });
 });

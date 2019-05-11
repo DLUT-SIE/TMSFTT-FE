@@ -51,24 +51,17 @@ describe('CanvasService', () => {
     service.getCanvasOptions().subscribe((data: OptionType[]) => {
       expect(data.length).toEqual(2);
     });
-    const options: DataGraphConfiguration = {
+    let options: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedGroupType: 0,
       selectedStartYear: 0,
       selectedEndYear: 0,
       selectedDepartment: 0
     };
-    const canvasUrl = '/aggregate-data/data/';
-    const methodName = 'staff_statistics';
-    const groupBy = options.selectedGroupType;
-    const startYear = options.selectedStartYear;
-    const endYear = options.selectedEndYear;
-    const region = options.selectedDepartment;
-    const queryUrl = canvasUrl +
-      `?method_name=${methodName}&group_by=${groupBy}&start_year=` +
-      `${startYear}&end_year=${endYear}&region=${region}/`;
+    const canvasUrl = '/aggregate-data/data/?method_name=staff_statistics'+
+      '&group_by=0&start_year=0&end_year=0&region=0';
     service.getCanvasData(options).subscribe();
-    const canvasReq = httpTestingController.expectOne(queryUrl);
+    const canvasReq = httpTestingController.expectOne(canvasUrl);
     expect(canvasReq.request.method).toBeTruthy('GET');
   });
 });
