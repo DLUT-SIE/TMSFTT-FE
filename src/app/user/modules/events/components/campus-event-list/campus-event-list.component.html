@@ -29,14 +29,14 @@
               <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
               <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
               <td scope="col">
-                <ng-container *ngIf="item.enrollments_status; else notEnrolled">
+                <ng-container *ngIf="item.enrolled; else notEnrolled">
                   已报名
                 </ng-container>
                 <ng-template #notEnrolled>
-                    <ng-container *ngIf="item.overdue_status; else notOverdue">
+                    <ng-container *ngIf="item.expired; else notExpired">
                         已截止
                     </ng-container>
-                    <ng-template #notOverdue>
+                    <ng-template #notExpired>
                         <button mat-raised-button color="primary">报名</button>
                     </ng-template>
                 </ng-template>

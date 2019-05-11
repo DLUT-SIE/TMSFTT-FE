@@ -56,8 +56,8 @@ describe('CampusEventDetailResolverService', () => {
         name: '不过时候之间国际.',
         category: 4
       },
-      overdue_status: false,
-      enrollments_status: false,
+      expired: false,
+      enrolled: false,
       create_time: '2019-02-26T15:04:24.232265+08:00',
       update_time: '2019-02-26T15:04:24.232288+08:00',
       name: '介绍需要关系如此.',
