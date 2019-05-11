@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, ValidatorFn, FormGroup, ValidationErrors} from '@angular/forms';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { Department } from 'src/app/shared/interfaces/department';
-import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
+import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
@@ -83,8 +83,8 @@ export class DataGraphOptionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly departmentService: DepartmentService,
-    private readonly canvasOptionsService: CanvasOptionsService
-    ) { }
+    private readonly canvasService: CanvasService
+  ) { }
 
   ngOnInit() {
       for (let i = 2016; i <= (new Date()).getFullYear(); i++) {
@@ -99,7 +99,7 @@ export class DataGraphOptionsComponent implements OnInit {
         }, { validator: timeValidator });
       this.departmentService.getDepartments({offset: 0, limit: 100} as ListRequest)
           .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments.results));
-      this.canvasOptionsService.getCanvasOptions()
+      this.canvasService.getCanvasOptions()
           .subscribe(options => this.statisticsType = options);
       this.SelectedParamChangingCheck();
   }

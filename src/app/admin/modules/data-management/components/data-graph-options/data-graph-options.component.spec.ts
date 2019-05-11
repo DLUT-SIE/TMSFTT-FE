@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 
 import { DataGraphOptionsComponent, timeValidator } from './data-graph-options.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
-import { CanvasOptionsService } from 'src/app/shared/services/data/canvas-options.service';
+import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
@@ -67,7 +67,7 @@ describe('DataGraphOptionsComponent', () => {
       ],
       providers: [
         {
-          provide: CanvasOptionsService,
+          provide: CanvasService,
           useValue: {
             getCanvasOptions: () => getOptions$
           }
