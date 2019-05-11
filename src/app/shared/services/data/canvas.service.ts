@@ -28,15 +28,17 @@ export class CanvasService {
   }
 
   getCanvasData(options: DataGraphConfiguration) {
-    const url = '/aggregate-data/data/';
-    const methodName = (this.cachedOptions[
-      options.selectedStatisticsType].key).toLowerCase();
-    const groupBy = options.selectedGroupType;
-    const startYear = options.selectedStartYear;
-    const endYear = options.selectedEndYear;
-    const region = options.selectedDepartment;
-    return this.http.get<CanvasData>(url +
-      `?method_name=${methodName}&group_by=${groupBy}&start_year=` +
-      `${startYear}&end_year=${endYear}&region=${region}`);
+    const resourceURL = 'aggregate-data/data';
+    const params = new Map();
+    params.set('method_name', (this.cachedOptions[
+      options.selectedStatisticsType].key).toLowerCase() || '');
+    params.set('group_by', options.selectedGroupType || 0);
+    params.set('start_year', options.selectedStartYear || 2016);
+    params.set('end_year', options.selectedEndYear || 2016);
+    params.set('region', options.selectedDepartment || 0);
+    const queryParams = Array.from(params.keys()).sort().map(
+        key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
+    const url = `/${resourceURL}/?${queryParams}`;
+    return this.http.get<CanvasData>(url);
   }
 }
