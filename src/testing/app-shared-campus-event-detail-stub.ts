@@ -3,9 +3,9 @@ import { Directive, Input } from '@angular/core';
 /* tslint:disable:directive-class-suffix */
 /* tslint:disable:directive-selector */
 @Directive({
-  selector: '<app-event-detail>',
+  selector: '<app-shared-campus-event-detail>',
 })
-export class AppEventDetailStub {
+export class AppSharedCampusEventDetailStub {
     @Input() eventDetailType?: EventDetailType;
     @Input() event?: CampusEvent;
 }
@@ -17,7 +17,7 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 @NgModule({
   declarations: [
-    AppEventDetailStub,
+    AppSharedCampusEventDetailStub,
   ]
 })
-export class AppEventDetailStubModule {}
+export class AppSharedCampusEventDetailStubModule {}

@@ -1,35 +1,20 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-// import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
-import { Program } from '../../interfaces/program';
+// import { Program } from '../../interfaces/program';
+import { CampusEvent } from '../../interfaces/event';
 
 @Component({
-  selector: 'app-event-detail',
-  templateUrl: './event-detail.component.html',
-  styleUrls: ['./event-detail.component.css']
+  selector: 'app-shared-campus-event-detail',
+  templateUrl: './shared-campus-event-detail.component.html',
+  styleUrls: ['./shared-campus-event-detail.component.css']
 })
-export class EventDetailComponent {
+export class SharedCampusEventDetailComponent {
   checkEventDetailType = EventDetailType;
   @Input() eventDetailType?: EventDetailType;
-  @Input() event: {
-    id?: number,
-    overdue_status?: boolean,
-    enrollments_status?: boolean,
-    create_time?: string,
-    update_time?: string,
-    name?: string,
-    time?: string,
-    location?: string,
-    num_hours?: number,
-    num_participants?: number,
-    deadline?: string,
-    num_enrolled?: number,
-    description?: string,
-    program?: Program
-  };
+  @Input() event?: CampusEvent;
 
   constructor(
     private readonly router: Router,

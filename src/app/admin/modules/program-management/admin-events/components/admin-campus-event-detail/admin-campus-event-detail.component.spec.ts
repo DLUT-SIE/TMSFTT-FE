@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
-import { AppEventDetailStub } from 'src/testing/app-event-detail-stub';
+import { AppSharedCampusEventDetailStub } from 'src/testing/app-shared-campus-event-detail-stub';
 
-describe('AddminCampusEventDetailComponent', () => {
+describe('AdminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
   let fixture: ComponentFixture<AdminCampusEventDetailComponent>;
 
@@ -13,7 +13,7 @@ describe('AddminCampusEventDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AdminCampusEventDetailComponent,
-        AppEventDetailStub
+        AppSharedCampusEventDetailStub
       ],
       providers: [
         {

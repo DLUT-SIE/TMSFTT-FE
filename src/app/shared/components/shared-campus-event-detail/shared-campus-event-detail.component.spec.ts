@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EventDetailComponent } from './event-detail.component';
+import { SharedCampusEventDetailComponent } from './shared-campus-event-detail.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
 
-describe('AddminCampusEventDetailComponent', () => {
-  let component: EventDetailComponent;
-  let fixture: ComponentFixture<EventDetailComponent>;
+describe('SharedCampusEventDetailComponent', () => {
+  let component: SharedCampusEventDetailComponent;
+  let fixture: ComponentFixture<SharedCampusEventDetailComponent>;
   let navigate: jasmine.Spy;
   let bypassSecurityTrustHtml: jasmine.Spy;
 
@@ -17,7 +16,7 @@ describe('AddminCampusEventDetailComponent', () => {
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
     TestBed.configureTestingModule({
       declarations: [
-        EventDetailComponent
+        SharedCampusEventDetailComponent
       ],
       providers: [
         {
@@ -44,7 +43,7 @@ describe('AddminCampusEventDetailComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventDetailComponent);
+    fixture = TestBed.createComponent(SharedCampusEventDetailComponent);
     component = fixture.componentInstance;
     const event =  {
       id: 12,
