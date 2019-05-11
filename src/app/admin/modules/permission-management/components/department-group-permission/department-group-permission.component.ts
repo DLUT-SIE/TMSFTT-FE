@@ -64,10 +64,6 @@ export class DepartmentGroupPermissionComponent implements OnInit {
             };
           }).sort((x, y) => x.permission.id - y.permission.id);
         }),
-        catchError((err: HttpErrorResponse) => {
-          this.errorMessage = err.message;
-          return observableOf([]);
-        }),
       ).subscribe((permissions: GroupPermissionStatus[]) => {
         this.originalPermissions = permissions;
         /** Deepcopy permission items. */
