@@ -5,6 +5,7 @@ import { GraphData } from 'src/app/shared/interfaces/graph-data';
 import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-graph-canvas',
@@ -24,7 +25,10 @@ export class DataGraphCanvasComponent implements OnInit {
     if (this.hidePieGraph) {
         this.pieEchartsInstance = null;
     }
-    this.canvasService.getCanvasData(val).subscribe(canvasData => {
+    if (this.subscription) {
+        this.subscription.unsubscribe();
+    }
+    this.subscription = this.canvasService.getCanvasData(val).subscribe(canvasData => {
         this.xAxisList = canvasData.label;
         this.seriesData = canvasData.group_by_data;
         this.buildPieChartOption(title);
@@ -175,6 +179,8 @@ export class DataGraphCanvasComponent implements OnInit {
     ]
   };
 
+  private subscription: Subscription;
+
   onPieChartInit(ec: echarts.ECharts) {
       this.pieEchartsInstance = ec;
       this.pieEchartsInstance.setOption(this.pieChartOption);
@@ -224,10 +230,9 @@ export class DataGraphCanvasComponent implements OnInit {
         (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
             .name = this.seriesData[j].seriesName;
     }
-    while (this.pieChartOption.series.length > pieNum) {
-        this.pieChartOption.series.pop();
-        (this.pieChartOption.title as echarts.EChartTitleOption[]).pop();
-    }
+    this.pieChartOption.series.splice(pieNum, this.pieChartOption.series.length);
+    (this.pieChartOption.title as echarts.EChartTitleOption[]).splice(
+        pieNum, this.pieChartOption.series.length);
   }
 
   buildBarChartOption(title: string) {
@@ -250,9 +255,7 @@ export class DataGraphCanvasComponent implements OnInit {
         (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i]
             .data = this.seriesData[i].data;
     }
-    while (this.barChartOption.series.length > this.seriesData.length) {
-        this.barChartOption.series.pop();
-    }
+    this.barChartOption.series.splice(this.seriesData.length, this.barChartOption.series.length);
     (this.barChartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
   }
 
