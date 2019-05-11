@@ -4,6 +4,7 @@ import { EChartOption } from 'echarts';
 import { GraphData } from 'src/app/shared/interfaces/graph-data';
 import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
+import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 
 @Component({
   selector: 'app-data-graph-canvas',
@@ -23,14 +24,18 @@ export class DataGraphCanvasComponent implements OnInit {
     if (this.hidePieGraph) {
         this.pieEchartsInstance = null;
     }
-    this.buildPieChartOption(title);
-    this.buildBarChartOption(title);
-    if (this.pieEchartsInstance && this.pieEchartsInstance !== null) {
-        this.pieEchartsInstance.setOption(this.pieChartOption);
-    }
-    if (this.barEchartsInstance) {
-        this.barEchartsInstance.setOption(this.barChartOption);
-    }
+    this.canvasService.getCanvasData(val).subscribe(canvasData => {
+        this.xAxisList = canvasData.label;
+        this.seriesData = canvasData.group_by_data;
+        this.buildPieChartOption(title);
+        this.buildBarChartOption(title);
+        if (this.pieEchartsInstance && this.pieEchartsInstance !== null) {
+            this.pieEchartsInstance.setOption(this.pieChartOption);
+        }
+        if (this.barEchartsInstance) {
+            this.barEchartsInstance.setOption(this.barChartOption);
+        }
+    });
   }
 
   barChartOption?: EChartOption;
@@ -38,12 +43,8 @@ export class DataGraphCanvasComponent implements OnInit {
   pieEchartsInstance: echarts.ECharts;
   barEchartsInstance: echarts.ECharts;
 
-  // TODO(wangyang): Following two variables should be assigned by calling relevant services
-  xAxisList: string[] = ['a', 'b', 'c', 'd', 'e'];
-  seriesData: GraphData[] = [
-    {seriesNum: 0, seriesName: '专任教师', data: [120, 101, 90, 134, 230]},
-    {seriesNum: 1, seriesName: '其他', data: [320, 301, 390, 302, 330]}
-  ];
+  xAxisList: string[];
+  seriesData: GraphData[];
 
   baseDoubleBarChartOption: EChartOption = {
     legend: {
@@ -61,7 +62,6 @@ export class DataGraphCanvasComponent implements OnInit {
     }],
     yAxis: {
         type: 'value',
-        max: 500,
         splitLine: {
             show: false
         }
@@ -139,7 +139,6 @@ export class DataGraphCanvasComponent implements OnInit {
         subtext: '',
         left: '',
         textAlign: 'center',
-        top: 20,
     }],
 
     tooltip: {
@@ -153,16 +152,15 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     series: [
         {
-            name: '访问来源',
+            name: '',
             type: 'pie',
             radius: '55%',
             center: ['25%', '50%'],
             data: [],
-            roseType: 'radius',
             label: {
                 normal: {
-                    show: false,
-                    position: 'center'
+                    show: true,
+                    formatter: '{b}: ({d}%)'
                 }
             },
             animationType: 'scale',
@@ -224,6 +222,10 @@ export class DataGraphCanvasComponent implements OnInit {
         (this.pieChartOption.series as echarts.EChartOption.SeriesPie[])[j]
             .name = this.seriesData[j].seriesName;
     }
+    while (this.pieChartOption.series.length > pieNum) {
+        this.pieChartOption.series.pop();
+        (this.pieChartOption.title as echarts.EChartTitleOption[]).pop();
+    }
   }
 
   buildBarChartOption(title: string) {
@@ -246,10 +248,15 @@ export class DataGraphCanvasComponent implements OnInit {
         (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i]
             .data = this.seriesData[i].data;
     }
+    while (this.barChartOption.series.length > this.seriesData.length) {
+        this.barChartOption.series.pop();
+    }
     (this.barChartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
   }
 
-  constructor() { }
+  constructor(
+    private readonly canvasService: CanvasService,
+  ) { }
   ngOnInit() {
   }
 }
