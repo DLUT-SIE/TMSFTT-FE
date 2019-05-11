@@ -193,4 +193,86 @@ describe('PermissionService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(dummyResponse);
   });
+
+  it('should create group permission', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.createGroupPermission({
+      group: 1,
+      permission: 2,
+    }).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `/group-permissions/`);
+
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
+  it('should create group permission', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.createGroupPermissions([
+      {
+        group: 1,
+        permission: 2,
+      },
+      {
+        group: 1,
+        permission: 2,
+      }
+    ]).subscribe();
+
+    const req = httpTestingController.match(
+      `/group-permissions/`);
+
+    expect(req.length).toBe(2);
+    expect(req[0].request.method).toEqual('POST');
+    expect(req[1].request.method).toEqual('POST');
+    req.map(x => x.flush({}));
+  });
+
+  it('should delete group permission', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+    const permissionId = 1;
+
+    service.deleteGroupPermission(permissionId).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `/group-permissions/${permissionId}/`);
+
+    expect(req.request.method).toEqual('DELETE');
+    req.flush({});
+  });
+
+  it('should delete group permission', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+    const permissionIds = [1, 2, 3];
+
+    service.deleteGroupPermissions(permissionIds).subscribe();
+
+    permissionIds.map(x => {
+      const req = httpTestingController.expectOne(
+        `/group-permissions/${x}/`);
+
+      expect(req.request.method).toEqual('DELETE');
+      req.flush({});
+    });
+  });
+
+  it('should return empty list if permissionIds is empty.', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.deleteGroupPermissions([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
+
+  it('should return empty list if reqs is empty.', () => {
+    const service: PermissionService = TestBed.get(PermissionService);
+
+    service.createGroupPermissions([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 });
