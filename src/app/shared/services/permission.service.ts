@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, zip, of as observableOf } from 'rxjs';
-import { Permission, UserPermission, GroupPermission } from '../interfaces/permission';
+import { Permission, GroupPermission, UserPermission } from '../interfaces/permission';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
@@ -57,5 +57,23 @@ export class PermissionService {
   getGroupPermissions(groupId: number): Observable<GroupPermission[]> {
     return this.http.get<GroupPermission[]>(
       `/group-permissions/?group=${groupId}&limit=-1`);
+  }
+
+  createGroupPermission(req: GroupPermission) {
+    return this.http.post(`/group-permissions/`, req);
+  }
+
+  createGroupPermissions(reqs: GroupPermission[]) {
+    if (reqs.length === 0) return observableOf([]);
+    return zip(...reqs.map(req => this.createGroupPermission(req)));
+  }
+
+  deleteGroupPermission(permissionId: number) {
+    return this.http.delete(`/group-permissions/${permissionId}/`);
+  }
+
+  deleteGroupPermissions(permissionIds: number[]) {
+    if (permissionIds.length === 0) return observableOf([]);
+    return zip(...permissionIds.map(id => this.deleteGroupPermission(id)));
   }
 }

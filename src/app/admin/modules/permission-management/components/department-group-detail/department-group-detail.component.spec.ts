@@ -1,5 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import {
+  MatFormFieldModule,
+  MatProgressSpinnerModule,
+  MatCheckboxModule,
+  MatSnackBar,
+  MatInputModule,
+  MatChipsModule,
+  MatDividerModule,
+} from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatPaginatorModule, MatProgressSpinnerModule, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentGroupDetailComponent } from './department-group-detail.component';
@@ -12,8 +23,10 @@ import { Group } from 'src/app/shared/interfaces/group';
 describe('DepartmentGroupDetailComponent', () => {
   let component: DepartmentGroupDetailComponent;
   let fixture: ComponentFixture<DepartmentGroupDetailComponent>;
+  let snackBarOpen: jasmine.Spy;
 
   beforeEach(async(() => {
+    snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         DepartmentGroupDetailComponent,
@@ -21,10 +34,23 @@ describe('DepartmentGroupDetailComponent', () => {
         DepartmentGroupUserComponent,
       ],
       imports: [
+        HttpClientTestingModule,
+        FormsModule,
         MatPaginatorModule,
+        MatFormFieldModule,
         MatProgressSpinnerModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatChipsModule,
+        MatDividerModule,
       ],
       providers: [
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {
