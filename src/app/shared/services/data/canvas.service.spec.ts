@@ -51,14 +51,14 @@ describe('CanvasService', () => {
     service.getCanvasOptions().subscribe((data: OptionType[]) => {
       expect(data.length).toEqual(2);
     });
-    let options: DataGraphConfiguration = {
+    const options: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedGroupType: 0,
       selectedStartYear: 0,
       selectedEndYear: 0,
       selectedDepartment: 0
     };
-    const canvasUrl = '/aggregate-data/data/?method_name=staff_statistics'+
+    const canvasUrl = '/aggregate-data/data/?method_name=staff_statistics' +
       '&group_by=0&start_year=0&end_year=0&region=0';
     service.getCanvasData(options).subscribe();
     const canvasReq = httpTestingController.expectOne(canvasUrl);
