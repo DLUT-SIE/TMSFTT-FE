@@ -64,36 +64,8 @@
             </div>
             <div fxFlex="1 0 2%"></div>
           </div>
-
         </ng-container>
 
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px" *ngIf="!isLoading && newPermissions.length !== 0">
-          <span class="item-title" fxFlex="1 0 20%">用户权限</span>
-          <div class="table-responsive" fxFlex="1 0 78%">
-            <table class="table">
-              <thead class="text-primary">
-                <th>
-                  权限名称
-                </th>
-                <th>
-                  是否拥有该权限？
-                </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let perm of newPermissions">
-                  <td>
-                    {{perm.permission.label}}
-                  </td>
-                  <td>
-                    <mat-checkbox [(ngModel)]="perm.hasPermission"></mat-checkbox>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
       </div>
     </div>
   </div>

@@ -38,3 +38,14 @@ export interface UserPermissionStatus {
     permission?: Permission;
     hasPermission?: boolean;
 }
+
+/** The status of group for specific permission, it's temporary object. */
+export interface GroupPermissionStatus {
+    /** The id of the group-permission. */
+    id?: number;
+    /** The id of the group. */
+    group?: number;
+    /** The permission object. */
+    permission?: Permission;
+    hasPermission?: boolean;
+}
