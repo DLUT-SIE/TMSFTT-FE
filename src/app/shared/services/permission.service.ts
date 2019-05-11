@@ -64,8 +64,7 @@ export class PermissionService {
   }
 
   createGroupPermissions(reqs: GroupPermission[]) {
-    if (reqs.length === 0) return observableOf([]);
-    return zip(...reqs.map(req => this.createGroupPermission(req)));
+    return this.http.post(`/group-permissions/`, reqs);
   }
 
   deleteGroupPermission(permissionId: number) {
