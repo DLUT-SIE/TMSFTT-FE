@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CampusEventListComponent } from './components/campus-event-list/campus-event-list.component';
 import { EventsComponent } from './events.component';
-import { EventDetailResolverService } from 'src/app/shared/services/events/event-detail-resolver.service';
+import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { CampusEventDetailComponent } from './components/campus-event-detail/campus-event-detail.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
       {
         path: ':id',
         resolve: {
-          event: EventDetailResolverService,
+          event: CampusEventDetailResolverService,
         },
         component: CampusEventDetailComponent,
       },

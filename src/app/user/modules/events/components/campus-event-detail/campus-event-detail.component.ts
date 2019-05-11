@@ -11,16 +11,16 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 export class CampusEventDetailComponent implements OnInit {
   eventDetailType: EventDetailType = EventDetailType.USER;
   event: CampusEvent;
+  
+  constructor(
+    private readonly route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: { event: CampusEvent}) => {
       this.event = data.event;
     });
   }
-
-  constructor(
-    private readonly route: ActivatedRoute,
-  ) { }
 }
 
 

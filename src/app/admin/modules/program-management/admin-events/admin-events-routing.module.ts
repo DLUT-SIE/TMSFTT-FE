@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminCampusEventListComponent } from './components/admin-campus-event-list/admin-campus-event-list.component';
 import { AdminCampusEventDetailComponent } from './components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
-import { EventDetailResolverService } from 'src/app/shared/services/events/event-detail-resolver.service';
+import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { AdminEventsComponent } from './admin-events.component';
 
 const routes: Routes = [
@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: ':id',
         resolve: {
-          event: EventDetailResolverService,
+          event: CampusEventDetailResolverService,
         },
         component: AdminCampusEventDetailComponent,
       },

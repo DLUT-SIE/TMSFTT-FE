@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 import { CampusEventDetailComponent } from './campus-event-detail.component';
-import { AppEventDetailStub } from 'src/testing/app-event-detail-stub';
+import { AppSharedCampusEventDetailStub } from 'src/testing/app-shared-campus-event-detail-stub';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 describe('CampusEventDetailComponent', () => {
@@ -13,7 +13,7 @@ describe('CampusEventDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CampusEventDetailComponent,
-        AppEventDetailStub
+        AppSharedCampusEventDetailStub
       ],
       providers: [
         {

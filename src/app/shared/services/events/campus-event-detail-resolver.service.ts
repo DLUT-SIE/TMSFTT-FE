@@ -8,11 +8,11 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { switchMap, map } from 'rxjs/operators';
 import { Program } from '../../interfaces/program';
 
-/** Pre-fetching notification data. */
+/** Pre-fetching campus event detail data. */
 @Injectable({
   providedIn: 'root'
 })
-export class EventDetailResolverService implements Resolve<CampusEvent> {
+export class CampusEventDetailResolverService implements Resolve<CampusEvent> {
   event: CampusEvent;
 
   constructor(

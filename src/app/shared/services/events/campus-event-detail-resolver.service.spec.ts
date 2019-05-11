@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 
-import { EventDetailResolverService } from './event-detail-resolver.service';
+import { CampusEventDetailResolverService } from './campus-event-detail-resolver.service';
 import { EventService } from './event.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { Program } from 'src/app/shared/interfaces/program';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { Subject } from 'rxjs';
 
-describe('EventDetailResolverService', () => {
+describe('CampusEventDetailResolverService', () => {
   let getEvent: jasmine.Spy;
   let getEvent$: Subject<CampusEvent>;
   let getProgram: jasmine.Spy;
@@ -37,11 +37,11 @@ describe('EventDetailResolverService', () => {
     });
   });
   it('should be created', () => {
-    const service: EventDetailResolverService = TestBed.get(EventDetailResolverService);
+    const service: CampusEventDetailResolverService = TestBed.get(CampusEventDetailResolverService);
     expect(service).toBeTruthy();
   });
   it('should resolve data', () => {
-    const service: EventDetailResolverService = TestBed.get(EventDetailResolverService);
+    const service: CampusEventDetailResolverService = TestBed.get(CampusEventDetailResolverService);
     const id = 10;
     const route = jasmine.createSpyObj('ActivatedRouteSnapshot', ['toString']);
     route.paramMap = {

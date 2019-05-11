@@ -12,14 +12,14 @@ export class AdminCampusEventDetailComponent implements OnInit {
   eventDetailType: EventDetailType = EventDetailType.ADMIN;
   event: CampusEvent;
 
+  constructor(
+    private readonly route: ActivatedRoute,
+  ) { }
+
   ngOnInit() {
     this.route.data.subscribe((data: { event: CampusEvent}) => {
       this.event = data.event;
     });
   }
-
-  constructor(
-    private readonly route: ActivatedRoute,
-  ) { }
 
 }
