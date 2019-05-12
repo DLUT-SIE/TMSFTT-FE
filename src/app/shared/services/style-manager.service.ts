@@ -42,6 +42,7 @@ export class StyleManager {
 
   private readonly themeChanged$ = new ReplaySubject<SiteTheme>();
   private readonly divsMap = new Map<string, HTMLDivElement>();
+  private readonly allColorKeys = ['primary', 'accent', 'warn', 'primary-2', 'accent-2', 'warn-2'];
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
@@ -88,5 +89,9 @@ export class StyleManager {
       return this.currentTheme.primary;
     }
     return this.windowService.getComputedStyle(div).color;
+  }
+
+  getAllColors() {
+    return this.allColorKeys.map(x => this.getColor(x));
   }
 }

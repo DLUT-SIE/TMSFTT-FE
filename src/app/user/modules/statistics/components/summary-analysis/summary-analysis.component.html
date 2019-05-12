@@ -1,99 +1,172 @@
-<div fxLayout="column">
-  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="10px"
-       fxLayout.gt-sm="row">
+<div fxLayout="column" *ngIf="!isLoadingResults; else dataLoading">
+  <div fxLayout="column wrap" fxLayoutAlign="space-around start" fxLayoutGap="10px" fxLayout.gt-sm="row">
     <div class="card card-stats">
       <div class="card-header card-header-primary card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">content_copy</i>
+          <i class="material-icons">how_to_reg</i>
         </div>
-        <p class="card-category">个人培训记录数量</p>
-        <h3 class="card-title">126</h3>
+        <p class="card-category">已报名培训次数</p>
+        <h3 class="card-title">{{ eventsStatistics?.num_enrolled_events }} 次</h3>
       </div>
       <div class="card-footer">
         <div class="stats">
           <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
+          最后更新：{{ eventsStatistics?.timestamp | date:'medium' }}
         </div>
       </div>
     </div>
     <div class="card card-stats">
       <div class="card-header card-header-info card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">store</i>
+          <i class="material-icons">group</i>
         </div>
-        <p class="card-category">参加校内培训数量</p>
-        <h3 class="card-title">38</h3>
+        <p class="card-category">已完成培训次数</p>
+        <h3 class="card-title">{{ eventsStatistics?.num_completed_events }} 次</h3>
       </div>
       <div class="card-footer">
         <div class="stats">
           <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
+          最后更新：{{ eventsStatistics?.timestamp | date:'medium' }}
         </div>
       </div>
     </div>
     <div class="card card-stats">
       <div class="card-header card-header-success card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">info_outline</i>
+          <i class="material-icons">school</i>
         </div>
-        <p class="card-category">参加校外培训数量</p>
-        <h3 class="card-title">88</h3>
+        <p class="card-category">专家身份参与培训次数</p>
+        <h3 class="card-title">{{ eventsStatistics?.num_events_as_expert }} 次</h3>
       </div>
       <div class="card-footer">
         <div class="stats">
           <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats">
-      <div class="card-header card-header-warning card-header-icon">
-        <div class="card-icon">
-          <i class="material-icons">access_time</i>
-        </div>
-        <p class="card-category">去年培训记录数量</p>
-        <h3 class="card-title">233</h3>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
+          最后更新：{{ eventsStatistics?.timestamp | date:'medium' }}
         </div>
       </div>
     </div>
   </div>
-  <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" fxLayout.gt-sm="row">
-    <div class="card card-chart">
-      <div class="card-header card-header-success">
-        <h4 class="card-title">个人月度培训记录新增情况</h4>
-        <p class="card-category">
-        </p>
-      </div>
-      <div class="card-body">
-        <div echarts [options]="chartOption"></div>
+  <div fxLayout="column wrap" fxLayoutAlign="space-around start" fxLayoutGap="10px" fxLayout.gt-sm="row">
+    <div class="card card-stats">
+      <div class="card-header card-header-primary card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">mood</i>
+        </div>
+        <p class="card-category">教学竞赛奖励基本信息</p>
+        <p class="card-title">{{ competitionAwardInfo?.data?.competition }}</p>
+        <p class="card-title">{{ competitionAwardInfo?.data?.level }} {{ competitionAwardInfo?.data?.award }}</p>
       </div>
       <div class="card-footer">
         <div class="stats">
           <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
+          最后更新：{{ competitionAwardInfo?.timestamp | date:'medium' }}
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats">
+      <div class="card-header card-header-info card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">people</i>
+        </div>
+        <p class="card-category">校内培训次数（占比）</p>
+        <h3 class="card-title">{{ recordsStatistics?.num_campus_records }} 次 ({{ recordsStatistics?.campus_records_ratio }})</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ recordsStatistics?.timestamp | date:'medium' }}
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats">
+      <div class="card-header card-header-success card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">people_outline</i>
+        </div>
+        <p class="card-category">校外培训次数（占比）</p>
+        <h3 class="card-title">{{ recordsStatistics?.num_off_campus_records }} 次 ({{ recordsStatistics?.off_campus_records_ratio }})</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ recordsStatistics?.timestamp | date:'medium' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column wrap" fxLayoutAlign="space-around start" fxLayoutGap="10px" fxLayout.gt-sm="row">
+    <div fxFlex="auto" class="card card-stats">
+      <div class="card-header card-header-primary card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">domain</i>
+        </div>
+        <p class="card-category">培训学时本单位排名百分比</p>
+        <h3 class="card-title">{{ rankingInDepartment?.ranking }}</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ rankingInDepartment?.timestamp | date:'medium' }}
+        </div>
+      </div>
+    </div>
+    <div fxFlex="auto" class="card card-stats">
+      <div class="card-header card-header-info card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">domain</i>
+        </div>
+        <p class="card-category">培训学时全校排名百分比</p>
+        <h3 class="card-title">{{ rankingInSchool?.ranking }}</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ rankingInSchool?.timestamp | date:'medium' }}
+        </div>
+      </div>
+    </div>
+    <div fxFlex="auto" fxFlexFill></div>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" fxLayout.gt-sm="row">
+    <div class="card card-chart">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">参与不同培训项目情况</h4>
+        <p class="card-category">
+        </p>
+      </div>
+      <div class="card-body">
+        <div echarts [options]="programsPieChartOption" (chartInit)="programsPieChart = $event"></div>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ programsStatistics?.timestamp | date:'medium' }}
         </div>
       </div>
     </div>
     <div class="card card-chart">
-      <div class="card-header card-header-primary">
+      <div class="card-header card-header-info">
         <h4 class="card-title">个人月度培训记录新增情况</h4>
         <p class="card-category">
         </p>
       </div>
       <div class="card-body">
-        <div echarts [options]="chartOption"></div>
+        <div echarts [options]="monthlyAddedRecordsBarChartOption" (chartInit)="monthlyAddedRecordsBarChart = $event"></div>
       </div>
       <div class="card-footer">
         <div class="stats">
           <i class="material-icons">access_time</i>
-          最后更新：2019年3月28日 14:00
+          最后更新：{{ monthlyAddedRecords?.timestamp | date:'medium' }}
         </div>
       </div>
     </div>
   </div>
 </div>
+<ng-template #dataLoading>
+  <mat-card>
+    <mat-card-title>正在查询中</mat-card-title>
+    <mat-card-content>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
