@@ -1,0 +1,53 @@
+<ng-container *ngIf="eventListType === checkEventListType.ADMIN">
+    <div class="float-left">
+        <button mat-raised-button color="primary" (click)="navigateToProgramDetail()">查看项目详情</button>
+      </div>
+    <div class="float-right">
+        <button mat-raised-button color="primary" (click)="navigateToCreateForm()">创建新活动</button>
+    </div>
+</ng-container>
+
+<div class="loading-shade" *ngIf="isLoadingResults">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="table-responsive">
+  <table class="table table-hover text-center">
+    <thead class="text-primary">
+      <tr>
+        <th scope="col">名字</th>
+        <th scope="col">时间</th>
+        <th scope="col">地点</th>
+        <th scope="col">总时长</th>
+        <th scope="col">参与者人数</th>
+        <ng-container *ngIf="eventListType === checkEventListType.USER">
+          <th scope="col">状态</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of results; let i = index" (click)="navigateToDetail(item)">
+        <td scope="col">{{ item.name }}</td>
+        <td scope="col">{{ item.time | date:'y.M.d' }}</td>
+        <td scope="col">{{ item.location }}</td>
+        <td scope="col">{{ item.num_hours | number:"0.1-1" }} </td>
+        <td scope="col">{{ item.num_participants }}</td>
+        <ng-container *ngIf="eventListType === checkEventListType.USER">
+          <td scope="col">
+              <ng-container *ngIf="item.enrolled; else notEnrolled">
+                已报名
+              </ng-container>
+              <ng-template #notEnrolled>
+                  <ng-container *ngIf="item.expired; else notExpired">
+                      已截止
+                  </ng-container>
+                  <ng-template #notExpired>
+                      <button mat-raised-button color="primary">报名</button>
+                  </ng-template>
+              </ng-template>
+            </td>
+        </ng-container>
+    </tr>
+    </tbody>
+  </table>
+  <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
+</div>

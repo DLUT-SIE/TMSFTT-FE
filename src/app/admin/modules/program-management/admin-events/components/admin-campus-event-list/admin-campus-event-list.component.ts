@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService  } from 'src/app/shared/services/events/event.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { Program } from 'src/app/shared/interfaces/program';
 import { switchMap } from 'rxjs/operators';
+import { EventListType } from 'src/app/shared/enums/event-list-type.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-campus-event-list',
@@ -14,34 +11,15 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./admin-campus-event-list.component.css']
 })
 
-export class AdminCampusEventListComponent extends GenericListComponent<CampusEvent> implements OnInit {
-
+export class AdminCampusEventListComponent implements OnInit {
   programId: number;
   program: Program;
+  eventListType: EventListType = EventListType.ADMIN;
 
   constructor(
-    private readonly eventService: EventService,
     private readonly programService: ProgramService,
     protected readonly route: ActivatedRoute,
-    protected readonly location: Location,
-    protected readonly router: Router,
-  ) {
-    super(route, router, location);
-  }
-
-  getResults(offset: number, limit: number) {
-    const extraParams = new Map();
-    extraParams.set('program', this.programId);
-    return this.eventService.getCampusEvents({offset, limit, extraParams});
-  }
-
-  navigateToProgramDetail() {
-    this.router.navigate(['../../programs', this.programId], {relativeTo: this.route});
-  }
-
-  navigateToCreateForm() {
-    this.router.navigate(['./form'], { queryParams: {program_id: this.programId}, relativeTo: this.route});
-  }
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.pipe(
@@ -52,7 +30,6 @@ export class AdminCampusEventListComponent extends GenericListComponent<CampusEv
     ).subscribe(program => {
       this.program = program;
     });
-    super.ngOnInit();
   }
 
 }

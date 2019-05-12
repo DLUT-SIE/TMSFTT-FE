@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { EventService  } from 'src/app/shared/services/events/event.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { Component} from '@angular/core';
+
+import { EventListType } from 'src/app/shared/enums/event-list-type.enum';
 
 /** CampusEventListComponent provides campus event list. */
 @Component({
@@ -11,17 +8,7 @@ import { GenericListComponent } from 'src/app/shared/generics/generic-list/gener
   templateUrl: './campus-event-list.component.html',
   styleUrls: ['./campus-event-list.component.css']
 })
-export class CampusEventListComponent extends GenericListComponent<CampusEvent> {
-  constructor(
-    private readonly eventService: EventService,
-    protected readonly route: ActivatedRoute,
-    protected readonly router: Router,
-    protected readonly location: Location,
-  ) {
-    super(route, router, location);
-  }
-
-  getResults(offset: number, limit: number) {
-    return this.eventService.getCampusEvents({offset, limit});
-  }
+export class CampusEventListComponent {
+  eventListType: EventListType = EventListType.USER;
+  constructor() { }
 }
