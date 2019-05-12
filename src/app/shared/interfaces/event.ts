@@ -1,3 +1,5 @@
+import { Program } from './program';
+
 interface Event {
   id?: number;
   create_time?: string;
@@ -14,8 +16,10 @@ export interface OffCampusEvent extends Event {
 }
 
 export interface CampusEvent extends Event {
-  program?: number;
+  program?: number | Program;
   deadline?: string;
   num_enrolled?: number;
   description?: string;
+  expired?: boolean;
+  enrolled?: boolean;
 }

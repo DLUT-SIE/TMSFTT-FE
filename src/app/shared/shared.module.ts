@@ -31,6 +31,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
 import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { SharedCampusEventDetailComponent } from './components/shared-campus-event-detail/shared-campus-event-detail.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     OffCampusRecordDetailComponent,
     SharedRecordListComponent,
     TruncatePipe,
+    SharedCampusEventDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -98,6 +100,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 
     OffCampusRecordDetailComponent,
     SharedRecordListComponent,
+    SharedCampusEventDetailComponent,
 
     NgxEchartsModule,
     CKEditorModule,

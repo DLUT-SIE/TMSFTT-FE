@@ -109,22 +109,20 @@
     fxLayoutGap="15px">
     <span class="item-title" fxFlex="1 0 20%">审核提示</span>
     <div class="item-content" fxFlex="1 0 78%">
-      <div *ngFor="let reviewnote of results">
-        <div *ngIf="reviewnote">
-          <p>
-          {{ reviewnote.content }}
-          <span class="span1"></span>
-          (XXX){{ reviewnote.create_time | date:'y.M.d H:mm' }}
-          </p>
-        </div>
+      <div *ngFor="let reviewNote of reviewNotes">
+        <p>
+        {{ reviewNote.content }}
+        <span class="span1"></span>
+        ({{ reviewNote.user }}){{ reviewNote.create_time | date:'y.M.d H:mm' }}
+        </p>
       </div>
-      <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
+      <mat-paginator [length]="reviewNotesLength" [pageSize]="pageSize" [disabled]="isLoadingReviewNotes"></mat-paginator>
       <div fxLayout="row" fxLayoutAlign="space-between start" fxLayout.xs="column" fxLayoutAlign.xs="start stretch">
         <div fxLayout="row" fxFlex="1 1 80%" fxLayoutGap="5px">
           <mat-form-field fxFlexFill fxLayoutAlign="center" appearance="outline">
             <mat-icon matPrefix>assignment</mat-icon>
             <mat-label i18n>审核与反馈</mat-label>
-            <input matInput [(ngModel)]="reviewnotecontent" placeholder="请输入内容" i18n-placeholder required>
+            <input matInput [(ngModel)]="reviewNoteContent" placeholder="请输入内容" i18n-placeholder required>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxFlex="1 1 20%" fxLayoutAlign="end center">

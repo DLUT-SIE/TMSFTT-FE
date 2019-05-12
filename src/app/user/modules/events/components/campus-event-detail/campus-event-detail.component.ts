@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-campus-event-detail',
@@ -10,24 +9,18 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./campus-event-detail.component.css']
 })
 export class CampusEventDetailComponent implements OnInit {
-
-  item: CampusEvent;
+  eventDetailType: EventDetailType = EventDetailType.USER;
+  event: CampusEvent;
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly sanitizer: DomSanitizer,
-    readonly location: Location,
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { item: CampusEvent}) => {
-      this.item = data.item;
+    this.route.data.subscribe((data: { event: CampusEvent}) => {
+      this.event = data.event;
     });
   }
-
-  get description() {
-    // Through this getter, we can bypass sanitizing and get raw HTML.
-    return this.sanitizer.bypassSecurityTrustHtml(this.item.description || /* istanbul ignore next */ '');
-  }
-
 }
+
+

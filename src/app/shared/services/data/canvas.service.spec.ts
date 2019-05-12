@@ -3,10 +3,11 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Subject } from 'rxjs';
 import { AUTH_SERVICE } from '../../interfaces/auth-service';
 
-import { CanvasOptionsService } from './canvas-options.service';
+import { CanvasService } from './canvas.service';
+import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { OptionType } from '../../interfaces/option-type';
 
-describe('CanvasOptionsService', () => {
+describe('CanvasService', () => {
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
     const authenticationSucceed$ = new Subject<void>();
@@ -32,23 +33,34 @@ describe('CanvasOptionsService', () => {
   });
 
   it('should be created', () => {
-    const service: CanvasOptionsService = TestBed.get(CanvasOptionsService);
+    const service: CanvasService = TestBed.get(CanvasService);
     expect(service).toBeTruthy();
   });
 
   it('should get options', () => {
-    const service: CanvasOptionsService = TestBed.get(CanvasOptionsService);
-    const url = '/canvas-data/canvas-options/';
+    const service: CanvasService = TestBed.get(CanvasService);
+    const url = '/aggregate-data/canvas-options/';
     service.getCanvasOptions().subscribe();
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toBeTruthy('GET');
     req.flush([
-      {type: 0, name: '123', subOption: []},
-      {type: 1, name: '456', subOption: []}
+      {type: 0, name: '123', key: 'staff_statistics', subOption: []},
+      {type: 1, name: '456', key: 'trainee_statistics', subOption: []}
     ]);
 
     service.getCanvasOptions().subscribe((data: OptionType[]) => {
       expect(data.length).toEqual(2);
     });
+    const options: DataGraphConfiguration = {
+      selectedStatisticsType: 0,
+      selectedStartYear: 0,
+      selectedEndYear: 0,
+      selectedDepartment: 0
+    };
+    const canvasUrl = '/aggregate-data/data/?end_year=2016&group_by=0' +
+      '&method_name=staff_statistics&region=0&start_year=2016';
+    service.getCanvasData(options).subscribe();
+    const canvasReq = httpTestingController.expectOne(canvasUrl);
+    expect(canvasReq.request.method).toBeTruthy('GET');
   });
 });

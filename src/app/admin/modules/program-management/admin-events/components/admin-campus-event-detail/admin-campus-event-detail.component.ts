@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-
 
 @Component({
   selector: 'app-admin-campus-event-detail',
@@ -10,23 +9,17 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
   styleUrls: ['./admin-campus-event-detail.component.css']
 })
 export class AdminCampusEventDetailComponent implements OnInit {
-
-  item: CampusEvent;
+  eventDetailType: EventDetailType = EventDetailType.ADMIN;
+  event: CampusEvent;
 
   constructor(
-    readonly location: Location,
     private readonly route: ActivatedRoute,
-    private readonly router: Router,
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { item: CampusEvent}) => {
-      this.item = data.item;
+    this.route.data.subscribe((data: { event: CampusEvent}) => {
+      this.event = data.event;
     });
-  }
-
-  navigateToChangeEvent() {
-    this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.item.id } });
   }
 
 }

@@ -1,33 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { AdminCampusEventDetailComponent } from './admin-campus-event-detail.component';
+import { AppSharedCampusEventDetailStub } from 'src/testing/app-shared-campus-event-detail-stub';
 
-describe('AddminCampusEventDetailComponent', () => {
+describe('AdminCampusEventDetailComponent', () => {
   let component: AdminCampusEventDetailComponent;
   let fixture: ComponentFixture<AdminCampusEventDetailComponent>;
-  let navigate: jasmine.Spy;
 
   beforeEach(async(() => {
-    navigate = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
-        AdminCampusEventDetailComponent
+        AdminCampusEventDetailComponent,
+        AppSharedCampusEventDetailStub
       ],
       providers: [
-        {
-          provide: Location,
-          useValue: {},
-        },
-        {
-          provide: Router,
-          useValue: {
-            createUrlTree: () => 'abc',
-            navigate,
-          },
-        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -36,28 +24,17 @@ describe('AddminCampusEventDetailComponent', () => {
                 get: () => '1',
               },
             },
-            data: observableOf({item: {
+            data: observableOf({event: {
                 id: 601,
-                program_detail: {
-                  id: 157,
-                  department_detail: {
-                    id: 77,
-                    create_time: '2019-02-26T15:04:23.596821+08:00',
-                    update_time: '2019-02-26T15:04:23.628167+08:00',
-                    name: '七喜',
-                    admins: [
-                      12
-                    ]
-                  },
-                  category_detail: {
-                    id: 20,
-                    name: '其他'
-                  },
-                  name: '还是不是其中信息.',
-                  department: 77,
-                  category: 20,
-                  form: []
+                program: {
+                  id: 1,
+                  category_str: '青年教师助课',
+                  epartment: '飞海科技',
+                  name: '不过时候之间国际.',
+                  category: 4
                 },
+                expired: false,
+                enrolled: false,
                 create_time: '2019-02-26T15:04:24.232265+08:00',
                 update_time: '2019-02-26T15:04:24.232288+08:00',
                 name: '介绍需要关系如此.',
@@ -68,7 +45,6 @@ describe('AddminCampusEventDetailComponent', () => {
                 deadline: '2019-02-26T15:04:24.231857+08:00',
                 num_enrolled: 0,
                 description: '问题解决建设不同.所以任何下.',
-                program: 157
               } as CampusEvent}),
           }
         }
@@ -85,11 +61,5 @@ describe('AddminCampusEventDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should navigate to event form', () => {
-    component.navigateToChangeEvent();
-
-    expect(navigate).toHaveBeenCalled();
   });
 });
