@@ -63,11 +63,11 @@ export class EventService extends GenericListService {
   /** Retrieve off-campus events on ID */
   getOffCampusEventsByIds(ids: number[]) {
     if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
+    const extraParams = new Map<string, string>();
+    extraParams.set('id__in', ids.toString());
+    const limit = -1;
 
-    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
-
-    return this.http.get<PaginatedResponse<OffCampusEvent>>(
-      `/off-campus-events/?${queryParams}`);
+    return this.list<PaginatedResponse<OffCampusEvent>>('off-campus-events', {limit, extraParams});
   }
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {

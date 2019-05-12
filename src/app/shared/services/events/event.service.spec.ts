@@ -67,7 +67,7 @@ describe('EventService', () => {
     service.getOffCampusEventsByIds([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
-      `/off-campus-events/?id__in=1%2C2`);
+      `/off-campus-events/?id__in=1%2C2&limit=-1&offset=0`);
 
     expect(req.request.method).toEqual('GET');
 
