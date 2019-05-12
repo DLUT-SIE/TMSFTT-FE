@@ -1,11 +1,11 @@
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
-  <div fxFlex="8 8 calc(8em)" class="card">
-    <div class="card-header card-header-primary" *ngIf="program">
+  <div fxFlex="8 8 calc(8em)" class="card" *ngIf="program">
+    <div class="card-header card-header-primary">
       <h4 class="card-title">项目名称:{{ program.name }}</h4>
       <p class="card-category">开设单位:{{ program.department }}</p>
     </div>
-    <div class="card-body" *ngIf="program">
+    <div class="card-body">
         <app-shared-campus-event-list [eventListType]="eventListType" [program]="program"></app-shared-campus-event-list>
     </div>
   </div>

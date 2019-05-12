@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class AdminCampusEventListComponent implements OnInit {
-
   programId: number;
   program: Program;
   eventListType: EventListType = EventListType.ADMIN;
