@@ -32,6 +32,7 @@ import { OffCampusRecordDetailComponent } from './components/off-campus-record-d
 import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { SharedCampusEventDetailComponent } from './components/shared-campus-event-detail/shared-campus-event-detail.component';
+import { SharedCampusEventListComponent } from './components/shared-campus-event-list/shared-campus-event-list.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { SharedCampusEventDetailComponent } from './components/shared-campus-eve
     SharedRecordListComponent,
     TruncatePipe,
     SharedCampusEventDetailComponent,
+    SharedCampusEventListComponent,
   ],
   imports: [
     CommonModule,
@@ -101,6 +103,7 @@ import { SharedCampusEventDetailComponent } from './components/shared-campus-eve
     OffCampusRecordDetailComponent,
     SharedRecordListComponent,
     SharedCampusEventDetailComponent,
+    SharedCampusEventListComponent,
 
     NgxEchartsModule,
     CKEditorModule,
