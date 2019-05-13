@@ -2,11 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SummaryAnalysisComponent } from './summary-analysis.component';
 import { EChartsDirectiveStub } from 'src/testing/echarts-directive-stub';
-import { MatCardModule, MatProgressBarModule } from '@angular/material';
+import { MatCardModule, MatProgressBarModule, MatTooltipModule } from '@angular/material';
 import { StatisticsService } from '../../services/statistics.service';
 import { Subject } from 'rxjs';
 import { StyleManager } from 'src/app/shared/services/style-manager.service';
 import { EChartOption } from 'echarts';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 describe('SummaryAnalysisComponent', () => {
   let component: SummaryAnalysisComponent;
@@ -22,10 +24,13 @@ describe('SummaryAnalysisComponent', () => {
       imports: [
         MatCardModule,
         MatProgressBarModule,
+        MatTooltipModule,
+        FlexLayoutModule,
       ],
       declarations: [
         SummaryAnalysisComponent,
         EChartsDirectiveStub,
+        TruncatePipe,
       ],
       providers: [
         {
