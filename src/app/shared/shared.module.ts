@@ -15,6 +15,7 @@ import {
   MatDatepickerModule,
   MatSnackBarModule,
   MatNativeDateModule,
+  MatTooltipModule,
   MatSelectModule,
   MatCheckboxModule,
   MatDividerModule,
@@ -68,6 +69,7 @@ import { SharedCampusEventListComponent } from './components/shared-campus-event
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatTooltipModule,
 
     NgxEchartsModule,
     CKEditorModule,
@@ -99,6 +101,7 @@ import { SharedCampusEventListComponent } from './components/shared-campus-event
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatTooltipModule,
 
     OffCampusRecordDetailComponent,
     SharedRecordListComponent,
