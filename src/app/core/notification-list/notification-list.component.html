@@ -35,7 +35,7 @@
                 {{ notification.content | slice:0:30 }}...
               </td>
               <td>{{ notification.sender }}</td>
-              <td>{{ notification.time | date:'y年M月d日 H:mm:ss' }}</td>
+              <td>{{ notification.time | date:'medium' }}</td>
             </tr>
           </tbody>
         </table>

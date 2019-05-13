@@ -50,7 +50,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.time | date:'y年M月d日 H:mm' }}</p>
+            <p>{{ event.time | date:'medium' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -82,7 +82,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">截止时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.deadline | date:'y年M月d日 H:mm' }}</p>
+            <p>{{ event.deadline | date:'medium' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>

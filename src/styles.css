@@ -72,3 +72,11 @@ mat-divider {
     width: 10px !important;
     height: 5px !important;
 }
+
+div.mat-tooltip {
+    color: #fff !important;
+    font-family: Roboto,"Helvetica Neue",sans-serif !important;
+    font-weight: bold;
+    font-size: 10px !important;
+    background-color: rgba(97, 97, 97, 0.9) !important;
+}

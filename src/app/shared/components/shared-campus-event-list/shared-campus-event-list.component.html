@@ -27,7 +27,7 @@
     <tbody>
       <tr *ngFor="let item of results; let i = index">
           <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
-          <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'y.M.d' }}</td>
+          <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'medium' }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>

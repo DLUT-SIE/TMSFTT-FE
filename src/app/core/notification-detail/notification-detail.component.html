@@ -19,7 +19,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">发送时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ notification.time | date:'y年M月d日 H:mm:ss' }}</p>
+            <p>{{ notification.time | date:'medium' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -28,7 +28,7 @@
           fxLayoutAlign="space-between start" fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">阅读时间</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ notification.read_time | date:'y年M月d日 H:mm:ss' }}</p>
+            <p>{{ notification.read_time | date:'medium' }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
