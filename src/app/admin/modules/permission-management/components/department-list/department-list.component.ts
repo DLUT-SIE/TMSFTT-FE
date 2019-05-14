@@ -11,6 +11,8 @@ export class DepartmentListComponent implements OnInit {
   departmentChildSelect: Department = null;
   departmentList: Department[];
   @Output() departmentSelect = new EventEmitter<Department>();
+  /** Indicate data loading status */
+  isLoadingResults = true;
 
   constructor(
     private readonly departmentService: DepartmentService,
@@ -19,6 +21,7 @@ export class DepartmentListComponent implements OnInit {
   ngOnInit() {
     this.departmentService.getTopDepartments().subscribe(res => {
       this.departmentList = res;
+      this.isLoadingResults = false;
     });
   }
 
