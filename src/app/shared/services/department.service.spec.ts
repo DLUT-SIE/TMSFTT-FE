@@ -50,5 +50,15 @@ describe('DepartmentService', () => {
     req.flush({});
   });
 
+  it('should get top departments', () => {
+    const service: DepartmentService = TestBed.get(DepartmentService);
+    service.getTopDepartments().subscribe();
+
+    const url = `/departments/top-level-departments/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
 
 });

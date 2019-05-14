@@ -1,8 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Department } from 'src/app/shared/interfaces/department';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 
 @Component({
@@ -10,21 +7,19 @@ import { DepartmentService } from 'src/app/shared/services/department.service';
   templateUrl: './department-list.component.html',
   styleUrls: ['./department-list.component.css']
 })
-export class DepartmentListComponent extends GenericListComponent<Department> {
+export class DepartmentListComponent implements OnInit {
   departmentChildSelect: Department = null;
+  departmentList: Department[];
   @Output() departmentSelect = new EventEmitter<Department>();
 
   constructor(
-    protected readonly route: ActivatedRoute,
-    protected readonly router: Router,
-    protected readonly location: Location,
     private readonly departmentService: DepartmentService,
-  ) {
-    super(route, router, location);
-  }
+  ) { }
 
-  getResults(offset: number, limit: number) {
-    return this.departmentService.getDepartments({offset, limit});
+  ngOnInit() {
+    this.departmentService.getTopDepartments().subscribe(res => {
+      this.departmentList = res;
+    });
   }
 
   onSelect(department: Department) {
