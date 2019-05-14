@@ -16,11 +16,15 @@ export class DepartmentService extends GenericListService {
     super(http);
   }
 
-  getDepartments (req: ListRequest) {
+  getDepartments(req: ListRequest) {
     return this.list<PaginatedResponse<Department>>('departments', req);
   }
 
   getDepartment(id: Department|number) {
     return this.http.get<Department>(`/departments/${id}/`);
+  }
+
+  getTopDepartments() {
+    return this.http.get<Department[]>('/departments/top-level-departments/');
   }
 }

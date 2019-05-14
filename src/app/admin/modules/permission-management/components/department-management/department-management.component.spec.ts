@@ -8,19 +8,16 @@ import { DepartmentGroupComponent } from '../department-group/department-group.c
 import { DepartmentListComponent } from '../department-list/department-list.component';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Subject } from 'rxjs';
 
 describe('DepartmentManagementComponent', () => {
   let component: DepartmentManagementComponent;
   let fixture: ComponentFixture<DepartmentManagementComponent>;
-  let getDepartments: jasmine.Spy;
-  let getDepartments$: Subject<PaginatedResponse<Department>>;
+  let getTopDepartments$: Subject<Department[]>;
   let getGroupByDepartmentName$: Subject<{}>;
 
   beforeEach(async(() => {
-    getDepartments$ = new Subject();
-    getDepartments = jasmine.createSpy().and.returnValue(getDepartments$);
+    getTopDepartments$ = new Subject();
     getGroupByDepartmentName$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [
@@ -55,7 +52,7 @@ describe('DepartmentManagementComponent', () => {
           {
             provide: DepartmentService,
             useValue: {
-              getDepartments,
+              getTopDepartments: () => getTopDepartments$,
             },
           },
           {

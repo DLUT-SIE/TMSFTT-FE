@@ -4,20 +4,26 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Department } from 'src/app/shared/interfaces/department';
 import { Subject } from 'rxjs';
 import { DepartmentListComponent } from './department-list.component';
 
+function generateDepartments(n?: number): Department[] {
+  n = n || 5;
+  const depart: Department[] = [];
+  for (let i = 0; i < n; i++) {
+    depart.push({id: i, name: `${i}`, users: [1, ], admins: [2, ]});
+  }
+  return depart;
+}
+
 describe('DepartmentListComponent', () => {
   let component: DepartmentListComponent;
   let fixture: ComponentFixture<DepartmentListComponent>;
-  let getDepartments: jasmine.Spy;
-  let getDepartments$: Subject<PaginatedResponse<Department>>;
+  let getTopDepartments$: Subject<Department[]>;
 
   beforeEach(async(() => {
-    getDepartments$ = new Subject();
-    getDepartments = jasmine.createSpy().and.returnValue(getDepartments$);
+    getTopDepartments$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [ DepartmentListComponent ],
       imports: [
@@ -47,7 +53,7 @@ describe('DepartmentListComponent', () => {
         {
           provide: DepartmentService,
           useValue: {
-            getDepartments,
+            getTopDepartments: () => getTopDepartments$,
           },
         },
       ],
@@ -66,10 +72,10 @@ describe('DepartmentListComponent', () => {
   });
 
   it('should get results', () => {
-    const limit = 10, offset = 5;
-    component.getResults(offset, limit);
+    const n = 5;
+    getTopDepartments$.next(generateDepartments(n));
 
-    expect(getDepartments).toHaveBeenCalledWith({offset, limit});
+    expect(component.departmentList.length).toBe(n);
   });
 
   it('should onSelect', () => {
