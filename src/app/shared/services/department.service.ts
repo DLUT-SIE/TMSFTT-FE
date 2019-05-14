@@ -24,7 +24,7 @@ export class DepartmentService extends GenericListService {
     return this.http.get<Department>(`/departments/${id}/`);
   }
 
-  getTopLevelDepartments() {
+  getTopDepartments() {
     return this.http.get<Department[]>(`/departments/top-level-departments/`);
   }
 }

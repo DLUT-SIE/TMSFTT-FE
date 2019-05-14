@@ -32,7 +32,7 @@ export class AdminProgramListComponent implements OnInit {
 
   ngOnInit() {
     if (this.isSchoolAdmin) {
-      this.departmentService.getTopLevelDepartments().pipe(
+      this.departmentService.getTopDepartments().pipe(
         catchError((err) => {
           this.isLoadingResults = false;
           return observableOf([]);

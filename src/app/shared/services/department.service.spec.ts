@@ -41,14 +41,14 @@ describe('DepartmentService', () => {
   it('should get top level departments', () => {
     const service: DepartmentService = TestBed.get(DepartmentService);
 
-    service.getTopLevelDepartments().subscribe();
+    service.getTopDepartments().subscribe();
 
     const url = `/departments/top-level-departments/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
     req.flush({});
-  })
+  });
 
   it('should get deparmtent', () => {
     const service: DepartmentService = TestBed.get(DepartmentService);
