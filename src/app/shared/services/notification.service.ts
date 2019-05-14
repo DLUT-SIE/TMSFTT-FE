@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { timer, of as observableOf } from 'rxjs';
-import { switchMap, map, catchError, takeWhile } from 'rxjs/operators';
+import { timer, merge, Subject } from 'rxjs';
+import { switchMap, takeWhile, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-servic
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { PaginatedResponse } from '../interfaces/paginated-response';
+import { MatSnackBar } from '@angular/material';
 
 
 @Injectable({
@@ -21,30 +22,48 @@ export class NotificationService extends GenericListService {
   /** Indicate whether unread notifications has been loaded. */
   unreadNotificationsLoaded = false;
 
+  private latestUnreadNotification: Notification;
+  private readonly reloadUnReadNotifications$ = new Subject<void>();
+
   constructor(
     protected readonly http: HttpClient,
+    private readonly snackBar: MatSnackBar,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) {
     super(http);
     this.authService.authenticationSucceed.subscribe(() => {
-      timer(0, environment.REFRESH_INTERVAL).pipe(
+      merge(this.reloadUnReadNotifications$, timer(0, environment.REFRESH_INTERVAL))
+      .pipe(
         takeWhile(() => this.authService.isAuthenticated),
-        switchMap(() => this.getUnReadNotifications({offset: 0})),
-        map(res => {
+        switchMap(() => this.getUnReadNotifications({ offset: 0 })),
+      ).subscribe(
+        (res) => {
+          if (res.count !== 0
+              && (!this.latestUnreadNotification || this.latestUnreadNotification.id !== res.results[0].id)) {
+            this.snackBar.open('您有未阅读的通知，请前往通知中心查看!', '关闭', {
+              duration: 2000,
+              panelClass: 'color-white',
+            });
+            this.latestUnreadNotification = res.results[0];
+          }
           this.unreadNotifications = res.results;
           this.unreadNotificationsLength = res.count;
-        }),
-        catchError(() => {
+          this.unreadNotificationsLoaded = true;
+        },
+        () => {
           this.unreadNotificationsLength = 0;
-          return observableOf(null);
-        }),
-      ).subscribe(() => this.unreadNotificationsLoaded = true);
+          this.unreadNotificationsLoaded = true;
+        });
     });
   }
 
+  private reloadUnReadNotifications() {
+    this.reloadUnReadNotifications$.next();
+  }
+
   getNotification(id: number) {
-    return this.http.get<Notification>(
-      `/notifications/${id}/`);
+    return this.http.get<Notification>(`/notifications/${id}/`)
+      .pipe(tap(() => this.reloadUnReadNotifications()));
   }
 
   /** API for retrieving notifications. */

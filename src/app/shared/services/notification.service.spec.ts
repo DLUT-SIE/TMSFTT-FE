@@ -6,9 +6,13 @@ import { NotificationService } from './notification.service';
 import { Notification } from 'src/app/shared/interfaces/notification';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
 
 describe('NotificationService', () => {
   let httpTestingController: HttpTestingController;
+  let open: jasmine.Spy;
   const dummyNotification: Notification = {
     id: 1,
     time: '2019-01-01',
@@ -27,8 +31,11 @@ describe('NotificationService', () => {
   const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(() => {
+    open = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
+        MatSnackBarModule,
+        BrowserAnimationsModule,
         HttpClientTestingModule,
       ],
       providers: [
@@ -37,6 +44,12 @@ describe('NotificationService', () => {
           useValue: {
             authenticationSucceed: authenticationSucceed$,
             isAuthenticated: true,
+          },
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open,
           },
         },
       ]
@@ -106,12 +119,21 @@ describe('NotificationService', () => {
     authenticationSucceed$.next();
     const getUnReadNotifications = spyOn(service, 'getUnReadNotifications');
 
-    getUnReadNotifications.and.returnValue(observableOf({ count: 20, results: [{}, {}] }));
+    getUnReadNotifications.and.returnValue(observableOf({ count: 20, results: [{id: 1}, {}] }));
 
-    tick(1000);
+    tick();
 
     expect(service.unreadNotifications.length).toBe(2);
     expect(service.unreadNotificationsLength).toBe(20);
+    expect(open).toHaveBeenCalled();
+
+    getUnReadNotifications.and.returnValue(observableOf({ count: 10, results: [{id: 5}] }));
+
+    tick(environment.REFRESH_INTERVAL);
+
+    expect(service.unreadNotifications.length).toBe(1);
+    expect(service.unreadNotificationsLength).toBe(10);
+    expect(open).toHaveBeenCalledTimes(2);
 
     discardPeriodicTasks();
   }));
