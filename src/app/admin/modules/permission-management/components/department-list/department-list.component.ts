@@ -11,6 +11,7 @@ export class DepartmentListComponent implements OnInit {
   departmentChildSelect: Department = null;
   departmentList: Department[];
   @Output() departmentSelect = new EventEmitter<Department>();
+
   /** Indicate data loading status */
   isLoadingResults = true;
 
