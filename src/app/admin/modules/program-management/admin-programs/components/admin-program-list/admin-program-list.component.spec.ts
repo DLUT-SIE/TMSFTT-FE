@@ -18,10 +18,10 @@ describe('AdminProgramListComponent', () => {
   let component: AdminProgramListComponent;
   let fixture: ComponentFixture<AdminProgramListComponent>;
   let getPrograms$: Subject<PaginatedResponse<Program>>;
-  let getTopLevelDepartments$: Subject<Department[]>;
+  let getTopDepartments$: Subject<Department[]>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
-  let getTopLevelDepartments: jasmine.Spy;
+  let getTopDepartments: jasmine.Spy;
   const dummyProgram: Program = {
     id: 1,
     name: 'sender',
@@ -50,9 +50,9 @@ describe('AdminProgramListComponent', () => {
     getPrograms$ = new Subject<PaginatedResponse<Program>>();
     getPrograms = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
-    getTopLevelDepartments$ = new Subject<Department[]>();
-    getTopLevelDepartments = jasmine.createSpy();
-    getTopLevelDepartments.and.returnValue(getTopLevelDepartments$);
+    getTopDepartments$ = new Subject<Department[]>();
+    getTopDepartments = jasmine.createSpy();
+    getTopDepartments.and.returnValue(getTopDepartments$);
     TestBed.configureTestingModule({
       declarations: [
         AdminProgramListComponent,
@@ -92,7 +92,7 @@ describe('AdminProgramListComponent', () => {
         {
           provide: DepartmentService,
           useValue: {
-            getTopLevelDepartments,
+            getTopDepartments,
           }
         },
         {
@@ -123,14 +123,14 @@ describe('AdminProgramListComponent', () => {
   });
 
   it('should load departments', () => {
-    getTopLevelDepartments$.next([dummyDepartment, dummySuperDepartment]);
+    getTopDepartments$.next([dummyDepartment, dummySuperDepartment]);
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.departments.length).toEqual(2);
   });
 
   it('should empty data if an error encountered.', () => {
-    getTopLevelDepartments$.error('error');
+    getTopDepartments$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.programs).toEqual([]);
