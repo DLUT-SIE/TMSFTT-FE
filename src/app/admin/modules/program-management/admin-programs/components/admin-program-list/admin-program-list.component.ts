@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { tap, map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
@@ -31,35 +31,18 @@ export class AdminProgramListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.isSchoolAdmin);
-    const department = this.authService.department;
-    let departments: Department[] = [];
-    let secondId;
     if (this.isSchoolAdmin) {
-      this.departmentService.getDepartments({offset: 0, limit: 200}).pipe(
-        map(data => {
-          departments = data.results;
-          return departments;
-        }),
-        tap(data => {
-          for (let i = 0; i < data.length; i++) {
-            if (data[i].name === '凌水主校区') {
-              secondId = data[i].id;
-          }}
-          for (let i = 0; i < data.length; i++) {
-            if (data[i].super_department === secondId || data[i].name === '大连理工大学') {
-              this.departments.push(data[i]);
-          }}
-        }),
+      this.departmentService.getTopLevelDepartments().pipe(
         catchError((err) => {
           this.isLoadingResults = false;
           return observableOf([]);
         })
       ).subscribe(data => {
           this.isLoadingResults = false;
+          this.departments = data;
       });
     } else {
-      this.loadProgramsBelongToDepartment(department);
+      this.loadProgramsBelongToDepartment(this.authService.department);
       this.isLoadingResults = false;
     }
 }
