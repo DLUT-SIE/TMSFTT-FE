@@ -18,10 +18,10 @@ describe('AdminProgramListComponent', () => {
   let component: AdminProgramListComponent;
   let fixture: ComponentFixture<AdminProgramListComponent>;
   let getPrograms$: Subject<PaginatedResponse<Program>>;
-  let getDepartments$: Subject<PaginatedResponse<Department>>;
+  let getTopLevelDepartments$: Subject<Department[]>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
-  let getDepartments: jasmine.Spy;
+  let getTopLevelDepartments: jasmine.Spy;
   const dummyProgram: Program = {
     id: 1,
     name: 'sender',
@@ -42,7 +42,7 @@ describe('AdminProgramListComponent', () => {
     name: '凌水主校区',
     admins: [],
     users: [],
-    super_department: 4,
+    super_department: 3,
   };
 
   beforeEach(async(() => {
@@ -50,9 +50,9 @@ describe('AdminProgramListComponent', () => {
     getPrograms$ = new Subject<PaginatedResponse<Program>>();
     getPrograms = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
-    getDepartments$ = new Subject<PaginatedResponse<Department>>();
-    getDepartments = jasmine.createSpy();
-    getDepartments.and.returnValue(getDepartments$);
+    getTopLevelDepartments$ = new Subject<Department[]>();
+    getTopLevelDepartments = jasmine.createSpy();
+    getTopLevelDepartments.and.returnValue(getTopLevelDepartments$);
     TestBed.configureTestingModule({
       declarations: [
         AdminProgramListComponent,
@@ -92,7 +92,7 @@ describe('AdminProgramListComponent', () => {
         {
           provide: DepartmentService,
           useValue: {
-            getDepartments,
+            getTopLevelDepartments,
           }
         },
         {
@@ -123,15 +123,14 @@ describe('AdminProgramListComponent', () => {
   });
 
   it('should load departments', () => {
-    const count = 100;
-    getDepartments$.next({ count,  next: '', previous: '', results: [dummyDepartment, dummySuperDepartment] });
+    getTopLevelDepartments$.next([dummyDepartment, dummySuperDepartment]);
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.departments.length).toEqual(1);
+    expect(component.departments.length).toEqual(2);
   });
 
   it('should empty data if an error encountered.', () => {
-    getDepartments$.error('error');
+    getTopLevelDepartments$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
     expect(component.programs).toEqual([]);
