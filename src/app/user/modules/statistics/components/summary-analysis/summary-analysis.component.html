@@ -36,9 +36,12 @@
           <i class="material-icons">mood</i>
         </div>
         <p class="card-category">教学竞赛奖励基本信息</p>
-        <p class="card-title" fxShow [fxShow.lt-md]="false" matTooltip="{{ competitionAwardInfo?.data?.competition }}">{{ competitionAwardInfo?.data?.competition | truncate:10 }} {{ competitionAwardInfo?.data?.level }} {{ competitionAwardInfo?.data?.award }}</p>
-        <p class="card-title" fxHide [fxShow.lt-md]="true">{{ competitionAwardInfo?.data?.competition }} </p>
-        <p class="card-title" fxHide [fxShow.lt-md]="true">{{ competitionAwardInfo?.data?.level }} {{ competitionAwardInfo?.data?.award }}</p>
+        <p class="card-title" *ngIf="!competitionAwardInfo?.data; else competitionAwardInfoBlock">暂无数据</p>
+        <ng-template #competitionAwardInfoBlock>
+          <p class="card-title" fxShow [fxShow.lt-md]="false" matTooltip="{{ competitionAwardInfo?.data?.competition }}">{{ competitionAwardInfo?.data?.competition | truncate:10 }} {{ competitionAwardInfo?.data?.level }} {{ competitionAwardInfo?.data?.award }}</p>
+          <p class="card-title" fxHide [fxShow.lt-md]="true">{{ competitionAwardInfo?.data?.competition }} </p>
+          <p class="card-title" fxHide [fxShow.lt-md]="true">{{ competitionAwardInfo?.data?.level }} {{ competitionAwardInfo?.data?.award }}</p>
+        </ng-template>
       </div>
       <div class="card-footer">
         <div class="stats">
@@ -131,7 +134,7 @@
     <div fxFlex="auto" fxFlexFill></div>
   </div>
   <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" fxLayout.gt-sm="row">
-    <div class="card card-chart">
+    <div class="card card-chart" *ngIf="programsStatistics?.data.length !== 0">
       <div class="card-header card-header-primary">
         <h4 class="card-title">参与不同培训项目情况</h4>
         <p class="card-category">
@@ -147,7 +150,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-chart">
+    <div class="card card-chart" *ngIf="monthlyAddedRecords?.months.length !== 0">
       <div class="card-header card-header-info">
         <h4 class="card-title">个人月度培训记录新增情况</h4>
         <p class="card-category">
