@@ -41,7 +41,7 @@ export class AdminProgramListComponent implements OnInit {
           return observableOf([]);
         });
       } else {
-        this.loadProgramsBelongToDepartment(this.authService.department);
+        this.loadProgramsBelongToDepartment(this.authService.administrativeDepartment);
         this.isLoadingResults = false;
       }
   }
@@ -55,7 +55,7 @@ export class AdminProgramListComponent implements OnInit {
     extraParams.set('department', department);
     this.programService.getPrograms({offset: 0, limit: -1, extraParams}).subscribe(
       data => {
-        this.programs = data.results;
+        this.programs = data;
       });
     }
 }

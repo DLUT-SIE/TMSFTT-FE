@@ -57,11 +57,11 @@ describe('ProgramService', () => {
 
     service.getPrograms({}).subscribe();
 
-    const url = `/programs/?limit=10&offset=0`;
+    const url = `/programs/?limit=10&offset=-1`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
-    req.flush({count: 2, results: [], next: '', previous: ''});
+    req.flush([]);
   });
 
   it('should get program', () => {
