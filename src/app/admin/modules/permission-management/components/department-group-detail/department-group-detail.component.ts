@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group } from 'src/app/shared/interfaces/group';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-department-group-detail',
@@ -14,7 +13,6 @@ export class DepartmentGroupDetailComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    readonly location: Location,
   ) { }
 
   ngOnInit() {
