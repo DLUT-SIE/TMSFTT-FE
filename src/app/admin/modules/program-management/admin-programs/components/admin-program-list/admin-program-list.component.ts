@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { catchError } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
@@ -32,20 +31,20 @@ export class AdminProgramListComponent implements OnInit {
 
   ngOnInit() {
     if (this.isSchoolAdmin) {
-      this.departmentService.getTopDepartments().pipe(
-        catchError((err) => {
-          this.isLoadingResults = false;
-          return observableOf([]);
-        })
-      ).subscribe(data => {
+      this.departmentService.getTopDepartments().subscribe(
+        data => {
           this.isLoadingResults = false;
           this.departments = data;
-      });
-    } else {
-      this.loadProgramsBelongToDepartment(this.authService.department);
-      this.isLoadingResults = false;
-    }
-}
+        },
+        err => {
+          this.isLoadingResults = false;
+          return observableOf([]);
+        });
+      } else {
+        this.loadProgramsBelongToDepartment(this.authService.department);
+        this.isLoadingResults = false;
+      }
+  }
 
   navigateToRelatedEvents(row: Program) {
     this.router.navigate(['../../events'], { queryParams: {program_id: row.id}, relativeTo: this.route});
@@ -54,7 +53,7 @@ export class AdminProgramListComponent implements OnInit {
   loadProgramsBelongToDepartment(department: number) {
     const extraParams = new Map();
     extraParams.set('department', department);
-    this.programService.getPrograms({offset: 0, limit: 200, extraParams}).subscribe(
+    this.programService.getPrograms({offset: 0, limit: -1, extraParams}).subscribe(
       data => {
         this.programs = data.results;
       });
