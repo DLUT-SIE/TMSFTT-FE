@@ -46,6 +46,18 @@ describe('GroupService', () => {
     expect(req.request.method).toEqual('GET');
   });
 
+  it('should get Groups by ByTopDepartmentId', () => {
+    const department = {id: 1, name: 'name'} as Department;
+    const service: GroupService = TestBed.get(GroupService);
+    service.getGroupsByTopDepartmentId(department.id).subscribe();
+
+    const params = `department_id=${department.id}`;
+    const url = `/groups/top-department-related-groups/?${params}`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+  });
+
   it('should get User By GroupID', () => {
     const service: GroupService = TestBed.get(GroupService);
     const limit = 5;

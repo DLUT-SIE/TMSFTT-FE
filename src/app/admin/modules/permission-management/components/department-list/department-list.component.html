@@ -12,18 +12,13 @@
         <thead class="text-primary">
           <tr>
             <th scope="col">学部学院名称</th>
-            <th scope="col">管理员数量</th>
-            <th scope="col">教师数量</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let department of departmentList"
               (click)="onSelect(department)"
-              [class.selected]="department === departmentChildSelect"
-              >
+              [class.selected]="department === departmentChildSelect">
             <td>{{ department.name }}</td>
-            <td>{{ department.admins.length }}</td>
-            <td>{{ department.users.length }}</td>
           </tr>
         </tbody>
       </table>
