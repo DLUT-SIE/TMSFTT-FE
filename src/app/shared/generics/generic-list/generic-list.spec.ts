@@ -35,11 +35,13 @@ describe('GenericListComponent', () => {
     let getResults: jasmine.Spy;
     let getResults$: Subject<PaginatedResponse<{id: number}>>;
     let go: jasmine.Spy;
+    let replaceState: jasmine.Spy;
     const dummyResponse = { id: 1 };
 
     beforeEach(() => {
-        go = jasmine.createSpy(),
-            navigate = jasmine.createSpy();
+        go = jasmine.createSpy();
+        replaceState = jasmine.createSpy();
+        navigate = jasmine.createSpy();
         getResults$ = new Subject();
         TestBed.configureTestingModule({
             declarations: [
@@ -69,7 +71,7 @@ describe('GenericListComponent', () => {
                 {
                     provide: Location,
                     useValue: {
-                        go,
+                        go, replaceState
                     },
                 },
                 {
@@ -148,6 +150,7 @@ describe('GenericListComponent', () => {
         expect(hasPreviousPage).toHaveBeenCalled();
         expect(firstPage).not.toHaveBeenCalled();
         expect(go).toHaveBeenCalled();
+        expect(replaceState).toHaveBeenCalled();
         expect(getResults).toHaveBeenCalled();
     });
 

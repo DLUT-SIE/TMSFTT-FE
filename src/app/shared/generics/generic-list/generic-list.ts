@@ -22,6 +22,7 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
   readonly pageSize = environment.PAGINATION_SIZE;
 
   private forceRefresh$ = new Subject<PageEvent>();
+  private initialized = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -58,6 +59,7 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
       }),
       // Convert event to page index and update URL
       map((event: PageEvent) => {
+        this.paginator.pageIndex = event.pageIndex;
         this.isLoadingResults = true;
         const url = this.router.createUrlTree([], {
           relativeTo: this.route,
@@ -66,7 +68,12 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
           },
           queryParamsHandling: 'merge',
         }).toString();
-        this.location.go(url);
+        if (this.initialized) {
+          this.location.go(url);
+        } else {
+          this.initialized = true;
+          this.location.replaceState(url);
+        }
         return event.pageIndex;
       }),
       switchMap(page => {
