@@ -25,6 +25,8 @@ export class HTTPAuthService implements AuthService {
   lastName: string = null;
   department: number = null;
   departmentName: string = null;
+  administrativeDepartment: number = null;
+  administrativeDepartmentName: string = null;
   authenticationSucceed = new ReplaySubject<void>();
 
   constructor(
@@ -68,6 +70,8 @@ export class HTTPAuthService implements AuthService {
     this.isTeacher = user.is_teacher;
     this.department = user.department;
     this.departmentName = user.department_str || '未知';
+    this.administrativeDepartment = user.administrative_department;
+    this.administrativeDepartmentName = user.administrative_department_str || '未知';
     this.storageService.setItem(environment.JWT_KEY, token);
     this.isAuthenticated = true;
     this.authenticationSucceed.next();

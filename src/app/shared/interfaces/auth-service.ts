@@ -25,6 +25,10 @@ export interface AuthService {
     department: number;
     /** Department name for authenticated user. */
     departmentName: string;
+    /** Administrative department id for authenticated user. */
+    administrativeDepartment: number;
+    /** Administrative department name for authenticated user. */
+    administrativeDepartmentName: string;
     /** Notify when authentication succeed. */
     authenticationSucceed: Observable<void>;
     /**
