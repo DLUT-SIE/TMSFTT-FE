@@ -5,7 +5,6 @@ import { GroupService } from 'src/app/admin/modules/permission-management/servic
 import { Department } from 'src/app/shared/interfaces/department';
 import { of as observableOf, Subject } from 'rxjs';
 import { Group } from 'src/app/shared/interfaces/group';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 function generateGroups(n?: number): Group[] {
   n = n || 5;
