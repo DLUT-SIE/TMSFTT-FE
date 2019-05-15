@@ -21,7 +21,7 @@ export class DepartmentGroupUserComponent extends GenericListComponent<User> {
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
-    protected readonly location: Location,
+    readonly location: Location,
     private readonly groupService: GroupService,
     public dialog: MatDialog,
   ) {
