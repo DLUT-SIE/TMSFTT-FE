@@ -8,7 +8,6 @@ import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { of as observableOf } from 'rxjs';
-import { PaginatedResponse } from '../../interfaces/paginated-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +24,7 @@ export class ProgramService extends GenericListService {
 
   /** get the information of programs from the background. */
   getPrograms(req: ListRequest) {
-    return this.list<PaginatedResponse<Program>>('programs', req);
+    return this.list<Program[]>('programs', req);
   }
 
   /** get the information of one program from the background. */
