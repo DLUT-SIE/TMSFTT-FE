@@ -4,7 +4,8 @@
     <p class="card-category">您可以查看和管理所有 {{group.name}} 岗位内的成员</p>
   </div>
   <div class="card-body">
-    <div class="float-right">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between">
+      <button mat-raised-button color="primary" (click)="location.back()">返回</button>
       <button mat-raised-button color="primary" (click)="openDialog()">增加新用户</button>
     </div>
     <div class="loading-shade" *ngIf="isLoadingResults">
