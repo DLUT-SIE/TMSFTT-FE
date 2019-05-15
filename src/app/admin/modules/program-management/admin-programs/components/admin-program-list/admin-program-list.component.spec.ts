@@ -10,14 +10,13 @@ import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { AdminProgramListComponent } from './admin-program-list.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Department } from 'src/app/shared/interfaces/department';
 
 describe('AdminProgramListComponent', () => {
   let component: AdminProgramListComponent;
   let fixture: ComponentFixture<AdminProgramListComponent>;
-  let getPrograms$: Subject<PaginatedResponse<Program>>;
+  let getPrograms$: Subject<Program[]>;
   let getTopDepartments$: Subject<Department[]>;
   let navigate: jasmine.Spy;
   let getPrograms: jasmine.Spy;
@@ -47,7 +46,7 @@ describe('AdminProgramListComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getPrograms$ = new Subject<PaginatedResponse<Program>>();
+    getPrograms$ = new Subject<Program[]>();
     getPrograms = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
     getTopDepartments$ = new Subject<Department[]>();
@@ -115,11 +114,10 @@ describe('AdminProgramListComponent', () => {
   });
 
   it('should load programs', () => {
-    const count = 100;
     component.loadProgramsBelongToDepartment(dummyDepartment.id);
-    getPrograms$.next({ count,  next: '', previous: '', results: [dummyProgram] });
+    getPrograms$.next([dummyProgram]);
 
-    expect(component.programs.length).toEqual(1);
+    expect(component.programs).toEqual([dummyProgram]);
   });
 
   it('should load departments', () => {
@@ -133,7 +131,7 @@ describe('AdminProgramListComponent', () => {
     getTopDepartments$.error('error');
 
     expect(component.isLoadingResults).toBeFalsy();
-    expect(component.programs).toEqual([]);
+    expect(component.departments).toEqual([]);
   });
 
   it('should navigate to detail', () => {
@@ -148,12 +146,12 @@ describe('NotSchoolAdminAdminProgramListComponent', () => {
   let component: AdminProgramListComponent;
   let fixture: ComponentFixture<AdminProgramListComponent>;
   let navigate: jasmine.Spy;
-  let getPrograms$: Subject<PaginatedResponse<Program>>;
+  let getPrograms$: Subject<Program[]>;
   let getPrograms: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
-    getPrograms$ = new Subject<PaginatedResponse<Program>>();
+    getPrograms$ = new Subject<Program[]>();
     getPrograms = jasmine.createSpy();
     getPrograms.and.returnValue(getPrograms$);
     TestBed.configureTestingModule({
