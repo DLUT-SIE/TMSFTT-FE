@@ -7,7 +7,7 @@ import { of as observableOf, Subject } from 'rxjs';
 import { Group } from 'src/app/shared/interfaces/group';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
-function generateGroups(n?: number): PaginatedResponse<Group> {
+function generateGroups(n?: number): Group[] {
   n = n || 5;
   const group: Group[] = [];
   for (let i = 0; i < n; i++) {

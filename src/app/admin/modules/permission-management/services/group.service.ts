@@ -28,7 +28,7 @@ export class GroupService extends GenericListService {
 
   getGroupsByTopDepartmentId(id: number) {
     return this.http.get<Group[]>(
-      `/groups/top-department-related-groups/?department_id=${id}`)
+      `/groups/top-department-related-groups/?department_id=${id}`);
   }
 
   getUsersByGroupId(req: ListRequest) {
