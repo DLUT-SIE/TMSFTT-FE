@@ -32,11 +32,11 @@ export class DepartmentGroupComponent implements OnInit {
   ngOnInit() {
     this._departmentChange.pipe(
       switchMap(() => {
-        return this.groupService.getGroupByDepartmentName(
-          this.departmentSelectedItem.name);
+        return this.groupService.getGroupsByTopDepartmentId(
+          this.departmentSelectedItem.id);
       }),
     ).subscribe(res => {
-      this.departmentGroup = res.results;
+      this.departmentGroup = res;
     });
   }
 

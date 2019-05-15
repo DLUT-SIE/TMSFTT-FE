@@ -6,7 +6,6 @@ import { MenuComponent } from './components/menu/menu.component';
 import { PermissionManagementComponent } from './permission-management.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DepartmentManagementComponent } from './components/department-management/department-management.component';
-import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentListComponent } from './components/department-list/department-list.component';
 import { DepartmentGroupComponent } from './components/department-group/department-group.component';
 import { DepartmentGroupDetailComponent } from './components/department-group-detail/department-group-detail.component';
@@ -20,7 +19,6 @@ import { AdduserDialogComponent } from './components/adduser-dialog/adduser-dial
     UserManagementComponent,
     MenuComponent,
     DepartmentManagementComponent,
-    DepartmentDetailComponent,
     DepartmentListComponent,
     DepartmentGroupComponent,
     DepartmentGroupDetailComponent,
