@@ -57,7 +57,7 @@ describe('ProgramService', () => {
 
     service.getPrograms({}).subscribe();
 
-    const url = `/programs/?limit=10&offset=-1`;
+    const url = `/programs/?limit=-1&offset=0`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
