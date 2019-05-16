@@ -31,6 +31,7 @@ import { EventService } from 'src/app/shared/services/events/event.service';
 import { ContentType } from 'src/app/shared/enums/content-type.enum';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 
 describe('RecordFormComponent', () => {
   // Note: We should create Observable before our each test in certain
@@ -49,6 +50,8 @@ describe('RecordFormComponent', () => {
   let snackBarOpen: jasmine.Spy;
   let component: RecordFormComponent;
   let fixture: ComponentFixture<RecordFormComponent>;
+  let getRoleChoices: jasmine.Spy;
+  let getRoleChoices$: Subject<RoleChoice[]>;
 
   const dummyEvent: OffCampusEvent = {
     id: 5,
@@ -59,16 +62,25 @@ describe('RecordFormComponent', () => {
     num_participants: 10,
   };
 
+  const dummyRoleChoice: RoleChoice = {
+      role: 0,
+      role_str: '123',
+    };
+
+
   beforeEach(async(() => {
     createOffCampusRecord$ = new Subject();
     updateOffCampusRecord$ = new Subject();
     getOffCampusEvents$ = new Subject();
     getRecordWithDetail$ = new Subject();
     deleteRecordAttachment$ = new Subject();
+    getRoleChoices$ = new Subject();
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
     getOffCampusEvents = jasmine.createSpy();
     getOffCampusEvents.and.returnValue(getOffCampusEvents$);
+    getRoleChoices = jasmine.createSpy();
+    getRoleChoices.and.returnValue(getRoleChoices$);
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -116,6 +128,7 @@ describe('RecordFormComponent', () => {
               attachments: [],
               user: 1,
               status: 1,
+              role: 0,
             } as Record}),
           },
         },
@@ -131,6 +144,7 @@ describe('RecordFormComponent', () => {
             createOffCampusRecord: () => createOffCampusRecord$,
             updateOffCampusRecord: () => updateOffCampusRecord$,
             getRecordWithDetail: () => getRecordWithDetail$,
+            getRoleChoices: () => getRoleChoices$,
           },
         },
         {
@@ -184,7 +198,7 @@ describe('RecordFormComponent', () => {
         time: '2019-03-02T00:00:00+08:00',
         location: 'dfgfd',
         num_hours: 0,
-        num_participants: 25
+        num_participants: 25,
         },
       contents: [
         {
@@ -206,9 +220,16 @@ describe('RecordFormComponent', () => {
       ],
       user: 1,
       status: 1,
+      role: 0,
     };
     getRecordWithDetail$.next(dummyRecord);
     expect(component.record).toBe(dummyRecord);
+  });
+
+  it('should load role-choices', () => {
+    getRoleChoices$.next([dummyRoleChoice, dummyRoleChoice]);
+
+    expect(component.roleChoices).toEqual([dummyRoleChoice, dummyRoleChoice]);
   });
 
   it('should display errors when failed to get record.', () => {
@@ -291,6 +312,7 @@ describe('RecordFormComponent', () => {
     component.record = {
       id: 1,
       off_campus_event: {id: 1},
+      role: 0,
     };
     component.onSubmit();
     updateOffCampusRecord$.next({ id: 123 } as Record);
