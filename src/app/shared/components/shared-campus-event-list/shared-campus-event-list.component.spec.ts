@@ -1,5 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule, MatPaginatorModule, MatIconModule } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  MatProgressSpinnerModule,
+  MatPaginatorModule,
+  MatIconModule,
+  MatSnackBar
+ } from '@angular/material';
+ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of as observableOf, Subject } from 'rxjs';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
@@ -10,13 +17,17 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { EventListType } from '../../enums/event-list-type.enum';
 import { SharedCampusEventListComponent } from './shared-campus-event-list.component';
+import { Enrollment } from 'src/app/shared/interfaces/enrollment';
 
 describe('SharedCampusEventListComponent', () => {
   let component: SharedCampusEventListComponent;
   let fixture: ComponentFixture<SharedCampusEventListComponent>;
   let getCampusEvents$: Subject<PaginatedResponse<CampusEvent>>;
   let getCampusEvents: jasmine.Spy;
+  let enrollCampusEvent$: Subject<Enrollment>;
+
   let navigate: jasmine.Spy;
+  let snackBarOpen: jasmine.Spy;
   const route = {
     queryParams: observableOf({ program_id: 1 }),
     snapshot: {
@@ -31,6 +42,8 @@ describe('SharedCampusEventListComponent', () => {
     getCampusEvents$ = new Subject<PaginatedResponse<CampusEvent>>();
     getCampusEvents = jasmine.createSpy();
     getCampusEvents.and.returnValue(getCampusEvents$);
+    enrollCampusEvent$ = new Subject();
+    snackBarOpen = jasmine.createSpy();
 
     TestBed.configureTestingModule({
       declarations: [
@@ -40,6 +53,7 @@ describe('SharedCampusEventListComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
         MatPaginatorModule,
+        NoopAnimationsModule
       ],
       providers: [
         {
@@ -60,7 +74,14 @@ describe('SharedCampusEventListComponent', () => {
           provide: EventService,
           useValue: {
             getCampusEvents: () => getCampusEvents$,
+            enrollCampusEvent: () => enrollCampusEvent$,
           }
+        },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          },
         },
         {
           provide: HAMMER_LOADER,
@@ -113,4 +134,72 @@ describe('SharedCampusEventListComponent', () => {
     expect(navigate).toHaveBeenCalledWith(
       ['./form'], { queryParams: { program_id: component.program.id} , relativeTo: route });
   });
+
+  it('should enroll event.', () => {
+    const event: CampusEvent = {
+      id: 1,
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+    const enrollment: Enrollment = {
+      id: 1,
+      create_time: '123',
+      enroll_method: 0,
+      campus_event: 1,
+      user: 1,
+    };
+
+    component.enrollEvent(event);
+    enrollCampusEvent$.next(enrollment);
+
+  });
+
+  it('should display errors when enroll failed.', () => {
+    enrollCampusEvent$.error({
+      message: 'Raw error message',
+      error: {
+        enrollCampusEvent_data: ['Invalid content'],
+      },
+    } as HttpErrorResponse);
+    const event: CampusEvent = {
+      id: 1,
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+    component.enrollEvent(event);
+    expect(snackBarOpen).toHaveBeenCalledWith('报名失败！', '关闭');
+  });
+
+  it('should display raw errors when updation failed.', () => {
+    enrollCampusEvent$.error({
+      message: 'Raw error message',
+    } as HttpErrorResponse);
+
+    const event: CampusEvent = {
+      id: 1,
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+    component.enrollEvent(event);
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+  });
+
 });
