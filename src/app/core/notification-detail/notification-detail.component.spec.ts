@@ -6,6 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { NotificationDetailComponent } from './notification-detail.component';
 import { Notification } from 'src/app/shared/interfaces/notification';
+import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
 
 
 describe('NotificationDetailComponent', () => {
@@ -16,6 +21,11 @@ describe('NotificationDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         NotificationDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
       ],
       imports: [
         MatCardModule,

@@ -34,6 +34,11 @@ import { SharedRecordListComponent } from './components/shared-record-list/share
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { SharedCampusEventDetailComponent } from './components/shared-campus-event-detail/shared-campus-event-detail.component';
 import { SharedCampusEventListComponent } from './components/shared-campus-event-list/shared-campus-event-list.component';
+import { DetailSectionComponent } from './components/detail-section/detail-section.component';
+import { DetailItemComponent } from './components/detail-item/detail-item.component';
+import { DetailItemTitleComponent } from './components/detail-item-title/detail-item-title.component';
+import { DetailItemContentComponent } from './components/detail-item-content/detail-item-content.component';
+import { DetailSectionActionsComponent } from './components/detail-section-actions/detail-section-actions.component';
 
 
 @NgModule({
@@ -43,6 +48,11 @@ import { SharedCampusEventListComponent } from './components/shared-campus-event
     TruncatePipe,
     SharedCampusEventDetailComponent,
     SharedCampusEventListComponent,
+    DetailSectionComponent,
+    DetailItemComponent,
+    DetailItemTitleComponent,
+    DetailItemContentComponent,
+    DetailSectionActionsComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +68,7 @@ import { SharedCampusEventListComponent } from './components/shared-campus-event
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatDividerModule,
     MatDialogModule,
     MatIconModule,
     MatInputModule,
@@ -107,6 +118,11 @@ import { SharedCampusEventListComponent } from './components/shared-campus-event
     SharedRecordListComponent,
     SharedCampusEventDetailComponent,
     SharedCampusEventListComponent,
+    DetailSectionComponent,
+    DetailItemComponent,
+    DetailItemTitleComponent,
+    DetailItemContentComponent,
+    DetailSectionActionsComponent,
 
     NgxEchartsModule,
     CKEditorModule,
