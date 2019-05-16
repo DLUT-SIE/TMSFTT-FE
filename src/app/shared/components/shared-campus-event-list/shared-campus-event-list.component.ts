@@ -7,6 +7,10 @@ import { Program } from 'src/app/shared/interfaces/program';
 import { EventService  } from 'src/app/shared/services/events/event.service';
 import { EventListType } from '../../enums/event-list-type.enum';
 
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+
+
 @Component({
   selector: 'app-shared-campus-event-list',
   templateUrl: './shared-campus-event-list.component.html',
@@ -22,6 +26,7 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
     protected readonly route: ActivatedRoute,
     protected readonly location: Location,
     protected readonly router: Router,
+    protected readonly snackBar: MatSnackBar,
   ) {
     super(route, router, location);
   }
@@ -44,5 +49,16 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
     this.router.navigate(['./form'], { queryParams: {program_id: this.program.id}, relativeTo: this.route});
   }
 
-
+  enrollEvent(event: CampusEvent) {
+    this.eventService.enrollCampusEvent(event).subscribe(() => {
+      this.forceRefresh();
+      },
+      (error: HttpErrorResponse) => {
+        let message = error.message;
+        if (error.error) {
+          message = '报名失败！';
+        }
+        this.snackBar.open(message, '关闭');
+      });
+ }
 }

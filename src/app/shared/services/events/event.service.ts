@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import {
   OffCampusEvent,
@@ -9,6 +10,7 @@ import { GenericListService } from 'src/app/shared/generics/generic-list-service
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { of as observableOf } from 'rxjs';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
+import { Enrollment } from 'src/app/shared/interfaces/enrollment';
 
 /** Provide services for Event. */
 @Injectable({
@@ -84,6 +86,12 @@ export class EventService extends GenericListService {
   updateCampusEvent(req: CampusEvent) {
     return this.http.patch<CampusEvent>(
       `/campus-events/${req.id}/`, req);
+  }
+
+  /** Enroll campus event */
+  enrollCampusEvent(event: CampusEvent): Observable<Enrollment> {
+    return this.http.post<Enrollment>(
+      `/enrollments/`, {campus_event: event.id});
   }
 
 }
