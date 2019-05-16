@@ -50,7 +50,8 @@ describe('ReviewNoteService', () => {
       create_time: '2019-04-05T14:21:55.787056+08:00',
       update_time: '2019-04-05T14:21:57.202346+08:00',
       status: 3,
-      user: 9
+      user: 9,
+      role: 0,
     };
     const notecontent = 'abc';
 

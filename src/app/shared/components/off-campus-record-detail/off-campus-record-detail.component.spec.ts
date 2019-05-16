@@ -19,7 +19,6 @@ import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { Location } from '@angular/common';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
-
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
   let fixture: ComponentFixture<OffCampusRecordDetailComponent>;
@@ -110,6 +109,8 @@ describe('OffCampusRecordDetailComponent', () => {
       attachments: [],
       user: 1,
       status: 1,
+      role: 1,
+      role_str: '1433223',
     };
     component.record = record;
     fixture.detectChanges();

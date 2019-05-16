@@ -15,4 +15,6 @@ export interface Record {
   feedback?: number;
   attachments?: number[] | File[] | RecordAttachment[] | PaginatedResponse<RecordAttachment>;
   contents?: number[] | RecordContent[] | PaginatedResponse<RecordContent>;
+  role: number;
+  role_str?: string;
 }

@@ -53,6 +53,15 @@
     <div fxFlex="1 0 2%"></div>
   </div>
 
+  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+    fxLayoutGap="15px">
+    <span class="item-title" fxFlex="1 0 20%">参与方式</span>
+    <div class="item-content" fxFlex="1 0 78%">
+      <p>{{ record.role_str }}</p>
+    </div>
+    <div fxFlex="1 0 2%"></div>
+  </div>
+
   <div *ngFor="let con of record.contents">
     <div *ngIf="con.content_type === 0">
       <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"

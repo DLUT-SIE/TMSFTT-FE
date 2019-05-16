@@ -16,6 +16,7 @@ import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { RecordAttachment, SecuredPath } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -29,12 +30,15 @@ interface FileChangeEvent extends Event {
 })
 export class RecordFormComponent implements OnInit {
   /** Use FormBuilder to build our form to collect Record data. */
+  roleChoices: RoleChoice[] = [];
+
   recordForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     time: ['', [Validators.required, Validators.maxLength(30)]],
     location: ['', [Validators.required, Validators.maxLength(50)]],
     numHours: ['', [Validators.required]],
     numParticipants: ['', [Validators.required]],
+    role: ['', [Validators.required]],
     content: ['', [Validators.required, Validators.maxLength(200)]],
     summary: ['', [Validators.maxLength(200)]],
     feedback: ['', [Validators.maxLength(200)]],
@@ -79,6 +83,11 @@ export class RecordFormComponent implements OnInit {
       this.numHours.setValue(offCampusEvent.num_hours);
       this.numParticipants.setValue(offCampusEvent.num_participants);
     });
+
+    this.recordService.getRoleChoices().subscribe(roleChoices => {
+      this.roleChoices = roleChoices;
+    });
+
     if (this.route.snapshot.queryParams.record_id !== undefined) {
       const recordID = this.route.snapshot.queryParams.record_id;
       this.recordService.getRecordWithDetail(recordID).subscribe(
@@ -113,6 +122,7 @@ export class RecordFormComponent implements OnInit {
     this.location.setValue(this.record.off_campus_event.location);
     this.numHours.setValue(this.record.off_campus_event.num_hours);
     this.numParticipants.setValue(this.record.off_campus_event.num_participants);
+    this.role.setValue(this.record.role);
     this.record.contents = record.contents as RecordContent[];
     this.record.contents.map(content => {
       switch (content.content_type) {
@@ -161,6 +171,10 @@ export class RecordFormComponent implements OnInit {
   /** Access the numParticipants field of the form. */
   get numParticipants() {
     return this.recordForm.get('numParticipants');
+  }
+
+  get role() {
+    return this.recordForm.get('role');
   }
 
   /** Access the content field of the form. */
@@ -246,6 +260,7 @@ export class RecordFormComponent implements OnInit {
       user: this.authService.userID,
       contents: this.buildContents(),
       attachments: this.attachments,
+      role: this.recordForm.value.role,
     };
   }
 
@@ -262,6 +277,7 @@ export class RecordFormComponent implements OnInit {
         let message = error.message;
         if (error.error) {
           message = '';
+          console.log(error.error['detail']);
           for (const key of Object.keys(error.error)) {
             message += error.error[key].join(',') + '。';
           }

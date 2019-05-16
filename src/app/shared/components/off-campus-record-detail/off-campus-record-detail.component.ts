@@ -30,6 +30,8 @@ export class OffCampusRecordDetailComponent implements OnInit {
     feedback?: number;
     attachments?: RecordAttachment[];
     contents?: RecordContent[];
+    role: number;
+    role_str?: string;
   };
   reviewNoteContent: string;
   reviewNotes: ReviewNote[] = [];
