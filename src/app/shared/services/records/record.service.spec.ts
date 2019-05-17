@@ -368,7 +368,7 @@ describe('RecordService', () => {
     service.getRoleChoices().subscribe((data: RoleChoice[]) => {
       expect(data.length).toEqual(2);
     });
-    const url = `/role-choices/`;
+    const url = `${environment.API_URL}/records/role-choices/`;
 
     const req = httpTestingController.expectOne(url);
 
