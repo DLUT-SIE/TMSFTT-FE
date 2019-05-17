@@ -11,10 +11,10 @@ import { RecordListType } from '../../enums/record-list-type.enum';
 describe('SharedRecordListComponent', () => {
   let component: SharedRecordListComponent;
   let fixture: ComponentFixture<SharedRecordListComponent>;
-  let getRecordsWithDetail: jasmine.Spy;
+  let getRecords: jasmine.Spy;
 
   beforeEach(async(() => {
-    getRecordsWithDetail = jasmine.createSpy();
+    getRecords = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [ SharedRecordListComponent ],
       imports: [
@@ -47,7 +47,7 @@ describe('SharedRecordListComponent', () => {
         {
           provide: RecordService,
           useValue: {
-            getRecordsWithDetail,
+            getRecords,
           }
         },
         {
@@ -76,7 +76,7 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit});
+    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit});
   });
 
   it('should get reviewed records with detail.', () => {
@@ -86,7 +86,7 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecordsWithDetail).toHaveBeenCalledWith('records/reviewed', {offset, limit});
+    expect(getRecords).toHaveBeenCalledWith('records/reviewed', {offset, limit});
   });
 
   it('should get off-campus-event records with detail.', () => {
@@ -98,7 +98,7 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit, extraParams});
+    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams});
   });
 
   it('should get all records if recordListType is undefined.', () => {
@@ -107,6 +107,6 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecordsWithDetail).toHaveBeenCalledWith('records', {offset, limit});
+    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit});
   });
 });

@@ -12,8 +12,6 @@ import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 import { RecordContentService } from 'src/app/shared/services/records/record-content.service';
-import { EventService } from '../events/event.service';
-import { OffCampusEvent, CampusEvent } from '../../interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
@@ -30,7 +28,6 @@ export class RecordService extends GenericListService {
     protected readonly http: HttpClient,
     private readonly recordAttachmentService: RecordAttachmentService,
     private readonly recordContentSerice: RecordContentService,
-    private readonly eventService: EventService,
     @Inject(AUTH_SERVICE) private readonly authService: AuthService,
   ) {
     super(http);
@@ -86,21 +83,13 @@ export class RecordService extends GenericListService {
       switchMap((data) => {
         recordWithDetail = data;
         return zip(
-          recordWithDetail.off_campus_event ?
-          this.eventService.getOffCampusEvent(data.off_campus_event as number) :
-          this.eventService.getEvent(data.campus_event as number),
           this.recordContentSerice.getRecordContents(data.contents as number[]),
           this.recordAttachmentService.getRecordAttachments(data.attachments as number[]),
         );
       }),
-      map((val: [OffCampusEvent | CampusEvent, RecordContent[], RecordAttachment[]]) => {
-        if (recordWithDetail.off_campus_event) {
-          recordWithDetail.off_campus_event = val[0] as OffCampusEvent;
-        } else {
-          recordWithDetail.campus_event = val[0] as CampusEvent;
-        }
-        recordWithDetail.contents = val[1] as RecordContent[];
-        recordWithDetail.attachments = val[2] as RecordAttachment[];
+      map((val: [RecordContent[], RecordAttachment[]]) => {
+        recordWithDetail.contents = val[0] as RecordContent[];
+        recordWithDetail.attachments = val[1] as RecordAttachment[];
         return recordWithDetail;
       }),
     );
@@ -108,47 +97,6 @@ export class RecordService extends GenericListService {
 
   getRecords(url: string, req: ListRequest) {
     return this.list<PaginatedResponse<Record>>(url, req);
-  }
-
-  getRecordsWithDetail(url: string, req: ListRequest) {
-    return this.getDetailOfRecords(this.getRecords(url, req));
-  }
-
-  private getDetailOfRecords(records: Observable<PaginatedResponse<Record>>): Observable<PaginatedResponse<Record>> {
-    let paginatedRecords: PaginatedResponse<Record>;
-    return records.pipe(
-      switchMap((data) => {
-        paginatedRecords = data;
-        const campusEventIDs: number[] = [];
-        const offCampusEventIDs: number[] = [];
-        paginatedRecords.results.map(record => {
-          if (record.off_campus_event) {
-            offCampusEventIDs.push(record.off_campus_event as number);
-          } else {
-            campusEventIDs.push(record.campus_event as number);
-          }
-        });
-        return zip(
-          this.eventService.getCampusEventsByIds(campusEventIDs),
-          this.eventService.getOffCampusEventsByIds(offCampusEventIDs),
-        );
-      }),
-      map((val: [PaginatedResponse<CampusEvent>, PaginatedResponse<OffCampusEvent>]) => {
-        const campusEventsMap = new Map<number, CampusEvent>();
-        const offCampusEventsMap = new Map<number, OffCampusEvent>();
-        val[0].results.map(x => campusEventsMap.set(x.id, x));
-        val[1].results.map(x => offCampusEventsMap.set(x.id, x));
-        paginatedRecords.results.map(record => {
-          if (record.off_campus_event) {
-            record.off_campus_event = offCampusEventsMap.get(record.off_campus_event as number);
-          } else {
-            record.campus_event = campusEventsMap.get(record.campus_event as number);
-          }
-        });
-
-        return paginatedRecords;
-      }),
-    );
   }
 
   getNumberOfRecordsWithoutFeedback() {
