@@ -10,7 +10,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目名称</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ asProgram(event.program).name }}</p>
+            <p>{{ event.program_detail.name }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -18,7 +18,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目单位</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ asProgram(event.program).department }}</p>
+            <p>{{ event.program_detail.department }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -26,7 +26,7 @@
           fxLayoutGap="15px">
           <span class="item-title" fxFlex="1 0 20%">项目类别</span>
           <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ asProgram(event.program).category }}</p>
+            <p>{{ event.program_detail.category_str }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -35,14 +35,6 @@
           <span class="item-title" fxFlex="1 0 20%">活动名称</span>
           <div class="item-content" fxFlex="1 0 78%">
             <p>{{ event.name }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">编号</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.id }}</p>
           </div>
           <div fxFlex="1 0 2%"></div>
         </div>
@@ -103,7 +95,7 @@
        </div>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
           <ng-container *ngIf="event.enrolled && eventDetailType === checkEventDetailType.USER">
-              <button mat-raised-button color="primary">取消报名</button>
+              <button mat-raised-button color="primary" (click)="deleteEnrollment(event.enrollment_id)">取消报名</button>
           </ng-container>
           <ng-container *ngIf="eventDetailType === checkEventDetailType.ADMIN">
             <button mat-raised-button color="primary">导出签到表</button>

@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
-import { Program } from '../../interfaces/program';
 import { CampusEvent } from '../../interfaces/event';
+import { EventService } from '../../services/events/event.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-shared-campus-event-detail',
@@ -19,13 +20,10 @@ export class SharedCampusEventDetailComponent {
   constructor(
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
+    private readonly eventService: EventService,
+    protected readonly snackBar: MatSnackBar,
     readonly location: Location,
   ) { }
-
-  /* tslint:disable-next-line:no-any */
-  asProgram(program: any): Program {
-    return program;
-  }
 
   navigateToChangeEvent() {
     this.router.navigate(['/admin/events/form'], { queryParams: { event_id: this.event.id } });
@@ -36,4 +34,10 @@ export class SharedCampusEventDetailComponent {
     return this.sanitizer.bypassSecurityTrustHtml(this.event.description || /* istanbul ignore next */ '');
   }
 
+  deleteEnrollment(id: number) {
+    this.eventService.deleteEventEnrollment(id).subscribe(() => {
+      this.snackBar.open('取消报名成功', '关闭');
+      this.router.navigate(['/user/events/']);
+    });
+  }
 }

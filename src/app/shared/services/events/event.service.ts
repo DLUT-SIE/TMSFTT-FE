@@ -94,4 +94,9 @@ export class EventService extends GenericListService {
       `/enrollments/`, {campus_event: event.id});
   }
 
+  /** Delete campus event enrollment. */
+  deleteEventEnrollment(id: number) {
+    return this.http.delete(`/enrollments/${id}/`);
+  }
+
 }
