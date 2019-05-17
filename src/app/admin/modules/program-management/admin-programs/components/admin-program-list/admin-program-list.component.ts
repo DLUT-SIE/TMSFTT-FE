@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of as observableOf } from 'rxjs';
 
 import { Program } from 'src/app/shared/interfaces/program';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
@@ -20,7 +19,8 @@ export class AdminProgramListComponent implements OnInit {
   departments: Department[] = [];
   /** The total number of programs. */
   isLoadingResults = true;
-  isSchoolAdmin = this.authService.isSchoolAdmin;
+  isSchoolAdmin: boolean;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
@@ -30,6 +30,7 @@ export class AdminProgramListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isSchoolAdmin = this.authService.isSchoolAdmin;
     if (this.isSchoolAdmin) {
       this.departmentService.getTopDepartments().subscribe(
         data => {
@@ -38,7 +39,7 @@ export class AdminProgramListComponent implements OnInit {
         },
         err => {
           this.isLoadingResults = false;
-          return observableOf([]);
+          this.departments = [];
         });
       } else {
         this.loadProgramsBelongToDepartment(this.authService.administrativeDepartment);
