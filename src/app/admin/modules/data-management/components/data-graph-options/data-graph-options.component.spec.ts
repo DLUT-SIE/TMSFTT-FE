@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 
 import { DataGraphOptionsComponent, timeValidator } from './data-graph-options.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
+import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DepartmentService } from 'src/app/shared/services/department.service';
@@ -55,7 +56,11 @@ describe('DataGraphOptionsComponent', () => {
     getOptions$ = new Subject();
     getDepartments$ = new Subject();
     TestBed.configureTestingModule({
-      declarations: [ DataGraphOptionsComponent, DataGraphCanvasComponent ],
+      declarations: [
+        DataGraphOptionsComponent,
+        DataGraphCanvasComponent,
+        DataGraphEchartsComponent
+      ],
       imports: [
         MatFormFieldModule,
         MatSelectModule,

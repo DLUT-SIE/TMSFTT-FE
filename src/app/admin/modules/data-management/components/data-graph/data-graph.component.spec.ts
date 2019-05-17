@@ -10,6 +10,7 @@ import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas
 import { DataGraphOptionsComponent } from '../data-graph-options/data-graph-options.component';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
+import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 
 describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
@@ -20,7 +21,8 @@ describe('DataGraphComponent', () => {
       declarations: [
         DataGraphComponent,
         DataGraphCanvasComponent,
-        DataGraphOptionsComponent
+        DataGraphOptionsComponent,
+        DataGraphEchartsComponent
       ],
       imports: [
         MatFormFieldModule,
