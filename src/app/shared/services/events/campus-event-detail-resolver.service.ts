@@ -3,10 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 
 import { EventService } from './event.service';
-import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
-import { switchMap, map } from 'rxjs/operators';
-import { Program } from '../../interfaces/program';
 
 /** Pre-fetching campus event detail data. */
 @Injectable({
@@ -16,21 +13,11 @@ export class CampusEventDetailResolverService implements Resolve<CampusEvent> {
   event: CampusEvent;
 
   constructor(
-    private readonly eventService: EventService,
-    private readonly programService: ProgramService
+    private readonly eventService: EventService
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CampusEvent > {
     const id = +route.paramMap.get('id');
-    return this.eventService.getEvent(id).pipe(
-      switchMap((data: CampusEvent) => {
-        this.event = data;
-        return this.programService.getProgram(this.event.program as number);
-      }),
-      map((program: Program) => {
-        this.event.program = program;
-        return this.event;
-      }),
-    );
+    return this.eventService.getEvent(id);
   }
 }

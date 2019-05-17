@@ -187,4 +187,17 @@ describe('EventService', () => {
     req.flush({});
   });
 
+  it('shoule delete enrollment.', () => {
+    const service: EventService = TestBed.get(EventService);
+    const id = 1;
+
+    service.deleteEventEnrollment(id).subscribe();
+
+    const url = `/enrollments/${id}/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush({});
+  });
+
 });
