@@ -24,6 +24,7 @@ export class ProgramService extends GenericListService {
 
   /** get the information of programs from the background. */
   getPrograms(req: ListRequest) {
+    req.limit = -1;
     return this.list<Program[]>('programs', req);
   }
 

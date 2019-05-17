@@ -43,7 +43,6 @@ export class AdminProgramListComponent implements OnInit {
         });
       } else {
         this.loadProgramsBelongToDepartment(this.authService.administrativeDepartment);
-        this.isLoadingResults = false;
       }
   }
 
@@ -53,10 +52,12 @@ export class AdminProgramListComponent implements OnInit {
 
   loadProgramsBelongToDepartment(department: number) {
     const extraParams = new Map();
+    this.isLoadingResults = true;
     extraParams.set('department', department);
     this.programService.getPrograms({offset: 0, limit: -1, extraParams}).subscribe(
       data => {
         this.programs = data;
+        this.isLoadingResults = false;
       });
     }
 }
