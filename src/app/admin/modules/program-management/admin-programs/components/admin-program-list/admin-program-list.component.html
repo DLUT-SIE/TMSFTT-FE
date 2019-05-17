@@ -1,14 +1,21 @@
-<div fxLayout="row" fxLayoutAlign="space-between">
-  <mat-form-field  *ngIf="isSchoolAdmin">
-    <mat-label>选择开设单位</mat-label>
-    <mat-select [(value)]="selected">
-      <mat-option *ngFor="let department of departments" [value]="department.id" (click)="loadProgramsBelongToDepartment(department.id)">{{department.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div>
-    <button mat-raised-button color="primary" routerLink='./form'>创建新项目</button>
+<div *ngIf="isSchoolAdmin else elseField">
+  <div fxLayout="row" fxLayoutAlign="space-between" >
+    <mat-form-field>
+      <mat-label>选择开设单位</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option *ngFor="let department of departments" [value]="department.id" (click)="loadProgramsBelongToDepartment(department.id)">{{department.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" routerLink='./form'>创建新项目</button>
+    </div>
   </div>
 </div>
+<ng-template #elseField>
+  <div class="d-flex justify-content-end">
+    <button mat-raised-button color="primary" routerLink='./form'>创建新项目</button>
+  </div>
+</ng-template>
 <div class="loading-shade" *ngIf="isLoadingResults">
   <mat-spinner></mat-spinner>
 </div>
