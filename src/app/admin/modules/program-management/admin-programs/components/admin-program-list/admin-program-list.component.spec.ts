@@ -204,8 +204,4 @@ describe('NotSchoolAdminAdminProgramListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should convert to loadProgramsBelongToDepartment', () => {
-
-    expect(component.isLoadingResults).toBeFalsy();
-  });
 });
