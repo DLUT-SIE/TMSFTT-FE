@@ -12,6 +12,7 @@ import { DataGraphCanvasComponent } from './components/data-graph-canvas/data-gr
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableExportComponent } from './components/table-export/table-export.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
+import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-graph-echarts.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,13 @@ import { DataGraphComponent } from './components/data-graph/data-graph.component
     DataGraphOptionsComponent,
     DataGraphCanvasComponent,
     DataGraphComponent,
+    DataGraphEchartsComponent,
   ],
   imports: [
     SharedModule,
     DataManagementRoutingModule,
     ReactiveFormsModule
-  ]
+  ],
+  entryComponents: [DataGraphEchartsComponent],
 })
 export class DataManagementModule { }
