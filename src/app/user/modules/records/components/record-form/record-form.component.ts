@@ -277,7 +277,6 @@ export class RecordFormComponent implements OnInit {
         let message = error.message;
         if (error.error) {
           message = '';
-          console.log(error.error['detail']);
           for (const key of Object.keys(error.error)) {
             message += error.error[key].join(',') + '。';
           }
