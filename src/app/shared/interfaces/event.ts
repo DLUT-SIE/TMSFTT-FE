@@ -22,4 +22,5 @@ export interface CampusEvent extends Event {
   description?: string;
   expired?: boolean;
   enrolled?: boolean;
+  program_detail?: Program;
 }
