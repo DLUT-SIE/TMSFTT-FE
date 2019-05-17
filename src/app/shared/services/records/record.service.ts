@@ -183,7 +183,7 @@ export class RecordService extends GenericListService {
     if (this.cachedRoleChoices.length !== 0) {
       return observableOf(this.cachedRoleChoices);
     }
-    return this.http.get<RoleChoice[]>('/role-choices/').pipe(
+    return this.http.get<RoleChoice[]>(`${environment.API_URL}/records/role-choices/`).pipe(
       tap(data => this.cachedRoleChoices = data),
     );
   }
