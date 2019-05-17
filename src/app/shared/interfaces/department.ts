@@ -5,4 +5,5 @@ export interface Department {
     update_time?: string;
     admins?: number[];
     users?: number[];
+    super_department?: number;
 }
