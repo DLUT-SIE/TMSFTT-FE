@@ -49,12 +49,10 @@ describe('DataGraphComponent', () => {
       option: {} as DataGraphConfiguration,
       isCoverageGraph: true,
       graphTypeName: '123',
-      selectedDepartmentName: '456'
     } as DataGraphOption;
     component.getOptions(options);
     expect(component.graphOptions).toEqual(options.option);
     expect(component.hidePieGraph).toEqual(options.isCoverageGraph);
     expect(component.graphTypeName).toEqual(options.graphTypeName);
-    expect(component.selectedDepartmentName).toEqual(options.selectedDepartmentName);
   });
 });

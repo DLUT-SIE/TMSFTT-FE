@@ -6,6 +6,7 @@ import { AUTH_SERVICE } from '../../interfaces/auth-service';
 import { CanvasService } from './canvas.service';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { OptionType } from '../../interfaces/option-type';
+import { Department } from 'src/app/shared/interfaces/department';
 
 describe('CanvasService', () => {
   let httpTestingController: HttpTestingController;
@@ -44,8 +45,8 @@ describe('CanvasService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toBeTruthy('GET');
     req.flush([
-      {type: 0, name: '123', key: 'staff_statistics', subOption: []},
-      {type: 1, name: '456', key: 'trainee_statistics', subOption: []}
+      {type: 0, name: '123', key: 'teachers_statistics', subOption: []},
+      {type: 1, name: '456', key: 'records_statistics', subOption: []}
     ]);
 
     service.getCanvasOptions().subscribe((data: OptionType[]) => {
@@ -55,10 +56,10 @@ describe('CanvasService', () => {
       selectedStatisticsType: 0,
       selectedStartYear: 0,
       selectedEndYear: 0,
-      selectedDepartment: 0
+      selectedDepartment: {id: 0, name: '大连理工大学'} as Department
     };
-    const canvasUrl = '/aggregate-data/data/?end_year=2016&group_by=0' +
-      '&method_name=staff_statistics&region=0&start_year=2016';
+    const canvasUrl = '/aggregate-data/data/?department_id=0&end_year=2016&group_by=0' +
+      '&method_name=teachers_statistics&start_year=2016';
     service.getCanvasData(options).subscribe();
     const canvasReq = httpTestingController.expectOne(canvasUrl);
     expect(canvasReq.request.method).toBeTruthy('GET');

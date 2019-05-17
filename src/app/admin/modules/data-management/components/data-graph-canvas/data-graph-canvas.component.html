@@ -1,2 +1,3 @@
+<button *ngIf="graphTypeName==='培训人数统计'" mat-raised-button color="primary" (click)="onPieSecondSeriesDisplay()">显示/隐藏第二系列</button>
 <div *ngIf="!hidePieGraph" echarts [options]="pieChartOption" (chartInit)="onPieChartInit($event)"></div>
 <div echarts [options]="barChartOption" (chartInit)="onBarChartInit($event)"></div>
