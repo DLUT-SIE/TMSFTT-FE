@@ -4,7 +4,6 @@ import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { Department } from 'src/app/shared/interfaces/department';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { GraphTypeName } from 'src/app/shared/enums/graph-type.enum';
 
@@ -15,7 +14,6 @@ export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
     return selectedStartYear.value && selectedEndYear.value && selectedStartYear.value > selectedEndYear.value ?
            { timeValidator: true } : null;
 };
-const WHOLE_SCHOOL = 0;
 
 @Component({
   selector: 'app-data-graph-options',
@@ -29,8 +27,9 @@ export class DataGraphOptionsComponent implements OnInit {
   showDepartmentSelector = true;
   yearList: number[] = [];
 
-  departmentsList: Department[] = [{id: 0, name: '全校'} as Department];
+  departmentsList: Department[] = [{id: 0, name: '大连理工大学'} as Department];
   statisticsType: OptionType[];
+
 
   SelectedParamChangingCheck() {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
@@ -41,7 +40,7 @@ export class DataGraphOptionsComponent implements OnInit {
         .key === GraphTypeName.HOURS_STATISTICS ? false : true;
       this.selectedGraph.patchValue({
         selectedGroupType: null,
-        selectedDepartment: WHOLE_SCHOOL
+        selectedDepartment: this.departmentsList[0]
       });
     });
     this.selectedGraph.get('selectedGroupType').valueChanges.subscribe(val => {
@@ -54,7 +53,7 @@ export class DataGraphOptionsComponent implements OnInit {
           this.statisticsType[first].subOption[second].key === 'BY_DEPARTMENT') {
           this.showDepartmentSelector = false;
           this.selectedGraph.patchValue({
-            selectedDepartment: WHOLE_SCHOOL
+            selectedDepartment: this.departmentsList[0]
           });
       } else {
           this.showDepartmentSelector = true;
@@ -67,13 +66,10 @@ export class DataGraphOptionsComponent implements OnInit {
             .selectedStatisticsType].name;
           const isCoverageGraph = this.statisticsType[selectedGraphValues
             .selectedStatisticsType].key === GraphTypeName.COVERAGE_STATISTICS;
-          const selectedDepartmentName = this.departmentsList[selectedGraphValues
-            .selectedDepartment].name;
           const options = {
             option: selectedGraphValues,
             isCoverageGraph,
             graphTypeName,
-            selectedDepartmentName
           } as DataGraphOption;
           this.getOptions.emit(options);
         }
@@ -95,10 +91,10 @@ export class DataGraphOptionsComponent implements OnInit {
         selectedGroupType: [null, Validators.required],
         selectedStartYear: [this.yearList[this.yearList.length - 1], Validators.required],
         selectedEndYear: [this.yearList[this.yearList.length - 1], Validators.required],
-        selectedDepartment: [WHOLE_SCHOOL]
+        selectedDepartment: [this.departmentsList[0]]
         }, { validator: timeValidator });
-      this.departmentService.getDepartments({offset: 0, limit: 100} as ListRequest)
-          .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments.results));
+      this.departmentService.getTopDepartments()
+          .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments));
       this.canvasService.getCanvasOptions()
           .subscribe(options => this.statisticsType = options);
       this.SelectedParamChangingCheck();

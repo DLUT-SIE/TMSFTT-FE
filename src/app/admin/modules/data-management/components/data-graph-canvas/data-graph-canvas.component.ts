@@ -16,12 +16,11 @@ export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
   @Input() hidePieGraph: boolean;
-  @Input() selectedDepartmentName: string;
   @Input() set graphOptions(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
-    const title = `${titleYear}-${this.selectedDepartmentName}-${this.graphTypeName}`;
+    const title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
     if (this.hidePieGraph) {
         this.pieEchartsInstance = null;
     }
@@ -31,7 +30,7 @@ export class DataGraphCanvasComponent implements OnInit {
     this.subscription = this.canvasService.getCanvasData(val).subscribe(canvasData => {
         this.xAxisList = canvasData.label;
         this.seriesData = canvasData.group_by_data;
-        this.buildPieChartOption(title);
+        this.buildPieChartOption();
         this.buildBarChartOption(title);
         if (this.pieEchartsInstance && this.pieEchartsInstance !== null) {
             this.pieEchartsInstance.clear();
@@ -56,7 +55,7 @@ export class DataGraphCanvasComponent implements OnInit {
     legend: {
         data: ['', ''],
         x: '10%',
-        y: '7%'
+        y: '5%'
     },
     tooltip: {
     formatter: '{c0}'
@@ -77,7 +76,7 @@ export class DataGraphCanvasComponent implements OnInit {
         data: [],
         axisLabel: {
             interval: 0,
-            rotate: 0
+            rotate: 330
         },
         splitLine: {
             show: false
@@ -102,7 +101,7 @@ export class DataGraphCanvasComponent implements OnInit {
     legend: {
         data: ['', ''],
         x: '10%',
-        y: '7%'
+        y: '5%'
     },
     title: [{
         text: '',
@@ -114,7 +113,11 @@ export class DataGraphCanvasComponent implements OnInit {
     },
     xAxis: {
         type: 'category',
-        data: []
+        data: [],
+        axisLabel: {
+            interval: 0,
+            rotate: 330
+        },
     },
     tooltip: {
         trigger: 'axis',
@@ -152,6 +155,7 @@ export class DataGraphCanvasComponent implements OnInit {
         formatter: '{a} <br/>{b}: {c} ({d}%)'
     },
     legend: {
+        type: 'scroll',
         orient: 'horizontal',
         y: '85%',
         data: ['']
@@ -169,6 +173,11 @@ export class DataGraphCanvasComponent implements OnInit {
                     formatter: '{b}: ({d}%)'
                 }
             },
+            labelLine: {
+                normal: {
+                    length: 1
+                }
+            },
             animationType: 'scale',
             animationEasing: 'elasticOut',
             animationDelay:  () => {
@@ -180,6 +189,7 @@ export class DataGraphCanvasComponent implements OnInit {
   };
 
   private subscription: Subscription;
+  cachedSeriesData: GraphData[] = [];
 
   onPieChartInit(ec: echarts.ECharts) {
       this.pieEchartsInstance = ec;
@@ -191,7 +201,22 @@ export class DataGraphCanvasComponent implements OnInit {
     this.barEchartsInstance.setOption(this.barChartOption);
   }
 
-  buildPieChartOption(title: string) {
+  onPieSecondSeriesDisplay() {
+    if (this.seriesData.length > 1) {
+        Object.assign(this.cachedSeriesData, this.seriesData);
+        this.seriesData.splice(1, this.seriesData.length);
+        this.buildPieChartOption();
+        this.pieEchartsInstance.clear();
+        this.pieEchartsInstance.setOption(this.pieChartOption);
+    } else {
+        Object.assign(this.seriesData, this.cachedSeriesData);
+        this.buildPieChartOption();
+        this.pieEchartsInstance.clear();
+        this.pieEchartsInstance.setOption(this.pieChartOption);
+    }
+  }
+
+  buildPieChartOption() {
     this.pieChartOption = this.basePieChartOption;
     // Only SeriesBar's legend data is string[] type and then SeriesPie is number[]
     (this.pieChartOption.legend as echarts.EChartOption.SeriesBar).data = this.xAxisList;
