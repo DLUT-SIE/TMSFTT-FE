@@ -14,30 +14,23 @@ import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { RecordAttachment } from '../../interfaces/record-attachment';
 import { RecordContent } from '../../interfaces/record-content';
 import { CampusEvent, OffCampusEvent } from '../../interfaces/event';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { RoleChoice } from '../../interfaces/event-role-choices';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
   let authenticationSucceed$: Subject<void>;
-  let getCampusEventsByIds$: Subject<PaginatedResponse<CampusEvent>>;
-  let getOffCampusEventsByIds$: Subject<PaginatedResponse<OffCampusEvent>>;
   let getRecordAttachments$: Subject<RecordAttachment[]>;
   let getRecordContents$: Subject<RecordContent[]>;
   let getEvent$: Subject<CampusEvent>;
   let getOffCampusEvent$: Subject<OffCampusEvent>;
-  let getRecords$: Subject<PaginatedResponse<Record>>;
   let getRecord$: Subject<Record>;
 
   beforeEach(() => {
     authenticationSucceed$ = new Subject<void>();
     getRecordAttachments$ = new Subject();
-    getCampusEventsByIds$ = new Subject();
-    getOffCampusEventsByIds$ = new Subject();
     getRecordContents$ = new Subject();
     getEvent$ = new Subject();
     getOffCampusEvent$ = new Subject();
-    getRecords$ = new Subject();
     getRecord$ = new Subject();
     TestBed.configureTestingModule({
       imports: [
@@ -69,8 +62,6 @@ describe('RecordService', () => {
           useValue: {
             getEvent: () => getEvent$,
             getOffCampusEvent: () => getOffCampusEvent$,
-            getCampusEventsByIds: () => getCampusEventsByIds$,
-            getOffCampusEventsByIds: () => getOffCampusEventsByIds$,
           },
         },
       ]
@@ -90,7 +81,7 @@ describe('RecordService', () => {
   it('should create off-campus record', () => {
     const service: RecordService = TestBed.get(RecordService);
     const createReq: Record = {
-      off_campus_event: 3,
+      off_campus_event: {},
       user: 1,
       contents: [
         {
@@ -134,7 +125,7 @@ describe('RecordService', () => {
     const service: RecordService = TestBed.get(RecordService);
     const updateReq: Record = {
       id: 1,
-      off_campus_event: 3,
+      off_campus_event: {},
       user: 1,
       contents: [],
       attachments: [],
@@ -160,54 +151,6 @@ describe('RecordService', () => {
     req.flush({ count: 2 });
   });
 
-  it('should get off-campus-event records with detail data.', () => {
-    const service: RecordService = TestBed.get(RecordService);
-    const offCampusEventRecord: Record = {
-      off_campus_event: 1,
-      user: 1,
-      contents: [],
-      attachments: [],
-      role: 0,
-    };
-    const campusEventRecord: Record = {
-      campus_event: 1,
-      user: 1,
-      contents: [],
-      attachments: [],
-      role: 0,
-    };
-    const records: PaginatedResponse<Record> = {
-      count: 3,
-      next: '',
-      previous: '',
-      results: [offCampusEventRecord, campusEventRecord],
-    };
-    const offCampusEvents: PaginatedResponse<OffCampusEvent> = {
-      count: 1,
-      next: '',
-      previous: '',
-      results: [{id: 1}],
-    };
-    const campusEvents: PaginatedResponse<CampusEvent> = {
-      count: 1,
-      next: '',
-      previous: '',
-      results: [{id: 1}],
-    };
-    const getRecords = spyOn(service, 'getRecords');
-    getRecords.and.returnValue(getRecords$);
-
-    service.getRecordsWithDetail('', {}).subscribe(data => {
-      expect(data.results.length).toBe(2);
-      expect(data.results[0].off_campus_event).toEqual({id: 1});
-      expect(data.results[1].campus_event).toEqual({id: 1});
-    }
-    );
-    getRecords$.next(records);
-    getCampusEventsByIds$.next(campusEvents);
-    getOffCampusEventsByIds$.next(offCampusEvents);
-  });
-
   it('should get record', () => {
     const service: RecordService = TestBed.get(RecordService);
     const id = 1;
@@ -225,7 +168,8 @@ describe('RecordService', () => {
     const service: RecordService = TestBed.get(RecordService);
     const id = 1;
     const offCampusEventRecord: Record = {
-      off_campus_event: 3,
+      id: 1,
+      off_campus_event: {},
       user: 1,
       contents: [],
       attachments: [],
@@ -235,12 +179,10 @@ describe('RecordService', () => {
     getRecord.and.returnValue(getRecord$);
     service.getRecordWithDetail(id).subscribe(
       (data: Record) => {
-        expect(data.off_campus_event).toEqual({});
         expect(data.attachments).toEqual([]);
         expect(data.contents).toEqual([]);
     });
     getRecord$.next(offCampusEventRecord);
-    getOffCampusEvent$.next({});
     getRecordAttachments$.next([]);
     getRecordContents$.next([]);
   });
@@ -249,7 +191,8 @@ describe('RecordService', () => {
     const service: RecordService = TestBed.get(RecordService);
     const id = 1;
     const campusEventRecord: Record = {
-      campus_event: 3,
+      id: 1,
+      campus_event: {},
       user: 1,
       contents: [],
       attachments: [],
@@ -259,12 +202,10 @@ describe('RecordService', () => {
     getRecord.and.returnValue(getRecord$);
     service.getRecordWithDetail(id).subscribe(
       (data: Record) => {
-        expect(data.campus_event).toEqual({});
         expect(data.attachments).toEqual([]);
         expect(data.contents).toEqual([]);
     });
     getRecord$.next(campusEventRecord);
-    getEvent$.next({});
     getRecordAttachments$.next([]);
     getRecordContents$.next([]);
   });

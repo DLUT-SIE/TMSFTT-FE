@@ -48,48 +48,6 @@ describe('EventService', () => {
     req.flush({ count: 2 });
   });
 
-  it('should get campus events by ids', () => {
-    const service: EventService = TestBed.get(EventService);
-
-    service.getCampusEventsByIds([1, 2]).subscribe();
-
-    const req = httpTestingController.expectOne(
-      `/campus-events/?id__in=1%2C2`);
-
-    expect(req.request.method).toEqual('GET');
-
-    req.flush({});
-  });
-
-  it('should get off-campus events by ids', () => {
-    const service: EventService = TestBed.get(EventService);
-
-    service.getOffCampusEventsByIds([1, 2]).subscribe();
-
-    const req = httpTestingController.expectOne(
-      `/off-campus-events/?id__in=1%2C2&limit=-1&offset=0`);
-
-    expect(req.request.method).toEqual('GET');
-
-    req.flush({});
-  });
-
-  it('should return if no get campus events request', () => {
-    const service: EventService = TestBed.get(EventService);
-
-    service.getCampusEventsByIds([]).subscribe(res => {
-      expect(res.results.length).toBe(0);
-    });
-  });
-
-  it('should return if no get off campus events request', () => {
-    const service: EventService = TestBed.get(EventService);
-
-    service.getOffCampusEventsByIds([]).subscribe(res => {
-      expect(res.results.length).toBe(0);
-    });
-  });
-
   it('should get off-campus events', () => {
     const service: EventService = TestBed.get(EventService);
 
