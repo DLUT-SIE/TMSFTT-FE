@@ -17,14 +17,14 @@
       <tr *ngFor="let record of results" (click)="navigateToDetail(record)">
         <div *ngIf="record.off_campus_event; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-          <td scope="col">{{ record.off_campus_event.name }}</td>
+          <td scope="col">{{ record.off_campus_event.name | truncate:11 }}</td>
           <td scope="col">{{ record.off_campus_event.time | date:'medium' }}</td>
           <td scope="col">{{ record.off_campus_event.location }}</td>
           <td scope="col">{{ record.off_campus_event.num_hours | number:"1.1-1" }}</td>
           <td scope="col">{{ record.off_campus_event.num_participants }}</td>
         </ng-template>
         <ng-template #elseBlock>
-          <td scope="col">{{ record.campus_event.name }}</td>
+          <td scope="col">{{ record.campus_event.name | truncate:11 }}</td>
           <td scope="col">{{ record.campus_event.time | date:'medium' }}</td>
           <td scope="col">{{ record.campus_event.location }}</td>
           <td scope="col">{{ record.campus_event.num_hours | number:"1.1-1" }}</td>
