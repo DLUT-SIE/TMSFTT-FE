@@ -8,8 +8,8 @@ export interface Record {
   id?: number;
   create_time?: string;
   update_time?: string;
-  campus_event?: number | CampusEvent;
-  off_campus_event?: number | OffCampusEvent;
+  campus_event?: CampusEvent;
+  off_campus_event?: OffCampusEvent;
   user?: number;
   status?: number;
   feedback?: number;

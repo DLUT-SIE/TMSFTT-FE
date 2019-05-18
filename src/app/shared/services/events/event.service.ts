@@ -8,7 +8,6 @@ import {
 } from 'src/app/shared/interfaces/event';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { of as observableOf } from 'rxjs';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
 import { Enrollment } from 'src/app/shared/interfaces/enrollment';
 
@@ -35,16 +34,6 @@ export class EventService extends GenericListService {
     return this.list<PaginatedResponse<CampusEvent>>('campus-events', req);
   }
 
-  /** Retrieve campus events on ID */
-  getCampusEventsByIds(ids: number[]) {
-    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
-
-    const queryParams = 'id__in=' + encodeURIComponent(ids.toString());
-
-    return this.http.get<PaginatedResponse<CampusEvent>>(
-      `/campus-events/?${queryParams}`);
-  }
-
   /** Create an off-campus event. */
   createOffCampusEvent(req: OffCampusEvent) {
     return this.http.post<OffCampusEvent>(
@@ -62,15 +51,6 @@ export class EventService extends GenericListService {
       `/off-campus-events/${eventID}/`);
   }
 
-  /** Retrieve off-campus events on ID */
-  getOffCampusEventsByIds(ids: number[]) {
-    if (ids.length === 0) return observableOf({count: 0, next: '', previous: '', results: []});
-    const extraParams = new Map<string, string>();
-    extraParams.set('id__in', ids.toString());
-    const limit = -1;
-
-    return this.list<PaginatedResponse<OffCampusEvent>>('off-campus-events', {limit, extraParams});
-  }
   /** Retrieve off-campus events, it's frequently used in AutoComplete. */
   getOffCampusEvents(req: ListRequest) {
     return this.list<PaginatedResponse<OffCampusEvent>>('off-campus-events', req);
@@ -92,6 +72,11 @@ export class EventService extends GenericListService {
   enrollCampusEvent(event: CampusEvent): Observable<Enrollment> {
     return this.http.post<Enrollment>(
       `/enrollments/`, {campus_event: event.id});
+  }
+
+  /** Delete campus event enrollment. */
+  deleteEventEnrollment(id: number) {
+    return this.http.delete(`/enrollments/${id}/`);
   }
 
 }
