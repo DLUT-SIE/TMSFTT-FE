@@ -1,5 +1,4 @@
-import { Component, OnInit , Input, ViewChild, ViewContainerRef,
-    ComponentFactory, ComponentRef, ComponentFactoryResolver, OnDestroy} from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 import * as echarts from 'echarts';
 import { EChartOption } from 'echarts';
 import { GraphData } from 'src/app/shared/interfaces/graph-data';
@@ -7,16 +6,13 @@ import { PieGraphData } from 'src/app/shared/interfaces/pie-graph-data';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { Subscription } from 'rxjs';
-import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 
 @Component({
   selector: 'app-data-graph-canvas',
   templateUrl: './data-graph-canvas.component.html',
   styleUrls: ['./data-graph-canvas.component.css']
 })
-export class DataGraphCanvasComponent implements OnInit, OnDestroy  {
-
-  @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
+export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
   @Input() hidePieGraph: boolean;
@@ -33,15 +29,6 @@ export class DataGraphCanvasComponent implements OnInit, OnDestroy  {
         this.seriesData = canvasData.group_by_data;
         this.buildPieChartOption();
         this.buildBarChartOption(title);
-        this.container.clear();
-        this.componentRefList = [];
-        for (const pieChartOption of this.pieChartOptionList) {
-            const factory: ComponentFactory<DataGraphEchartsComponent> =
-                this.resolver.resolveComponentFactory(DataGraphEchartsComponent);
-            const componentRef = this.container.createComponent(factory);
-            componentRef.instance.option = pieChartOption;
-            this.componentRefList.push(componentRef);
-        }
     });
   }
 
@@ -189,7 +176,6 @@ export class DataGraphCanvasComponent implements OnInit, OnDestroy  {
   };
 
   private subscription: Subscription;
-  private componentRefList: Array<ComponentRef<DataGraphEchartsComponent>>;
 
   buildPieChartOption() {
     this.pieChartOptionList = [];
@@ -250,16 +236,9 @@ export class DataGraphCanvasComponent implements OnInit, OnDestroy  {
   }
 
   constructor(
-    private readonly canvasService: CanvasService,
-    private resolver: ComponentFactoryResolver
+    private readonly canvasService: CanvasService
   ) { }
 
   ngOnInit() {
-  }
-
-  ngOnDestroy() {
-      for (const componentRef of this.componentRefList) {
-          componentRef.destroy();
-      }
   }
 }

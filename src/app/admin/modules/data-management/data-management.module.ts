@@ -32,6 +32,5 @@ import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-
     DataManagementRoutingModule,
     ReactiveFormsModule
   ],
-  entryComponents: [DataGraphEchartsComponent],
 })
 export class DataManagementModule { }
