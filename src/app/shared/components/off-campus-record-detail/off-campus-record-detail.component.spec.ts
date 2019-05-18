@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +19,7 @@ import { OffCampusRecordDetailComponent } from './off-campus-record-detail.compo
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { Location } from '@angular/common';
+import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
 import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
@@ -50,6 +52,7 @@ describe('OffCampusRecordDetailComponent', () => {
         AsSecuredPathPipe,
       ],
       imports: [
+        HttpClientTestingModule,
         MatPaginatorModule,
         MatIconModule,
         MatFormFieldModule,
@@ -95,6 +98,12 @@ describe('OffCampusRecordDetailComponent', () => {
         {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
+        },
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            userID: 1,
+          },
         },
       ]
     })
