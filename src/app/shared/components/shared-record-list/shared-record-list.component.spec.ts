@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharedRecordListComponent } from './shared-record-list.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { RecordListType } from '../../enums/record-list-type.enum';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 describe('SharedRecordListComponent', () => {
   let component: SharedRecordListComponent;
@@ -16,7 +17,10 @@ describe('SharedRecordListComponent', () => {
   beforeEach(async(() => {
     getRecords = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ SharedRecordListComponent ],
+      declarations: [
+        SharedRecordListComponent,
+        TruncatePipe,
+      ],
       imports: [
         MatIconModule,
         MatProgressSpinnerModule,
