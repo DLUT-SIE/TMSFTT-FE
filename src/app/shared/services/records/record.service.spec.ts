@@ -15,6 +15,7 @@ import { RecordAttachment } from '../../interfaces/record-attachment';
 import { RecordContent } from '../../interfaces/record-content';
 import { CampusEvent, OffCampusEvent } from '../../interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { RoleChoice } from '../../interfaces/event-role-choices';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
@@ -100,7 +101,8 @@ describe('RecordService', () => {
       attachments: [
         new File([''], 'file'),
         new File([''], 'file'),
-      ]
+      ],
+      role: 0,
     };
 
     service.createOffCampusRecord(createReq).subscribe();
@@ -135,7 +137,8 @@ describe('RecordService', () => {
       off_campus_event: 3,
       user: 1,
       contents: [],
-      attachments: []
+      attachments: [],
+      role: 0,
     };
 
     service.updateOffCampusRecord(updateReq).subscribe();
@@ -164,12 +167,14 @@ describe('RecordService', () => {
       user: 1,
       contents: [],
       attachments: [],
+      role: 0,
     };
     const campusEventRecord: Record = {
       campus_event: 1,
       user: 1,
       contents: [],
       attachments: [],
+      role: 0,
     };
     const records: PaginatedResponse<Record> = {
       count: 3,
@@ -224,6 +229,7 @@ describe('RecordService', () => {
       user: 1,
       contents: [],
       attachments: [],
+      role: 0,
     };
     const getRecord = spyOn(service, 'getRecord');
     getRecord.and.returnValue(getRecord$);
@@ -247,6 +253,7 @@ describe('RecordService', () => {
       user: 1,
       contents: [],
       attachments: [],
+      role: 0,
     };
     const getRecord = spyOn(service, 'getRecord');
     getRecord.and.returnValue(getRecord$);
@@ -353,5 +360,23 @@ describe('RecordService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
     req.flush({});
+  });
+
+  it('should get role-choices.', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.getRoleChoices().subscribe((data: RoleChoice[]) => {
+      expect(data.length).toEqual(2);
+    });
+    const url = `${environment.API_URL}/records/role-choices/`;
+
+    const req = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toEqual('GET');
+    req.flush([{val: 1, name: '123'}, {val: 0, name: 'test2'}]);
+
+    service.getRoleChoices().subscribe((data: RoleChoice[]) => {
+      expect(data.length).toEqual(2);
+    });
   });
 });

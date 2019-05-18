@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timer, of as observableOf, Observable, zip } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -15,6 +16,7 @@ import { EventService } from '../events/event.service';
 import { OffCampusEvent, CampusEvent } from '../../interfaces/event';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 
 /** Provide services for Record. */
 @Injectable({
@@ -22,6 +24,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-servic
 })
 export class RecordService extends GenericListService {
   numberOfRecordsWithoutFeedback = 0;
+  private cachedRoleChoices: RoleChoice[] = [];
 
   constructor(
     protected readonly http: HttpClient,
@@ -48,6 +51,7 @@ export class RecordService extends GenericListService {
     data.set('user', req.user.toString());
     (req.attachments as File[]).map(x => data.append('attachments', x));
     (req.contents as RecordContent[]).map(x => data.append('contents', JSON.stringify(x)));
+    data.set('role', req.role.toString());
     return data;
   }
   /** Create Records along with its contents and attachments. */
@@ -173,5 +177,14 @@ export class RecordService extends GenericListService {
 
   closeRecord(recordId: number) {
     return this.http.post(`${environment.API_URL}/records/${recordId}/close/`, {});
+  }
+
+  getRoleChoices() {
+    if (this.cachedRoleChoices.length !== 0) {
+      return observableOf(this.cachedRoleChoices);
+    }
+    return this.http.get<RoleChoice[]>(`${environment.API_URL}/records/role-choices/`).pipe(
+      tap(data => this.cachedRoleChoices = data),
+    );
   }
 }

@@ -86,6 +86,21 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-icon matPrefix>directions_run</mat-icon>
+          <mat-label i18n>参与方式</mat-label>
+          <mat-select placeholder="请选择参与的方式" formControlName="role" required>
+            <mat-option *ngFor="let roleChoice of roleChoices" [value]="roleChoice.role">
+              {{ roleChoice.role_str }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="role.invalid && (role.dirty || role.touched)">
+            <span *ngIf="!!role.errors.required" i18n>
+              您需要提供参与的方式。
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-icon matPrefix>assignment</mat-icon>
           <mat-label i18n>培训内容</mat-label>
           <textarea matInput placeholder="请告诉我们您所参加培训的培训内容" formControlName="content" i18n-placeholder
