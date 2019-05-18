@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
 
 import { RecordDetailComponent } from './record-detail.component';
 import { Record } from 'src/app/shared/interfaces/record';
+import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { FeedbackDialogComponent } from 'src/app/user/modules/records/components/feedback-dialog/feedback-dialog.component';
 import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
@@ -72,6 +73,12 @@ describe('RecordDetailComponent', () => {
         HttpClientTestingModule,
       ],
       providers: [
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            userID: 1,
+          },
+        },
         {
           provide: ActivatedRoute,
           useValue: {

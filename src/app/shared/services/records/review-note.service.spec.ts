@@ -54,8 +54,9 @@ describe('ReviewNoteService', () => {
       role: 0,
     };
     const notecontent = 'abc';
+    const user = 15;
 
-    service.createReviewNote(dres, notecontent).subscribe();
+    service.createReviewNote(dres, notecontent, user).subscribe();
 
     const req = httpTestingController.expectOne(`/review-notes/`);
     expect(req.request.method).toBe('POST');
