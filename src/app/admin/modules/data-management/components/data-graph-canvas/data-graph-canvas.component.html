@@ -1,2 +1,4 @@
-<ng-template *ngIf="!hidePieGraph" #container></ng-template>
+<ng-container *ngFor="let pieChartOption of pieChartOptionList">
+    <app-data-graph-echarts [option]="pieChartOption"></app-data-graph-echarts>
+</ng-container>
 <app-data-graph-echarts [option]="barChartOption"></app-data-graph-echarts>
