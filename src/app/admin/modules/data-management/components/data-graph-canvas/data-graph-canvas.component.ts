@@ -230,7 +230,7 @@ export class DataGraphCanvasComponent implements OnInit, OnDestroy  {
     (chartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     (chartOption.title as echarts.EChartTitleOption[])[0].text = title;
     // Expand the series based on the length of seriesData which obtained from backend.
-    const barSeriesLength = chartOption.series ? chartOption.series.length : 0;
+    const barSeriesLength = chartOption.series.length;
     const barSeries = chartOption.series[0];
     const legendList: string[] = [];
     for (let i = 0; i < this.seriesData.length; i++) {

@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
 
 import { DataGraphCanvasComponent } from './data-graph-canvas.component';
-import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
+import { AppDataGraphEchartsStub } from 'src/testing/app-data-graph-echarts-stub';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 import { CanvasData } from 'src/app/shared/interfaces/canvas_data';
@@ -39,7 +39,7 @@ describe('DataGraphCanvasComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         DataGraphCanvasComponent,
-        DataGraphEchartsComponent
+        AppDataGraphEchartsStub
       ],
       imports: [
         NgxEchartsModule,
