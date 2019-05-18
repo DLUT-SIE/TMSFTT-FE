@@ -43,19 +43,19 @@ export class SharedRecordListComponent extends GenericListComponent<Record> {
     let url = 'records';
     switch (this.recordListType) {
       case RecordListType.ALL_RECORDS: {
-        return this.recordService.getRecordsWithDetail(url, {offset, limit});
+        return this.recordService.getRecords(url, {offset, limit});
       }
       case RecordListType.REVIEWED_RECORDS: {
         url = 'records/reviewed';
-        return this.recordService.getRecordsWithDetail(url, {offset, limit});
+        return this.recordService.getRecords(url, {offset, limit});
       }
       case RecordListType.OFF_CAMPUS_EVENT_RECORDS: {
         const extraParams = new Map<string, string>();
         extraParams.set('off_campus_event__isnull', 'false');
-        return this.recordService.getRecordsWithDetail(url, {offset, limit, extraParams});
+        return this.recordService.getRecords(url, {offset, limit, extraParams});
       }
       default: {
-        return this.recordService.getRecordsWithDetail(url, {offset, limit});
+        return this.recordService.getRecords(url, {offset, limit});
       }
     }
   }
