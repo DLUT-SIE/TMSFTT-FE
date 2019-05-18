@@ -16,7 +16,7 @@ export class DataGraphEchartsComponent implements OnInit {
     }
   }
 
-  private chartOption: EChartOption = {};
+  chartOption: EChartOption = {};
   private echartsInstance: echarts.ECharts;
 
   onChartInit(ec: echarts.ECharts) {
