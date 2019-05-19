@@ -48,6 +48,7 @@
   <detail-item>
     <detail-item-title>审核提示</detail-item-title>
     <detail-item-content>
+<<<<<<< HEAD
       <div class="review-note" *ngFor="let reviewNote of reviewNotes"
            fxLayout="column">
         <span>
@@ -56,6 +57,14 @@
         <span fxLayout="row" fxLayoutAlign="end start">
           由 {{ reviewNote.user_name }} 生成于 {{ reviewNote.create_time | date:'medium' }}
         </span>
+=======
+      <div *ngFor="let reviewNote of reviewNotes">
+        <p>
+        {{ reviewNote.content }}
+        <span class="span1"></span>
+        ({{ reviewNote.user_name }}){{ reviewNote.create_time | date:'medium' }}
+        </p>
+>>>>>>> Show user name in review note.
       </div>
       <mat-paginator [style.visibility]="reviewNotes.length === 0 ? 'hidden': 'visible'"
         [style.height]="reviewNotes.length === 0 ? 0 : 'auto'" [length]="reviewNotesLength" [pageSize]="pageSize"

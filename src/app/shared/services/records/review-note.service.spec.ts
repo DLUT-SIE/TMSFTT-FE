@@ -55,8 +55,9 @@ describe('ReviewNoteService', () => {
     };
     const notecontent = 'abc';
     const user = 15;
+    const username = 'aa';
 
-    service.createReviewNote(dres, notecontent, user).subscribe();
+    service.createReviewNote(dres, notecontent, user, username).subscribe();
 
     const req = httpTestingController.expectOne(`/review-notes/`);
     expect(req.request.method).toBe('POST');
@@ -64,6 +65,7 @@ describe('ReviewNoteService', () => {
     expect(form.has('content')).toBeTruthy();
     expect(form.has('record')).toBeTruthy();
     expect(form.has('user')).toBeTruthy();
+    expect(form.has('user_name')).toBeTruthy();
     req.flush({});
   });
 });

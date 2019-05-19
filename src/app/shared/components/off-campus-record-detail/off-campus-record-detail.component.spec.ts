@@ -103,6 +103,7 @@ describe('OffCampusRecordDetailComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             userID: 1,
+            username: 'aa',
           },
         },
       ]
