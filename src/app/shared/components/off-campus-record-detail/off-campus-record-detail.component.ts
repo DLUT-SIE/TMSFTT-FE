@@ -66,7 +66,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
       this.snackBar.open('请输入内容后再进行提交', '关闭', {duration: 3000});
       return;
     }
-    this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent, this.authService.userID)
+    this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent, this.authService.userID, this.authService.firstName)
     .subscribe(() => {
       this.forceRefresh();
       },
@@ -103,7 +103,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
       }),
     ).subscribe(() => {
       this.isLoadingReviewNotes = false;
-      console.log(this.reviewNotes)},
+      },
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
