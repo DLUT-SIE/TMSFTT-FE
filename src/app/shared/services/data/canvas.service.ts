@@ -35,7 +35,7 @@ export class CanvasService {
     params.set('group_by', options.selectedGroupType || 0);
     params.set('start_year', options.selectedStartYear || 2016);
     params.set('end_year', options.selectedEndYear || 2016);
-    params.set('region', options.selectedDepartment || 0);
+    params.set('department_id', options.selectedDepartment.id || 0);
     const queryParams = Array.from(params.keys()).sort().map(
         key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
     const url = `/${resourceURL}/?${queryParams}`;

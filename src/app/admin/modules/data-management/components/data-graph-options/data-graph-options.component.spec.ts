@@ -8,17 +8,17 @@ import { Subject } from 'rxjs';
 
 import { DataGraphOptionsComponent, timeValidator } from './data-graph-options.component';
 import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
+import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DepartmentService } from 'src/app/shared/services/department.service';
-import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Department } from 'src/app/shared/interfaces/department';
 
 describe('DataGraphOptionsComponent', () => {
   let component: DataGraphOptionsComponent;
   let fixture: ComponentFixture<DataGraphOptionsComponent>;
   let getOptions$: Subject<OptionType[]>;
-  let getDepartments$: Subject<PaginatedResponse<Department>>;
+  let getDepartments$: Subject<Department[]>;
   const options: OptionType[] = [{
     type: 0,
     name: '教职工人数统计',
@@ -56,7 +56,11 @@ describe('DataGraphOptionsComponent', () => {
     getOptions$ = new Subject();
     getDepartments$ = new Subject();
     TestBed.configureTestingModule({
-      declarations: [ DataGraphOptionsComponent, DataGraphCanvasComponent ],
+      declarations: [
+        DataGraphOptionsComponent,
+        DataGraphCanvasComponent,
+        DataGraphEchartsComponent
+      ],
       imports: [
         MatFormFieldModule,
         MatSelectModule,
@@ -69,13 +73,13 @@ describe('DataGraphOptionsComponent', () => {
         {
           provide: CanvasService,
           useValue: {
-            getCanvasOptions: () => getOptions$
+            getCanvasOptions: () => getOptions$,
           }
         },
         {
           provide: DepartmentService,
           useValue: {
-            getDepartments: () => getDepartments$
+            getTopDepartments: () => getDepartments$
           }
         }
       ]
@@ -91,17 +95,16 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should create', () => {
     getOptions$.next(options);
-    getDepartments$.next({
-      results: [{id: 1,
-        name: '111'
-      } as Department]
-    } as PaginatedResponse<Department>);
+    getDepartments$.next(
+      [{id: 50,
+        name: '建筑与艺术学院'
+      } as Department]);
     const departmentResult = [{
       id: 0,
-      name: '全校'
+      name: '大连理工大学'
     }, {
-      id: 1,
-      name: '111'
+      id: 50,
+      name: '建筑与艺术学院'
     }];
     expect(component).toBeTruthy();
     expect(component.departmentsList).toEqual(departmentResult as Department[]);
@@ -138,11 +141,11 @@ describe('DataGraphOptionsComponent', () => {
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
     expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedGraph.get('selectedDepartment').value).toEqual(0);
+    expect(component.selectedGraph.get('selectedDepartment').value.id).toEqual(0);
 
     component.selectedGraph.patchValue({selectedGroupType: 0});
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedGraph.get('selectedDepartment').value).toEqual(0);
+    expect(component.selectedGraph.get('selectedDepartment').value.id).toEqual(0);
   });
 
   it('should display the departmentSelector', () => {
@@ -150,13 +153,13 @@ describe('DataGraphOptionsComponent', () => {
     component.selectedGraph.patchValue({selectedStatisticsType: 0});
     expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeTruthy();
-    expect(component.selectedGraph.get('selectedDepartment').value).toEqual(0);
+    expect(component.selectedGraph.get('selectedDepartment').value.id).toEqual(0);
 
     component.selectedGraph.patchValue({
       selectedGroupType: 0
     });
     expect(component.showDepartmentSelector).toBeFalsy();
-    expect(component.selectedGraph.get('selectedDepartment').value).toEqual(0);
+    expect(component.selectedGraph.get('selectedDepartment').value.id).toEqual(0);
 
     component.selectedGraph.patchValue({selectedGroupType: 1});
     expect(component.showDepartmentSelector).toBeTruthy();

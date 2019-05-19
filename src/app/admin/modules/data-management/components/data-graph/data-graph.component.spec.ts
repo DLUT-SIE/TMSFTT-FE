@@ -10,6 +10,7 @@ import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas
 import { DataGraphOptionsComponent } from '../data-graph-options/data-graph-options.component';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
+import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 
 describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
@@ -20,7 +21,8 @@ describe('DataGraphComponent', () => {
       declarations: [
         DataGraphComponent,
         DataGraphCanvasComponent,
-        DataGraphOptionsComponent
+        DataGraphOptionsComponent,
+        DataGraphEchartsComponent
       ],
       imports: [
         MatFormFieldModule,
@@ -49,12 +51,10 @@ describe('DataGraphComponent', () => {
       option: {} as DataGraphConfiguration,
       isCoverageGraph: true,
       graphTypeName: '123',
-      selectedDepartmentName: '456'
     } as DataGraphOption;
     component.getOptions(options);
     expect(component.graphOptions).toEqual(options.option);
     expect(component.hidePieGraph).toEqual(options.isCoverageGraph);
     expect(component.graphTypeName).toEqual(options.graphTypeName);
-    expect(component.selectedDepartmentName).toEqual(options.selectedDepartmentName);
   });
 });

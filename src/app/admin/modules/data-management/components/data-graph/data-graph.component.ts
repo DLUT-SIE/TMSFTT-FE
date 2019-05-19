@@ -12,7 +12,6 @@ export class DataGraphComponent implements OnInit {
   graphOptions: DataGraphConfiguration;
   hidePieGraph: boolean;
   graphTypeName: string;
-  selectedDepartmentName: string;
 
   constructor() { }
 
@@ -23,6 +22,5 @@ export class DataGraphComponent implements OnInit {
     this.graphOptions = options.option;
     this.hidePieGraph = options.isCoverageGraph;
     this.graphTypeName = options.graphTypeName;
-    this.selectedDepartmentName = options.selectedDepartmentName;
   }
 }
