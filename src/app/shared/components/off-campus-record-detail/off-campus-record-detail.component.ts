@@ -58,7 +58,6 @@ export class OffCampusRecordDetailComponent implements OnInit {
   getReviewNotes(offset: number, limit: number) {
     const extraParams = new Map();
     extraParams.set('record', this.record.id);
-    extraParams.set('user', this.record.user);
     return this.reviewNoteService.getReviewNotes({offset, limit, extraParams});
   }
 
@@ -102,8 +101,9 @@ export class OffCampusRecordDetailComponent implements OnInit {
         this.reviewNotes = data.results;
         return null;
       }),
-    ).subscribe(() =>
-      this.isLoadingReviewNotes = false,
+    ).subscribe(() => {
+      this.isLoadingReviewNotes = false;
+      console.log(this.reviewNotes)},
       (error: HttpErrorResponse) => {
         let message = error.message;
         if (error.error) {
