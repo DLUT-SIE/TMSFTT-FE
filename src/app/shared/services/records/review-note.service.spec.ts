@@ -29,11 +29,11 @@ describe('ReviewNoteService', () => {
   it('should get reviewnotes', () => {
     const service: ReviewNoteService = TestBed.get(ReviewNoteService);
     const url = 'review-notes';
-    const extraParams = new Map<string, {}>([['record', 3], ['user', 87]]);
+    const extraParams = new Map<string, {}>([['record', 3]]);
 
     service.getReviewNotes({ extraParams }).subscribe();
 
-    const expectedUrl = `/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0&record=3&user=87`;
+    const expectedUrl = `/${url}/?limit=${environment.PAGINATION_SIZE}&offset=0&record=3`;
 
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('GET');
