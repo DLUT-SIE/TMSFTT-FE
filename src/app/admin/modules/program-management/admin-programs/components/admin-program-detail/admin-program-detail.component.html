@@ -5,37 +5,24 @@
       <h4 class="card-title">培训项目详情</h4>
     </div>
     <div class="card-body">
-      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">项目名称</span>
-          <div class="item-content" *ngIf="program" fxFlex="1 0 78%">
-            <p>{{ program.name }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">所属院系</span>
-          <div class="item-content" *ngIf="program" fxFlex="1 0 78%">
-            <p>{{ program.department }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">培训类别</span>
-          <div class="item-content" *ngIf="program" fxFlex="1 0 78%">
-            <p>{{ program.category_str }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <button mat-raised-button color="primary" (click)="navigateToChangeProgram()">修改</button>
-          <button mat-raised-button color="primary" (click)="location.back()">返回</button>
-        </div>
-      </div>
+      <detail-section>
+        <detail-item>
+          <detail-item-title>项目名称</detail-item-title>
+          <detail-item-content>{{ program.name }}</detail-item-content>
+        </detail-item>
+        <detail-item>
+          <detail-item-title>所属院系</detail-item-title>
+          <detail-item-content>{{ program.department }}</detail-item-content>
+        </detail-item>
+        <detail-item>
+          <detail-item-title>培训类别</detail-item-title>
+          <detail-item-content>{{ program.category_str }}</detail-item-content>
+        </detail-item>
+        <detail-section-actions>
+          <a mat-raised-button color="primary" (click)="navigateToChangeProgram()">修改</a>
+          <a mat-raised-button color="primary" (click)="location.back()">返回</a>
+        </detail-section-actions>
+      </detail-section>
     </div>
   </div>
-  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
