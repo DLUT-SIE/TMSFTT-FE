@@ -22,7 +22,7 @@ describe('DataGraphOptionsComponent', () => {
   const options: OptionType[] = [{
     type: 0,
     name: '教职工人数统计',
-    key: 'STAFF_STATISTICS',
+    key: 'TEACHERS_STATISTICS',
     subOption: [{
       type: 0,
       name: '按学院',
@@ -128,6 +128,10 @@ describe('DataGraphOptionsComponent', () => {
 
       testFormGroup.patchValue({selectedStartYear: '', selectedEndYear: ''});
       expect(timeValidator(testFormGroup)).toBe(null);
+
+      testFormGroup.get('selectedStartYear').disable();
+      testFormGroup.get('selectedEndYear').disable();
+      expect(timeValidator(testFormGroup)).toBe(null);
   });
 
   it('should get a FormGroup ValidationErrors', () => {
@@ -163,5 +167,15 @@ describe('DataGraphOptionsComponent', () => {
 
     component.selectedGraph.patchValue({selectedGroupType: 1});
     expect(component.showDepartmentSelector).toBeTruthy();
+  });
+
+  it('should disabled time selector', () => {
+    getOptions$.next(options);
+    component.selectedGraph.patchValue({selectedStatisticsType: 0});
+    expect(component.selectedGraph.get('selectedStartYear').disabled).toBeTruthy();
+    expect(component.selectedGraph.get('selectedEndYear').disabled).toBeTruthy();
+    component.selectedGraph.patchValue({selectedStatisticsType: 1});
+    expect(component.selectedGraph.get('selectedStartYear').enabled).toBeTruthy();
+    expect(component.selectedGraph.get('selectedEndYear').enabled).toBeTruthy();
   });
 });

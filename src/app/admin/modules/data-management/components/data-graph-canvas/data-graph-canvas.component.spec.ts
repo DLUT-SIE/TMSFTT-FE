@@ -88,6 +88,16 @@ describe('DataGraphCanvasComponent', () => {
     getCanvasData$.next(canvasData);
     expect((component.pieChartOptionList[0].title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-大连理工大学-1234');
+    const graphOptionsUndefined: DataGraphConfiguration = {
+      selectedStatisticsType: 0,
+      selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
+      selectedStartYear: undefined,
+      selectedEndYear: undefined,
+      selectedGroupType: 2
+    };
+    component.graphOptions = graphOptionsUndefined;
+    getCanvasData$.next(canvasData);
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('大连理工大学-1234');
     const graphOptions2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,

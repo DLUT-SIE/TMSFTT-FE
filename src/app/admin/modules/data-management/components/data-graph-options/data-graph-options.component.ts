@@ -10,6 +10,9 @@ import { GraphTypeName } from 'src/app/shared/enums/graph-type.enum';
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const selectedStartYear = control.get('selectedStartYear');
     const selectedEndYear = control.get('selectedEndYear');
+    if (selectedStartYear.disabled && selectedEndYear.disabled) {
+      return null;
+    }
 
     return selectedStartYear.value && selectedEndYear.value && selectedStartYear.value > selectedEndYear.value ?
            { timeValidator: true } : null;
@@ -35,6 +38,13 @@ export class DataGraphOptionsComponent implements OnInit {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
       if (val === null) {
         return;
+      }
+      if (this.statisticsType[val].key === GraphTypeName.TEACHERS_STATISTICS) {
+        this.selectedGraph.get('selectedStartYear').disable();
+        this.selectedGraph.get('selectedEndYear').disable();
+      } else {
+        this.selectedGraph.get('selectedStartYear').enable();
+        this.selectedGraph.get('selectedEndYear').enable();
       }
       this.showDepartmentSelector = this.statisticsType[val]
         .key === GraphTypeName.HOURS_STATISTICS ? false : true;
