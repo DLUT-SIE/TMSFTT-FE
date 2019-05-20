@@ -39,6 +39,12 @@ export class DataGraphOptionsComponent implements OnInit {
       if (val === null) {
         return;
       }
+      this.showDepartmentSelector = this.statisticsType[val]
+        .key === GraphTypeName.HOURS_STATISTICS ? false : true;
+      this.selectedGraph.patchValue({
+        selectedGroupType: null,
+        selectedDepartment: this.departmentsList[0]
+      });
       if (this.statisticsType[val].key === GraphTypeName.TEACHERS_STATISTICS) {
         this.selectedGraph.get('selectedStartYear').disable();
         this.selectedGraph.get('selectedEndYear').disable();
@@ -46,12 +52,6 @@ export class DataGraphOptionsComponent implements OnInit {
         this.selectedGraph.get('selectedStartYear').enable();
         this.selectedGraph.get('selectedEndYear').enable();
       }
-      this.showDepartmentSelector = this.statisticsType[val]
-        .key === GraphTypeName.HOURS_STATISTICS ? false : true;
-      this.selectedGraph.patchValue({
-        selectedGroupType: null,
-        selectedDepartment: this.departmentsList[0]
-      });
     });
     this.selectedGraph.get('selectedGroupType').valueChanges.subscribe(val => {
       if (val === null) {
