@@ -20,7 +20,10 @@ export class DataGraphCanvasComponent implements OnInit {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
-    const title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
+    let title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
+    if (val.selectedStartYear === undefined && val.selectedEndYear === undefined) {
+        title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
+    }
     if (this.subscription) {
         this.subscription.unsubscribe();
     }
