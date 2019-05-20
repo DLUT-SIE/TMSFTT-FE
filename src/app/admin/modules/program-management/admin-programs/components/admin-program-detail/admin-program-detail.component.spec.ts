@@ -1,11 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatDividerModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AdminProgramDetailComponent } from './admin-program-detail.component';
 import { Program } from 'src/app/shared/interfaces/program';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 
 describe('AdminProgramDetailComponent', () => {
   let component: AdminProgramDetailComponent;
@@ -15,9 +20,17 @@ describe('AdminProgramDetailComponent', () => {
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ AdminProgramDetailComponent ],
+      declarations: [
+        AdminProgramDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
+      ],
       imports: [
         MatCardModule,
+        MatDividerModule,
       ],
       providers: [
         {
