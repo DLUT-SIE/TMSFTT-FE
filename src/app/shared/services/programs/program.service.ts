@@ -48,4 +48,9 @@ export class ProgramService extends GenericListService {
     return this.http.post<Program>(
       `/programs/`, req);
   }
+
+  updateProgram(req: Program) {
+    return this.http.patch<Program>(
+      `/programs/${req.id}/`, req);
+  }
 }
