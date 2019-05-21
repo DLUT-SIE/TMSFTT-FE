@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APIHostInterceptor } from './core/api-host-interceptor/apihost-interceptor.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 registerLocaleData(localeZhHans, 'zh-Hans');
 
@@ -50,6 +51,7 @@ export let AppInjector: Injector;
     AppRoutingModule,
     CoreModule,
     SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {

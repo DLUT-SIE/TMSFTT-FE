@@ -9,6 +9,7 @@ import { PlatformType } from './shared/enums/platform-type.enum';
 import { WindowService } from './shared/services/window.service';
 import { StyleManager } from './shared/services/style-manager.service';
 import { SiteTheme } from './shared/interfaces/theme';
+import { SwUpdate } from '@angular/service-worker';
 
 /** Root component. */
 @Component({
@@ -30,8 +31,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly platformService: PlatformService,
     private readonly router: Router,
     private readonly windowService: WindowService,
+    private readonly updates: SwUpdate,
     @Inject(DOCUMENT) private readonly document: Document,
-  ) { }
+  ) {
+    this.updates.available.subscribe(event => {
+      if (confirm('检测到您正在使用过期的页面，点击确定以更新至最新版本')) {
+        this.updates.activateUpdate().then(() => this.document.location.reload());
+      }
+    });
+  }
 
   ngOnInit() {
     this.styleManager.themeChanged.subscribe((theme: SiteTheme) => {
