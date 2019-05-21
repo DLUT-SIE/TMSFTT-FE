@@ -122,4 +122,23 @@ describe('ProgramService', () => {
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
+
+  it('should update admin-program-form', () => {
+    const service: ProgramService = TestBed.get(ProgramService);
+
+    const updateReq: Program = {
+      id: 1,
+      department: 1,
+      name: 'test',
+      category: 2,
+    };
+
+    service.updateProgram(updateReq).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `/programs/1/`);
+    expect(req.request.method).toBe('PATCH');
+    req.flush({});
+  });
+
 });

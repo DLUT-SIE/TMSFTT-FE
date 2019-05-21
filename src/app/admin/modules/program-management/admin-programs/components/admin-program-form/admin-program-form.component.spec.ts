@@ -26,6 +26,7 @@ describe('AdminProgramFormComponent', () => {
   let fixture: ComponentFixture<AdminProgramFormComponent>;
   let getProgramForms$: Subject<PaginatedResponse<ProgramForm>>;
   let getProgramForms: jasmine.Spy;
+  let updateProgramForm$: Subject<Program>;
   let getProgramCategories$: Subject<ProgramCategory[]>;
   let getProgramCategories: jasmine.Spy;
   let getProgram$: Subject<Program>;
@@ -40,6 +41,7 @@ describe('AdminProgramFormComponent', () => {
   };
 
   beforeEach(async(() => {
+    updateProgramForm$ = new Subject();
     createProgramForm$ = new Subject();
     getProgramForms$ = new Subject<PaginatedResponse<ProgramForm>>();
     getProgramForms = jasmine.createSpy();
@@ -82,6 +84,7 @@ describe('AdminProgramFormComponent', () => {
           provide: ProgramService,
           useValue: {
             createProgram: () => createProgramForm$,
+            updateProgram: () => updateProgramForm$,
             getProgramCategories: () => getProgramCategories$,
             getProgram,
           }
@@ -127,10 +130,22 @@ describe('AdminProgramFormComponent', () => {
   });
 
   it('should navigate when creation succeed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createProgramForm$.next({ id: 5 } as Program);
 
     expect(navigate).toHaveBeenCalledWith(['/admin/programs/', 5]);
+  });
+
+  it('should navigate when updation succeed.', () => {
+    component.isUpdateMode = true;
+    component.program = {
+      id: 1,
+    };
+    component.onSubmit();
+    updateProgramForm$.next({ id: 1 } as Program);
+
+    expect(navigate).toHaveBeenCalledWith(['/admin/programs/', 1]);
   });
 
   it('should load pragram', () => {
@@ -146,6 +161,7 @@ describe('AdminProgramFormComponent', () => {
   });
 
   it('should display errors when creation failed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createProgramForm$.error({
       message: 'Raw error message',
@@ -159,6 +175,7 @@ describe('AdminProgramFormComponent', () => {
   });
 
   it('should display raw errors when creation failed.', () => {
+    component.isUpdateMode = false;
     component.onSubmit();
     createProgramForm$.error({
       message: 'Raw error message',
