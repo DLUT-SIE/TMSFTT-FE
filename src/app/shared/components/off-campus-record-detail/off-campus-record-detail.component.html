@@ -1,123 +1,69 @@
-<div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">项目名称</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.name }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">培训时间</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.time | date:'medium' }}</p> 
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">培训地点</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.location }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">培训学时</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.num_hours | number:"1.1-1" }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">参加人数</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.off_campus_event.num_participants }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">人员信息</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.user }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">参与方式</span>
-    <div class="item-content" fxFlex="1 0 78%">
-      <p>{{ record.role_str }}</p>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
+<detail-section>
+  <detail-item>
+    <detail-item-title>项目名称</detail-item-title>
+    <detail-item-content>{{ record.off_campus_event.name }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>培训时间</detail-item-title>
+    <detail-item-content>{{ record.off_campus_event.time | date:'medium' }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>培训地点</detail-item-title>
+    <detail-item-content>{{ record.off_campus_event.location }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>培训学时</detail-item-title>
+    <detail-item-content>{{ record.off_campus_event.num_hours | number:"1.1-1" }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>参加人数</detail-item-title>
+    <detail-item-content>{{ record.off_campus_event.num_participants }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>人员信息</detail-item-title>
+    <detail-item-content>{{ record.user }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>参与方式</detail-item-title>
+    <detail-item-content>{{ record.role_str }}</detail-item-content>
+  </detail-item>
   <div *ngFor="let con of record.contents">
     <div *ngIf="con.content_type === 0">
-      <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-        fxLayoutGap="15px">
-        <span class="item-title" fxFlex="1 0 20%">培训内容</span>
-        <div class="item-content" fxFlex="1 0 78%">
-          <p>{{ con.content }}</p>
-        </div>
-        <div fxFlex="1 0 2%"></div>
-      </div>
+      <detail-item>
+        <detail-item-title>培训内容</detail-item-title>
+        <detail-item-content>{{ con.content }}</detail-item-content>
+      </detail-item>
     </div>
   </div>
-
   <div *ngFor="let con of record.contents">
     <div *ngIf="con.content_type === 1">
-      <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-        fxLayoutGap="15px">
-        <span class="item-title" fxFlex="1 0 20%">培训总结</span>
-        <div class="item-content" fxFlex="1 0 78%">
-          <p>{{ con.content }}</p>
-        </div>
-        <div fxFlex="1 0 2%"></div>
-      </div>
+      <detail-item>
+        <detail-item-title>培训总结</detail-item-title>
+        <detail-item-content>{{ con.content }}</detail-item-content>
+      </detail-item>
     </div>
   </div>
-
   <div *ngFor="let con of record.contents">
     <div *ngIf="con.content_type === 2">
-      <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-        fxLayoutGap="15px">
-        <span class="item-title" fxFlex="1 0 20%">培训反馈</span>
-        <div class="item-content" fxFlex="1 0 78%">
-          <p>{{ con.content }}</p>
-        </div>
-        <div fxFlex="1 0 2%"></div>
-      </div>
+      <detail-item>
+        <detail-item-title>培训反馈</detail-item-title>
+        <detail-item-content>{{ con.content }}</detail-item-content>
+      </detail-item>
     </div>
   </div>
-
   <div *ngIf="record.attachments.length">
-    <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-      fxLayoutGap="15px">
-      <span class="item-title" fxFlex="1 0 20%">附加文件</span>
-      <div class="item-content" fxFlex="1 0 78%">
+    <detail-item>
+      <detail-item-title>附加文件</detail-item-title>
+      <detail-item-content>
         <div *ngFor="let att of record.attachments">
           <a [href]="att.path.url">{{ att.path.name }}</a>
         </div>
-      </div>
-      <div fxFlex="1 0 2%"></div>
-    </div>
+      </detail-item-content>
+    </detail-item>
   </div>
-
-  <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-    fxLayoutGap="15px">
-    <span class="item-title" fxFlex="1 0 20%">审核提示</span>
-    <div class="item-content" fxFlex="1 0 78%">
+  <detail-item>
+    <detail-item-title>审核提示</detail-item-title>
+    <detail-item-content>
       <div *ngFor="let reviewNote of reviewNotes">
         <p>
         {{ reviewNote.content }}
@@ -134,12 +80,10 @@
             <input matInput [(ngModel)]="reviewNoteContent" placeholder="请输入内容" i18n-placeholder required>
           </mat-form-field>
         </div>
-        <div fxLayout="row" fxFlex="1 1 20%" fxLayoutAlign="end center">
-          <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">提交</button>
-        </div>
+        <detail-section-actions>
+          <a mat-raised-button color="primary" (click)="onSubmit()">提交</a>
+        </detail-section-actions>
       </div>
-    </div>
-    <div fxFlex="1 0 2%"></div>
-  </div>
-
-</div>
+    </detail-item-content>
+  </detail-item>
+</detail-section>

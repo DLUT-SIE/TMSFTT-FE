@@ -23,6 +23,11 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { FeedbackDialogComponent } from 'src/app/user/modules/records/components/feedback-dialog/feedback-dialog.component';
 import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 
 describe('RecordDetailComponent', () => {
   let component: RecordDetailComponent;
@@ -44,7 +49,15 @@ describe('RecordDetailComponent', () => {
     snackBarOpen = jasmine.createSpy();
     dialogRef = jasmine.createSpyObj('', ['afterClosed']);
     TestBed.configureTestingModule({
-      declarations: [ RecordDetailComponent, OffCampusRecordDetailComponent ],
+      declarations: [
+        RecordDetailComponent,
+        OffCampusRecordDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
+      ],
       imports: [
         MatCardModule,
         MatIconModule,
