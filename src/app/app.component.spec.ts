@@ -13,6 +13,7 @@ import { AUTH_SERVICE } from './shared/interfaces/auth-service';
 import { WindowService } from './shared/services/window.service';
 import { PlatformType } from './shared/enums/platform-type.enum';
 import { StyleManager } from './shared/services/style-manager.service';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-sidebar',
@@ -46,6 +47,7 @@ describe('AppComponent(Windows)', () => {
   let fixture: ComponentFixture<TestAppRootComponent>;
   let scrollTo: jasmine.Spy;
   let matchMedia: jasmine.Spy;
+  let available$: Subject<{}>;
   let events$: Subject<{}>;
   let platformService: {
     isMobile: boolean,
@@ -55,6 +57,7 @@ describe('AppComponent(Windows)', () => {
 
   beforeEach(async(() => {
     events$ = new Subject<{}>();
+    available$ = new Subject();
     scrollTo = jasmine.createSpy();
     matchMedia = jasmine.createSpy();
     matchMedia.and.returnValue({ matches: true });
@@ -84,6 +87,12 @@ describe('AppComponent(Windows)', () => {
           useValue: {
             isAuthenticated: false,
           },
+        },
+        {
+          provide: SwUpdate,
+          useValue: {
+            available: available$,
+          }
         },
         {
           provide: Location,
