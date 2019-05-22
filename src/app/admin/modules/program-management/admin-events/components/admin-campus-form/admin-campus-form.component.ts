@@ -7,6 +7,7 @@ import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 import { CampusEvent } from 'src/app/shared/interfaces/event';
+import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { Observable } from 'rxjs';
 import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
@@ -45,6 +46,8 @@ export class AdminCampusFormComponent implements OnInit {
       }
     ]
   };
+
+  roundChoices: RoundChoice[] = []
   programId: number;
   isUpdateMode = false;
   event: CampusEvent;
@@ -68,6 +71,10 @@ export class AdminCampusFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.eventService.getRoundChoices().subscribe(roundChoices => {
+      this.roundChoices = roundChoices;
+    });
+
     this.route.queryParams.subscribe(queryParams => {
       this.programId = queryParams.program_id;
     });
