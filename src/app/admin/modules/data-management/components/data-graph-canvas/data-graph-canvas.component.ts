@@ -116,7 +116,7 @@ export class DataGraphCanvasComponent implements OnInit {
         trigger: 'axis',
         formatter:  (c) => {
             /* istanbul ignore next */
-            return Math.round((c[0]).value / (
+            return c[0].name + '覆盖率: ' + Math.round((c[0]).value / (
                 c[0].value + c[1].value) * 100) + '%';
         }
     },
@@ -126,9 +126,11 @@ export class DataGraphCanvasComponent implements OnInit {
             type: 'bar',
             stack: '1',
             label: {
-                normal: {
-                    show: true,
-                    position: 'insideTop'
+                show: true,
+                position: 'insideTop',
+                formatter: (params) => {
+                    /* istanbul ignore next */
+                    return params.value > 0 ? params.value : '';
                 }
             },
             data: []
@@ -172,11 +174,7 @@ export class DataGraphCanvasComponent implements OnInit {
                 }
             },
             animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay:  () => {
-                /* istanbul ignore next */
-                return Math.random() * 200;
-            }
+            animationEasing: 'elasticOut'
         }
     ]
   };
@@ -239,6 +237,19 @@ export class DataGraphCanvasComponent implements OnInit {
     chartOption.series.splice(this.seriesData.length, chartOption.series.length);
     (chartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
     this.barChartOption = JSON.parse(JSON.stringify(chartOption));
+    if (this.isCoverageGraph) {
+        this.barChartOption.tooltip.formatter = (c) => {
+            /* istanbul ignore next */
+            return c[0].name + '覆盖率: ' + Math.round((c[0]).value / (
+                c[0].value + c[1].value) * 100) + '%';
+        };
+        for (let i = 0; i < this.seriesData.length; i++) {
+            (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.formatter = (params) => {
+                /* istanbul ignore next */
+                return params.value > 0 ? params.value : '';
+            };
+        }
+    }
   }
 
   constructor(
