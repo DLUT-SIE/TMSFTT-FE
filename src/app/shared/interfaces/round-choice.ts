@@ -1,4 +1,4 @@
-export interface RoundChoices {
+export interface RoundChoice {
     type?: number;
     name?: string;
 }
