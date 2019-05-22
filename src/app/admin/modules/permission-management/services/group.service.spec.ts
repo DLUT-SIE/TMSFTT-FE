@@ -47,6 +47,13 @@ describe('GroupService', () => {
     req.flush({});
   });
 
+  it('should return if no requests.', () => {
+    const service: GroupService = TestBed.get(GroupService);
+
+    service.getGroupsByIds([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
 
   it('should get Group2', () => {
     const department = {id: 1, name: 'name'} as Department;
