@@ -52,6 +52,19 @@
                 </mat-select>
               </mat-form-field>
             </div>
+            <div fxFlex="1 1 calc(4em)" *ngIf="isCoverageGraph">
+              <mat-form-field>
+                <mat-label>选择项目</mat-label>
+                <mat-select formControlName="selectedProgram">
+                    <mat-option>-- None --</mat-option>
+                    <mat-optgroup *ngFor="let group of groupPrograms" [label]="group.name">
+                  <mat-option *ngFor="let program of group.programs" [value]="program">
+                    {{program.name}}
+                  </mat-option>
+                </mat-optgroup>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
           <p class="text-danger" *ngIf="selectedGraph.errors?.timeValidator">请选择正确的起止年份</p>
         </div>

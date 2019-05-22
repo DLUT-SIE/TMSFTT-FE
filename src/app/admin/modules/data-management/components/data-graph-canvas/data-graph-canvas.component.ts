@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
-  @Input() hidePieGraph: boolean;
+  @Input() isCoverageGraph: boolean;
   @Input() set graphOptions(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
@@ -23,6 +23,9 @@ export class DataGraphCanvasComponent implements OnInit {
     let title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
     if (val.selectedStartYear === undefined && val.selectedEndYear === undefined) {
         title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
+    }
+    if (val.selectedProgram) {
+        title = `${val.selectedProgram.name}-` + title;
     }
     if (this.subscription) {
         this.subscription.unsubscribe();
@@ -48,7 +51,7 @@ export class DataGraphCanvasComponent implements OnInit {
         y: '5%'
     },
     tooltip: {
-    formatter: '{c0}'
+    formatter: '{b}'
     },
     title: [{
         text: '',
@@ -214,7 +217,7 @@ export class DataGraphCanvasComponent implements OnInit {
   }
 
   buildBarChartOption(title: string) {
-    const chartOption = this.hidePieGraph ?
+    const chartOption = this.isCoverageGraph ?
         this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
     (chartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     (chartOption.title as echarts.EChartTitleOption[])[0].text = title;
