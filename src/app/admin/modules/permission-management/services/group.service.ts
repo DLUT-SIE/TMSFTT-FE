@@ -22,7 +22,7 @@ export class GroupService extends GenericListService {
     return this.http.get<Group>(`/groups/${id}/`);
   }
 
-  getGroupByIds(ids: number[]) {
+  getGroupsByIds(ids: number[]) {
     if (ids.length === 0) return observableOf([]);
 
     const extraParams = new Map<string, string>();
