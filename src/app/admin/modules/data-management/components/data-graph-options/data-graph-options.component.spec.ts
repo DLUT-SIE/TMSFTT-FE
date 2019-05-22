@@ -13,12 +13,14 @@ import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { Department } from 'src/app/shared/interfaces/department';
+import { ProgramsOption } from 'src/app/shared/interfaces/programs-option';
 
 describe('DataGraphOptionsComponent', () => {
   let component: DataGraphOptionsComponent;
   let fixture: ComponentFixture<DataGraphOptionsComponent>;
   let getOptions$: Subject<OptionType[]>;
   let getDepartments$: Subject<Department[]>;
+  let getGroupPrograms$: Subject<ProgramsOption[]>;
   const options: OptionType[] = [{
     type: 0,
     name: '教职工人数统计',
@@ -44,17 +46,25 @@ describe('DataGraphOptionsComponent', () => {
   }, {
     type: 2,
     name: '专任教师培训覆盖率统计',
-    key: 'FULL_TIME_TEACHER_TRAINED_COVERAGE',
+    key: 'COVERAGE_STATISTICS',
     subOption: [{
       type: 0,
       name: '按学院',
       key: 'BY_DEPARTMENT'
     }]
   }];
+  const programsOption: ProgramsOption[] = [
+    {
+      id: 1,
+      name: '大连理工大学',
+      programs: [{id: 12, name: '名师讲坛', department: 1}]
+    }
+  ];
 
   beforeEach(async(() => {
     getOptions$ = new Subject();
     getDepartments$ = new Subject();
+    getGroupPrograms$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [
         DataGraphOptionsComponent,
@@ -74,6 +84,7 @@ describe('DataGraphOptionsComponent', () => {
           provide: CanvasService,
           useValue: {
             getCanvasOptions: () => getOptions$,
+            getGroupPrograms: () => getGroupPrograms$,
           }
         },
         {
@@ -95,6 +106,7 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should create', () => {
     getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
     getDepartments$.next(
       [{id: 50,
         name: '建筑与艺术学院'
@@ -141,6 +153,7 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should hide the departmentSelector', () => {
     getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
     component.selectedGraph.patchValue({selectedStatisticsType: null});
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
     expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
@@ -154,6 +167,7 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should display the departmentSelector', () => {
     getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
     component.selectedGraph.patchValue({selectedStatisticsType: 0});
     expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
     expect(component.showDepartmentSelector).toBeTruthy();
@@ -171,11 +185,23 @@ describe('DataGraphOptionsComponent', () => {
 
   it('should disabled time selector', () => {
     getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
     component.selectedGraph.patchValue({selectedStatisticsType: 0});
     expect(component.selectedGraph.get('selectedStartYear').disabled).toBeTruthy();
     expect(component.selectedGraph.get('selectedEndYear').disabled).toBeTruthy();
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
     expect(component.selectedGraph.get('selectedStartYear').enabled).toBeTruthy();
     expect(component.selectedGraph.get('selectedEndYear').enabled).toBeTruthy();
+  });
+
+  it('should get isCoverageGraph', () => {
+    getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
+    component.selectedGraph.patchValue({selectedStatisticsType: null});
+    expect(component.isCoverageGraph).toBeFalsy();
+    component.selectedGraph.patchValue({selectedStatisticsType: 0});
+    expect(component.isCoverageGraph).toBeFalsy();
+    component.selectedGraph.patchValue({selectedStatisticsType: 2});
+    expect(component.isCoverageGraph).toBeTruthy();
   });
 });

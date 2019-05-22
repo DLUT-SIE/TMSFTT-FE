@@ -7,9 +7,10 @@ import { DataGraphCanvasComponent } from './data-graph-canvas.component';
 import { AppDataGraphEchartsStub } from 'src/testing/app-data-graph-echarts-stub';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
-import { CanvasData } from 'src/app/shared/interfaces/canvas_data';
+import { CanvasData } from 'src/app/shared/interfaces/canvas-data';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { Department } from 'src/app/shared/interfaces/department';
+import { Program } from 'src/app/shared/interfaces/programs-option';
 import * as echarts from 'echarts';
 
 describe('DataGraphCanvasComponent', () => {
@@ -83,7 +84,7 @@ describe('DataGraphCanvasComponent', () => {
       selectedGroupType: 2
     };
     component.graphTypeName = '1234';
-    component.hidePieGraph = true;
+    component.isCoverageGraph = true;
     component.graphOptions = graphOptions;
     getCanvasData$.next(canvasData);
     expect((component.pieChartOptionList[0].title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
@@ -105,7 +106,7 @@ describe('DataGraphCanvasComponent', () => {
       selectedEndYear: 2019,
       selectedGroupType: 2
     };
-    component.hidePieGraph = false;
+    component.isCoverageGraph = false;
     component.graphOptions = graphOptions2;
     canvasData.group_by_data.push({
       seriesNum: 1,
@@ -114,5 +115,16 @@ describe('DataGraphCanvasComponent', () => {
     });
     getCanvasData$.next(canvasData);
     expect(component.pieChartOptionList.length).toEqual(1);
+    const graphOptions3: DataGraphConfiguration = {
+      selectedStatisticsType: 2,
+      selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
+      selectedStartYear: 2019,
+      selectedEndYear: 2019,
+      selectedGroupType: 2,
+      selectedProgram: {id: 1, name: '名师讲堂', department: 1} as Program
+    };
+    component.graphOptions = graphOptions3;
+    getCanvasData$.next(canvasData);
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('名师讲堂-2019-大连理工大学-1234');
   });
 });

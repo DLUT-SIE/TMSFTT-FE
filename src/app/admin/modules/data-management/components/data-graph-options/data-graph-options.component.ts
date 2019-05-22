@@ -5,6 +5,7 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
+import { ProgramsOption } from 'src/app/shared/interfaces/programs-option';
 import { GraphTypeName } from 'src/app/shared/enums/graph-type.enum';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -32,7 +33,12 @@ export class DataGraphOptionsComponent implements OnInit {
 
   departmentsList: Department[] = [{id: 0, name: '大连理工大学'} as Department];
   statisticsType: OptionType[];
+  groupPrograms: ProgramsOption[];
 
+  get isCoverageGraph() {
+    return this.selectedGraph.value.selectedStatisticsType ? this.statisticsType[
+      this.selectedGraph.value.selectedStatisticsType].key === GraphTypeName.COVERAGE_STATISTICS : false;
+  }
 
   SelectedParamChangingCheck() {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
@@ -43,6 +49,7 @@ export class DataGraphOptionsComponent implements OnInit {
         .key === GraphTypeName.HOURS_STATISTICS ? false : true;
       this.selectedGraph.patchValue({
         selectedGroupType: null,
+        selectedProgram: null,
         selectedDepartment: this.departmentsList[0]
       });
       if (this.statisticsType[val].key === GraphTypeName.TEACHERS_STATISTICS) {
@@ -74,8 +81,7 @@ export class DataGraphOptionsComponent implements OnInit {
           const selectedGraphValues = this.selectedGraph.value;
           const graphTypeName = this.statisticsType[selectedGraphValues
             .selectedStatisticsType].name;
-          const isCoverageGraph = this.statisticsType[selectedGraphValues
-            .selectedStatisticsType].key === GraphTypeName.COVERAGE_STATISTICS;
+          const isCoverageGraph = this.isCoverageGraph;
           const options = {
             option: selectedGraphValues,
             isCoverageGraph,
@@ -101,12 +107,15 @@ export class DataGraphOptionsComponent implements OnInit {
         selectedGroupType: [null, Validators.required],
         selectedStartYear: [this.yearList[this.yearList.length - 1], Validators.required],
         selectedEndYear: [this.yearList[this.yearList.length - 1], Validators.required],
-        selectedDepartment: [this.departmentsList[0]]
+        selectedDepartment: [this.departmentsList[0]],
+        selectedProgram: [null]
         }, { validator: timeValidator });
       this.departmentService.getTopDepartments()
           .subscribe(departments => this.departmentsList = this.departmentsList.concat(departments));
       this.canvasService.getCanvasOptions()
           .subscribe(options => this.statisticsType = options);
+      this.canvasService.getGroupPrograms()
+          .subscribe(programs => this.groupPrograms = programs);
       this.SelectedParamChangingCheck();
   }
 }
