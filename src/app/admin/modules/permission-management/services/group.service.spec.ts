@@ -37,7 +37,7 @@ describe('GroupService', () => {
   it('should get Group by Ids.', () => {
     const service: GroupService = TestBed.get(GroupService);
 
-    service.getGroupByIds([1, 2]).subscribe();
+    service.getGroupsByIds([1, 2]).subscribe();
 
     const req = httpTestingController.expectOne(
       `/groups/?id__in=1%2C2&limit=-1&offset=0`);
