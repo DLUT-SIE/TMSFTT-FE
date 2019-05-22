@@ -36,7 +36,7 @@ export class DataGraphCanvasComponent implements OnInit {
   }
 
   barChartOption?: EChartOption;
-  pieChartOptionList?: EChartOption[];
+  pieChartOptionList: EChartOption[] = [];
 
   xAxisList: string[];
   seriesData: GraphData[];
