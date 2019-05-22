@@ -54,7 +54,7 @@ export class RecordFormComponent implements OnInit {
   originalAttachments: Array<{id: number, path: SecuredPath}> = [];
   hasOriginalAttachments = false;
   isUpdateMode: boolean;
-  canSubmit = true;
+  submitDisabled = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -266,7 +266,7 @@ export class RecordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.canSubmit = false;
+    this.submitDisabled = true;
     const req: Record = this.buildRequest();
     const targetRecord: Observable<Record> = this.isUpdateMode ?
                                            this.recordService.updateOffCampusRecord(req) :
