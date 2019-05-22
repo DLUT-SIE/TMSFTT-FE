@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DataGraphEchartsComponent } from './data-graph-echarts.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { EChartOption } from 'echarts';
+import { StyleManager } from 'src/app/shared/services/style-manager.service';
 
 describe('DataGraphEchartsComponent', () => {
   let component: DataGraphEchartsComponent;
@@ -17,6 +18,14 @@ describe('DataGraphEchartsComponent', () => {
         NgxEchartsModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
+      ],
+      providers: [
+        {
+          provide: StyleManager,
+          useValue: {
+            getAllColors: () => ['red', 'black'],
+          }
+        },
       ],
     })
     .compileComponents();
