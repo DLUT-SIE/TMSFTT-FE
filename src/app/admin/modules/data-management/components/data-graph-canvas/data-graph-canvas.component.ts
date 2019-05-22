@@ -254,6 +254,9 @@ export class DataGraphCanvasComponent implements OnInit {
                 /* istanbul ignore next */
                 return params.value > 0 ? params.value : '';
             };
+            if (i === this.seriesData.length - 1) {
+                (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.position = 'top';
+            }
         }
     }
   }
