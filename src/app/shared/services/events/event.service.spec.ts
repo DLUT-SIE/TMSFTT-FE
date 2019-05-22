@@ -8,10 +8,12 @@ import {
   CampusEvent,
 } from 'src/app/shared/interfaces/event';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
+import { RoundChoices } from 'src/app/shared/interfaces/round-choices';
 
 
 describe('EventService', () => {
   let httpTestingController: HttpTestingController;
+  // let getRoundChoices$: Subject<RoundChoices>;
 
   beforeEach(() => {
     const authenticationSucceed$ = new Subject<void>();
@@ -198,6 +200,23 @@ describe('EventService', () => {
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('DELETE');
     req.flush({});
+  });
+
+  it('should get round-choices.', () => {
+    const service: EventService = TestBed.get(EventService);
+
+    service.getRoundChoices().subscribe((data: RoundChoices[]) => {
+      expect(data.length).toEqual(2);
+    });
+    const url = `/round-choices/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush([{val: 1, name: 'test1'}, {val: 2, name: 'test2'}]);
+
+    service.getRoundChoices().subscribe((data: RoundChoices[]) => {
+      expect(data.length).toEqual(2);
+    });
   });
 
 });
