@@ -10,12 +10,17 @@ import { GenericListService } from 'src/app/shared/generics/generic-list-service
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
 import { Enrollment } from 'src/app/shared/interfaces/enrollment';
+import { RoundChoices } from 'src/app/shared/interfaces/round-choices';
+import { tap } from 'rxjs/operators';
+import { of as observableOf } from 'rxjs';
 
 /** Provide services for Event. */
 @Injectable({
   providedIn: 'root'
 })
 export class EventService extends GenericListService {
+
+  private cachedRoundChoices: RoundChoices[] = [];
 
   constructor(
     protected readonly http: HttpClient,
@@ -77,6 +82,16 @@ export class EventService extends GenericListService {
   /** Delete campus event enrollment. */
   deleteEventEnrollment(id: number) {
     return this.http.delete(`/enrollments/${id}/`);
+  }
+
+  /** Get round choices.*/
+  getRoundChoices() {
+    if (this.cachedRoundChoices.length !== 0) {
+      return observableOf(this.cachedRoundChoices);
+    }
+    return this.http.get<RoundChoices[]>(`/round-choices/`).pipe(
+      tap(data => this.cachedRoundChoices = data),
+    );
   }
 
 }
