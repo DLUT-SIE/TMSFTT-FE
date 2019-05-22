@@ -60,6 +60,10 @@ export class AdminCampusFormComponent implements OnInit {
     numParticipants: ['', [Validators.required]],
     deadline: ['', [Validators.required, Validators.maxLength(30)]],
     description: ['', [Validators.required]],
+    coefficientParticipator: ['', [Validators.required]],
+    coefficientExpert: ['', [Validators.required]],
+    hoursOption: ['', [Validators.required]],
+    workloadOption: ['', [Validators.required]],
   });
 
   constructor(
@@ -150,6 +154,23 @@ export class AdminCampusFormComponent implements OnInit {
     return this.eventForm.get('description');
   }
 
+  get coefficientParticipator() {
+    return this.eventForm.get('coefficientParticipator');
+  }
+
+  get coefficientExpert() {
+    return this.eventForm.get('coefficientExpert');
+  }
+
+  get hoursOption() {
+    return this.eventForm.get('hoursOption');
+  }
+
+  get workloadOption() {
+    return this.eventForm.get('workloadOption');
+  }
+
+
   onSubmit() {
     const req: CampusEvent = {
       id: this.isUpdateMode ? this.event.id : undefined,
@@ -161,6 +182,20 @@ export class AdminCampusFormComponent implements OnInit {
       num_participants: this.eventForm.value.numParticipants,
       deadline: this.eventForm.value.deadline,
       description: this.eventForm.value.description,
+      coefficients: {
+        专家: {
+          coefficient: this.eventForm.value.coefficientExpert,
+          hours_option: this.eventForm.value.hoursOption,
+          workload_option: this.eventForm.value.workloadOption,
+        },
+        参与: {
+          coefficient: this.eventForm.value.coefficientParticipator,
+          hours_option: this.eventForm.value.hoursOption,
+          workload_option: this.eventForm.value.workloadOption,
+        }
+      }
+      
+      
     };
     const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
                                              this.eventService.updateCampusEvent(req) :
