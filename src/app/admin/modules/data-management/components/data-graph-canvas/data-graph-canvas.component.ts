@@ -240,8 +240,11 @@ export class DataGraphCanvasComponent implements OnInit {
     if (this.isCoverageGraph) {
         this.barChartOption.tooltip.formatter = (c) => {
             /* istanbul ignore next */
-            return c[0].name + '覆盖率: ' + Math.round((c[0]).value / (
-                c[0].value + c[1].value) * 100) + '%';
+            const c0 = c[0] ? c[0].value : 0;
+            const c1 = c[1] ? c[1].value : 0;
+            const name = c[0] ? c[0].name : c[1].name;
+            return name + '覆盖率: ' + Math.round(c0 / (
+                c0 + c1) * 100) + '%';
         };
         for (let i = 0; i < this.seriesData.length; i++) {
             (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.formatter = (params) => {
