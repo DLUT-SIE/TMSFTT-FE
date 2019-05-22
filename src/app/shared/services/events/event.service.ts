@@ -10,7 +10,7 @@ import { GenericListService } from 'src/app/shared/generics/generic-list-service
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { PaginatedResponse } from '../../interfaces/paginated-response';
 import { Enrollment } from 'src/app/shared/interfaces/enrollment';
-import { RoundChoices } from 'src/app/shared/interfaces/round-choices';
+import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { tap } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
@@ -20,7 +20,7 @@ import { of as observableOf } from 'rxjs';
 })
 export class EventService extends GenericListService {
 
-  private cachedRoundChoices: RoundChoices[] = [];
+  private cachedRoundChoices: RoundChoice[] = [];
 
   constructor(
     protected readonly http: HttpClient,
@@ -89,7 +89,7 @@ export class EventService extends GenericListService {
     if (this.cachedRoundChoices.length !== 0) {
       return observableOf(this.cachedRoundChoices);
     }
-    return this.http.get<RoundChoices[]>(`/round-choices/`).pipe(
+    return this.http.get<RoundChoice[]>(`/round-choices/`).pipe(
       tap(data => this.cachedRoundChoices = data),
     );
   }

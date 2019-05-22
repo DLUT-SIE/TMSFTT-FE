@@ -88,6 +88,54 @@
             </span>
           </mat-error>
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>people</mat-icon>
+          <mat-label i18n>参与工作量系数</mat-label>
+          <input matInput type="number" placeholder="请提供校内培训活动参与工作量系数" formControlName="coefficientParticipator"
+            i18n-placeholder required>
+          <mat-error *ngIf="coefficientParticipator.invalid && (coefficientParticipator.dirty || coefficientParticipator.touched)">
+            <span *ngIf="!!coefficientParticipator.errors.required" i18n>
+              您需要提供校内培训活动参与工作量方式
+            </span>
+          </mat-error>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>people</mat-icon>
+          <mat-label i18n>专家工作量系数</mat-label>
+          <input matInput type="number" placeholder="请提供校内培训活动专家工作量系数" formControlName="coefficientExpert"
+            i18n-placeholder required>
+          <mat-error *ngIf="coefficientExpert.invalid && (coefficientExpert.dirty || coefficientExpert.touched)">
+            <span *ngIf="!!coefficientExpert.errors.required" i18n>
+              您需要提供校内培训活动参与方式工作量方式
+            </span>
+          </mat-error>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>note_add</mat-icon>
+          <mat-select placeholder="请提供校内培训活动学时取整方式" formControlName="hoursOption" required>
+            <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
+              {{ roundChoice.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="hoursOption.invalid && (hoursOption.dirty || hoursOption.touched)">
+            <span *ngIf="!!hoursOption.errors.required" i18n>
+              您需要校内培训活动学时取整方式。
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>note_add</mat-icon>
+          <mat-select placeholder="请提供校内培训活动工作量取整方式" formControlName="workloadOption" required>
+            <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
+              {{ roundChoice.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="workloadOption.invalid && (workloadOption.dirty || workloadOption.touched)">
+            <span *ngIf="!!workloadOption.errors.required" i18n>
+              您需要校内培训活动工作量取整方式。
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        </mat-form-field>
         <ng-container *ngIf="!isUpdateMode || (isUpdateMode && event)">
           <ckeditor [editor]="editor" [config]="editorConfig" (ready)="onDescriptionEditorReady($event)"
                     [data]="description.value" (change)="descriptionChange($event)"
