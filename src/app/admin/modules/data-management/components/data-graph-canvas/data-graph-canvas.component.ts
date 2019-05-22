@@ -241,8 +241,11 @@ export class DataGraphCanvasComponent implements OnInit {
         this.barChartOption.tooltip.formatter = (c) => {
             /* istanbul ignore next */
             const c0 = c[0] ? c[0].value : 0;
+            /* istanbul ignore next */
             const c1 = c[1] ? c[1].value : 0;
+            /* istanbul ignore next */
             const name = c[0] ? c[0].name : c[1].name;
+            /* istanbul ignore next */
             return name + '覆盖率: ' + Math.round(c0 / (
                 c0 + c1) * 100) + '%';
         };
