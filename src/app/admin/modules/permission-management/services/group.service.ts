@@ -5,6 +5,7 @@ import { Group } from 'src/app/shared/interfaces/group';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
+import { of as observableOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,16 @@ export class GroupService extends GenericListService {
 
   getGroupById(id: number) {
     return this.http.get<Group>(`/groups/${id}/`);
+  }
+
+  getGroupByIds(ids: number[]) {
+    if (ids.length === 0) return observableOf([]);
+
+    const extraParams = new Map<string, string>();
+    extraParams.set('id__in', ids.toString());
+    const limit = -1;
+
+    return this.list<Group[]>('groups', {limit, extraParams});
   }
 
   getGroupByDepartmentName(name: string) {

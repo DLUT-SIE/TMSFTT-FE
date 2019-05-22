@@ -55,7 +55,7 @@ describe('UserManagementComponent', () => {
   let component: UserManagementComponent;
   let fixture: ComponentFixture<UserManagementComponent>;
   let getUserByUsername$: Subject<PaginatedResponse<User>>;
-  let getGroupById$: Subject<{}>;
+  let getGroupByIds$: Subject<{}>;
   let createUserPermissions$: Subject<Array<{}>>;
   let deleteUserPermissions$: Subject<Array<{}>>;
   let getPermissions$: Subject<Array<{}>>;
@@ -64,7 +64,7 @@ describe('UserManagementComponent', () => {
 
   beforeEach(async(() => {
     getUserByUsername$ = new Subject();
-    getGroupById$ = new Subject();
+    getGroupByIds$ = new Subject();
     createUserPermissions$ = new Subject();
     deleteUserPermissions$ = new Subject();
     getPermissions$ = new Subject();
@@ -99,7 +99,7 @@ describe('UserManagementComponent', () => {
         {
           provide: GroupService,
           useValue: {
-            getGroupById: () => getGroupById$,
+            getGroupByIds: () => getGroupByIds$,
           }
         },
         {
@@ -135,7 +135,7 @@ describe('UserManagementComponent', () => {
     expect(component.isLoading).toBeTruthy();
 
     getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: [1, 2]} as User] });
-    getGroupById$.next({});
+    getGroupByIds$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));
 
@@ -154,7 +154,7 @@ describe('UserManagementComponent', () => {
     const k = 2;
 
     getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: []} as User] });
-    getGroupById$.next({});
+    getGroupByIds$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));
 
