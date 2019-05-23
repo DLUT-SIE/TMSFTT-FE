@@ -17,4 +17,7 @@ export interface Record {
   contents?: number[] | RecordContent[] | PaginatedResponse<RecordContent>;
   role: number;
   role_str?: string;
+  allow_ordinary_user_review?: boolean;
+  allow_department_admin_review?: boolean;
+  allow_school_admin_review?: boolean;
 }
