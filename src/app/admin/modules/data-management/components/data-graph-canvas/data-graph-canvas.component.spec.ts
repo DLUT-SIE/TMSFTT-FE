@@ -81,21 +81,24 @@ describe('DataGraphCanvasComponent', () => {
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
       selectedStartYear: 2019,
       selectedEndYear: 2019,
-      selectedGroupType: 2
+      selectedGroupType: 2,
+      selectedProgram: {id: 1, name: '名师讲堂'} as Program
     };
     component.graphTypeName = '1234';
     component.isCoverageGraph = true;
     component.graphOptions = graphOptions;
     getCanvasData$.next(canvasData);
     expect((component.pieChartOptionList[0].title as echarts.EChartTitleOption[])[0].text).toBe('专任教师占比');
-    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('2019-大连理工大学-1234');
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('名师讲堂-2019-全校-1234');
     const graphOptionsUndefined: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
       selectedStartYear: undefined,
       selectedEndYear: undefined,
-      selectedGroupType: 2
+      selectedGroupType: 2,
+      selectedProgram: {id: 0, name: '全部项目'} as Program
     };
+    component.isCoverageGraph = false;
     component.graphOptions = graphOptionsUndefined;
     getCanvasData$.next(canvasData);
     expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('大连理工大学-1234');
@@ -115,16 +118,17 @@ describe('DataGraphCanvasComponent', () => {
     });
     getCanvasData$.next(canvasData);
     expect(component.pieChartOptionList.length).toEqual(1);
+    component.isCoverageGraph = true;
     const graphOptions3: DataGraphConfiguration = {
       selectedStatisticsType: 2,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
       selectedStartYear: 2019,
       selectedEndYear: 2019,
       selectedGroupType: 2,
-      selectedProgram: {id: 1, name: '名师讲堂', department: 1} as Program
+      selectedProgram: {id: 0, name: '全部项目'} as Program
     };
     component.graphOptions = graphOptions3;
     getCanvasData$.next(canvasData);
-    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('名师讲堂-2019-大连理工大学-1234');
+    expect((component.barChartOption.title as echarts.EChartTitleOption[])[0].text).toBe('大连理工大学全部项目-2019-全校-1234');
   });
 });
