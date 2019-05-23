@@ -107,6 +107,6 @@ describe('DataExportComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams: params});
+    expect(getRecords).toHaveBeenCalledWith('records/search', {offset, limit, extraParams: params});
   });
 });
