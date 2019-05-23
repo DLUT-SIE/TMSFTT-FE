@@ -13,7 +13,6 @@ import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 
 describe('EventService', () => {
   let httpTestingController: HttpTestingController;
-  // let getRoundChoices$: Subject<RoundChoices>;
 
   beforeEach(() => {
     const authenticationSucceed$ = new Subject<void>();

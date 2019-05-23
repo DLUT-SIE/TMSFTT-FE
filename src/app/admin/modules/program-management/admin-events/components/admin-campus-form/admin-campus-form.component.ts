@@ -15,7 +15,7 @@ import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { UploadAdapter } from 'src/app/shared/services/upload-adapter';
 import { AppInjector } from 'src/app/app.module';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
-import { RecordService } from '../../../../../../shared/services/records/record.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -83,7 +83,7 @@ export class AdminCampusFormComponent implements OnInit {
 
     this.recordService.getRoleChoices().pipe(
       switchMap(roleChoices => {
-        this.roleChoices  = roleChoices;
+        this.roleChoices = roleChoices;
         return this.eventService.getRoundChoices();
       })
     ).subscribe(roundChoices => {
@@ -177,7 +177,6 @@ export class AdminCampusFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.eventForm.value.coefficients);
     const req: CampusEvent = {
       id: this.isUpdateMode ? this.event.id : undefined,
       program: this.programId,
