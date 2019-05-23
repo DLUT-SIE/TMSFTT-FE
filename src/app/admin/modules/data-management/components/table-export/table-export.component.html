@@ -2,29 +2,81 @@
   <div fxFlex.lg="1 1 calc(1em)"></div>
     <div fxFlex="8 8 calc(8em)" class="card">
       <div class="card-header card-header-primary">
-        <h4 class="card-title">基本数据导出</h4>
-        <p class="card-category">您可以选择并导出教师的基本数据</p>
+        <h4 class="card-title">导出各种表格</h4>
+        <p class="card-category">您可以选择导出不同的表格</p>
       </div>
       <div class="card-body">
-          <div align="center">
-            <button *ngFor='let t of tablesBasic' mat-raised-button color="primary" (click)="doTableExport(t)">导出{{t.name}}</button>
-          </div>
-      </div>
-    </div>
-  <div fxFlex.lg="1 1 calc(1em)"></div>
-</div>
+        <div [formGroup]="exportTableOptions">
+          <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" fxLayout.xs="column">
+            
+            <div fxFlex="1 1 calc(4em)">
+              <mat-form-field>
+                <mat-label>选择需要导出的表格</mat-label>
+                <mat-select formControlName="selectedTable" [(value)]='choosedTable'>
+                  <mat-option *ngFor="let table of tables" [value]="table">{{table.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-<div fxLayout="row">
-  <div fxFlex.lg="1 1 calc(1em)"></div>
-    <div fxFlex="8 8 calc(8em)" class="card">
-      <div class="card-header card-header-primary">
-        <h4 class="card-title">教师培训数据导出</h4>
-        <p class="card-category">您可以选择并导出教师培训情况数据</p>
-      </div>
-      <div class="card-body">
-          <div align="center">
-              <button *ngFor='let t of tablesTraining' mat-raised-button color="primary" (click)="doTableExport(t)">导出{{t.name}}</button>
+            <div fxFlex="1 1 calc(4em)" *ngIf="subOptionsConfig.departmenShow">
+                <mat-form-field>
+                  <mat-label>选择学院</mat-label>
+                  <mat-select formControlName="selectedDepartment" [(value)]='choosedDepartment'>
+                    <mat-option *ngFor="let department of departmentsData" [value]="department">{{department.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex="1 1 calc(4em)" *ngIf='subOptionsConfig.programShow'>
+              <mat-form-field>
+                <mat-label>选择培训项目</mat-label>
+                <mat-select formControlName="selectedProgram" [(value)]='choosedProgram'>
+                  <mat-option [value]="defaultProgram">{{defaultProgram.name}}</mat-option>
+                  <mat-option *ngFor="let program of programsList" [value]="program">{{program.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex="1 1 calc(4em)" *ngIf='subOptionsConfig.startTimeShow'>
+              <mat-form-field>
+                <mat-label>输入起始时间</mat-label>
+                <input formControlName="startTime" matInput [matDatepicker]="startPicker" placeholder="请告诉我们您所参加培训的时间"
+                  i18n-placeholder>
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #startPicker disabled="false"></mat-datepicker>
+            <!--
+            <mat-select  formControlName="selectedStartYear" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
+              </mat-select> -->
+            <mat-error *ngIf="exportTableOptions.get('startTime').hasError('required')">您必须选择一个开始年份</mat-error>
+          </mat-form-field>
+            </div>
+
+            <div fxFlex="1 1 calc(4em)" *ngIf='subOptionsConfig.endTimeShow'>
+              <mat-form-field>
+                <mat-label>输入终止时间</mat-label>
+                <input formControlName="endTime"  matInput [matDatepicker]="endPicker" placeholder="请告诉我们您所参加培训的时间"
+                i18n-placeholder>
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #endPicker disabled="false"></mat-datepicker>
+                <!--
+                <mat-select formControlName="selectedEndYear" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
+                </mat-select>
+              -->
+                <mat-error *ngIf="exportTableOptions.get('endTime').hasError('required')">您必须选择一个结束年份</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex="1 1 calc(4em)">
+                <button  mat-raised-button color="primary" (click)="doTableExport()" [disabled]="!exportTableOptions.valid">导出</button>
+            </div>
+
           </div>
+          <p class="text-danger" *ngIf="exportTableOptions.errors?.timeValidator">请选择正确的起止年份</p>
+        </div>
       </div>
     </div>
   <div fxFlex.lg="1 1 calc(1em)"></div>
