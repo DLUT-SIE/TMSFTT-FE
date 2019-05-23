@@ -93,11 +93,14 @@ describe('DashboardComponent', () => {
     const length = 20;
     expect(component.filteredDepartmentRecords.length).toBe(0);
 
+    const data = [];
+    for (let i = 0; i < length; i++) {
+      data.push({department: '', num_users: 10, num_records: 10});
+    }
+
     component.departmentRecords = {
       timestamp: '',
-      data: Array(length).fill(0).map(() => {
-        return {department: '', num_users: 10, num_records: 10};
-      }),
+      data,
     };
 
     expect(component.filteredDepartmentRecords.length).toBe(8);
