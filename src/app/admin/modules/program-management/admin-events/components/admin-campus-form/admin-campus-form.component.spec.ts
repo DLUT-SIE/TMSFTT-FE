@@ -17,6 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
+import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { CKEditorDirectiveStub } from 'src/testing/ckeditor-stub';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
@@ -26,15 +27,25 @@ describe('AdminCampusFormComponent', () => {
   let fixture: ComponentFixture<AdminCampusFormComponent>;
   let createEventForm$: Subject<CampusEvent>;
   let updateEventForm$: Subject<CampusEvent>;
+  let getRoundChoices$: Subject<RoundChoice[]>;
+  let getRoundChoices: jasmine.Spy;
   let getEvent$: Subject<CampusEvent>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
+
+  const dummyRoundChoice: RoundChoice = {
+    type: 1,
+    name: 'sender',
+  };
 
 
   beforeEach(async(() => {
     createEventForm$ = new Subject();
     updateEventForm$ = new Subject();
     getEvent$ = new Subject();
+    getRoundChoices$ = new Subject<RoundChoice[]>();
+    getRoundChoices = jasmine.createSpy();
+    getRoundChoices.and.returnValue(getRoundChoices$);
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
@@ -69,6 +80,7 @@ describe('AdminCampusFormComponent', () => {
           useValue: {
             createCampusEvent: () => createEventForm$,
             updateCampusEvent: () => updateEventForm$,
+            getRoundChoices: () => getRoundChoices$,
             getEvent: () => getEvent$,
           }
         },
@@ -97,6 +109,14 @@ describe('AdminCampusFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load round-choices', () => {
+
+    getRoundChoices$.next([dummyRoundChoice, dummyRoundChoice]);
+
+    expect(component.roundChoices).toEqual([dummyRoundChoice, dummyRoundChoice]);
+  });
+
   it('should load event.', () => {
     const dummyEvent: CampusEvent = {
       id: 1,
