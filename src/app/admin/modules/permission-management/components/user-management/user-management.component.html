@@ -36,18 +36,109 @@
         <ng-container *ngIf="user">
           <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
             fxLayoutGap="15px">
-            <span class="item-title" fxFlex="1 0 20%">ID</span>
+            <span class="item-title" fxFlex="1 0 20%">姓名</span>
             <div class="item-content" fxFlex="1 0 78%">
-              {{ user.id }}
+              {{ user.first_name }}
             </div>
             <div fxFlex="1 0 2%"></div>
           </div>
 
           <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
             fxLayoutGap="15px">
-            <span class="item-title" fxFlex="1 0 20%">姓名</span>
+            <span class="item-title" fxFlex="1 0 20%">性别</span>
             <div class="item-content" fxFlex="1 0 78%">
-              {{ user.first_name }}
+              {{ user.gender_str }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">年龄</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.age }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">学历</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.education_background }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">任教类型</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.teaching_type }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">专业技术职称</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.technical_title }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">任职状态</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.tenure_status }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">所属院系</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.department_str }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">所属行政单位</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.administrative_department_str }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">入职时间</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.onboard_time | date:'medium'}}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">邮箱</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.email }}
+            </div>
+            <div fxFlex="1 0 2%"></div>
+          </div>
+
+          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
+            fxLayoutGap="15px">
+            <span class="item-title" fxFlex="1 0 20%">手机号</span>
+            <div class="item-content" fxFlex="1 0 78%">
+              {{ user.cell_phone_number }}
             </div>
             <div fxFlex="1 0 2%"></div>
           </div>
