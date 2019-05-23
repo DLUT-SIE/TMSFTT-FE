@@ -1,5 +1,5 @@
 import { Program } from './program';
-import { Coefficients } from './coefficients';
+import { Coefficient } from './coefficient';
 
 interface Event {
   id?: number;
@@ -24,5 +24,5 @@ export interface CampusEvent extends Event {
   expired?: boolean;
   enrolled?: boolean;
   program_detail?: Program;
-  coefficients?: Coefficients;
+  coefficients?: Coefficient[];
 }

@@ -93,5 +93,4 @@ export class EventService extends GenericListService {
       tap(data => this.cachedRoundChoices = data),
     );
   }
-
 }
