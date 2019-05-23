@@ -8,7 +8,7 @@ import { EventListType } from 'src/app/shared/enums/event-list-type.enum';
   templateUrl: './campus-event-list.component.html',
   styleUrls: ['./campus-event-list.component.css']
 })
-export class CampusEventListComponent {s
+export class CampusEventListComponent {
   eventListType: EventListType = EventListType.USER;
   constructor() { }
 }

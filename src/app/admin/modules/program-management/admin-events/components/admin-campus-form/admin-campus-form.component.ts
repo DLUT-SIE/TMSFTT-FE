@@ -47,7 +47,7 @@ export class AdminCampusFormComponent implements OnInit {
     ]
   };
 
-  roundChoices: RoundChoice[] = []
+  roundChoices: RoundChoice[] = [];
   programId: number;
   isUpdateMode = false;
   event: CampusEvent;
