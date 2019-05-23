@@ -35,11 +35,13 @@ describe('DataReviewComponent', () => {
   let updateRecordStatus$: Subject<void>;
   let closeRecord$: Subject<void>;
   let snackBarOpen: jasmine.Spy;
+  let navigate: jasmine.Spy;
 
   beforeEach(async(() => {
     updateRecordStatus$ = new Subject();
     closeRecord$ = new Subject();
     snackBarOpen = jasmine.createSpy();
+    navigate = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         DataReviewComponent,
@@ -67,6 +69,7 @@ describe('DataReviewComponent', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isDepartmentAdmin: true,
+            isSchoolAdmin: false,
           },
         },
         {
@@ -109,6 +112,7 @@ describe('DataReviewComponent', () => {
           provide: Router,
           useValue: {
             createUrlTree: () => 'abc',
+            navigate,
           },
         },
         {
@@ -149,6 +153,7 @@ describe('DataReviewComponent', () => {
     updateRecordStatus$.next();
 
     expect(snackBarOpen).toHaveBeenCalledWith('操作成功！', '关闭');
+    expect(navigate).toHaveBeenCalled();
   });
 
   it('should display errors when updation failed.', () => {
