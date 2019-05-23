@@ -10,9 +10,12 @@ import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { UploadAdapter } from 'src/app/shared/services/upload-adapter';
 import { AppInjector } from 'src/app/app.module';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { RecordService } from '../../../../../../shared/services/records/record.service';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -46,7 +49,8 @@ export class AdminCampusFormComponent implements OnInit {
       }
     ]
   };
-  roles = ['参与', '专家'];
+
+  roleChoices: RoleChoice[] = [];
   roundChoices: RoundChoice[] = [];
   programId: number;
   isUpdateMode = false;
@@ -68,7 +72,8 @@ export class AdminCampusFormComponent implements OnInit {
     private readonly snackBar: MatSnackBar,
     private readonly eventService: EventService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly recordService: RecordService
   ) { }
 
   ngOnInit() {
@@ -76,18 +81,23 @@ export class AdminCampusFormComponent implements OnInit {
       this.programId = queryParams.program_id;
     });
 
-    this.eventService.getRoundChoices().subscribe(roundChoices => {
+    this.recordService.getRoleChoices().pipe(
+      switchMap(roleChoices => {
+        this.roleChoices  = roleChoices;
+        return this.eventService.getRoundChoices();
+      })
+    ).subscribe(roundChoices => {
       this.roundChoices = roundChoices;
-      for (let i = 0; i < this.roles.length; i++) {
+      for (let i = 0; i < this.roleChoices.length; i++) {
         const control = this.fb.group({
-          name: [this.roles[i]],
+          role: this.roleChoices[i].role,
           coefficient: [0, [Validators.required]],
-          hoursOption: '',
-          workloadOption: '',
+          hours_option: '',
+          workload_option: '',
         });
-        
-        control.get('hoursOption').setValue(this.roundChoices[0].type);
-        control.get('workloadOption').setValue(this.roundChoices[0].type);
+
+        control.get('hours_option').setValue(this.roundChoices[0].type);
+        control.get('workload_option').setValue(this.roundChoices[0].type);
         this.coefficients.push(control);
       }
     });

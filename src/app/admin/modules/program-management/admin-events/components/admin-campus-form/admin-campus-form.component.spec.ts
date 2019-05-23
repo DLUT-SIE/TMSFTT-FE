@@ -21,6 +21,8 @@ import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { CKEditorDirectiveStub } from 'src/testing/ckeditor-stub';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 describe('AdminCampusFormComponent', () => {
   let component: AdminCampusFormComponent;
@@ -32,12 +34,18 @@ describe('AdminCampusFormComponent', () => {
   let getEvent$: Subject<CampusEvent>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
+  let getRoleChoices: jasmine.Spy;
+  let getRoleChoices$: Subject<RoleChoice[]>;
 
   const dummyRoundChoice: RoundChoice = {
     type: 1,
     name: 'sender',
   };
 
+  const dummyRoleChoice: RoleChoice = {
+    role: 0,
+    role_str: '123',
+  };
 
   beforeEach(async(() => {
     createEventForm$ = new Subject();
@@ -48,6 +56,9 @@ describe('AdminCampusFormComponent', () => {
     getRoundChoices.and.returnValue(getRoundChoices$);
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
+    getRoleChoices$ = new Subject();
+    getRoleChoices = jasmine.createSpy();
+    getRoleChoices.and.returnValue(getRoleChoices$);
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -94,6 +105,12 @@ describe('AdminCampusFormComponent', () => {
             open: snackBarOpen,
           },
         },
+        {
+          provide: RecordService,
+          useValue: {
+            getRoleChoices: () => getRoleChoices$,
+          },
+        },
       ],
       declarations: [ AdminCampusFormComponent, CKEditorDirectiveStub ]
     })
@@ -110,8 +127,10 @@ describe('AdminCampusFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load round-choices', () => {
+  it('should load role-choices and round-choices', () => {
+    getRoleChoices$.next([dummyRoleChoice, dummyRoleChoice]);
 
+    expect(component.roleChoices).toEqual([dummyRoleChoice, dummyRoleChoice]);
     getRoundChoices$.next([dummyRoundChoice, dummyRoundChoice]);
 
     expect(component.roundChoices).toEqual([dummyRoundChoice, dummyRoundChoice]);
