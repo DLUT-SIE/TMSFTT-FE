@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -46,12 +46,11 @@ export class AdminCampusFormComponent implements OnInit {
       }
     ]
   };
-
+  roles = ['参与', '专家'];
   roundChoices: RoundChoice[] = [];
   programId: number;
   isUpdateMode = false;
   event: CampusEvent;
-
   eventForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     time: ['', [Validators.required, Validators.maxLength(30)]],
@@ -60,11 +59,9 @@ export class AdminCampusFormComponent implements OnInit {
     numParticipants: ['', [Validators.required]],
     deadline: ['', [Validators.required, Validators.maxLength(30)]],
     description: ['', [Validators.required]],
-    coefficientParticipator: ['', [Validators.required]],
-    coefficientExpert: ['', [Validators.required]],
-    hoursOption: ['', [Validators.required]],
-    workloadOption: ['', [Validators.required]],
+    coefficients: this.fb.array([]),
   });
+
 
   constructor(
     private readonly fb: FormBuilder,
@@ -75,12 +72,24 @@ export class AdminCampusFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.eventService.getRoundChoices().subscribe(roundChoices => {
-      this.roundChoices = roundChoices;
-    });
-
     this.route.queryParams.subscribe(queryParams => {
       this.programId = queryParams.program_id;
+    });
+
+    this.eventService.getRoundChoices().subscribe(roundChoices => {
+      this.roundChoices = roundChoices;
+      for (let i = 0; i < this.roles.length; i++) {
+        const control = this.fb.group({
+          name: [this.roles[i]],
+          coefficient: [0, [Validators.required]],
+          hoursOption: '',
+          workloadOption: '',
+        });
+        
+        control.get('hoursOption').setValue(this.roundChoices[0].type);
+        control.get('workloadOption').setValue(this.roundChoices[0].type);
+        this.coefficients.push(control);
+      }
     });
 
     if (this.route.snapshot.queryParams.event_id !== undefined) {
@@ -153,25 +162,12 @@ export class AdminCampusFormComponent implements OnInit {
   get description() {
     return this.eventForm.get('description');
   }
-
-  get coefficientParticipator() {
-    return this.eventForm.get('coefficientParticipator');
+  get coefficients() {
+    return this.eventForm.get('coefficients') as FormArray;
   }
-
-  get coefficientExpert() {
-    return this.eventForm.get('coefficientExpert');
-  }
-
-  get hoursOption() {
-    return this.eventForm.get('hoursOption');
-  }
-
-  get workloadOption() {
-    return this.eventForm.get('workloadOption');
-  }
-
 
   onSubmit() {
+    console.log(this.eventForm.value.coefficients);
     const req: CampusEvent = {
       id: this.isUpdateMode ? this.event.id : undefined,
       program: this.programId,
@@ -182,18 +178,7 @@ export class AdminCampusFormComponent implements OnInit {
       num_participants: this.eventForm.value.numParticipants,
       deadline: this.eventForm.value.deadline,
       description: this.eventForm.value.description,
-      coefficients: {
-        专家: {
-          coefficient: this.eventForm.value.coefficientExpert,
-          hours_option: this.eventForm.value.hoursOption,
-          workload_option: this.eventForm.value.workloadOption,
-        },
-        参与: {
-          coefficient: this.eventForm.value.coefficientParticipator,
-          hours_option: this.eventForm.value.hoursOption,
-          workload_option: this.eventForm.value.workloadOption,
-        }
-      }
+      coefficients: this.eventForm.value.coefficients,
     };
     const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
                                              this.eventService.updateCampusEvent(req) :
