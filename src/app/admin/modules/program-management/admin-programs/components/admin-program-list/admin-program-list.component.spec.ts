@@ -205,7 +205,11 @@ describe('NotSchoolAdminAdminProgramListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should loadProgramsBelongToDepartment', () => {
+  it('should loadProgramsBelongToDepartment with other departments', () => {
     component.loadProgramsBelongToDepartment(1);
+  });
+  
+  it('should loadProgramsBelongToDepartment with dlut', () => {
+    component.loadProgramsBelongToDepartment(0);
   });
 });

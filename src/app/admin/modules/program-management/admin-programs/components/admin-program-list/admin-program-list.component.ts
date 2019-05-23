@@ -53,7 +53,11 @@ export class AdminProgramListComponent implements OnInit {
   loadProgramsBelongToDepartment(department: number) {
     const extraParams = new Map();
     this.isLoadingResults = true;
-    extraParams.set('department', department);
+    if (department === 0) {
+      extraParams.set('department.name', '大连理工大学');
+    } else {
+      extraParams.set('department', department);
+    }
     this.programService.getPrograms({offset: 0, limit: -1, extraParams}).subscribe(
       data => {
         this.programs = data;
