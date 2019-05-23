@@ -84,7 +84,7 @@ export class EventService extends GenericListService {
     return this.http.delete(`/enrollments/${id}/`);
   }
 
-  /** Get round choices.*/
+  /** Get round choices. */
   getRoundChoices() {
     if (this.cachedRoundChoices.length !== 0) {
       return observableOf(this.cachedRoundChoices);

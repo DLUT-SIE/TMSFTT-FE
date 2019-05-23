@@ -1,5 +1,5 @@
 import { Program } from './program';
-import { Coefficients } from './coefficients'
+import { Coefficients } from './coefficients';
 
 interface Event {
   id?: number;
