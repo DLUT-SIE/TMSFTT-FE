@@ -18,7 +18,7 @@ import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 export class DataReviewComponent implements OnInit {
   /** The data to be displayed. */
   record: Record;
-  isAllowed: Boolean;
+  isAllowed: boolean;
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -70,10 +70,10 @@ export class DataReviewComponent implements OnInit {
     this.route.data.subscribe((data: { record: Record}) => {
       this.record = data.record;
       const recordStatus = data.record.status;
-      this.isAllowed = (!(recordStatus == RecordStatus.STATUS_CLOSED)) && (
-        (this.authService.isDepartmentAdmin && (recordStatus == RecordStatus.STATUS_SUBMITTED)) ||
-        (this.authService.isSchoolAdmin && (recordStatus == RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED)));
-      console.log(this.isAllowed);
+      this.isAllowed = (!(recordStatus === RecordStatus.STATUS_CLOSED)) && (
+        (this.authService.isDepartmentAdmin && (recordStatus === RecordStatus.STATUS_SUBMITTED)) ||
+        (this.authService.isSchoolAdmin && (recordStatus === RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED))
+      );
     });
   }
 

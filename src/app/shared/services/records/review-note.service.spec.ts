@@ -61,11 +61,6 @@ describe('ReviewNoteService', () => {
 
     const req = httpTestingController.expectOne(`/review-notes/`);
     expect(req.request.method).toBe('POST');
-    const form = req.request.body as FormData;
-    expect(form.has('content')).toBeTruthy();
-    expect(form.has('record')).toBeTruthy();
-    expect(form.has('user')).toBeTruthy();
-    expect(form.has('user_name')).toBeTruthy();
     req.flush({});
   });
 });
