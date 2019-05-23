@@ -79,9 +79,7 @@ export class DataGraphOptionsComponent implements OnInit {
           .subscribe(programs => {
             this.groupPrograms = programs;
             for (const dep of programs) {
-              if (dep.programs.length) {
-                this.cachedProgramDepartmentsList.push({id: dep.id, name: dep.name} as Department);
-              }
+              this.cachedProgramDepartmentsList.push({id: dep.id, name: dep.name} as Department);
             }
           });
         }
