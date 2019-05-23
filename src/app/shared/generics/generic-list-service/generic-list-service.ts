@@ -18,8 +18,13 @@ export class GenericListService {
         const params = req.extraParams || new Map();
         params.set('offset', req.offset || 0);
         params.set('limit', req.limit || environment.PAGINATION_SIZE);
-        const queryParams = Array.from(params.keys()).sort().map(
-            key => key + '=' + encodeURIComponent((params.get(key) || '').toString())).join('&');
+        const queryParams = Array.from(params.keys()).sort().map((key) => {
+            let val = params.get(key);
+            if (val === null) {
+                val = '';
+            }
+            return  key + '=' + encodeURIComponent(val.toString());
+        }).filter(x => x !== null).join('&');
 
         // Construct final URL
         const url = `/${resourceURL}/?${queryParams}`;
