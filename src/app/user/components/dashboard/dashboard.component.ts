@@ -3,6 +3,7 @@ import { EChartOption, ECharts } from 'echarts';
 import { StyleManager } from 'src/app/shared/services/style-manager.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { StatisticsService } from 'src/app/shared/services/statistics.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +11,33 @@ import { Subject } from 'rxjs';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  chartOption: EChartOption = {
+  eventsStatistics: {
+    timestamp: string,
+    available_to_enroll: number,
+  };
+  recordsStatistics: {
+    timestamp: string,
+    num_records: number,
+    num_records_added_in_current_month: number,
+    num_average_records: number,
+  };
+  departmentRecords: {
+    timestamp: string,
+    data: Array<{
+      department: string,
+      num_users: number,
+      num_records: number,
+    }>,
+  };
+  monthlyAddedRecords: {
+    timestamp: string,
+    months: string[],
+    records: number[],
+  };
+  monthlyAddedRecordsChartOption: EChartOption = {
     xAxis: {
       type: 'category',
-      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: [],
       silent: false,
       splitLine: {
         show: false
@@ -22,25 +46,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
     tooltip: {},
     yAxis: {},
     series: [{
-      data: [820, 932, 901, 934, 1290, 1330, 1320, 1333, 1340, 1568, 1622, 1588],
+      data: [],
       type: 'bar',
       itemStyle: {
         normal: {
           color: 'rgb(84,170,88)',
         },
       },
+      label: {
+        show: true,
+        position: 'top'
+      }
     }],
     animationEasing: 'elasticOut',
     animationDelayUpdate: /* istanbul ignore next */ (idx: number) => {
       return idx * 50;
     },
   };
+  isLoadingResults = true;
+  isError = false;
+  showAll = false;
 
-  recordsGrowthChart: ECharts;
+  monthlyAddedRecordsChart: ECharts;
   private readonly destroyed = new Subject<void>();
 
   constructor(
     private readonly styleManager: StyleManager,
+    private readonly statistics: StatisticsService,
   ) { }
 
   ngOnInit() {
@@ -49,18 +81,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.updateChart();
     });
+
+    this.statistics.getSchoolSummary().subscribe(data => {
+      this.eventsStatistics = data['events_statistics'];
+      this.recordsStatistics = data['records_statistics'];
+      this.departmentRecords = data['department_records_statistics'];
+      this.monthlyAddedRecords = data['monthly_added_records_statistics'];
+      (this.monthlyAddedRecordsChartOption.xAxis as {data: string[]}).data = this.monthlyAddedRecords.months;
+      (this.monthlyAddedRecordsChartOption.series[0] as {data: Array<{}>}).data = this.monthlyAddedRecords.records;
+      this.updateChart();
+      this.isLoadingResults = false;
+    },
+    () => {
+      this.isError = true;
+      this.isLoadingResults = false;
+    });
+  }
+
+  get filteredDepartmentRecords() {
+    if (!this.departmentRecords) {
+      return [];
+    }
+    if (this.showAll) {
+      return this.departmentRecords.data;
+    }
+    return this.departmentRecords.data.slice(0, 8);
   }
 
   updateChart() {
-    if (!this.recordsGrowthChart) {
+    if (!this.monthlyAddedRecordsChart) {
       /* istanbul ignore next */
       return;
     }
-    const series = this.chartOption.series;
+    const series = this.monthlyAddedRecordsChartOption.series;
     for (const s of series) {
       (s as EChartOption.SeriesBar).itemStyle.normal.color = this.styleManager.getColor('primary');
     }
-    this.recordsGrowthChart.setOption(this.chartOption);
+    this.monthlyAddedRecordsChart.setOption(this.monthlyAddedRecordsChartOption);
   }
 
   ngOnDestroy() {
@@ -68,7 +125,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   chartInit(chart: ECharts) {
-    this.recordsGrowthChart = chart;
+    this.monthlyAddedRecordsChart = chart;
     this.updateChart();
   }
 }

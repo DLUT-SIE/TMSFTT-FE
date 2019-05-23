@@ -7,17 +7,25 @@ import { EChartsDirectiveStub } from 'src/testing/echarts-directive-stub';
 import { StyleManager } from 'src/app/shared/services/style-manager.service';
 import { SiteTheme } from 'src/app/shared/interfaces/theme';
 import { Subject } from 'rxjs';
+import { StatisticsService } from 'src/app/shared/services/statistics.service';
+import { MatCardModule, MatProgressBarModule } from '@angular/material';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let themeChanged: Subject<SiteTheme>;
   let getColor: jasmine.Spy;
+  let getSchoolalSummary$: Subject<{}>;
 
   beforeEach(async(() => {
     themeChanged = new Subject();
     getColor = jasmine.createSpy();
+    getSchoolalSummary$ = new Subject();
     TestBed.configureTestingModule({
+      imports: [
+        MatCardModule,
+        MatProgressBarModule,
+      ],
       declarations: [
         DashboardComponent,
         MatTooltipPositionDirectiveStub,
@@ -30,7 +38,13 @@ describe('DashboardComponent', () => {
             themeChanged,
             getColor,
           }
-        }
+        },
+        {
+          provide: StatisticsService,
+          useValue: {
+            getSchoolSummary: () => getSchoolalSummary$,
+          },
+        },
       ]
     })
     .compileComponents();
@@ -50,14 +64,14 @@ describe('DashboardComponent', () => {
     const setOption = jasmine.createSpy();
     const chart = {} as ECharts;
     chart.setOption = setOption;
-    component.recordsGrowthChart = chart;
+    component.monthlyAddedRecordsChart = chart;
     const color = 'rgb(1, 2, 3)';
     getColor.and.returnValue(color);
     themeChanged.next({primary: 'primary', accent: 'accent', name: 'name'});
 
-    const newColor = (component.chartOption.series[0] as EChartOption.SeriesBar).itemStyle.normal.color;
+    const newColor = (component.monthlyAddedRecordsChartOption.series[0] as EChartOption.SeriesBar).itemStyle.normal.color;
     expect(newColor).toEqual(color);
-    expect(setOption).toHaveBeenCalledWith(component.chartOption);
+    expect(setOption).toHaveBeenCalledWith(component.monthlyAddedRecordsChartOption);
   });
 
   it('should updateChart when init.', () => {
@@ -67,5 +81,69 @@ describe('DashboardComponent', () => {
     component.chartInit(chart);
 
     expect(updateChart).toHaveBeenCalled();
+  });
+
+  it('should set error', () => {
+    getSchoolalSummary$.error({});
+    expect(component.isError).toBeTruthy();
+    expect(component.isLoadingResults).toBeFalsy();
+  });
+
+  it('should filter records', () => {
+    const length = 20;
+    expect(component.filteredDepartmentRecords.length).toBe(0);
+
+    const data = [];
+    for (let i = 0; i < length; i++) {
+      data.push({department: '', num_users: 10, num_records: 10});
+    }
+
+    component.departmentRecords = {
+      timestamp: '',
+      data,
+    };
+
+    expect(component.filteredDepartmentRecords.length).toBe(8);
+
+    component.showAll = true;
+    expect(component.filteredDepartmentRecords.length).toBe(length);
+  });
+
+  it('should set fields for school summary', () => {
+    const updateChart = spyOn(component, 'updateChart');
+
+    const data = {
+      events_statistics: {
+        timestamp: '2019-05-12T08:07:16.088408Z',
+        available_to_enroll: 10,
+      },
+      records_statistics: {
+        timestamp: '2019-05-12T08:07:16.088408Z',
+        num_records: 10,
+        num_records_added_in_current_month: 20,
+        num_average_records: 2,
+      },
+      department_records_statistics: {
+        timestamp: '2019-05-12T08:07:16.088408Z',
+        data: [{department: 'a', num_users: 10, num_records: 10}],
+      },
+      monthly_added_records_statistics: {
+        timestamp: '2019-05-12T08:07:16.088408Z',
+        months: ['a', 'b', 'c'],
+        records: [1, 2, 3],
+      }
+    };
+
+    getSchoolalSummary$.next(data);
+
+    expect(component.eventsStatistics).toEqual(data.events_statistics);
+    expect(component.recordsStatistics).toEqual(data.records_statistics);
+    expect(component.departmentRecords).toEqual(data.department_records_statistics);
+    expect(component.monthlyAddedRecords).toEqual(data.monthly_added_records_statistics);
+    const option = component.monthlyAddedRecordsChartOption;
+    expect((option.xAxis as {data: string[]}).data).toEqual(data.monthly_added_records_statistics.months);
+    expect((option.series[0] as {data: Array<{}>}).data).toEqual(data.monthly_added_records_statistics.records);
+    expect(updateChart).toHaveBeenCalled();
+    expect(component.isLoadingResults).toBeFalsy();
   });
 });

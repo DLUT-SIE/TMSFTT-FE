@@ -41,7 +41,7 @@
       $colorName: nth($colorNames, $i);
       $color: nth($colors, $i);
       .color-#{$colorName} {
-          color: mat-color($color, 400);
+          color: mat-color($color, 400) !important;
       }
       .mat-raised-button.mat-#{$colorName} {
           background-color: mat-color($color, 400);

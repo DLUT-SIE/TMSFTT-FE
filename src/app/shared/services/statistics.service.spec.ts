@@ -33,27 +33,26 @@ describe('StatisticsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return null if not authenticated', () => {
-    const service: StatisticsService = TestBed.get(StatisticsService);
-    service.getPersonalSummary().subscribe(
-      data => {
-        expect(data).toBeNull();
-      }
-    );
-  });
-
-  it('should retrieve data if authenticated', () => {
+  it('should retrieve personal summary', () => {
     const service: StatisticsService = TestBed.get(StatisticsService);
     const authService = TestBed.get(AUTH_SERVICE);
     authService.isAuthenticated = true;
-    service.getPersonalSummary().subscribe(
-      data => {
-        expect(data).not.toBeNull();
-      }
-    );
+    service.getPersonalSummary().subscribe();
 
     const req = httpTestingController.expectOne('/aggregate-data/data/?method_name=personal_summary');
     expect(req.request.method).toBe('GET');
     req.flush({});
   });
+
+  it('should retrieve school summary', () => {
+    const service: StatisticsService = TestBed.get(StatisticsService);
+    const authService = TestBed.get(AUTH_SERVICE);
+    authService.isAuthenticated = true;
+    service.getSchoolSummary().subscribe();
+
+    const req = httpTestingController.expectOne('/aggregate-data/data/?method_name=school_summary');
+    expect(req.request.method).toBe('GET');
+    req.flush({});
+  });
+
 });
