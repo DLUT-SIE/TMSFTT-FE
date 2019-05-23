@@ -194,8 +194,6 @@ export class AdminCampusFormComponent implements OnInit {
           workload_option: this.eventForm.value.workloadOption,
         }
       }
-      
-      
     };
     const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
                                              this.eventService.updateCampusEvent(req) :
