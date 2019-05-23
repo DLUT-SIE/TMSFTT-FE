@@ -34,6 +34,27 @@ describe('GroupService', () => {
     expect(req.request.method).toEqual('GET');
   });
 
+  it('should get Group by Ids.', () => {
+    const service: GroupService = TestBed.get(GroupService);
+
+    service.getGroupsByIds([1, 2]).subscribe();
+
+    const req = httpTestingController.expectOne(
+      `/groups/?id__in=1%2C2&limit=-1&offset=0`);
+
+    expect(req.request.method).toEqual('GET');
+
+    req.flush({});
+  });
+
+  it('should return if no requests.', () => {
+    const service: GroupService = TestBed.get(GroupService);
+
+    service.getGroupsByIds([]).subscribe(res => {
+      expect(res.length).toBe(0);
+    });
+  });
+
   it('should get Group2', () => {
     const department = {id: 1, name: 'name'} as Department;
     const service: GroupService = TestBed.get(GroupService);

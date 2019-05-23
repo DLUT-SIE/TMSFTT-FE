@@ -13,6 +13,7 @@ import {
   MatSelectModule,
   MatSnackBar,
   MatInputModule,
+  MatDividerModule,
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -22,6 +23,11 @@ import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-ca
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 
 describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
@@ -35,13 +41,22 @@ describe('DataReviewComponent', () => {
     closeRecord$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ DataReviewComponent, OffCampusRecordDetailComponent ],
+      declarations: [
+        DataReviewComponent,
+        OffCampusRecordDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
+      ],
       imports: [
         MatCardModule,
         MatPaginatorModule,
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatDividerModule,
         MatSelectModule,
         FormsModule,
         NoopAnimationsModule,
