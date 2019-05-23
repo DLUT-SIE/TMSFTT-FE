@@ -61,8 +61,7 @@ export class UserManagementComponent implements OnInit {
         }
         this.user = res.results[0];
         if (this.user.groups.length === 0) return observableOf([]);
-        return zip(...this.user.groups.map(
-          x => this.groupService.getGroupById(x)));
+        return this.groupService.getGroupsByIds(this.user.groups);
       }),
       map((groups: Group[]) => {
         this.groups = groups;

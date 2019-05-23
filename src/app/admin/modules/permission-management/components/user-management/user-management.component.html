@@ -23,8 +23,6 @@
               </mat-form-field>
               <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
                 <button mat-raised-button type="submit" color="primary" [disabled]="usernameModel.invalid">检索</button>
-                <button mat-raised-button type="button" color="accent" (click)="updatePermissions()"
-                  *ngIf="!isLoading && originalPermissions.length !== 0">保存</button>
               </div>
             </form>
           </div>
