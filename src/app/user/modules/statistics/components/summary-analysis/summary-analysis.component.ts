@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { EChartOption } from 'echarts';
-import { StatisticsService } from '../../services/statistics.service';
+import { StatisticsService } from 'src/app/shared/services/statistics.service';
 import { Subject } from 'rxjs';
 import { StyleManager } from 'src/app/shared/services/style-manager.service';
 import { takeUntil } from 'rxjs/operators';

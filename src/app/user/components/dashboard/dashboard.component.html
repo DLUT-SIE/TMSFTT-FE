@@ -1,150 +1,140 @@
-<div fxLayout="column">
-    <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="10px"
-         fxLayout.gt-sm="row">
-        <div class="card card-stats">
-            <div class="card-header card-header-primary card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
+<div fxLayout="column" *ngIf="!isLoadingResults; else dataLoading">
+    <ng-container *ngIf="!isError; else dataError">
+        <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="10px" fxLayout.gt-sm="row">
+            <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">domain</i>
+                    </div>
+                    <p class="card-category">全校可报名活动</p>
+                    <h3 class="card-title color-primary cursor-pointer" routerLink="/user/events">{{ eventsStatistics?.available_to_enroll }} 项</h3>
                 </div>
-                <p class="card-category">培训记录</p>
-                <h3 class="card-title">2658</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
-                </div>
-            </div>
-        </div>
-        <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">store</i>
-                </div>
-                <p class="card-category">进行中活动</p>
-                <h3 class="card-title">38</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：{{ eventsStatistics?.timestamp | date:'medium' }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">group</i>
+                    </div>
+                    <p class="card-category">全校本月新增记录</p>
+                    <h3 class="card-title color-primary cursor-pointer" routerLink="/user/records">{{ recordsStatistics?.num_records_added_in_current_month }} 人次</h3>
                 </div>
-                <p class="card-category">人均培训记录</p>
-                <h3 class="card-title">16</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
-                </div>
-            </div>
-        </div>
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">access_time</i>
-                </div>
-                <p class="card-category">本月新增记录</p>
-                <h3 class="card-title">+245</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：{{ recordsStatistics?.timestamp | date:'medium' }}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px"
-         fxLayout.gt-sm="row">
-        <div class="card">
-            <div class="card-header card-header-success">
-                <h4 class="card-title">各学部学院最近30天培训记录新增情况</h4>
-                <p class="card-category">
-                    （只计算审核通过的有效培训记录数量）
-                </p>
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">school</i>
+                    </div>
+                    <p class="card-category">全校培训记录数量</p>
+                    <h3 class="card-title color-primary cursor-pointer" routerLink="/user/records">{{ recordsStatistics?.num_records }} 人次</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：{{ recordsStatistics?.timestamp | date:'medium' }}
+                    </div>
+                </div>
             </div>
-            <div class="card-body table-responsive">
-                <table class="table table-hover text-center">
-                    <thead class="color-primary">
-                        <th>学部/学院</th>
-                        <th>总人数</th>
-                        <th>新增培训记录</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>电子信息与电气工程学部</td>
-                            <td>368</td>
-                            <td>257</td>
-                        </tr>
-                        <tr>
-                            <td>化工与环境生命学部</td>
-                            <td>412</td>
-                            <td>236</td>
-                        </tr>
-                        <tr>
-                            <td>机械工程学院</td>
-                            <td>278</td>
-                            <td>186</td>
-                        </tr>
-                        <tr>
-                            <td>人文与社会科学学部</td>
-                            <td>311</td>
-                            <td>162</td>
-                        </tr>
-                        <tr>
-                            <td>运载工程与力学学部</td>
-                            <td>328</td>
-                            <td>145</td>
-                        </tr>
-                        <tr>
-                            <td>马克思主义学院</td>
-                            <td>138</td>
-                            <td>112</td>
-                        </tr>
-                        <tr>
-                            <td>管理与经济学部</td>
-                            <td>278</td>
-                            <td>108</td>
-                        </tr>
-                        <tr>
-                            <td>外国语学院</td>
-                            <td>149</td>
-                            <td>98</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
+            <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">person</i>
+                    </div>
+                    <p class="card-category">全校人均培训次数</p>
+                    <h3 class="card-title color-primary cursor-pointer" routerLink="/user/records">{{ recordsStatistics?.num_average_records | number:".0-1" }} 次</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：{{ recordsStatistics?.timestamp | date:'medium' }}
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card card-chart">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">全校月度培训记录新增情况</h4>
-                <p class="card-category">
-                    本月培训记录新增数量同比&nbsp;增加55%
-                </p>
+        <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" fxLayout.gt-sm="row">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <h4 class="card-title">各院系本年度培训记录新增情况</h4>
+                    <p class="card-category">以本年度1月1日起进行计算</p>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover text-center">
+                        <thead class="color-primary">
+                            <th>院系名称</th>
+                            <th>院系总人数</th>
+                            <th>参加培训人次</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of filteredDepartmentRecords">
+                                <td>{{ item.department }}</td>
+                                <td>{{ item.num_users }}</td>
+                                <td>{{ item.num_records }}</td>
+                            </tr>
+                            <tr (click)="showAll = !showAll">
+                                <td colspan="3">
+                                    <button mat-button color="primary">
+                                        <ng-container *ngIf="!showAll; else showPartialLabel">
+                                            点此以展示所有院系
+                                        </ng-container>
+                                        <ng-template #showPartialLabel>
+                                            点此以展示部分院系
+                                        </ng-template>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：2019年3月28日 14:00
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div echarts [options]="chartOption" (chartInit)="chartInit($event)"></div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i>
-                    最后更新：2019年3月28日 14:00
+            <div class="card card-chart">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">全校最近一年培训记录新增情况</h4>
+                    <p class="card-category">
+                    </p>
+                </div>
+                <div class="card-body" fxLayout="row">
+                    <div class="echarts" echarts [options]="monthlyAddedRecordsChartOption" (chartInit)="chartInit($event)"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i>
+                        最后更新：2019年3月28日 14:00
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </ng-container>
+    <ng-template #dataError>
+        <mat-card>
+            <mat-card-title>加载数据失败，请刷新页面重试</mat-card-title>
+            <mat-card-content>
+                <mat-progress-bar color="warn" [value]="50"></mat-progress-bar>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
 </div>
+<ng-template #dataLoading>
+    <mat-card>
+        <mat-card-title>正在为您加载全校培训数据</mat-card-title>
+        <mat-card-content>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-content>
+    </mat-card>
+</ng-template>
