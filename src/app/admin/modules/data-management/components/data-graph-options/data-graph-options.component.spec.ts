@@ -123,6 +123,8 @@ describe('DataGraphOptionsComponent', () => {
   });
 
   it('should get null', () => {
+      getOptions$.next(options);
+      getGroupPrograms$.next(programsOption);
       const testFormGroup = component.selectedGraph;
       expect(timeValidator(testFormGroup)).toBe(null);
 
@@ -136,9 +138,6 @@ describe('DataGraphOptionsComponent', () => {
       expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: 3});
-      expect(timeValidator(testFormGroup)).toBe(null);
-
-      testFormGroup.patchValue({selectedStartYear: '', selectedEndYear: ''});
       expect(timeValidator(testFormGroup)).toBe(null);
 
       testFormGroup.get('selectedStartYear').disable();

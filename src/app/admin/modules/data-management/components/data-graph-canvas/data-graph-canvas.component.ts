@@ -21,11 +21,17 @@ export class DataGraphCanvasComponent implements OnInit {
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
     let title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
+    // 教师统计标题不需要时间信息
     if (val.selectedStartYear === undefined && val.selectedEndYear === undefined) {
         title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
     }
-    if (val.selectedProgram) {
-        title = `${val.selectedProgram.name}-` + title;
+    // 覆盖率统计标题包含项目信息
+    if (this.isCoverageGraph) {
+        if (val.selectedProgram.id) {
+            title = `${val.selectedProgram.name}-${titleYear}-全校-${this.graphTypeName}`;
+        } else {
+            title = `${val.selectedDepartment.name}全部项目-${titleYear}-全校-${this.graphTypeName}`;
+        }
     }
     if (this.subscription) {
         this.subscription.unsubscribe();
@@ -238,14 +244,11 @@ export class DataGraphCanvasComponent implements OnInit {
     (chartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
     this.barChartOption = JSON.parse(JSON.stringify(chartOption));
     if (this.isCoverageGraph) {
+        /* istanbul ignore next */
         this.barChartOption.tooltip.formatter = (c) => {
-            /* istanbul ignore next */
             const c0 = c[0] ? c[0].value : 0;
-            /* istanbul ignore next */
             const c1 = c[1] ? c[1].value : 0;
-            /* istanbul ignore next */
             const name = c[0] ? c[0].name : c[1].name;
-            /* istanbul ignore next */
             return name + '覆盖率: ' + Math.round(c0 / (
                 c0 + c1) * 100) + '%';
         };
