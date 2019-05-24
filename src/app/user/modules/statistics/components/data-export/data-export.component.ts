@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { GenericListComponent } from 'src/app/shared/generics/generic-list/generic-list';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -28,6 +28,7 @@ export class DataExportComponent extends GenericListComponent<Record> {
     protected readonly location: Location,
     private readonly fb: FormBuilder,
     private readonly recordService: RecordService,
+    private readonly datePipe: DatePipe,
   ) {
     super(route, router, location);
   }
@@ -35,12 +36,12 @@ export class DataExportComponent extends GenericListComponent<Record> {
   getResults(offset: number, limit: number) {
     const value = this.filterForm.value;
     const params = new Map<string, string>([
-      ['event__name', value.eventName],
-      ['event__location', value.location],
-      ['startTime', value.startTime],
-      ['endTime', value.endTime],
+      ['event_name', value.eventName],
+      ['event_location', value.location],
+      ['start_time', value.startTime ? this.datePipe.transform(value.startTime, 'yyyy-MM-dd') : value.startTime],
+      ['end_time', value.endTime ? this.datePipe.transform(value.endTime, 'yyyy-MM-dd') : value.endTime],
     ]);
-    return this.recordService.getRecords('records/search', {offset, limit, extraParams: params});
+    return this.recordService.getRecords('records', {offset, limit, extraParams: params});
   }
 
 }
