@@ -5,11 +5,17 @@ import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detaile-type.enum';
 import {
-  MatSnackBar
+  MatSnackBar, MatDividerModule
  } from '@angular/material';
  import { EventService } from 'src/app/shared/services/events/event.service';
  import { Enrollment } from 'src/app/shared/interfaces/enrollment';
  import { Subject } from 'rxjs';
+import { AUTH_SERVICE } from '../../interfaces/auth-service';
+import { DetailSectionComponent } from '../detail-section/detail-section.component';
+import { DetailItemComponent } from '../detail-item/detail-item.component';
+import { DetailItemTitleComponent } from '../detail-item-title/detail-item-title.component';
+import { DetailItemContentComponent } from '../detail-item-content/detail-item-content.component';
+import { DetailSectionActionsComponent } from '../detail-section-actions/detail-section-actions.component';
 
 
 describe('SharedCampusEventDetailComponent', () => {
@@ -18,18 +24,33 @@ describe('SharedCampusEventDetailComponent', () => {
   let navigate: jasmine.Spy;
   let bypassSecurityTrustHtml: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
+  let reviewCampusEvent: jasmine.Spy;
   let deleteEventEnrollment$: Subject<Enrollment>;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     deleteEventEnrollment$ = new Subject();
     snackBarOpen = jasmine.createSpy();
+    reviewCampusEvent = jasmine.createSpy();
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
     TestBed.configureTestingModule({
       declarations: [
-        SharedCampusEventDetailComponent
+        SharedCampusEventDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
+      ],
+      imports: [
+        MatDividerModule,
       ],
       providers: [
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+          }
+        },
         {
           provide: DomSanitizer,
           useValue: {
@@ -52,6 +73,7 @@ describe('SharedCampusEventDetailComponent', () => {
           provide: EventService,
           useValue: {
             deleteEventEnrollment: (id: number) => deleteEventEnrollment$,
+            reviewCampusEvent,
           }
         },
         {
@@ -152,9 +174,44 @@ describe('SharedCampusEventDetailComponent', () => {
         category: 4
       }
     };
-    component.deleteEnrollment(event.id);
+    component.event = event;
+    component.deleteEnrollment();
     deleteEventEnrollment$.next();
     expect(snackBarOpen).toHaveBeenCalledWith('取消报名成功', '关闭');
     expect(navigate).toHaveBeenCalled();
+  });
+
+  it('should review campus event', () => {
+    const event = {
+      id: 12,
+      reviewed: false
+    };
+    const reviewCampusEvent$ = new Subject<{}>();
+    reviewCampusEvent.and.returnValue(reviewCampusEvent$);
+    component.event = event;
+
+    component.reviewCampusEvent();
+    reviewCampusEvent$.next();
+
+    expect(reviewCampusEvent).toHaveBeenCalledWith(event);
+    expect(snackBarOpen).toHaveBeenCalled();
+    expect(event.reviewed).toBeTruthy();
+  });
+
+  it('should review campus event (failed)', () => {
+    const event = {
+      id: 12,
+      reviewed: false
+    };
+    const reviewCampusEvent$ = new Subject<{}>();
+    reviewCampusEvent.and.returnValue(reviewCampusEvent$);
+    component.event = event;
+
+    component.reviewCampusEvent();
+    reviewCampusEvent$.error({});
+
+    expect(reviewCampusEvent).toHaveBeenCalledWith(event);
+    expect(snackBarOpen).toHaveBeenCalled();
+    expect(event.reviewed).toBeFalsy();
   });
 });

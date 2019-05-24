@@ -73,6 +73,10 @@ export class EventService extends GenericListService {
       `/campus-events/${req.id}/`, req);
   }
 
+  reviewCampusEvent(req: CampusEvent) {
+    return this.http.post(`/campus-events/${req.id}/review-event/`, {});
+  }
+
   /** Enroll campus event */
   enrollCampusEvent(event: CampusEvent): Observable<Enrollment> {
     return this.http.post<Enrollment>(

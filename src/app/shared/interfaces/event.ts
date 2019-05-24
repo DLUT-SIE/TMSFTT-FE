@@ -23,6 +23,8 @@ export interface CampusEvent extends Event {
   description?: string;
   expired?: boolean;
   enrolled?: boolean;
+  enrollment_id?: number;
+  reviewed?: boolean;
   program_detail?: Program;
   coefficients?: Coefficient[];
 }

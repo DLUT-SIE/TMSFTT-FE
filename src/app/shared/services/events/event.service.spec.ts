@@ -201,6 +201,18 @@ describe('EventService', () => {
     req.flush({});
   });
 
+  it('should review campus event', () => {
+    const service: EventService = TestBed.get(EventService);
+    const id = 1;
+
+    service.reviewCampusEvent({id}).subscribe();
+
+    const url = `/campus-events/${id}/review-event/`;
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
   it('should get round-choices.', () => {
     const service: EventService = TestBed.get(EventService);
 

@@ -5,106 +5,72 @@
       <h4 class="card-title">校园培训活动详情</h4>
     </div>
     <div class="card-body">
-      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">项目名称</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.program_detail.name }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">项目单位</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.program_detail.department }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">项目类别</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.program_detail.category_str }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">活动名称</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.name }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">时间</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.time | date:'medium' }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">地点</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.location }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">时长</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.num_hours | number:"0.1-1"  }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">参与人数</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.num_participants }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">截止时间</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.deadline | date:'medium' }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-          fxLayoutGap="15px">
-          <span class="item-title" fxFlex="1 0 20%">登记数</span>
-          <div class="item-content" fxFlex="1 0 78%">
-            <p>{{ event.num_enrolled }}</p>
-          </div>
-          <div fxFlex="1 0 2%"></div>
-        </div>
-        <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-           fxLayoutGap="15px">
-           <span class="item-title" fxFlex="1 0 20%">描述</span>
-           <div class="item-content" fxFlex="1 0 78%" [innerHTML]="description">
-           </div>
-           <div fxFlex="1 0 2%"></div>
-       </div>
-        <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <ng-container *ngIf="event.enrolled && eventDetailType === checkEventDetailType.USER">
-              <button mat-raised-button color="primary" (click)="deleteEnrollment(event.enrollment_id)">取消报名</button>
+      <detail-section>
+        <detail-item>
+          <detail-item-title>项目名称</detail-item-title>
+          <detail-item-content>{{ event.program_detail.name }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>项目院系</detail-item-title>
+          <detail-item-content>{{ event.program_detail.department }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>项目类型</detail-item-title>
+          <detail-item-content>{{ event.program_detail.category_str }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动名称</detail-item-title>
+          <detail-item-content>{{ event.name }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动时间</detail-item-title>
+          <detail-item-content>{{ event.time | date:'medium' }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动地点</detail-item-title>
+          <detail-item-content>{{ event.location }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动时长</detail-item-title>
+          <detail-item-content>{{ event.num_hours | number:"0.1-1" }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动报名人数</detail-item-title>
+          <detail-item-content>{{ event.num_enrolled }} (已报名人数) / {{ event.num_participants }} (最大可报名人数)</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>报名截止时间</detail-item-title>
+          <detail-item-content>{{ event.deadline | date:'medium' }}</detail-item-content>
+        </detail-item>
+
+        <detail-item>
+          <detail-item-title>活动简介</detail-item-title>
+          <detail-item-content><div [innerHTML]="description"></div></detail-item-content>
+        </detail-item>
+
+        <detail-section-actions>
+          <ng-container *ngIf="!event.reviewed && authService.isSchoolAdmin">
+            <button mat-raised-button color="primary" (click)="reviewCampusEvent()">审核通过</button>
           </ng-container>
-          <ng-container *ngIf="eventDetailType === checkEventDetailType.ADMIN">
+          <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
+            <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
+          </ng-container>
+          <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
             <button mat-raised-button color="primary">导出签到表</button>
             <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
           </ng-container>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>
-        </div>
-      </div>
+        </detail-section-actions>
+      </detail-section>
     </div>
   </div>
-  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
+<div fxFlex.lg="1 1 calc(1em)"></div>
