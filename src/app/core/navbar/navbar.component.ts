@@ -90,6 +90,13 @@ export class NavbarComponent implements OnInit {
             if (item.path === url || url.startsWith(item.path)) {
                 return item.title;
             }
+            if (item.otherMatches) {
+                for (const itemUrl of item.otherMatches) {
+                    if (url.startsWith(itemUrl)) {
+                        return item.title;
+                    }
+                }
+            }
         }
 
         return '教师培训管理系统';

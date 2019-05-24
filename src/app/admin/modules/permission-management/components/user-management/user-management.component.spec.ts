@@ -20,6 +20,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { User } from 'src/app/shared/interfaces/user';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 
 function generatePermissions(n?: number): Permission[] {
   n = n || 5;
@@ -71,7 +75,13 @@ describe('UserManagementComponent', () => {
     getUserPermissions$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [UserManagementComponent],
+      declarations: [
+        UserManagementComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionComponent,
+      ],
       imports: [
         HttpClientTestingModule,
         FormsModule,

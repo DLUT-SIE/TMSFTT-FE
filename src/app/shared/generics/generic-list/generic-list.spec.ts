@@ -131,6 +131,14 @@ describe('GenericListComponent', () => {
         expect(navigate).toHaveBeenCalled();
     });
 
+    it('should navigate to detail with specified detailUrlPrefix', () => {
+        component.detailUrlPrefix = '/abc';
+        component.navigateToDetail({ id: 1 });
+
+        const calls = navigate.calls;
+        expect(calls.argsFor(0)[0]).toEqual(['/abc', 1]);
+    });
+
     it('should trigger refresh (at first page)', () => {
         const hasPreviousPage = spyOn(component.paginator, 'hasPreviousPage');
         const firstPage = spyOn(component.paginator, 'firstPage');

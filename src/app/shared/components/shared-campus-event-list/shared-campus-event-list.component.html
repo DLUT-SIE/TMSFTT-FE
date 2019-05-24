@@ -1,4 +1,4 @@
-<ng-container *ngIf="eventListType === checkEventListType.ADMIN">
+<ng-container *ngIf="eventListType === EventListType.ADMIN">
     <div class="float-left">
         <button mat-raised-button color="primary" (click)="navigateToProgramDetail()">查看项目详情</button>
       </div>
@@ -19,19 +19,19 @@
         <th scope="col">地点</th>
         <th scope="col">总时长</th>
         <th scope="col">参与者人数</th>
-        <ng-container *ngIf="eventListType === checkEventListType.USER">
+        <ng-container *ngIf="eventListType === EventListType.USER">
           <th scope="col">状态</th>
         </ng-container>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of results; let i = index">
-          <td scope="col" (click)="navigateToDetail(item)">{{ item.name }}</td>
+          <td scope="col" (click)="navigateToDetail(item)">{{ item.name | truncate:11}}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'medium' }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.location }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_participants }}</td>
-        <ng-container *ngIf="eventListType === checkEventListType.USER">
+        <ng-container *ngIf="eventListType === EventListType.USER">
           <td scope="col">
               <ng-container *ngIf="item.enrolled; else notEnrolled">
                 已报名

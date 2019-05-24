@@ -34,38 +34,80 @@
         <mat-divider></mat-divider>
 
         <ng-container *ngIf="user">
-          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-            fxLayoutGap="15px">
-            <span class="item-title" fxFlex="1 0 20%">ID</span>
-            <div class="item-content" fxFlex="1 0 78%">
-              {{ user.id }}
-            </div>
-            <div fxFlex="1 0 2%"></div>
-          </div>
+          <detail-section>
+            <detail-item>
+              <detail-item-title>姓名</detail-item-title>
+              <detail-item-content>{{ user.first_name }}</detail-item-content>
+            </detail-item>
 
-          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-            fxLayoutGap="15px">
-            <span class="item-title" fxFlex="1 0 20%">姓名</span>
-            <div class="item-content" fxFlex="1 0 78%">
-              {{ user.first_name }}
-            </div>
-            <div fxFlex="1 0 2%"></div>
-          </div>
+            <detail-item>
+              <detail-item-title>性别</detail-item-title>
+              <detail-item-content>{{ user.gender_str }}</detail-item-content>
+            </detail-item>
 
-          <div class="detail-item" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start"
-            fxLayoutGap="15px">
-            <span class="item-title" fxFlex="1 0 20%">所属部门及身份</span>
-            <div class="item-content" fxFlex="1 0 78%">
-              <mat-chip-list>
-                <mat-chip color="primary" *ngFor="let group of groups" selected>{{group.name}}</mat-chip>
-              </mat-chip-list>
-            </div>
-            <div fxFlex="1 0 2%"></div>
-          </div>
+            <detail-item>
+              <detail-item-title>年龄</detail-item-title>
+              <detail-item-content>{{ user.age }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>学历</detail-item-title>
+              <detail-item-content>{{ user.education_background }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>任教类型</detail-item-title>
+              <detail-item-content>{{ user.teaching_type }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>专业技术职称</detail-item-title>
+              <detail-item-content>{{ user.technical_title }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>任职状态</detail-item-title>
+              <detail-item-content>{{ user.tenure_status }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>所属院系</detail-item-title>
+              <detail-item-content>{{ user.department_str }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>所属行政单位</detail-item-title>
+              <detail-item-content>{{ user.administrative_department_str }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>入职时间</detail-item-title>
+              <detail-item-content>{{ user.onboard_time | date:'medium' }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>邮箱</detail-item-title>
+              <detail-item-content>{{ user.email }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>手机号</detail-item-title>
+              <detail-item-content>{{ user.cell_phone_number }}</detail-item-content>
+            </detail-item>
+
+            <detail-item>
+              <detail-item-title>所属部门及身份</detail-item-title>
+              <detail-item-content>
+                <mat-chip-list>
+                  <mat-chip color="primary" *ngFor="let group of groups" selected>{{group.name}}</mat-chip>
+                </mat-chip-list>
+              </detail-item-content>
+            </detail-item>
+
+          </detail-section>
         </ng-container>
 
       </div>
     </div>
   </div>
-  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
