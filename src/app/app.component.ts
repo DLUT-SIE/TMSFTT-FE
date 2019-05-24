@@ -36,6 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {
     this.updates.available.subscribe(event => {
       if (confirm('检测到您正在使用过期的页面，点击确定以更新至最新版本')) {
+        /* istanbul ignore next */
         this.updates.activateUpdate().then(() => this.document.location.reload());
       }
     });
