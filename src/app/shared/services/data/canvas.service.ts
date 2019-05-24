@@ -4,7 +4,8 @@ import { of as observableOf } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { OptionType } from 'src/app/shared/interfaces/option-type';
-import { CanvasData } from 'src/app/shared/interfaces/canvas_data';
+import { CanvasData } from 'src/app/shared/interfaces/canvas-data';
+import { ProgramsOption } from 'src/app/shared/interfaces/programs-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
 
 @Injectable({
@@ -36,9 +37,18 @@ export class CanvasService {
     params.set('start_year', options.selectedStartYear || 2016);
     params.set('end_year', options.selectedEndYear || 2016);
     params.set('department_id', options.selectedDepartment.id || 0);
+    if (options.selectedProgram) {
+      params.set('program_id', options.selectedProgram.id);
+    } else {
+      params.set('program_id', 0);
+    }
     const queryParams = Array.from(params.keys()).sort().map(
         key => key + '=' + encodeURIComponent(params.get(key).toString())).join('&');
     const url = `/${resourceURL}/?${queryParams}`;
     return this.http.get<CanvasData>(url);
+  }
+
+  getGroupPrograms() {
+    return this.http.get<ProgramsOption[]>('/programs/group-programs/');
   }
 }

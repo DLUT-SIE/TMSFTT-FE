@@ -54,7 +54,7 @@ describe('DataGraphComponent', () => {
     } as DataGraphOption;
     component.getOptions(options);
     expect(component.graphOptions).toEqual(options.option);
-    expect(component.hidePieGraph).toEqual(options.isCoverageGraph);
+    expect(component.isCoverageGraph).toEqual(options.isCoverageGraph);
     expect(component.graphTypeName).toEqual(options.graphTypeName);
   });
 });

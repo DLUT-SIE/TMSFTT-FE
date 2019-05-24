@@ -15,14 +15,23 @@ import { Subscription } from 'rxjs';
 export class DataGraphCanvasComponent implements OnInit {
 
   @Input() graphTypeName: string;
-  @Input() hidePieGraph: boolean;
+  @Input() isCoverageGraph: boolean;
   @Input() set graphOptions(val: DataGraphConfiguration) {
     if (!(val && Object.keys(val)))return;
     const titleYear = val.selectedStartYear === val.selectedEndYear ?
         `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
     let title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
+    // 教师统计标题不需要时间信息
     if (val.selectedStartYear === undefined && val.selectedEndYear === undefined) {
         title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
+    }
+    // 覆盖率统计标题包含项目信息
+    if (this.isCoverageGraph) {
+        if (val.selectedProgram.id) {
+            title = `${val.selectedProgram.name}-${titleYear}-全校-${this.graphTypeName}`;
+        } else {
+            title = `${val.selectedDepartment.name}全部项目-${titleYear}-全校-${this.graphTypeName}`;
+        }
     }
     if (this.subscription) {
         this.subscription.unsubscribe();
@@ -48,7 +57,7 @@ export class DataGraphCanvasComponent implements OnInit {
         y: '5%'
     },
     tooltip: {
-    formatter: '{c0}'
+    formatter: '{b}'
     },
     title: [{
         text: '',
@@ -113,7 +122,7 @@ export class DataGraphCanvasComponent implements OnInit {
         trigger: 'axis',
         formatter:  (c) => {
             /* istanbul ignore next */
-            return Math.round((c[0]).value / (
+            return c[0].name + '覆盖率: ' + Math.round((c[0]).value / (
                 c[0].value + c[1].value) * 100) + '%';
         }
     },
@@ -123,9 +132,11 @@ export class DataGraphCanvasComponent implements OnInit {
             type: 'bar',
             stack: '1',
             label: {
-                normal: {
-                    show: true,
-                    position: 'insideTop'
+                show: true,
+                position: 'insideTop',
+                formatter: (params) => {
+                    /* istanbul ignore next */
+                    return params.value > 0 ? params.value : '';
                 }
             },
             data: []
@@ -169,11 +180,7 @@ export class DataGraphCanvasComponent implements OnInit {
                 }
             },
             animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay:  () => {
-                /* istanbul ignore next */
-                return Math.random() * 200;
-            }
+            animationEasing: 'elasticOut'
         }
     ]
   };
@@ -214,7 +221,7 @@ export class DataGraphCanvasComponent implements OnInit {
   }
 
   buildBarChartOption(title: string) {
-    const chartOption = this.hidePieGraph ?
+    const chartOption = this.isCoverageGraph ?
         this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
     (chartOption.xAxis as echarts.EChartOption.SeriesBar).data = this.xAxisList;
     (chartOption.title as echarts.EChartTitleOption[])[0].text = title;
@@ -236,6 +243,25 @@ export class DataGraphCanvasComponent implements OnInit {
     chartOption.series.splice(this.seriesData.length, chartOption.series.length);
     (chartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
     this.barChartOption = JSON.parse(JSON.stringify(chartOption));
+    if (this.isCoverageGraph) {
+        /* istanbul ignore next */
+        this.barChartOption.tooltip.formatter = (c) => {
+            const c0 = c[0] ? c[0].value : 0;
+            const c1 = c[1] ? c[1].value : 0;
+            const name = c[0] ? c[0].name : c[1].name;
+            return name + '覆盖率: ' + Math.round(c0 / (
+                c0 + c1) * 100) + '%';
+        };
+        for (let i = 0; i < this.seriesData.length; i++) {
+            (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.formatter = (params) => {
+                /* istanbul ignore next */
+                return params.value > 0 ? params.value : '';
+            };
+            if (i === this.seriesData.length - 1) {
+                (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.position = 'top';
+            }
+        }
+    }
   }
 
   constructor(
