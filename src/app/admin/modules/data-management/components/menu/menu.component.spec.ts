@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuComponent } from './menu.component';
+import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -8,7 +9,15 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
+      declarations: [ MenuComponent ],
+      providers: [
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            isSchoolAdmin: true,
+          }
+        }
+      ]
     })
     .compileComponents();
   }));

@@ -4,5 +4,6 @@ export interface ReviewNote {
   create_time?: string;
   record?: number;
   user?: number;
+  user_name?: string;
   content?: string;
 }

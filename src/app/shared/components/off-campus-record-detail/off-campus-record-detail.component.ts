@@ -12,6 +12,7 @@ import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
+import { ContentType } from '../../enums/content-type.enum';
 
 @Component({
   selector: 'app-off-campus-record-detail',
@@ -19,6 +20,7 @@ import { OffCampusEvent } from 'src/app/shared/interfaces/event';
   styleUrls: ['./off-campus-record-detail.component.css']
 })
 export class OffCampusRecordDetailComponent implements OnInit {
+  readonly ContentType = ContentType;
   /** The data to be displayed. */
   @Input() record: {
     id?: number;
@@ -33,7 +35,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
     role: number;
     role_str?: string;
   };
-  reviewNoteContent: string;
+  reviewNoteContent = '';
   reviewNotes: ReviewNote[] = [];
   reviewNotesLength = 0;
   isLoadingReviewNotes = true;
@@ -42,7 +44,6 @@ export class OffCampusRecordDetailComponent implements OnInit {
   private forceRefresh$ = new Subject<PageEvent>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -60,6 +61,10 @@ export class OffCampusRecordDetailComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.reviewNoteContent.length === 0) {
+      this.snackBar.open('请输入内容后再进行提交', '关闭', {duration: 3000});
+      return;
+    }
     this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent)
     .subscribe(() => {
       this.forceRefresh();
@@ -69,10 +74,10 @@ export class OffCampusRecordDetailComponent implements OnInit {
         if (error.error) {
           message = '';
           for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
+            message += error.error[key].join(',');
           }
         }
-        this.snackBar.open(message, '创建失败！');
+        this.snackBar.open(message, '关闭');
       }
     );
   }

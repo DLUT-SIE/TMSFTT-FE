@@ -17,7 +17,8 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./shared-campus-event-list.component.css']
 })
 export class SharedCampusEventListComponent extends GenericListComponent<CampusEvent>  {
-  checkEventListType = EventListType;
+  readonly EventListType = EventListType;
+
   @Input() program?: Program;
   @Input() eventListType?: EventListType;
 
@@ -34,6 +35,10 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
   getResults(offset: number, limit: number) {
     if (this.eventListType === EventListType.USER) {
       return this.eventService.getCampusEvents({offset, limit});
+    } else if (this.eventListType === EventListType.TO_BE_REVIEWED) {
+      const extraParams = new Map();
+      extraParams.set('reviewed', false);
+      return this.eventService.getCampusEvents({offset, limit, extraParams});
     } else {
       const extraParams = new Map();
       extraParams.set('program', this.program.id);

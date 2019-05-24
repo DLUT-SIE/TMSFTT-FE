@@ -1,0 +1,13 @@
+<div fxLayout="row">
+    <div fxFlex.lg="1 1 calc(1em)"></div>
+    <div fxFlex="8 8 calc(8em)" class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">院系培训活动审核</h4>
+        <p class="card-category">您可以通过该列表查看所有还未被校管理员审核确认的院系级培训活动，审核确认后院系管理员将无法再修改该活动的工作量系数。</p>
+      </div>
+      <div class="card-body">
+        <app-shared-campus-event-list [eventListType]="eventListType" detailUrlPrefix="/admin/events"></app-shared-campus-event-list>
+      </div>
+    </div>
+    <div fxFlex.lg="1 1 calc(1em)"></div>
+  </div>

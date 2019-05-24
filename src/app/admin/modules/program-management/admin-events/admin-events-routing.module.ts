@@ -5,12 +5,24 @@ import { AdminCampusEventDetailComponent } from './components/admin-campus-event
 import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
 import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { AdminEventsComponent } from './admin-events.component';
+import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
+import { SchoolAdminGuard } from 'src/app/shared/guards/school-admin.guard';
 
 const routes: Routes = [
   {
     path: 'events',
     component: AdminEventsComponent,
     children: [
+      {
+        path: 'review',
+        canActivate: [SchoolAdminGuard],
+        children: [
+          {
+            path: '',
+            component: AdminCampusEventReviewListComponent,
+          }
+        ]
+      },
       {
         path: 'form',
         component: AdminCampusFormComponent,

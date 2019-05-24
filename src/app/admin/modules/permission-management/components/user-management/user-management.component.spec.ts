@@ -20,6 +20,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { User } from 'src/app/shared/interfaces/user';
 import { GroupService } from 'src/app/admin/modules/permission-management/services/group.service';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 
 function generatePermissions(n?: number): Permission[] {
   n = n || 5;
@@ -55,7 +59,7 @@ describe('UserManagementComponent', () => {
   let component: UserManagementComponent;
   let fixture: ComponentFixture<UserManagementComponent>;
   let getUserByUsername$: Subject<PaginatedResponse<User>>;
-  let getGroupById$: Subject<{}>;
+  let getGroupsByIds$: Subject<{}>;
   let createUserPermissions$: Subject<Array<{}>>;
   let deleteUserPermissions$: Subject<Array<{}>>;
   let getPermissions$: Subject<Array<{}>>;
@@ -64,14 +68,20 @@ describe('UserManagementComponent', () => {
 
   beforeEach(async(() => {
     getUserByUsername$ = new Subject();
-    getGroupById$ = new Subject();
+    getGroupsByIds$ = new Subject();
     createUserPermissions$ = new Subject();
     deleteUserPermissions$ = new Subject();
     getPermissions$ = new Subject();
     getUserPermissions$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [UserManagementComponent],
+      declarations: [
+        UserManagementComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionComponent,
+      ],
       imports: [
         HttpClientTestingModule,
         FormsModule,
@@ -99,7 +109,7 @@ describe('UserManagementComponent', () => {
         {
           provide: GroupService,
           useValue: {
-            getGroupById: () => getGroupById$,
+            getGroupsByIds: () => getGroupsByIds$,
           }
         },
         {
@@ -135,7 +145,7 @@ describe('UserManagementComponent', () => {
     expect(component.isLoading).toBeTruthy();
 
     getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: [1, 2]} as User] });
-    getGroupById$.next({});
+    getGroupsByIds$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));
 
@@ -154,7 +164,7 @@ describe('UserManagementComponent', () => {
     const k = 2;
 
     getUserByUsername$.next({ count: 1, previous: '', next: '', results: [{ id: 1, groups: []} as User] });
-    getGroupById$.next({});
+    getGroupsByIds$.next({});
     getPermissions$.next(generatePermissions(n));
     getUserPermissions$.next(generateUserPermissions(k));
 

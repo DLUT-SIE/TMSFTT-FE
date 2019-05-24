@@ -5,3 +5,8 @@
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
 }
+
+.echarts {
+  max-height: 500px;
+  width: 100%;
+}
