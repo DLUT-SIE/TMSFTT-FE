@@ -24,6 +24,7 @@ import { DetailItemContentComponent } from 'src/app/shared/components/detail-ite
 import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
 import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
 import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
+import { AsSecuredPathPipe } from 'src/app/shared/pipes/as-secured-path.pipe';
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
@@ -46,6 +47,7 @@ describe('OffCampusRecordDetailComponent', () => {
         DetailItemTitleComponent,
         DetailItemContentComponent,
         DetailSectionActionsComponent,
+        AsSecuredPathPipe,
       ],
       imports: [
         MatPaginatorModule,
@@ -139,10 +141,14 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should create reviewnote.', () => {
+    component.reviewNoteContent = 'abc';
+    const forceRefresh = spyOn(component, 'forceRefresh');
 
     component.onSubmit();
+
     createReviewNote$.next();
 
+    expect(forceRefresh).toHaveBeenCalled();
   });
 
   it('should trigger refresh (at first page)', () => {
@@ -167,6 +173,7 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should display errors when creation failed.', () => {
+    component.reviewNoteContent = 'abc';
     createReviewNote$.error({
       message: 'Raw error message',
       error: {
@@ -176,17 +183,18 @@ describe('OffCampusRecordDetailComponent', () => {
 
     component.onSubmit();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content。', '创建失败！');
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content', '关闭');
   });
 
   it('should display raw errors when creation failed.', () => {
+    component.reviewNoteContent = 'abc';
     createReviewNote$.error({
       message: 'Raw error message',
     } as HttpErrorResponse);
 
     component.onSubmit();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 
   it('should load data', () => {

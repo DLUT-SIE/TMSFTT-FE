@@ -39,6 +39,7 @@ import { DetailItemComponent } from './components/detail-item/detail-item.compon
 import { DetailItemTitleComponent } from './components/detail-item-title/detail-item-title.component';
 import { DetailItemContentComponent } from './components/detail-item-content/detail-item-content.component';
 import { DetailSectionActionsComponent } from './components/detail-section-actions/detail-section-actions.component';
+import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { DetailSectionActionsComponent } from './components/detail-section-actio
     DetailItemTitleComponent,
     DetailItemContentComponent,
     DetailSectionActionsComponent,
+    AsSecuredPathPipe,
   ],
   imports: [
     CommonModule,
@@ -128,6 +130,7 @@ import { DetailSectionActionsComponent } from './components/detail-section-actio
     CKEditorModule,
 
     TruncatePipe,
+    AsSecuredPathPipe,
   ],
 })
 export class SharedModule { }

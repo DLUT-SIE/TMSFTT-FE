@@ -19,7 +19,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { DataReviewComponent } from './data-review.component';
-import { OffCampusRecordDetailComponent } from 'src/app/shared/components/off-campus-record-detail/off-campus-record-detail.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -28,6 +27,7 @@ import { DetailItemContentComponent } from 'src/app/shared/components/detail-ite
 import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
 import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
 import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
+import { AppOffCampusRecordDetailStub } from 'src/testing/app-shared-off-campus-record-detail-stub.';
 
 describe('DataReviewComponent', () => {
   let component: DataReviewComponent;
@@ -43,7 +43,7 @@ describe('DataReviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         DataReviewComponent,
-        OffCampusRecordDetailComponent,
+        AppOffCampusRecordDetailStub,
         DetailSectionComponent,
         DetailItemComponent,
         DetailItemTitleComponent,
