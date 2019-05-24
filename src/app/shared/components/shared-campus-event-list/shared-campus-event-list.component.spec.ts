@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 import { EventListType } from '../../enums/event-list-type.enum';
 import { SharedCampusEventListComponent } from './shared-campus-event-list.component';
 import { Enrollment } from 'src/app/shared/interfaces/enrollment';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 describe('SharedCampusEventListComponent', () => {
   let component: SharedCampusEventListComponent;
@@ -48,6 +49,7 @@ describe('SharedCampusEventListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         SharedCampusEventListComponent,
+        TruncatePipe
       ],
       imports: [
         MatIconModule,
