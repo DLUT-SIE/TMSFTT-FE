@@ -208,7 +208,7 @@ describe('NotSchoolAdminAdminProgramListComponent', () => {
   it('should loadProgramsBelongToDepartment with other departments', () => {
     component.loadProgramsBelongToDepartment(1);
   });
-  
+
   it('should loadProgramsBelongToDepartment with dlut', () => {
     component.loadProgramsBelongToDepartment(0);
   });
