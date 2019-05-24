@@ -54,7 +54,7 @@ export class AdminProgramListComponent implements OnInit {
     const extraParams = new Map();
     this.isLoadingResults = true;
     if (department === 0) {
-      extraParams.set('department.name', '大连理工大学');
+      extraParams.set('department__name', '大连理工大学');
     } else {
       extraParams.set('department', department);
     }
