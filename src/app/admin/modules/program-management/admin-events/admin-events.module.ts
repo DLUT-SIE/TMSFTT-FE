@@ -6,6 +6,7 @@ import { AdminCampusEventListComponent } from './components/admin-campus-event-l
 import { AdminCampusEventDetailComponent } from './components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
 import { AdminEventsComponent } from './admin-events.component';
+import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { AdminEventsComponent } from './admin-events.component';
     AdminCampusEventDetailComponent,
     AdminCampusEventListComponent,
     AdminCampusFormComponent,
+    AdminCampusEventReviewListComponent,
   ],
   imports: [
     AdminEventsRoutingModule,

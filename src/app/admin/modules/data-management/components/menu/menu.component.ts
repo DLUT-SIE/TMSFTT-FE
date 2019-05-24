@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(AUTH_SERVICE) readonly authService: AuthService,
+  ) { }
 
   ngOnInit() {
   }

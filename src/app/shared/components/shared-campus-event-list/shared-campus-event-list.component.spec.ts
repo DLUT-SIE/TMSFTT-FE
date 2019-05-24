@@ -75,7 +75,7 @@ describe('SharedCampusEventListComponent', () => {
         {
           provide: EventService,
           useValue: {
-            getCampusEvents: () => getCampusEvents$,
+            getCampusEvents,
             enrollCampusEvent: () => enrollCampusEvent$,
           }
         },
@@ -111,16 +111,33 @@ describe('SharedCampusEventListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load event by admin', () => {
+  it('should load event for EventListType.ADMIN', () => {
     component.eventListType = EventListType.ADMIN;
-    expect(component.getResults(0, 0)).toBe(getCampusEvents$);
+    component.program = {id: 1};
+    const extraParams = new Map();
+    extraParams.set('program', 1);
+
+    component.getResults(0, 0);
+
+    expect(getCampusEvents).toHaveBeenCalledWith({limit: 0, offset: 0, extraParams});
   });
 
-  it('should load event by user', () => {
+  it('should load event for EventListType.TO_BE_REVIEWED', () => {
+    component.eventListType = EventListType.TO_BE_REVIEWED;
+    const extraParams = new Map();
+    extraParams.set('reviewed', false);
+
+    component.getResults(0, 0);
+
+    expect(getCampusEvents).toHaveBeenCalledWith({limit: 0, offset: 0, extraParams});
+  });
+
+  it('should load event for EventListType.USER', () => {
     component.eventListType = EventListType.USER;
 
+    component.getResults(0, 0);
 
-    expect(component.getResults(0, 0)).toBe(getCampusEvents$);
+    expect(getCampusEvents).toHaveBeenCalledWith({limit: 0, offset: 0});
   });
 
   it('should navigate to program detail', () => {
