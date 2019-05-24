@@ -15,7 +15,7 @@ import { DataExportComponent } from './data-export.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -26,10 +26,12 @@ describe('DataExportComponent', () => {
   let fixture: ComponentFixture<DataExportComponent>;
   let getRecords: jasmine.Spy;
   let getRecords$: Subject<PaginatedResponse<Record>>;
+  let transform: jasmine.Spy;
 
   beforeEach(async(() => {
     getRecords$ = new Subject();
     getRecords = jasmine.createSpy().and.returnValue(getRecords$);
+    transform = jasmine.createSpy().and.returnValue('abc');
     TestBed.configureTestingModule({
       declarations: [DataExportComponent],
       imports: [
@@ -70,6 +72,12 @@ describe('DataExportComponent', () => {
           useValue: {},
         },
         {
+          provide: DatePipe,
+          useValue: {
+            transform,
+          },
+        },
+        {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
         },
@@ -91,22 +99,44 @@ describe('DataExportComponent', () => {
   it('should get Results', () => {
     const eventName = 'abc';
     const location = 'loc';
-    const startTime = 'start time';
-    const endTime = 'end time';
+    const startTime = 'abc';
+    const endTime = 'abc';
     const offset = 5;
     const limit = 10;
     component.filterForm.setValue({
       eventName, location, startTime, endTime,
     });
     const params = new Map<string, string>([
-      ['event__name', eventName],
-      ['event__location', location],
-      ['startTime', startTime],
-      ['endTime', endTime],
+      ['event_name', eventName],
+      ['event_location', location],
+      ['start_time', startTime],
+      ['end_time', endTime],
     ]);
 
     component.getResults(offset, limit);
 
-    expect(getRecords).toHaveBeenCalledWith('records/search', {offset, limit, extraParams: params});
+    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams: params});
+  });
+
+  it('should get Results without time', () => {
+    const eventName = 'abc';
+    const location = 'loc';
+    const startTime = '';
+    const endTime = '';
+    const offset = 5;
+    const limit = 10;
+    component.filterForm.setValue({
+      eventName, location, startTime, endTime,
+    });
+    const params = new Map<string, string>([
+      ['event_name', eventName],
+      ['event_location', location],
+      ['start_time', startTime],
+      ['end_time', endTime],
+    ]);
+
+    component.getResults(offset, limit);
+
+    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams: params});
   });
 });

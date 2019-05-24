@@ -6,12 +6,16 @@ import { MenuComponent } from './components/menu/menu.component';
 import { SummaryAnalysisComponent } from './components/summary-analysis/summary-analysis.component';
 import { DataExportComponent } from './components/data-export/data-export.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [StatisticsComponent, MenuComponent, SummaryAnalysisComponent, DataExportComponent],
   imports: [
     StatisticsRoutingModule,
     SharedModule,
+  ],
+  providers: [
+    DatePipe,
   ]
 })
 export class StatisticsModule { }
