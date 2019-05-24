@@ -1,4 +1,8 @@
 <div #themeContainer id="themeContainer">
+    <div fxLayout="column" class="loading-shade" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+      <span>正在载入模块中...</span>
+    </div>
     <div class="wrapper">
         <div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/dlut-2.jpeg">
             <app-sidebar></app-sidebar>
