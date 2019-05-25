@@ -276,7 +276,7 @@ describe('RecordService', () => {
 
     service.updateRecordStatus(1, true, true).subscribe();
 
-    const url1 = `${environment.API_URL}/records/1/department-admin-review/`;
+    const url1 = `/records/1/department-admin-review/`;
 
     const req1 = httpTestingController.expectOne(url1);
     expect(req1.request.method).toEqual('POST');
@@ -284,7 +284,7 @@ describe('RecordService', () => {
 
     service.updateRecordStatus(1, true, false).subscribe();
 
-    const url2 = `${environment.API_URL}/records/1/school-admin-review/`;
+    const url2 = `/records/1/school-admin-review/`;
 
     const req2 = httpTestingController.expectOne(url2);
     expect(req2.request.method).toEqual('POST');
@@ -296,7 +296,7 @@ describe('RecordService', () => {
 
     service.closeRecord(1).subscribe();
 
-    const url = `${environment.API_URL}/records/1/close/`;
+    const url = `/records/1/close/`;
 
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('POST');
@@ -309,7 +309,7 @@ describe('RecordService', () => {
     service.getRoleChoices().subscribe((data: RoleChoice[]) => {
       expect(data.length).toEqual(2);
     });
-    const url = `${environment.API_URL}/records/role-choices/`;
+    const url = `/role-choices/`;
 
     const req = httpTestingController.expectOne(url);
 

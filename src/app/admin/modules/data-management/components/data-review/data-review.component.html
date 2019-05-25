@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
-      <div class="detail-section" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
           <button mat-raised-button color="primary" (click)="closeRecord()">关闭此记录</button>
           <button mat-raised-button color="primary" (click)="changeStatus(true)">通过</button>

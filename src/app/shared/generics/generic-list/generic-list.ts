@@ -1,4 +1,4 @@
-import { OnInit, ViewChild } from '@angular/core';
+import { OnInit, ViewChild, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,8 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
   isLoadingResults = true;
 
   readonly pageSize = environment.PAGINATION_SIZE;
+
+  @Input() detailUrlPrefix?: string;
 
   private forceRefresh$ = new Subject<PageEvent>();
   private initialized = false;
@@ -108,6 +110,6 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
 
   /** Navigate to detail page which is related to current route. */
   navigateToDetail(row: T) {
-    this.router.navigate(['.', row.id], { relativeTo: this.route });
+    this.router.navigate([this.detailUrlPrefix ? this.detailUrlPrefix : '.', row.id], { relativeTo: this.route });
   }
 }

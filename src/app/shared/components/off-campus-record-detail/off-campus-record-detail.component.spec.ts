@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatPaginatorModule,
   MatIconModule,
+  MatDividerModule,
   MatFormFieldModule,
   MatSnackBar,
   MatInputModule,
@@ -18,6 +19,12 @@ import { ReviewNoteService } from 'src/app/shared/services/records/review-note.s
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { Location } from '@angular/common';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
+import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
+import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
+import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-title/detail-item-title.component';
+import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
+import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
+import { AsSecuredPathPipe } from 'src/app/shared/pipes/as-secured-path.pipe';
 
 describe('OffCampusRecordDetailComponent', () => {
   let component: OffCampusRecordDetailComponent;
@@ -33,11 +40,20 @@ describe('OffCampusRecordDetailComponent', () => {
     createReviewNote$ = new Subject();
     snackBarOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
-      declarations: [ OffCampusRecordDetailComponent ],
+      declarations: [
+        OffCampusRecordDetailComponent,
+        DetailSectionComponent,
+        DetailItemComponent,
+        DetailItemTitleComponent,
+        DetailItemContentComponent,
+        DetailSectionActionsComponent,
+        AsSecuredPathPipe,
+      ],
       imports: [
         MatPaginatorModule,
         MatIconModule,
         MatFormFieldModule,
+        MatDividerModule,
         MatInputModule,
         FormsModule,
         NoopAnimationsModule
@@ -125,10 +141,14 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should create reviewnote.', () => {
+    component.reviewNoteContent = 'abc';
+    const forceRefresh = spyOn(component, 'forceRefresh');
 
     component.onSubmit();
+
     createReviewNote$.next();
 
+    expect(forceRefresh).toHaveBeenCalled();
   });
 
   it('should trigger refresh (at first page)', () => {
@@ -153,6 +173,7 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should display errors when creation failed.', () => {
+    component.reviewNoteContent = 'abc';
     createReviewNote$.error({
       message: 'Raw error message',
       error: {
@@ -162,17 +183,18 @@ describe('OffCampusRecordDetailComponent', () => {
 
     component.onSubmit();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content。', '创建失败！');
+    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content', '关闭');
   });
 
   it('should display raw errors when creation failed.', () => {
+    component.reviewNoteContent = 'abc';
     createReviewNote$.error({
       message: 'Raw error message',
     } as HttpErrorResponse);
 
     component.onSubmit();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '创建失败！');
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 
   it('should load data', () => {

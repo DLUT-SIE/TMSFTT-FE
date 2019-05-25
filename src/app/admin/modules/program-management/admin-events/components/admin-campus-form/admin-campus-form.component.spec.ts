@@ -17,26 +17,48 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
+import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { CKEditorDirectiveStub } from 'src/testing/ckeditor-stub';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 describe('AdminCampusFormComponent', () => {
   let component: AdminCampusFormComponent;
   let fixture: ComponentFixture<AdminCampusFormComponent>;
   let createEventForm$: Subject<CampusEvent>;
   let updateEventForm$: Subject<CampusEvent>;
+  let getRoundChoices$: Subject<RoundChoice[]>;
+  let getRoundChoices: jasmine.Spy;
   let getEvent$: Subject<CampusEvent>;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
+  let getRoleChoices: jasmine.Spy;
+  let getRoleChoices$: Subject<RoleChoice[]>;
 
+  const dummyRoundChoice: RoundChoice = {
+    type: 1,
+    name: 'sender',
+  };
+
+  const dummyRoleChoice: RoleChoice = {
+    role: 0,
+    role_str: '123',
+  };
 
   beforeEach(async(() => {
     createEventForm$ = new Subject();
     updateEventForm$ = new Subject();
     getEvent$ = new Subject();
+    getRoundChoices$ = new Subject<RoundChoice[]>();
+    getRoundChoices = jasmine.createSpy();
+    getRoundChoices.and.returnValue(getRoundChoices$);
     navigate = jasmine.createSpy();
     snackBarOpen = jasmine.createSpy();
+    getRoleChoices$ = new Subject();
+    getRoleChoices = jasmine.createSpy();
+    getRoleChoices.and.returnValue(getRoleChoices$);
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
@@ -69,6 +91,7 @@ describe('AdminCampusFormComponent', () => {
           useValue: {
             createCampusEvent: () => createEventForm$,
             updateCampusEvent: () => updateEventForm$,
+            getRoundChoices: () => getRoundChoices$,
             getEvent: () => getEvent$,
           }
         },
@@ -80,6 +103,12 @@ describe('AdminCampusFormComponent', () => {
           provide: MatSnackBar,
           useValue: {
             open: snackBarOpen,
+          },
+        },
+        {
+          provide: RecordService,
+          useValue: {
+            getRoleChoices: () => getRoleChoices$,
           },
         },
       ],
@@ -97,6 +126,16 @@ describe('AdminCampusFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load role-choices and round-choices', () => {
+    getRoleChoices$.next([dummyRoleChoice, dummyRoleChoice]);
+
+    expect(component.roleChoices).toEqual([dummyRoleChoice, dummyRoleChoice]);
+    getRoundChoices$.next([dummyRoundChoice, dummyRoundChoice]);
+
+    expect(component.roundChoices).toEqual([dummyRoundChoice, dummyRoundChoice]);
+  });
+
   it('should load event.', () => {
     const dummyEvent: CampusEvent = {
       id: 1,

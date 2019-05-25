@@ -6,6 +6,14 @@
     </div>
   </div>
 </a>
+<a routerLink="/admin/events/review" *ngIf="authService.isSchoolAdmin">
+  <div class="card card-plain">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">院系培训活动审核</h4>
+      <p class="card-category">审核各院系管理员创建的培训活动。</p>
+    </div>
+  </div>
+</a>
 <a routerLink="./batch-submit">
   <div class="card card-plain">
     <div class="card-header card-header-primary">

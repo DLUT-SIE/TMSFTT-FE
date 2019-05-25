@@ -23,5 +23,20 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "backend-apis",
+      "urls": [
+        "/api",
+        "/media",
+        "/mock-cas"
+      ],
+      "cacheConfig": {
+        "maxSize": 0,
+        "maxAge": "0u",
+        "strategy": "freshness"
+      }
+    }
   ]
 }

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf, Subject } from 'rxjs';
 
@@ -14,6 +14,7 @@ import { WindowService } from './shared/services/window.service';
 import { PlatformType } from './shared/enums/platform-type.enum';
 import { StyleManager } from './shared/services/style-manager.service';
 import { SwUpdate } from '@angular/service-worker';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @Component({
   selector: 'app-sidebar',
@@ -65,6 +66,7 @@ describe('AppComponent(Windows)', () => {
       imports: [
         NoopAnimationsModule,
         RouterTestingModule,
+        MatProgressSpinnerModule,
       ],
       declarations: [
         TestAppRootComponent,
@@ -175,6 +177,24 @@ describe('AppComponent(Windows)', () => {
   it('should skip other navigation events.', () => {
     events$.next({});
     expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('should update loading indicator value properly', () => {
+    expect(app.isLoading).toBeFalsy();  // 0
+    const startEvent = new RouteConfigLoadStart({});
+    const endEvent = new RouteConfigLoadEnd({});
+
+    events$.next(startEvent);
+    expect(app.isLoading).toBeTruthy();  // 1
+
+    events$.next(startEvent);
+    expect(app.isLoading).toBeTruthy();  // 2
+
+    events$.next(endEvent);
+    expect(app.isLoading).toBeTruthy();  // 1
+
+    events$.next(endEvent);
+    expect(app.isLoading).toBeFalsy();  // 0
   });
 
   it('should reset y position when navigation ended', () => {

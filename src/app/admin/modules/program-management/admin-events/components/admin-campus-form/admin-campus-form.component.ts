@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -7,11 +7,15 @@ import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 import { CampusEvent } from 'src/app/shared/interfaces/event';
+import { RoundChoice } from 'src/app/shared/interfaces/round-choice';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ChangeEvent, CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { UploadAdapter } from 'src/app/shared/services/upload-adapter';
 import { AppInjector } from 'src/app/app.module';
+import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -45,10 +49,12 @@ export class AdminCampusFormComponent implements OnInit {
       }
     ]
   };
+
+  roleChoices: RoleChoice[] = [];
+  roundChoices: RoundChoice[] = [];
   programId: number;
   isUpdateMode = false;
   event: CampusEvent;
-
   eventForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     time: ['', [Validators.required, Validators.maxLength(30)]],
@@ -57,19 +63,43 @@ export class AdminCampusFormComponent implements OnInit {
     numParticipants: ['', [Validators.required]],
     deadline: ['', [Validators.required, Validators.maxLength(30)]],
     description: ['', [Validators.required]],
+    coefficients: this.fb.array([]),
   });
+
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly snackBar: MatSnackBar,
     private readonly eventService: EventService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly recordService: RecordService
   ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(queryParams => {
       this.programId = queryParams.program_id;
+    });
+
+    this.recordService.getRoleChoices().pipe(
+      switchMap(roleChoices => {
+        this.roleChoices = roleChoices;
+        return this.eventService.getRoundChoices();
+      })
+    ).subscribe(roundChoices => {
+      this.roundChoices = roundChoices;
+      for (let i = 0; i < this.roleChoices.length; i++) {
+        const control = this.fb.group({
+          role: this.roleChoices[i].role,
+          coefficient: [0, [Validators.required]],
+          hours_option: '',
+          workload_option: '',
+        });
+
+        control.get('hours_option').setValue(this.roundChoices[0].type);
+        control.get('workload_option').setValue(this.roundChoices[0].type);
+        this.coefficients.push(control);
+      }
     });
 
     if (this.route.snapshot.queryParams.event_id !== undefined) {
@@ -142,6 +172,9 @@ export class AdminCampusFormComponent implements OnInit {
   get description() {
     return this.eventForm.get('description');
   }
+  get coefficients() {
+    return this.eventForm.get('coefficients') as FormArray;
+  }
 
   onSubmit() {
     const req: CampusEvent = {
@@ -154,6 +187,7 @@ export class AdminCampusFormComponent implements OnInit {
       num_participants: this.eventForm.value.numParticipants,
       deadline: this.eventForm.value.deadline,
       description: this.eventForm.value.description,
+      coefficients: this.eventForm.value.coefficients,
     };
     const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
                                              this.eventService.updateCampusEvent(req) :

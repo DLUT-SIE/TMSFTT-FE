@@ -50,3 +50,20 @@ a.sidenav-router-link:hover {
 .hidden {
   display: hidden;
 }
+
+@keyframes router-load-indicator-animation {
+  from {
+      opacity: 0.0 ;
+  }
+
+  to {
+      opacity: 1.0 ;
+  }
+}
+
+.animation-loading-shade {
+  animation-delay: 500ms;
+  animation-duration: 200ms;
+  animation-fill-mode: both;
+  animation-name: router-load-indicator-animation;
+}

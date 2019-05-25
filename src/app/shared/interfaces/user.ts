@@ -16,4 +16,12 @@ export interface User {
     administrative_department?: number;
     administrative_department_str?: string;
     groups?: number[];
+    gender_str?: string;
+    age?: number;
+    onboard_time?: string;
+    tenure_status?: string;
+    education_background?: string;
+    technical_title?: string;
+    teaching_type?: string;
+    cell_phone_number?: string;
 }

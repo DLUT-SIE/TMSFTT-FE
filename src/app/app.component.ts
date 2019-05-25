@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Location, PopStateEvent, DOCUMENT } from '@angular/common';
-import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 
@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private lastPoppedUrl: string;
   /** Record the y-axis state for all routes */
   private yScrollStack: number[] = [];
+  private asyncLoadingCount = 0;
 
   constructor(
     readonly styleManager: StyleManager,
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {
     this.updates.available.subscribe(event => {
       if (confirm('检测到您正在使用过期的页面，点击确定以更新至最新版本')) {
+        /* istanbul ignore next */
         this.updates.activateUpdate().then(() => this.document.location.reload());
       }
     });
@@ -73,6 +75,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         } else {
           this.windowService.nativeWindow.scrollTo(0, 0);
         }
+      } else if (event instanceof RouteConfigLoadStart) {
+        this.asyncLoadingCount++;
+      } else if (event instanceof RouteConfigLoadEnd) {
+        this.asyncLoadingCount--;
       }
     });
 
@@ -93,5 +99,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       const ps = new PerfectScrollbar(elemMainPanel);
       ps.update();
     }
+  }
+
+  get isLoading() {
+    return this.asyncLoadingCount !== 0;
   }
 }
