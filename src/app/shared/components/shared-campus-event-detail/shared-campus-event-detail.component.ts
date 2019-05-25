@@ -2,7 +2,7 @@ import { Component, Input, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
+import { EventDetailType } from 'src/app/shared/enums/event-detail-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from 'src/app/shared/services/events/event.service';
 import { MatSnackBar } from '@angular/material';

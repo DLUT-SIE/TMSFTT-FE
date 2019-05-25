@@ -23,8 +23,8 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>calendar_today</mat-icon>
           <mat-label i18n>时间</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="请提供校内培训活动的时间" formControlName="time"
-            i18n-placeholder required>
+          <input matInput [matDatepicker]="picker" placeholder="请提供校内培训活动的时间" formControlName="time" i18n-placeholder
+            required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
           <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
@@ -39,8 +39,7 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>place</mat-icon>
           <mat-label i18n>参加地点</mat-label>
-          <input matInput type="text" placeholder="请提供校内培训活动的地点" formControlName="location" i18n-placeholder
-            required>
+          <input matInput type="text" placeholder="请提供校内培训活动的地点" formControlName="location" i18n-placeholder required>
           <mat-error *ngIf="location.invalid && (location.dirty || location.touched)">
             <span *ngIf="!!location.errors.required" i18n>
               您需要提供校内培训活动的地点。
@@ -53,8 +52,7 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>access_time</mat-icon>
           <mat-label i18n>参加时长</mat-label>
-          <input matInput type="number" placeholder="请提供校内培训活动的时长" formControlName="numHours" i18n-placeholder
-            required>
+          <input matInput type="number" placeholder="请提供校内培训活动的时长" formControlName="numHours" i18n-placeholder required>
           <mat-error *ngIf="numHours.invalid && (numHours.dirty || numHours.touched)">
             <span *ngIf="!!numHours.errors.required" i18n>
               您需要提供校内培训活动的时长。
@@ -64,8 +62,8 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>people</mat-icon>
           <mat-label i18n>参加人数</mat-label>
-          <input matInput type="number" placeholder="请提供校内培训活动的参加人数" formControlName="numParticipants"
-            i18n-placeholder required>
+          <input matInput type="number" placeholder="请提供校内培训活动的参加人数" formControlName="numParticipants" i18n-placeholder
+            required>
           <mat-error *ngIf="numParticipants.invalid && (numParticipants.dirty || numParticipants.touched)">
             <span *ngIf="!!numParticipants.errors.required" i18n>
               您需要提供校内培训活动的参加人数。
@@ -90,39 +88,38 @@
         </mat-form-field>
 
         <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
-        fxLayoutAlign.gt-sm="space-between center" *ngFor="let g of coefficients.controls; let i=index">
-        <ng-container [formGroup]="g">
-          <label>“{{ roleChoices[i].role_str }}” 身份工作量系数：</label>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>people</mat-icon>
-            <mat-label i18n>系数</mat-label>
-            <input matInput type="number" placeholder="请提供校内培训活动参与工作量系数" formControlName="coefficient"
-              i18n-placeholder required>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>note_add</mat-icon>
-            <mat-select placeholder="学时取整方式" formControlName="hours_option" required>
-              <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
-                {{ roundChoice.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>note_add</mat-icon>
-            <mat-select placeholder="工作量计算取整方式" formControlName="workload_option" required>
-              <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
-                {{ roundChoice.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-      </div>
-
+          fxLayoutAlign.gt-sm="space-between center" *ngFor="let g of coefficients.controls; let i=index">
+          <ng-container [formGroup]="g">
+            <label>“{{ roleChoices[i].role_str }}” 身份工作量系数：</label>
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>people</mat-icon>
+              <mat-label i18n>系数</mat-label>
+              <input matInput type="number" placeholder="请提供校内培训活动参与工作量系数" formControlName="coefficient"
+                i18n-placeholder required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-select placeholder="学时取整方式" formControlName="hours_option" required>
+                <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
+                  {{ roundChoice.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-icon matPrefix>note_add</mat-icon>
+              <mat-select placeholder="工作量计算取整方式" formControlName="workload_option" required>
+                <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
+                  {{ roundChoice.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </div>
 
         <ng-container *ngIf="!isUpdateMode || (isUpdateMode && event)">
+          <h4>活动简介</h4>
           <ckeditor [editor]="editor" [config]="editorConfig" (ready)="onDescriptionEditorReady($event)"
-                    [data]="description.value" (change)="descriptionChange($event)"
-                    ></ckeditor>
+            [data]="description.value" (change)="descriptionChange($event)"></ckeditor>
         </ng-container>
         <mat-divider></mat-divider>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EventDetailType } from 'src/app/shared/enums/event-detaile-type.enum';
+import { EventDetailType } from 'src/app/shared/enums/event-detail-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 @Component({

@@ -26,7 +26,6 @@ export class AdminCampusFormComponent implements OnInit {
   editor = DecoupledEditor;
   editorConfig = {
     language: 'zh-cn',
-    placeholder: '请提供校内培训活动的简要介绍 *',
     toolbar: {
       items: [
         'heading',

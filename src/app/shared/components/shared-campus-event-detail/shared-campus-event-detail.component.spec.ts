@@ -3,7 +3,7 @@ import { SharedCampusEventDetailComponent } from './shared-campus-event-detail.c
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EventDetailType } from '../../enums/event-detaile-type.enum';
+import { EventDetailType } from '../../enums/event-detail-type.enum';
 import {
   MatSnackBar, MatDividerModule
  } from '@angular/material';

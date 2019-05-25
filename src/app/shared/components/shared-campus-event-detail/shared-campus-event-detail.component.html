@@ -43,7 +43,8 @@
 
         <detail-item>
           <detail-item-title>活动报名人数</detail-item-title>
-          <detail-item-content>{{ event.num_enrolled }} (已报名人数) / {{ event.num_participants }} (最大可报名人数)</detail-item-content>
+          <detail-item-content>{{ event.num_enrolled }} (已报名人数) / {{ event.num_participants }} (最大可报名人数)
+          </detail-item-content>
         </detail-item>
 
         <detail-item>
@@ -53,17 +54,18 @@
 
         <detail-item>
           <detail-item-title>活动简介</detail-item-title>
-          <detail-item-content><div [innerHTML]="description"></div></detail-item-content>
+          <detail-item-content>
+            <div [innerHTML]="description"></div>
+          </detail-item-content>
         </detail-item>
 
         <detail-section-actions>
-          <ng-container *ngIf="!event.reviewed && authService.isSchoolAdmin">
-            <button mat-raised-button color="primary" (click)="reviewCampusEvent()">审核通过</button>
-          </ng-container>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
             <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
           </ng-container>
           <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
+            <button mat-raised-button color="primary" *ngIf="!event.reviewed && authService.isSchoolAdmin"
+              (click)="reviewCampusEvent()">审核通过</button>
             <button mat-raised-button color="primary">导出签到表</button>
             <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
           </ng-container>
@@ -72,5 +74,5 @@
       </detail-section>
     </div>
   </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
-<div fxFlex.lg="1 1 calc(1em)"></div>
