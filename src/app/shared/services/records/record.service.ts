@@ -118,20 +118,20 @@ export class RecordService extends GenericListService {
 
   updateRecordStatus(recordId: number, isApproved: boolean, isDepartmentAdmin: boolean) {
     if (isDepartmentAdmin) {
-      return this.http.post(`${environment.API_URL}/records/${recordId}/department-admin-review/`, {});
+      return this.http.post(`/records/${recordId}/department-admin-review/`, {});
     }
-    return this.http.post(`${environment.API_URL}/records/${recordId}/school-admin-review/`, {});
+    return this.http.post(`/records/${recordId}/school-admin-review/`, {});
   }
 
   closeRecord(recordId: number) {
-    return this.http.post(`${environment.API_URL}/records/${recordId}/close/`, {});
+    return this.http.post(`/records/${recordId}/close/`, {});
   }
 
   getRoleChoices() {
     if (this.cachedRoleChoices.length !== 0) {
       return observableOf(this.cachedRoleChoices);
     }
-    return this.http.get<RoleChoice[]>(`${environment.API_URL}/records/role-choices/`).pipe(
+    return this.http.get<RoleChoice[]>(`/role-choices/`).pipe(
       tap(data => this.cachedRoleChoices = data),
     );
   }
