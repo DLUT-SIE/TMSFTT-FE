@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { of as observableOf, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Department } from 'src/app/shared/interfaces/department';
 import { User } from 'src/app/shared/interfaces/user';
 import { Group } from 'src/app/shared/interfaces/group';
 import { UserService } from 'src/app/shared/services/user.service';
