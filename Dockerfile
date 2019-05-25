@@ -36,4 +36,5 @@ COPY --from=builder /app/dist/out /usr/share/nginx/html
 
 # Copy nginx configuration file
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/real_ip.conf /etc/nginx/conf.d/real_ip.conf
 COPY ./nginx/uwsgi_params /
