@@ -320,4 +320,15 @@ describe('RecordService', () => {
       expect(data.length).toEqual(2);
     });
   });
+
+  it('should export Records.', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    const url = `1433223`;
+    service.exportRecords(url).subscribe();
+
+    const req = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toEqual('GET');
+  });
 });

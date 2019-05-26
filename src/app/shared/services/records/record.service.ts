@@ -135,4 +135,8 @@ export class RecordService extends GenericListService {
       tap(data => this.cachedRoleChoices = data),
     );
   }
+
+  exportRecords(url: string) {
+    return this.http.get(url);
+  }
 }
