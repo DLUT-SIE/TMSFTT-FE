@@ -15,7 +15,7 @@ import { DataExportComponent } from './data-export.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HAMMER_LOADER } from '@angular/platform-browser';
-import { Location, DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Record } from 'src/app/shared/interfaces/record';
@@ -26,12 +26,10 @@ describe('DataExportComponent', () => {
   let fixture: ComponentFixture<DataExportComponent>;
   let getRecords: jasmine.Spy;
   let getRecords$: Subject<PaginatedResponse<Record>>;
-  let transform: jasmine.Spy;
 
   beforeEach(async(() => {
     getRecords$ = new Subject();
     getRecords = jasmine.createSpy().and.returnValue(getRecords$);
-    transform = jasmine.createSpy().and.returnValue('abc');
     TestBed.configureTestingModule({
       declarations: [DataExportComponent],
       imports: [
@@ -72,12 +70,6 @@ describe('DataExportComponent', () => {
           useValue: {},
         },
         {
-          provide: DatePipe,
-          useValue: {
-            transform,
-          },
-        },
-        {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
         },
@@ -113,6 +105,7 @@ describe('DataExportComponent', () => {
       ['end_time', endTime],
     ]);
 
+    spyOn(component.datePipe, 'transform').and.returnValue('abc');
     component.getResults(offset, limit);
 
     expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams: params});
