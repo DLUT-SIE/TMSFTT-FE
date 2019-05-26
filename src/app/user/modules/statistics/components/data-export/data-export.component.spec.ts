@@ -186,6 +186,8 @@ describe('DataExportComponent', () => {
       startTime: new Date(2019, 5, 21),
       endTime: new Date(2019, 5, 21),
     };
+
+    spyOn(component.datePipe, 'transform').and.returnValue('abc');
     const url: string = component.buildUrl();
 
     expect(url).toEqual(
