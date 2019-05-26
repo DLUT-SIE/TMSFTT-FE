@@ -274,6 +274,7 @@ export class RecordFormComponent implements OnInit {
     targetRecord.subscribe(
       record => {
         this.router.navigate(['user/off-campus-event-records/', record.id]);
+        this.submitDisabled = false;
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
@@ -284,6 +285,7 @@ export class RecordFormComponent implements OnInit {
           }
         }
         this.snackBar.open(message, '关闭');
+        this.submitDisabled = false;
       });
   }
 
