@@ -20,10 +20,6 @@ export class RecordDetailComponent implements OnInit {
   isCampusEventRecord: boolean;
   hasFeedbackSent: boolean;
   editable: boolean;
-  readonly editableStatus = new Set([RecordStatus.STATUS_SUBMITTED,
-                                     RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED,
-                                     RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED,
-                                     RecordStatus.STATUS_SCHOOL_ADMIN_REJECTED]);
 
   constructor(
     readonly location: Location,
@@ -39,7 +35,7 @@ export class RecordDetailComponent implements OnInit {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
       this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
-      this.editable = this.editableStatus.has(this.record.status);
+      this.editable = this.record.allow_actions_from_user;
     });
   }
 

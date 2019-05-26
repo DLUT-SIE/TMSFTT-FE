@@ -17,7 +17,6 @@ import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-servic
 export class DataReviewComponent implements OnInit {
   /** The data to be displayed. */
   record: Record;
-  ordinaryUserAllowed: boolean;
   departmentAdminAllowed: boolean;
   schoolAdminAllowed: boolean;
 
@@ -72,9 +71,8 @@ export class DataReviewComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { record: Record}) => {
       this.record = data.record;
-      this.ordinaryUserAllowed = data.record.allow_ordinary_user_review;
-      this.departmentAdminAllowed = data.record.allow_department_admin_review;
-      this.schoolAdminAllowed = data.record.allow_school_admin_review;
+      this.departmentAdminAllowed = data.record.allow_actions_from_department_admin;
+      this.schoolAdminAllowed = data.record.allow_actions_from_school_admin;
     });
   }
 

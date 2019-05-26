@@ -8,9 +8,9 @@
       <app-off-campus-record-detail [record]="record"></app-off-campus-record-detail>
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.md="10px">
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <button mat-raised-button color="primary" (click)="closeRecord()" *ngIf="departmentAdminAllowed || schoolAdminAllowed || ordinaryUserAllowed">关闭此记录</button>
-          <button mat-raised-button color="primary" (click)="changeStatus(true)" *ngIf="departmentAdminAllowed || schoolAdminAllowed || ordinaryUserAllowed">通过</button>
-          <button mat-raised-button color="primary" (click)="changeStatus(false)" *ngIf="departmentAdminAllowed || schoolAdminAllowed || ordinaryUserAllowed">不通过</button>
+          <button mat-raised-button color="primary" (click)="closeRecord()" *ngIf="departmentAdminAllowed || schoolAdminAllowed">关闭此记录</button>
+          <button mat-raised-button color="primary" (click)="changeStatus(true)" *ngIf="departmentAdminAllowed || schoolAdminAllowed">通过</button>
+          <button mat-raised-button color="primary" (click)="changeStatus(false)" *ngIf="departmentAdminAllowed || schoolAdminAllowed">不通过</button>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </div>
