@@ -186,7 +186,6 @@ describe('OffCampusRecordDetailComponent', () => {
 
     expect(hasPreviousPage).toHaveBeenCalled();
     expect(firstPage).not.toHaveBeenCalled();
-    expect(getReviewNotes).toHaveBeenCalled();
   });
 
   it('should display errors when creation failed.', () => {
