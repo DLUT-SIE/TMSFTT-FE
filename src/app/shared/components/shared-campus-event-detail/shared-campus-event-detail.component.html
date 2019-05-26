@@ -59,6 +59,21 @@
           </detail-item-content>
         </detail-item>
 
+        <ng-container *ngFor="let coefficient of event.coefficients">
+          <detail-item>
+            <detail-item-title>{{ coefficient.role_str }}角色系数</detail-item-title>
+            <detail-item-content>{{ coefficient.coefficient }}</detail-item-content>
+          </detail-item>
+          <detail-item>
+            <detail-item-title>{{ coefficient.role_str }}学时取整方式</detail-item-title>
+            <detail-item-content>{{ coefficient.hours_option_str }}</detail-item-content>
+          </detail-item>
+          <detail-item>
+            <detail-item-title>{{ coefficient.role_str }}工作量取整方式</detail-item-title>
+            <detail-item-content>{{ coefficient.workload_option_str }}</detail-item-content>
+          </detail-item>
+        </ng-container>
+
         <detail-section-actions>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
             <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>

@@ -4,6 +4,9 @@ export interface Coefficient {
     coefficient?: number;
     hours_option?: number;
     workload_option?: number;
-    campus_event?: CampusEvent;
-    off_campus_event?: OffCampusEvent;
+    campus_event?: CampusEvent | number;
+    off_campus_event?: OffCampusEvent | number;
+    hours_option_str?: string;
+    workload_option_str?: string;
+    role_str?: string;
 }
