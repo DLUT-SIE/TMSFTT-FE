@@ -19,9 +19,9 @@ export class GenericListService {
         params.set('offset', req.offset || 0);
         params.set('limit', req.limit || environment.PAGINATION_SIZE);
         const queryParams = Array.from(params.keys()).sort().map((key) => {
-            let val = params.get(key);
+            const val = params.get(key);
             if (val === null) {
-                val = '';
+                return null;
             }
             return  key + '=' + encodeURIComponent(val.toString());
         }).filter(x => x !== null).join('&');

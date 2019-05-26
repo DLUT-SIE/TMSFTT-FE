@@ -22,13 +22,14 @@ export class DataExportComponent extends GenericListComponent<Record> {
     endTime: [''],
   });
 
+  readonly datePipe: DatePipe = new DatePipe('zh-Hans');
+
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
     protected readonly location: Location,
     private readonly fb: FormBuilder,
     private readonly recordService: RecordService,
-    private readonly datePipe: DatePipe,
   ) {
     super(route, router, location);
   }
