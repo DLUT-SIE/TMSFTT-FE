@@ -38,6 +38,7 @@ describe('OffCampusRecordDetailComponent', () => {
   const dummyReviewNote = { id: 1 };
 
   beforeEach(async(() => {
+    getReviewNotes = jasmine.createSpy();
     getReviewNotes$ = new Subject();
     createReviewNote$ = new Subject();
     snackBarOpen = jasmine.createSpy();
@@ -114,8 +115,6 @@ describe('OffCampusRecordDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OffCampusRecordDetailComponent);
     component = fixture.componentInstance;
-    getReviewNotes = spyOn(component, 'getReviewNotes');
-    getReviewNotes.and.returnValue(getReviewNotes$);
     const record = {
       id: 1,
       create_time: '2019-01-01',
@@ -147,6 +146,9 @@ describe('OffCampusRecordDetailComponent', () => {
   });
 
   it('should get reviewnotes', () => {
+    getReviewNotes = spyOn(component, 'getReviewNotes');
+    getReviewNotes.and.returnValue(getReviewNotes$);
+
     expect(component.getReviewNotes(10, 0)).toBe(getReviewNotes$);
   });
 
@@ -159,6 +161,11 @@ describe('OffCampusRecordDetailComponent', () => {
     createReviewNote$.next();
 
     expect(forceRefresh).toHaveBeenCalled();
+
+    component.reviewNoteContent = '';
+    component.onSubmit();
+
+    expect(snackBarOpen).toHaveBeenCalledWith('请输入内容后再进行提交', '关闭', {duration: 3000});
   });
 
   it('should trigger refresh (at first page)', () => {
