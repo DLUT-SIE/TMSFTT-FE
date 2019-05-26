@@ -7,6 +7,7 @@ import {
   MatProgressSpinnerModule,
   MatNativeDateModule,
   MatInputModule,
+  MatSnackBar,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,16 +21,24 @@ import { RecordService } from 'src/app/shared/services/records/record.service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Record } from 'src/app/shared/interfaces/record';
 import { Subject } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { WindowService } from 'src/app/shared/services/window.service';
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent;
   let fixture: ComponentFixture<DataExportComponent>;
   let getRecords: jasmine.Spy;
+  let exportRecordsSubject$ = new Subject<{'url': string}>();
   let getRecords$: Subject<PaginatedResponse<Record>>;
+  let snackBarOpen: jasmine.Spy;
+  let windowOpen: jasmine.Spy;
 
   beforeEach(async(() => {
     getRecords$ = new Subject();
     getRecords = jasmine.createSpy().and.returnValue(getRecords$);
+    snackBarOpen = jasmine.createSpy();
+    windowOpen = jasmine.createSpy();
+    exportRecordsSubject$ = new Subject<{'url': string}>();
     TestBed.configureTestingModule({
       declarations: [DataExportComponent],
       imports: [
@@ -63,6 +72,7 @@ describe('DataExportComponent', () => {
           provide: RecordService,
           useValue: {
             getRecords,
+            exportRecords: () => exportRecordsSubject$,
           },
         },
         {
@@ -73,6 +83,18 @@ describe('DataExportComponent', () => {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
         },
+        {
+          provide: MatSnackBar,
+          useValue: {
+            open: snackBarOpen,
+          }
+        },
+        {
+          provide: WindowService,
+          useValue: {
+            open: windowOpen,
+          }
+        }
       ],
     })
       .compileComponents();
@@ -131,5 +153,42 @@ describe('DataExportComponent', () => {
     component.getResults(offset, limit);
 
     expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams: params});
+  });
+
+
+  it('should occure error', () => {
+    const buildUrl = spyOn(component, 'buildUrl');
+    buildUrl.and.returnValue('123');
+    component.doResultsExport();
+    exportRecordsSubject$.error({
+      error: {detail: 'Raw error message'},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+    expect(buildUrl).toHaveBeenCalled();
+  });
+
+  it('should load data', () => {
+    const buildUrl = spyOn(component, 'buildUrl');
+    buildUrl.and.returnValue('123');
+    component.doResultsExport();
+    exportRecordsSubject$.next({
+      url: '/path/to/file',
+    } as {url: string});
+    expect(buildUrl).toHaveBeenCalled();
+    expect(windowOpen).toHaveBeenCalledWith('/path/to/file');
+    expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '确定', {duration: 3000});
+  });
+
+  it('should build url', () => {
+    component.valueToExport = {
+      eventName: '111',
+      location: '222',
+      startTime: new Date(2019, 5, 21),
+      endTime: new Date(2019, 5, 21),
+    };
+    const url: string = component.buildUrl();
+
+    expect(url).toEqual(
+      `/aggregate-data/table-export/?table_type=8&event_name=111&event_location=222&start_time=abc&end_time=abc`);
   });
 });
