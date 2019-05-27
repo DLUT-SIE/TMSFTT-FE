@@ -18,6 +18,5 @@ export interface Record {
   role: number;
   role_str?: string;
   allow_actions_from_user?: boolean;
-  allow_actions_from_department_admin?: boolean;
-  allow_actions_from_school_admin?: boolean;
+  allow_actions_from_admin?: boolean;
 }
