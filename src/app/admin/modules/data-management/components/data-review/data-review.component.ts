@@ -33,7 +33,6 @@ export class DataReviewComponent implements OnInit {
     this.recordService.updateRecordStatus(this.record.id, isApproved, isDepartmentAdmin)
     .subscribe(() => {
       this.snackBar.open('操作成功！', '关闭');
-      /* istanbul ignore else */
       this.adminAllowed = false;
       },
       (error: HttpErrorResponse) => {
