@@ -52,7 +52,7 @@ export class DataGraphOptionsComponent implements OnInit {
   }
 
   get showGroupTypeSelector() {
-    return this.selectedGraph.get('selectedStatisticsType').value ? this.statisticsType[
+    return this.selectedGraph.get('selectedStatisticsType').value !== null ? this.statisticsType[
       this.selectedGraph.get('selectedStatisticsType').value].key !== GraphTypeName.HOURS_STATISTICS : false;
   }
 

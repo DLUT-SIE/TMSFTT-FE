@@ -54,34 +54,34 @@ export class DataGraphCanvasComponent implements OnInit {
         legend: {
             data: ['', ''],
             x: '10%',
-            y: '3%'
-        },
-        grid: {
-            containLabel: true,
-        },
-        tooltip: {
-            formatter: '{b}'
+            y: '5%'
         },
         title: [{
             text: '',
             left: '50%',
             textAlign: 'center'
         }],
-        xAxis: {
+        yAxis: {
             type: 'value',
+            name: '',
+            position: 'left',
             splitLine: {
                 show: false
             }
         },
-        yAxis: {
+        xAxis: {
             type: 'category',
             data: [],
-            splitLine: {
-                show: false
-            },
             axisLabel: {
                 interval: 0,
+                rotate: 330
             },
+        },
+        grid: {
+            containLabel: true,
+        },
+        tooltip: {
+            formatter: '{b}'
         },
         series: [{
             name: '',
