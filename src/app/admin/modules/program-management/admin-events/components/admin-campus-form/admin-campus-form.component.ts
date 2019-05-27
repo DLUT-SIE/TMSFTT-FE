@@ -49,7 +49,6 @@ export class AdminCampusFormComponent implements OnInit {
     ]
   };
 
-  roleChoice: RoleChoice = {};
   roleChoices: RoleChoice[] = [];
   roundChoices: RoundChoice[] = [];
   programId: number;
@@ -134,13 +133,11 @@ export class AdminCampusFormComponent implements OnInit {
     this.deadline.setValue(this.event.deadline);
     this.description.setValue(this.event.description);
     for (let i = 0; i < event.coefficients.length; i++) {
-      this.roleChoice.role = event.coefficients[i].role;
-      this.roleChoice.role_str = event.coefficients[i].role_str;
-      this.roleChoices.push(this.roleChoice);
+      this.roleChoices.push({role: event.coefficients[i].role, role_str: event.coefficients[i].role_str});
 
       const control = this.fb.group({
         role: event.coefficients[i].role,
-        coefficient: event.coefficients[i].coefficient,
+        coefficient: [event.coefficients[i].coefficient, [Validators.required]],
         hours_option: event.coefficients[i].hours_option,
         workload_option: event.coefficients[i].workload_option,
       });
