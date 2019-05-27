@@ -4,9 +4,13 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detail-type.enum';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatSnackBar, MatDividerModule
- } from '@angular/material';
+  MatIconModule,
+  MatInputModule,
+  MatSnackBar,
+  MatDividerModule,
+} from '@angular/material';
  import { EventService } from 'src/app/shared/services/events/event.service';
  import { Enrollment } from 'src/app/shared/interfaces/enrollment';
  import { Subject } from 'rxjs';
@@ -43,6 +47,9 @@ describe('SharedCampusEventDetailComponent', () => {
         DetailSectionActionsComponent,
       ],
       imports: [
+        ReactiveFormsModule,
+        MatIconModule,
+        MatInputModule,
         MatDividerModule,
       ],
       providers: [

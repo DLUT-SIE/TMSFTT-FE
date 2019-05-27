@@ -115,7 +115,7 @@ describe('AdminCampusFormComponent', () => {
                 get: () => '1',
               },
               queryParams: {
-                event_id: 'undefined',
+                event_id: '1',
               },
             }
           },
