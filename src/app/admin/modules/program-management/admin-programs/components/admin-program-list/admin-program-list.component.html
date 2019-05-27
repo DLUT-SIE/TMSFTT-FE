@@ -2,8 +2,8 @@
   <div fxLayout="row" fxLayoutAlign="space-between" >
     <mat-form-field>
       <mat-label>选择开设单位</mat-label>
-      <mat-select disableOptionCentering="true">
-        <mat-option (click)="loadProgramsBelongToDepartment(0)">校级</mat-option>
+      <mat-select>
+        <mat-option [value]="0" (click)="loadProgramsBelongToDepartment(0)">校级</mat-option>
         <mat-option *ngFor="let department of departments" [value]="department.id" (click)="loadProgramsBelongToDepartment(department.id)">{{department.name}}</mat-option>
       </mat-select>
     </mat-form-field>
