@@ -38,11 +38,7 @@ describe('DataGraphOptionsComponent', () => {
     type: 1,
     name: '培训学时与工作量统计',
     key: 'TRAINING_HOURS_WORKLOAD_STATISTICS',
-    subOption: [{
-      type: 0,
-      name: '按总人数',
-      key: 'BY_TOTAL_STAFF_NUM'
-    }]
+    subOption: []
   }, {
     type: 2,
     name: '专任教师培训覆盖率统计',
@@ -155,7 +151,7 @@ describe('DataGraphOptionsComponent', () => {
     getGroupPrograms$.next(programsOption);
     component.selectedGraph.patchValue({selectedStatisticsType: null});
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
-    expect(component.selectedGraph.get('selectedGroupType').value).toBe(null);
+    expect(component.selectedGraph.get('selectedGroupType').value).toBe(0);
     expect(component.showDepartmentSelector).toBeFalsy();
     expect(component.selectedGraph.get('selectedDepartment').value.id).toEqual(0);
 
@@ -202,5 +198,13 @@ describe('DataGraphOptionsComponent', () => {
     expect(component.isCoverageGraph).toBeFalsy();
     component.selectedGraph.patchValue({selectedStatisticsType: 2});
     expect(component.isCoverageGraph).toBeTruthy();
+  });
+
+  it('should hide groupType', () => {
+    getOptions$.next(options);
+    getGroupPrograms$.next(programsOption);
+    component.selectedGraph.patchValue({selectedStatisticsType: 1});
+    expect(component.showGroupTypeSelector).toBeFalsy();
+    expect(component.selectedGraph.get('selectedGroupType').value).toBe(0);
   });
 });

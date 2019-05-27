@@ -16,7 +16,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div fxFlex="1 1 calc(4em)" *ngIf="selectedGraph.get('selectedStatisticsType').value !== null">
+            <div fxFlex="1 1 calc(4em)" *ngIf="showGroupTypeSelector">
               <mat-form-field>
                 <mat-label>选择分组类型</mat-label>
                 <mat-select formControlName="selectedGroupType">

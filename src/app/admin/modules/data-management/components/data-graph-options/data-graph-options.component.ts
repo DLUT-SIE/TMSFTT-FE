@@ -51,6 +51,11 @@ export class DataGraphOptionsComponent implements OnInit {
     return this.isCoverageGraph ? '选择项目开设部门' : '选择学院';
   }
 
+  get showGroupTypeSelector() {
+    return this.selectedGraph.get('selectedStatisticsType').value ? this.statisticsType[
+      this.selectedGraph.get('selectedStatisticsType').value].key !== GraphTypeName.HOURS_STATISTICS : false;
+  }
+
   SelectedParamChangingCheck() {
     this.selectedGraph.get('selectedStatisticsType').valueChanges.subscribe(val => {
       if (val === null) {
@@ -89,6 +94,10 @@ export class DataGraphOptionsComponent implements OnInit {
         });
       } else {
         this.departmentsList = this.cachedDepartmentsList;
+      }
+      // 培训学时与工作量统计需隐藏分组选择组件，并初始化为0
+      if (this.statisticsType[val].key === GraphTypeName.HOURS_STATISTICS) {
+        this.selectedGraph.patchValue({selectedGroupType: 0});
       }
     });
     this.selectedGraph.get('selectedDepartment').valueChanges.subscribe(val => {
