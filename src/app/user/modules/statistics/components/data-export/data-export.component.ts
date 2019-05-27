@@ -85,7 +85,14 @@ export class DataExportComponent extends GenericListComponent<Record> {
       },
       (error: HttpErrorResponse) => {
           this.loggerService.log(error);
-          this.snackBar.open(error.error['detail'], '关闭');
+          let message = error.message;
+          if (error.error) {
+            message = '';
+            for (const key of Object.keys(error.error)) {
+              message += error.error[key].join(',');
+            }
+          }
+          this.snackBar.open(message, '关闭');
       });
   }
 
