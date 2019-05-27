@@ -44,7 +44,7 @@ export class DataGraphCanvasComponent implements OnInit {
         });
     }
 
-    barChartOption?: EChartOption;
+    barChartOptionList?: EChartOption[] = [];
     pieChartOptionList: EChartOption[] = [];
 
     axisList: string[] = [];
@@ -52,9 +52,12 @@ export class DataGraphCanvasComponent implements OnInit {
 
     baseDoubleBarChartOption: EChartOption = {
         legend: {
-            data: ['', ''],
+            data: [''],
             x: '10%',
             y: '5%'
+        },
+        tooltip: {
+            formatter: '{b}'
         },
         title: [{
             text: '',
@@ -79,9 +82,6 @@ export class DataGraphCanvasComponent implements OnInit {
         },
         grid: {
             containLabel: true,
-        },
-        tooltip: {
-            formatter: '{b}'
         },
         series: [{
             name: '',
@@ -183,7 +183,7 @@ export class DataGraphCanvasComponent implements OnInit {
     private subscription: Subscription;
 
     /* istanbul ignore next */
-    private formatLabel(params: {value: number}) {
+    private formatLabel(params: { value: number }) {
         return params.value && params.value > 0 ? `${params.value}` : '';
     }
 
@@ -230,33 +230,50 @@ export class DataGraphCanvasComponent implements OnInit {
     }
 
     buildBarChartOption(title: string) {
-        const chartOption = this.isCoverageGraph ?
-            this.baseCoverageBarChartOption : this.baseDoubleBarChartOption;
-        (chartOption.yAxis as echarts.EChartOption.SeriesBar).data = this.axisList;
-        (chartOption.title as echarts.EChartTitleOption[])[0].text = title;
-        // Expand the series based on the length of seriesData which obtained from backend.
-        const barSeriesLength = chartOption.series.length;
-        const barSeries = chartOption.series[0];
-        const legendList: string[] = [];
-        for (let i = 0; i < this.seriesData.length; i++) {
-            legendList.push(this.seriesData[i].seriesName);
-            // Add a series when the length of the current series small than seriesData's length.
-            if (i >= barSeriesLength) {
-                chartOption.series.push(JSON.parse(JSON.stringify(barSeries)));
-            }
-            (chartOption.series as echarts.EChartOption.SeriesBar[])[i]
-                .name = this.seriesData[i].seriesName;
-            (chartOption.series as echarts.EChartOption.SeriesBar[])[i]
-                .data = this.seriesData[i].data;
-        }
-        chartOption.series.splice(this.seriesData.length, chartOption.series.length);
-        (chartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
-        this.barChartOption = JSON.parse(JSON.stringify(chartOption));
+        this.barChartOptionList = [];
         if (this.isCoverageGraph) {
-            /* istanbul ignore next */
-            this.barChartOption.tooltip.formatter = this.formatTooltip;
+            const chartOption = this.baseCoverageBarChartOption;
+            (chartOption.yAxis as echarts.EChartOption.SeriesBar).data = this.axisList;
+            (chartOption.title as echarts.EChartTitleOption[])[0].text = title;
+            // Expand the series based on the length of seriesData which obtained from backend.
+            const barSeriesLength = chartOption.series.length;
+            const barSeries = chartOption.series[0];
+            const legendList: string[] = [];
             for (let i = 0; i < this.seriesData.length; i++) {
-                (this.barChartOption.series as echarts.EChartOption.SeriesBar[])[i].label.formatter = this.formatLabel;
+                legendList.push(this.seriesData[i].seriesName);
+                // Add a series when the length of the current series small than seriesData's length.
+                if (i >= barSeriesLength) {
+                    chartOption.series.push(JSON.parse(JSON.stringify(barSeries)));
+                }
+                (chartOption.series as echarts.EChartOption.SeriesBar[])[i]
+                    .name = this.seriesData[i].seriesName;
+                (chartOption.series as echarts.EChartOption.SeriesBar[])[i]
+                    .data = this.seriesData[i].data;
+            }
+            chartOption.series.splice(this.seriesData.length, chartOption.series.length);
+            (chartOption.legend as echarts.EChartOption.SeriesBar).data = legendList;
+            this.barChartOptionList.push(JSON.parse(JSON.stringify(chartOption)));
+            /* istanbul ignore next */
+            this.barChartOptionList[this.barChartOptionList.length - 1].tooltip.formatter = this.formatTooltip;
+            for (let i = 0; i < this.seriesData.length; i++) {
+                (this.barChartOptionList[this.barChartOptionList.length - 1]
+                    .series as echarts.EChartOption.SeriesBar[])[i].label.formatter = this.formatLabel;
+                if (i === this.seriesData.length - 1) {
+                    (this.barChartOptionList[this.barChartOptionList.length - 1]
+                        .series as echarts.EChartOption.SeriesBar[])[i].label.position = 'top';
+                }
+            }
+        } else {
+            const chartOption = this.baseDoubleBarChartOption;
+            for (let i = 0; i < this.seriesData.length; i++) {
+                (chartOption.yAxis as echarts.EChartOption.SeriesBar).data = this.axisList;
+                (chartOption.legend as echarts.EChartOption.SeriesBar).data[0] = this.seriesData[i].seriesName;
+                (chartOption.title as echarts.EChartTitleOption[])[0].text = title + `-${this.seriesData[i].seriesName}统计`;
+                (chartOption.series as echarts.EChartOption.SeriesBar[])[0]
+                    .name = this.seriesData[i].seriesName;
+                (chartOption.series as echarts.EChartOption.SeriesBar[])[0]
+                    .data = this.seriesData[i].data;
+                this.barChartOptionList.push(JSON.parse(JSON.stringify(chartOption)));
             }
         }
     }
@@ -265,6 +282,5 @@ export class DataGraphCanvasComponent implements OnInit {
         private readonly canvasService: CanvasService
     ) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 }

@@ -1,6 +1,6 @@
 <ng-container *ngFor="let pieChartOption of pieChartOptionList">
     <app-data-graph-echarts [option]="pieChartOption"></app-data-graph-echarts>
 </ng-container>
-<ng-container *ngIf="barChartOption">
+<ng-container *ngFor="let barChartOption of barChartOptionList">
     <app-data-graph-echarts [option]="barChartOption"></app-data-graph-echarts>
 </ng-container>
