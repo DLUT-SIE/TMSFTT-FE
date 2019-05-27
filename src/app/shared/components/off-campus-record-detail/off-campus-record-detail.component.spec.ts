@@ -19,7 +19,6 @@ import { OffCampusRecordDetailComponent } from './off-campus-record-detail.compo
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { Location } from '@angular/common';
-import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { DetailItemComponent } from 'src/app/shared/components/detail-item/detail-item.component';
 import { DetailItemContentComponent } from 'src/app/shared/components/detail-item-content/detail-item-content.component';
@@ -99,13 +98,6 @@ describe('OffCampusRecordDetailComponent', () => {
         {
           provide: HAMMER_LOADER,
           useValue: () => new Promise(() => { }),
-        },
-        {
-          provide: AUTH_SERVICE,
-          useValue: {
-            userID: 1,
-            username: 'aa',
-          },
         },
       ]
     })

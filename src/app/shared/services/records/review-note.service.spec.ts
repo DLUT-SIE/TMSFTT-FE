@@ -42,7 +42,7 @@ describe('ReviewNoteService', () => {
 
   it('should create reviewnote', () => {
     const service: ReviewNoteService = TestBed.get(ReviewNoteService);
-    const dres: Record = {
+    const rec: Record = {
       id: 1,
       campus_event: null,
       attachments: null,
@@ -54,10 +54,8 @@ describe('ReviewNoteService', () => {
       role: 0,
     };
     const notecontent = 'abc';
-    const user = 15;
-    const username = 'aa';
 
-    service.createReviewNote(dres, notecontent, user, username).subscribe();
+    service.createReviewNote(rec, notecontent).subscribe();
 
     const req = httpTestingController.expectOne(`/review-notes/`);
     expect(req.request.method).toBe('POST');
