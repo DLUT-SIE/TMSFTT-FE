@@ -86,7 +86,7 @@
             </span>
           </mat-error>
         </mat-form-field>
-        <ng-container *ngIf="roleChoices">
+        <ng-container>
           <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
             fxLayoutAlign.gt-sm="space-between center" *ngFor="let g of coefficients.controls; let i=index">
             <ng-container [formGroup]="g">

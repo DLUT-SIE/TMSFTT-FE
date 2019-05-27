@@ -58,23 +58,35 @@
             <div [innerHTML]="description"></div>
           </detail-item-content>
         </detail-item>
-        
+
         <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
           <ng-container  *ngFor="let coefficient of event.coefficients">
             <detail-item>
-              <detail-item-title>{{ coefficient.role_str }}角色系数</detail-item-title>
-              <detail-item-content>{{ coefficient.coefficient }}</detail-item-content>
-            </detail-item>
-            <detail-item>
-              <detail-item-title>{{ coefficient.role_str }}学时取整方式</detail-item-title>
-              <detail-item-content>{{ coefficient.hours_option_str }}</detail-item-content>
-            </detail-item>
-            <detail-item>
-              <detail-item-title>{{ coefficient.role_str }}工作量取整方式</detail-item-title>
-              <detail-item-content>{{ coefficient.workload_option_str }}</detail-item-content>
+              <detail-item-title>{{ coefficient.role_str }}角色</detail-item-title>
+              <detail-item-content>
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
+                  fxLayoutAlign.gt-sm="space-between center">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>people</mat-icon>
+                        <mat-label i18n>系数</mat-label>
+                        <input matInput type="number" [value]=coefficient.coefficient readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>note_add</mat-icon>
+                        <mat-label i18n>学时取整方式</mat-label>
+                        <input matInput type="string" [value]=coefficient.hours_option_str readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix>note_add</mat-icon>
+                        <mat-label i18n>工作量计算取整方式</mat-label>
+                        <input matInput type="string" [value]=coefficient.workload_option_str readonly>
+                    </mat-form-field>
+                </div>
+              </detail-item-content>
             </detail-item>
           </ng-container>
         </ng-container>
+
         <detail-section-actions>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
             <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
