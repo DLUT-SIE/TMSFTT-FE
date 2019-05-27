@@ -24,12 +24,10 @@ export class ReviewNoteService extends GenericListService {
     return this.list<PaginatedResponse<ReviewNote>>('review-notes', req);
   }
 
-  createReviewNote(dres: Record, notecontent: string, userID: number, username: string): Observable<ReviewNote> {
+  createReviewNote(rec: Record, notecontent: string): Observable<ReviewNote> {
     const data = {
       content: notecontent,
-      record: dres.id,
-      user: userID,
-      user_name: username,
+      record: rec.id,
     };
     return this.http.post<ReviewNote>(
       `/review-notes/`, data);

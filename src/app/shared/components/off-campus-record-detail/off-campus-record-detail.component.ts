@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatPaginator, PageEvent } from '@angular/material';
@@ -13,7 +13,6 @@ import { RecordAttachment } from 'src/app/shared/interfaces/record-attachment';
 import { RecordContent } from 'src/app/shared/interfaces/record-content';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { ContentType } from '../../enums/content-type.enum';
-import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 @Component({
   selector: 'app-off-campus-record-detail',
@@ -52,7 +51,6 @@ export class OffCampusRecordDetailComponent implements OnInit {
     protected readonly location: Location,
     protected readonly reviewNoteService: ReviewNoteService,
     protected readonly snackBar: MatSnackBar,
-    @Inject(AUTH_SERVICE) protected readonly authService: AuthService,
   ) {}
 
   getReviewNotes(offset: number, limit: number) {
@@ -66,7 +64,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
       this.snackBar.open('请输入内容后再进行提交', '关闭', {duration: 3000});
       return;
     }
-    this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent, this.authService.userID, this.authService.firstName)
+    this.reviewNoteService.createReviewNote(this.record, this.reviewNoteContent)
     .subscribe(() => {
       this.forceRefresh();
       },
