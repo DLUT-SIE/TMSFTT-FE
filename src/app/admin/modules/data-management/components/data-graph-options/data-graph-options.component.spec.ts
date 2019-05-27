@@ -37,7 +37,7 @@ describe('DataGraphOptionsComponent', () => {
   }, {
     type: 1,
     name: '培训学时与工作量统计',
-    key: 'TRAINING_HOURS_WORKLOAD_STATISTICS',
+    key: 'TRAINING_HOURS_STATISTICS',
     subOption: []
   }, {
     type: 2,
