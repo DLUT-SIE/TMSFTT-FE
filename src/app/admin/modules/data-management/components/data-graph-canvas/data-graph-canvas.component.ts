@@ -268,7 +268,7 @@ export class DataGraphCanvasComponent implements OnInit {
             for (let i = 0; i < this.seriesData.length; i++) {
                 (chartOption.yAxis as echarts.EChartOption.SeriesBar).data = this.axisList;
                 (chartOption.legend as echarts.EChartOption.SeriesBar).data[0] = this.seriesData[i].seriesName;
-                (chartOption.title as echarts.EChartTitleOption[])[0].text = title + `-${this.seriesData[i].seriesName}统计`;
+                (chartOption.title as echarts.EChartTitleOption[])[0].text = title + `-${this.seriesData[i].seriesName}`;
                 (chartOption.series as echarts.EChartOption.SeriesBar[])[0]
                     .name = this.seriesData[i].seriesName;
                 (chartOption.series as echarts.EChartOption.SeriesBar[])[0]
@@ -282,5 +282,5 @@ export class DataGraphCanvasComponent implements OnInit {
         private readonly canvasService: CanvasService
     ) { }
 
-    ngOnInit() {}
+    ngOnInit() { }
 }
