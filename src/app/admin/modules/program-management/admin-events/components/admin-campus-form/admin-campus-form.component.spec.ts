@@ -42,11 +42,6 @@ describe('AdminCampusFormComponent', () => {
     name: 'sender',
   };
 
-  // const dummyRoleChoice: RoleChoice = {
-  //   role: 0,
-  //   role_str: '123',
-  // };
-
   const dummyEvent: CampusEvent = {
     id: 1,
     create_time: '2019-01-01',
@@ -165,16 +160,6 @@ describe('AdminCampusFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // it('should load role-choices and round-choices when create', () => {
-  //   component.isUpdateMode = false;
-  //   getRoleChoices$.next([dummyRoleChoice, dummyRoleChoice]);
-
-  //   // expect(component.roleChoices).toEqual([dummyRoleChoice, dummyRoleChoice]);
-  //   getRoundChoices$.next([dummyRoundChoice, dummyRoundChoice]);
-
-  //   // expect(component.roundChoices).toEqual([dummyRoundChoice, dummyRoundChoice]);
-  // });
 
 
   it('should load round-choices when update', () => {
