@@ -29,6 +29,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
     off_campus_event?: OffCampusEvent;
     user?: number;
     status?: number;
+    status_str?: string;
     feedback?: number;
     attachments?: RecordAttachment[];
     contents?: RecordContent[];

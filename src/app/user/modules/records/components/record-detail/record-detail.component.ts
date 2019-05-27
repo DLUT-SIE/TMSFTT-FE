@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
-import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
 
 /** Display a record in detail. */
@@ -34,8 +33,8 @@ export class RecordDetailComponent implements OnInit {
     this.route.data.subscribe((data: { record: Record }) => {
       this.record = data.record;
       this.isCampusEventRecord = Boolean(this.record.campus_event);
-      this.hasFeedbackSent = this.record.status === RecordStatus.STATUS_FEEDBACK_SUBMITED;
       this.editable = this.record.allow_actions_from_user;
+      this.hasFeedbackSent = !!this.record.feedback;
     });
   }
 

@@ -12,6 +12,7 @@ export interface Record {
   off_campus_event?: OffCampusEvent;
   user?: number;
   status?: number;
+  status_str?: string;
   feedback?: number;
   attachments?: number[] | File[] | RecordAttachment[] | PaginatedResponse<RecordAttachment>;
   contents?: number[] | RecordContent[] | PaginatedResponse<RecordContent>;
