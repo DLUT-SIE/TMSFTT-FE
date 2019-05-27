@@ -68,7 +68,7 @@ export class AdminProgramFormComponent implements OnInit {
   onSubmit() {
     const req: Program = {
       id: this.isUpdateMode ? this.program.id : undefined,
-      department: this.authService.department,
+      department: this.authService.administrativeDepartment,
       category: this.programForm.value.categoryId,
       name: this.programForm.value.name,
     };
