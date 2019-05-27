@@ -17,8 +17,7 @@ import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-servic
 export class DataReviewComponent implements OnInit {
   /** The data to be displayed. */
   record: Record;
-  departmentAdminAllowed: boolean;
-  schoolAdminAllowed: boolean;
+  adminAllowed: boolean;
 
   constructor(
     protected readonly route: ActivatedRoute,
@@ -35,11 +34,7 @@ export class DataReviewComponent implements OnInit {
     .subscribe(() => {
       this.snackBar.open('操作成功！', '关闭');
       /* istanbul ignore else */
-      if (this.authService.isDepartmentAdmin) {
-        this.departmentAdminAllowed = false;
-      } else {
-        this.schoolAdminAllowed = false;
-      }
+      this.adminAllowed = false;
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
@@ -55,8 +50,7 @@ export class DataReviewComponent implements OnInit {
     this.recordService.closeRecord(this.record.id)
     .subscribe(() => {
       this.snackBar.open('操作成功！', '关闭');
-      this.departmentAdminAllowed = false;
-      this.schoolAdminAllowed = false;
+      this.adminAllowed = false;
       },
       (error: HttpErrorResponse) => {
         let message = error.message;
@@ -71,8 +65,7 @@ export class DataReviewComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { record: Record}) => {
       this.record = data.record;
-      this.departmentAdminAllowed = data.record.allow_actions_from_department_admin;
-      this.schoolAdminAllowed = data.record.allow_actions_from_school_admin;
+      this.adminAllowed = data.record.allow_actions_from_admin;
     });
   }
 
