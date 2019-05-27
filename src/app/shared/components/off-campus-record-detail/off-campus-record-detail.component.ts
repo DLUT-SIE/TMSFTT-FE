@@ -110,6 +110,7 @@ export class OffCampusRecordDetailComponent implements OnInit {
             message += error.error[key].join(',') + '。';
           }
         }
+        this.isLoadingReviewNotes = false;
         this.snackBar.open(message, '关闭');
       });
   }
