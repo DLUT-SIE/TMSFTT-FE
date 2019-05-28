@@ -230,4 +230,14 @@ describe('EventService', () => {
     });
   });
 
+  it('should export Records.', () => {
+    const service: EventService = TestBed.get(EventService);
+
+    const url = `1433223`;
+    service.exportAttendanceSheet(url).subscribe();
+
+    const req = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toEqual('GET');
+  });
 });

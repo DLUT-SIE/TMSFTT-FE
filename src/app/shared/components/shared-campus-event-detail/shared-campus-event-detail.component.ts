@@ -61,11 +61,9 @@ export class SharedCampusEventDetailComponent {
   }
 
   buildUrl(eventId: number): string {
-    let url = `/aggregate-data/table-export/?table_type=9`;
-    url += `&event_id=${eventId}`;
-    return url;
+    return  `/aggregate-data/table-export/?table_type=9&event_id=${eventId}`;
   }
-  
+
   doResultsExport(eventId: number) {
     this.eventService.exportAttendanceSheet(this.buildUrl(eventId)).subscribe(
       data => {
