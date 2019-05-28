@@ -19,7 +19,8 @@ import { DetailItemComponent } from '../detail-item/detail-item.component';
 import { DetailItemTitleComponent } from '../detail-item-title/detail-item-title.component';
 import { DetailItemContentComponent } from '../detail-item-content/detail-item-content.component';
 import { DetailSectionActionsComponent } from '../detail-section-actions/detail-section-actions.component';
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { WindowService } from 'src/app/shared/services/window.service';
 
 describe('SharedCampusEventDetailComponent', () => {
   let component: SharedCampusEventDetailComponent;
@@ -29,6 +30,8 @@ describe('SharedCampusEventDetailComponent', () => {
   let snackBarOpen: jasmine.Spy;
   let reviewCampusEvent: jasmine.Spy;
   let deleteEventEnrollment$: Subject<Enrollment>;
+  let windowOpen: jasmine.Spy;
+  let exportAttendanceSheet$ = new Subject<{'url': string}>();
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
@@ -36,6 +39,8 @@ describe('SharedCampusEventDetailComponent', () => {
     snackBarOpen = jasmine.createSpy();
     reviewCampusEvent = jasmine.createSpy();
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
+    exportAttendanceSheet$ = new Subject<{'url': string}>();
+    windowOpen = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         SharedCampusEventDetailComponent,
@@ -78,6 +83,7 @@ describe('SharedCampusEventDetailComponent', () => {
           provide: EventService,
           useValue: {
             deleteEventEnrollment: (id: number) => deleteEventEnrollment$,
+            exportAttendanceSheet: () => exportAttendanceSheet$,
             reviewCampusEvent,
           }
         },
@@ -87,6 +93,12 @@ describe('SharedCampusEventDetailComponent', () => {
             open: snackBarOpen,
           },
         },
+        {
+          provide: WindowService,
+          useValue: {
+            open: windowOpen,
+          }
+        }
       ]
     })
     .compileComponents();
@@ -219,4 +231,36 @@ describe('SharedCampusEventDetailComponent', () => {
     expect(snackBarOpen).toHaveBeenCalled();
     expect(event.reviewed).toBeFalsy();
   });
+
+  it('should build url', () => {
+
+    const url: string = component.buildUrl(1);
+
+    expect(url).toEqual(
+      `/aggregate-data/table-export/?table_type=9&event_id=1`);
+  });
+
+  it('should load data', () => {
+    const buildUrl = spyOn(component, 'buildUrl');
+    buildUrl.and.returnValue('123');
+    component.doResultsExport(1);
+    exportAttendanceSheet$.next({
+      url: '/path/to/file',
+    } as {url: string});
+    expect(buildUrl).toHaveBeenCalled();
+    expect(windowOpen).toHaveBeenCalledWith('/path/to/file');
+    expect(snackBarOpen).toHaveBeenCalledWith('导出成功', '确定', {duration: 3000});
+  });
+
+  it('should occure error', () => {
+    const buildUrl = spyOn(component, 'buildUrl');
+    buildUrl.and.returnValue('123');
+    component.doResultsExport(1);
+    exportAttendanceSheet$.error({
+      error: {detail: ['Raw error message']},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+    expect(buildUrl).toHaveBeenCalled();
+  });
+
 });
