@@ -86,7 +86,6 @@
             </span>
           </mat-error>
         </mat-form-field>
-        <ng-container>
           <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
             fxLayoutAlign.gt-sm="space-between center" *ngFor="let g of coefficients.controls; let i=index">
             <ng-container [formGroup]="g">
@@ -117,7 +116,6 @@
               </mat-form-field>
             </ng-container>
           </div>
-       </ng-container>
         <ng-container *ngIf="!isUpdateMode || (isUpdateMode && event)">
           <h4>活动简介</h4>
           <ckeditor [editor]="editor" [config]="editorConfig" (ready)="onDescriptionEditorReady($event)"
