@@ -86,11 +86,10 @@
             </span>
           </mat-error>
         </mat-form-field>
-        <ng-container *ngIf="isUpdateMode === false">
           <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
             fxLayoutAlign.gt-sm="space-between center" *ngFor="let g of coefficients.controls; let i=index">
             <ng-container [formGroup]="g">
-              <label>“{{ roleChoices[i].role_str }}” 身份工作量系数：</label>
+            <label>“{{ roleChoices[i].role_str }}” 身份工作量系数：</label>
               <mat-form-field appearance="outline">
                 <mat-icon matPrefix>people</mat-icon>
                 <mat-label i18n>系数</mat-label>
@@ -99,6 +98,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-icon matPrefix>note_add</mat-icon>
+                <mat-label i18n>学时取整方式</mat-label>
                 <mat-select placeholder="学时取整方式" formControlName="hours_option" required>
                   <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
                     {{ roundChoice.name }}
@@ -107,6 +107,7 @@
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-icon matPrefix>note_add</mat-icon>
+                <mat-label i18n>工作量计算取整方式</mat-label>
                 <mat-select placeholder="工作量计算取整方式" formControlName="workload_option" required>
                   <mat-option *ngFor="let roundChoice of roundChoices" [value]="roundChoice.type">
                     {{ roundChoice.name }}
@@ -115,7 +116,6 @@
               </mat-form-field>
             </ng-container>
           </div>
-       </ng-container>
         <ng-container *ngIf="!isUpdateMode || (isUpdateMode && event)">
           <h4>活动简介</h4>
           <ckeditor [editor]="editor" [config]="editorConfig" (ready)="onDescriptionEditorReady($event)"

@@ -80,31 +80,15 @@ export class AdminCampusFormComponent implements OnInit {
       this.programId = queryParams.program_id;
     });
 
-    this.recordService.getRoleChoices().pipe(
-      switchMap(roleChoices => {
-        this.roleChoices = roleChoices;
-        return this.eventService.getRoundChoices();
-      })
-    ).subscribe(roundChoices => {
-      this.roundChoices = roundChoices;
-      for (let i = 0; i < this.roleChoices.length; i++) {
-        const control = this.fb.group({
-          role: this.roleChoices[i].role,
-          coefficient: [0, [Validators.required]],
-          hours_option: '',
-          workload_option: '',
-        });
-
-        control.get('hours_option').setValue(this.roundChoices[0].type);
-        control.get('workload_option').setValue(this.roundChoices[0].type);
-        this.coefficients.push(control);
-      }
-    });
-
     if (this.route.snapshot.queryParams.event_id !== undefined) {
       this.isUpdateMode = true;
       const eventID = this.route.snapshot.queryParams.event_id;
-      this.eventService.getEvent(eventID).subscribe(
+      this.eventService.getRoundChoices().pipe(
+        switchMap(roundChoices => {
+          this.roundChoices = roundChoices;
+          return this.eventService.getEvent(eventID);
+        })
+      ).subscribe(
         (event: CampusEvent) => {
           this.setEventValue(event);
         },
@@ -115,7 +99,28 @@ export class AdminCampusFormComponent implements OnInit {
           }
           this.snackBar.open(message, '关闭');
         });
-    }
+    } else {
+       this.recordService.getRoleChoices().pipe(
+          switchMap(roleChoices => {
+            this.roleChoices = roleChoices;
+            return this.eventService.getRoundChoices();
+          })
+        ).subscribe(roundChoices => {
+          this.roundChoices = roundChoices;
+          for (let i = 0; i < this.roleChoices.length; i++) {
+            const control = this.fb.group({
+              role: this.roleChoices[i].role,
+              coefficient: [0, [Validators.required]],
+              hours_option: '',
+              workload_option: '',
+            });
+
+            control.get('hours_option').setValue(this.roundChoices[0].type);
+            control.get('workload_option').setValue(this.roundChoices[0].type);
+            this.coefficients.push(control);
+          }
+        });
+      }
   }
 
   private setEventValue(event: CampusEvent) {
@@ -127,6 +132,18 @@ export class AdminCampusFormComponent implements OnInit {
     this.numParticipants.setValue(this.event.num_participants);
     this.deadline.setValue(this.event.deadline);
     this.description.setValue(this.event.description);
+    for (let i = 0; i < event.coefficients.length; i++) {
+      this.roleChoices.push({role: event.coefficients[i].role, role_str: event.coefficients[i].role_str});
+
+      const control = this.fb.group({
+        role: event.coefficients[i].role,
+        coefficient: [event.coefficients[i].coefficient, [Validators.required]],
+        hours_option: event.coefficients[i].hours_option,
+        workload_option: event.coefficients[i].workload_option,
+      });
+
+      this.coefficients.push(control);
+    }
   }
 
   /* istanbul ignore next */

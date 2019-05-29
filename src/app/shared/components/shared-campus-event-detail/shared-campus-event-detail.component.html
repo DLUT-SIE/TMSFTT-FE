@@ -58,7 +58,35 @@
             <div [innerHTML]="description"></div>
           </detail-item-content>
         </detail-item>
-
+        <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
+            <detail-item>
+              <detail-item-title>活动系数</detail-item-title>
+              <detail-item-content>
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch" *ngFor="let coefficient of event.coefficients">
+                  <span>
+                    <mat-icon matPrefix>people</mat-icon>
+                    <mat-label i18n>角色：</mat-label>
+                    {{ coefficient.role_str }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>系数：</mat-label>
+                    {{ coefficient.coefficient }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>学时取整方式：</mat-label>
+                    {{ coefficient.hours_option_str }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>工作量计算取整方式：</mat-label>
+                    {{ coefficient.workload_option_str }}
+                  </span>     
+                </div>
+              </detail-item-content>
+            </detail-item>
+        </ng-container>
         <detail-section-actions>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
             <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
