@@ -13,11 +13,15 @@ export class DataGraphEchartsComponent implements OnInit {
   @Input() set option(val: EChartOption) {
     this.chartOption = val;
     this.chartOption.color = this.styleManager.getAllColors();
+    if (val.yAxis) {
+      this.componentHeight = Math.max(400, (val.yAxis as echarts.EChartOption.SeriesBar).data.length * 40);
+    }
     if (this.echartsInstance) {
       this.echartsInstance.setOption(val);
     }
   }
 
+  componentHeight = 400;
   chartOption: EChartOption = {};
   private echartsInstance: echarts.ECharts;
 

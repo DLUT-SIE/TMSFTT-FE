@@ -1,1 +1,4 @@
-<div echarts [options]="chartOption" (chartInit)="onChartInit($event)"></div>
+<div class="echarts" echarts
+     [options]="chartOption"
+     (chartInit)="onChartInit($event)"
+     [ngStyle]="{'min-height': componentHeight + 'px'}"></div>
