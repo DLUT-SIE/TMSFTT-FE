@@ -62,9 +62,7 @@
             <detail-item>
               <detail-item-title>活动系数</detail-item-title>
               <detail-item-content>
-                  <ng-container  *ngFor="let coefficient of event.coefficients">
-                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
-                  fxLayoutAlign.gt-sm="space-between center">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch" *ngFor="let coefficient of event.coefficients">
                   <span>
                     <mat-icon matPrefix>people</mat-icon>
                     <mat-label i18n>角色：</mat-label>
@@ -86,7 +84,6 @@
                     {{ coefficient.workload_option_str }}
                   </span>     
                 </div>
-              </ng-container>
               </detail-item-content>
             </detail-item>
         </ng-container>
