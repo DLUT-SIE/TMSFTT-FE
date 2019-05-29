@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detail-type.enum';
-import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatIconModule,
   MatInputModule,
@@ -47,7 +46,6 @@ describe('SharedCampusEventDetailComponent', () => {
         DetailSectionActionsComponent,
       ],
       imports: [
-        ReactiveFormsModule,
         MatIconModule,
         MatInputModule,
         MatDividerModule,
