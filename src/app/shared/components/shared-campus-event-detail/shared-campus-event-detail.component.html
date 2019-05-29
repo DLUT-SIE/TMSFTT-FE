@@ -59,31 +59,36 @@
           </detail-item-content>
         </detail-item>
         <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
-          <ng-container  *ngFor="let coefficient of event.coefficients">
             <detail-item>
-              <detail-item-title>{{ coefficient.role_str }}角色</detail-item-title>
+              <detail-item-title>活动系数</detail-item-title>
               <detail-item-content>
+                  <ng-container  *ngFor="let coefficient of event.coefficients">
                   <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between stretch"
                   fxLayoutAlign.gt-sm="space-between center">
-                    <mat-form-field appearance="outline">
-                        <mat-icon matPrefix>people</mat-icon>
-                        <mat-label i18n>系数</mat-label>
-                        <input matInput type="number" [value]=coefficient.coefficient readonly>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-icon matPrefix>note_add</mat-icon>
-                        <mat-label i18n>学时取整方式</mat-label>
-                        <input matInput type="string" [value]=coefficient.hours_option_str readonly>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-icon matPrefix>note_add</mat-icon>
-                        <mat-label i18n>工作量计算取整方式</mat-label>
-                        <input matInput type="string" [value]=coefficient.workload_option_str readonly>
-                    </mat-form-field>
+                  <span>
+                    <mat-icon matPrefix>people</mat-icon>
+                    <mat-label i18n>角色：</mat-label>
+                    {{ coefficient.role_str }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>系数：</mat-label>
+                    {{ coefficient.coefficient }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>学时取整方式：</mat-label>
+                    {{ coefficient.hours_option_str }}
+                  </span>
+                  <span>
+                    <mat-icon matPrefix>note_add</mat-icon>
+                    <mat-label i18n>工作量计算取整方式：</mat-label>
+                    {{ coefficient.workload_option_str }}
+                  </span>     
                 </div>
+              </ng-container>
               </detail-item-content>
             </detail-item>
-          </ng-container>
         </ng-container>
         <detail-section-actions>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
