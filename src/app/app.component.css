@@ -62,6 +62,7 @@ a.sidenav-router-link:hover {
 }
 
 .animation-loading-shade {
+  position: fixed;
   animation-delay: 500ms;
   animation-duration: 200ms;
   animation-fill-mode: both;

@@ -97,4 +97,8 @@ export class EventService extends GenericListService {
       tap(data => this.cachedRoundChoices = data),
     );
   }
+
+  exportAttendanceSheet(url: string) {
+    return this.http.get(url);
+  }
 }
