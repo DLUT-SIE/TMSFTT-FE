@@ -64,20 +64,17 @@ export class DataGraphCanvasComponent implements OnInit {
             left: '50%',
             textAlign: 'center'
         }],
-        yAxis: {
+        xAxis: {
             type: 'value',
-            name: '',
-            position: 'left',
             splitLine: {
                 show: false
             }
         },
-        xAxis: {
+        yAxis: {
             type: 'category',
             data: [],
             axisLabel: {
                 interval: 0,
-                rotate: 330
             },
         },
         grid: {
