@@ -11,13 +11,13 @@ import { Subscription } from 'rxjs';
 import { Program } from 'src/app/shared/interfaces/program';
 
 export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
-    const selectedStartYear = control.get('selectedStartYear');
-    const selectedEndYear = control.get('selectedEndYear');
-    if (selectedStartYear.disabled && selectedEndYear.disabled) {
+    const startTime = control.get('startTime');
+    const endTime = control.get('endTime');
+    if (startTime.disabled && endTime.disabled) {
       return null;
     }
 
-    return selectedStartYear.value && selectedEndYear.value && selectedStartYear.value > selectedEndYear.value ?
+    return startTime.value && endTime.value && startTime.value > endTime.value ?
            { timeValidator: true } : null;
 };
 
@@ -32,6 +32,7 @@ export class DataGraphOptionsComponent implements OnInit {
   private cachedDepartmentsList: Department[] = [{id: 0, name: '大连理工大学'} as Department];
   private cachedProgramDepartmentsList: Department[] = [{id: 0, name: '全校'} as Department];
   private groupPrograms: ProgramsOption[] = [];
+  minDate = new Date(2016, 0, 1);
 
   @Output() getOptions = new EventEmitter();
   selectedGraph: FormGroup;
@@ -71,11 +72,11 @@ export class DataGraphOptionsComponent implements OnInit {
       });
       // 选择教师统计图时时间选择组件不可用，其他组件可用
       if (this.statisticsType[val].key === GraphTypeName.TEACHERS_STATISTICS) {
-        this.selectedGraph.get('selectedStartYear').disable();
-        this.selectedGraph.get('selectedEndYear').disable();
+        this.selectedGraph.get('startTime').disable();
+        this.selectedGraph.get('endTime').disable();
       } else {
-        this.selectedGraph.get('selectedStartYear').enable();
-        this.selectedGraph.get('selectedEndYear').enable();
+        this.selectedGraph.get('startTime').enable();
+        this.selectedGraph.get('endTime').enable();
       }
       // 覆盖率统计组件需要请求分组项目数据，并将学部学院信息缓存，替换成可选择的部门
       if (this.statisticsType[val].key === GraphTypeName.COVERAGE_STATISTICS) {
@@ -159,14 +160,11 @@ export class DataGraphOptionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      for (let i = 2016; i <= (new Date()).getFullYear(); i++) {
-          this.yearList.push(i);
-      }
       this.selectedGraph = this.fb.group({
         selectedStatisticsType: [null, Validators.required],
         selectedGroupType: [null, Validators.required],
-        selectedStartYear: [this.yearList[this.yearList.length - 1], Validators.required],
-        selectedEndYear: [this.yearList[this.yearList.length - 1], Validators.required],
+        startTime: [null, Validators.required],
+        endTime: [null, Validators.required],
         selectedDepartment: [this.departmentsList[0]],
         selectedProgram: [this.programs[0]]
         }, { validator: timeValidator });
