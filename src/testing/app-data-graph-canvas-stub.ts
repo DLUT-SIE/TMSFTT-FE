@@ -9,7 +9,7 @@ import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-con
 export class AppDataGraphCanvasStub {
     @Input() graphTypeName: string;
     @Input() isCoverageGraph: boolean;
-    @Input() graphOptions: DataGraphConfiguration; 
+    @Input() graphOptions: DataGraphConfiguration;
 }
 
 // Dummy module to satisfy Angular Language service. Never used.
