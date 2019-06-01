@@ -23,6 +23,7 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WindowService } from 'src/app/shared/services/window.service';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent;
@@ -40,7 +41,10 @@ describe('DataExportComponent', () => {
     windowOpen = jasmine.createSpy();
     exportRecordsSubject$ = new Subject<{'url': string}>();
     TestBed.configureTestingModule({
-      declarations: [DataExportComponent],
+      declarations: [
+        DataExportComponent,
+        TruncatePipe,
+      ],
       imports: [
         NoopAnimationsModule,
         MatFormFieldModule,
