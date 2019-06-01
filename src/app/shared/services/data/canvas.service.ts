@@ -38,8 +38,8 @@ export class CanvasService {
     params.set('method_name', (this.cachedOptions[
       options.selectedStatisticsType].key).toLowerCase() || '');
     params.set('group_by', options.selectedGroupType || 0);
-    params.set('start_time', (this.datePipe.transform(startTime, 'yyy-MM-dd')) || 2016);
-    params.set('end_time', (this.datePipe.transform(endTime, 'yyy-MM-dd')) || 2016);
+    params.set('start_time', (this.datePipe.transform(startTime, 'yyy-MM-dd')) || new Date('2016-01-01'));
+    params.set('end_time', (this.datePipe.transform(endTime, 'yyy-MM-dd')) || new Date());
     params.set('department_id', options.selectedDepartment.id || 0);
     if (options.selectedProgram) {
       params.set('program_id', options.selectedProgram.id);
@@ -51,7 +51,6 @@ export class CanvasService {
     const url = `/${resourceURL}/?${queryParams}`;
     return this.http.get<CanvasData>(url);
   }
-
   getGroupPrograms() {
     return this.http.get<ProgramsOption[]>('/programs/group-programs/');
   }

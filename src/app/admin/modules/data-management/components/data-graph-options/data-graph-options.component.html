@@ -1,71 +1,75 @@
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
-    <div fxFlex="8 8 calc(8em)" class="card">
-      <div class="card-header card-header-primary">
-        <h4 class="card-title">数据统计图展示</h4>
-        <p class="card-category">您可以选择不同的统计方式进行展示</p>
-      </div>
-      <div class="card-body">
-        <div [formGroup]="selectedGraph">
-          <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" fxLayout.xs="column">
-            <div fxFlex="1 1 calc(4em)">
-              <mat-form-field>
-                <mat-label>选择统计类型</mat-label>
-                <mat-select formControlName="selectedStatisticsType">
-                  <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div fxFlex="1 1 calc(4em)" *ngIf="showGroupTypeSelector">
-              <mat-form-field>
-                <mat-label>选择分组类型</mat-label>
-                <mat-select formControlName="selectedGroupType">
-                  <mat-option *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].subOption" [value]="groupType.type">{{groupType.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div fxFlex="1 1 calc(4em)">
-                <mat-form-field>
-                  <mat-label>输入起始时间</mat-label>
-                  <input matInput [min]="minDate" formControlName="startTime" matInput [matDatepicker]="startPicker" placeholder="请选择开始年份时间"
-                    i18n-placeholder>
-                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #startPicker disabled="false"></mat-datepicker>
-                  <mat-error *ngIf="selectedGraph.get('startTime').hasError('required')">您必须选择一个开始时间</mat-error>
-                </mat-form-field>
-              </div>
-              <div fxFlex="1 1 calc(4em)">
-                <mat-form-field>
-                  <mat-label>输入终止时间</mat-label>
-                  <input formControlName="endTime"  matInput [matDatepicker]="endPicker" placeholder="请选择终止年份时间"
-                  i18n-placeholder>
-                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #endPicker disabled="false"></mat-datepicker>
-                  <mat-error *ngIf="selectedGraph.get('endTime').hasError('required')">您必须选择一个结束时间</mat-error>
-                </mat-form-field>
-              </div>
-
-            <div fxFlex="1 1 calc(4em)" *ngIf="showDepartmentSelector">
-              <mat-form-field>
-                <mat-label>{{ departmentOptionLabel }}</mat-label>
-                <mat-select formControlName="selectedDepartment">
-                  <mat-option *ngFor="let department of departmentsList" [value]="department">{{department.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div fxFlex="1 1 calc(4em)" *ngIf="isCoverageGraph">
-              <mat-form-field>
-                <mat-label>选择项目</mat-label>
-                <mat-select formControlName="selectedProgram">
-                    <mat-option *ngFor="let program of programs" [value]="program">{{program.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">数据统计图展示</h4>
+      <p class="card-category">您可以选择不同的统计方式进行展示</p>
+    </div>
+    <div class="card-body">
+      <div [formGroup]="selectedGraph">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" fxLayout.xs="column">
+          <div fxFlex="1 1 calc(4em)">
+            <mat-form-field>
+              <mat-label>选择统计类型</mat-label>
+              <mat-select formControlName="selectedStatisticsType">
+                <mat-option *ngFor="let statistics of statisticsType" [value]="statistics.type">{{statistics.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <p class="text-danger" *ngIf="selectedGraph.errors?.timeValidator">请选择正确的起止年份</p>
+          <div fxFlex="1 1 calc(4em)" *ngIf="showGroupTypeSelector">
+            <mat-form-field>
+              <mat-label>选择分组类型</mat-label>
+              <mat-select formControlName="selectedGroupType">
+                <mat-option
+                  *ngFor="let groupType of statisticsType[selectedGraph.get('selectedStatisticsType').value].subOption"
+                  [value]="groupType.type">{{groupType.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="1 1 calc(4em)">
+            <mat-form-field>
+              <mat-label>输入起始时间</mat-label>
+              <input matInput [min]="minDate" formControlName="startTime" [matDatepicker]="startPicker"
+                placeholder="请选择开始年份时间" i18n-placeholder>
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #startPicker disabled="false"></mat-datepicker>
+              <mat-error *ngIf="selectedGraph.get('startTime').hasError('required')">您必须选择一个开始时间</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="1 1 calc(4em)">
+            <mat-form-field>
+              <mat-label>输入终止时间</mat-label>
+              <input matInput formControlName="endTime" [matDatepicker]="endPicker" placeholder="请选择终止年份时间"
+                i18n-placeholder>
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #endPicker disabled="false"></mat-datepicker>
+              <mat-error *ngIf="selectedGraph.get('endTime').hasError('required')">您必须选择一个结束时间</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="1 1 calc(4em)" *ngIf="showDepartmentSelector">
+            <mat-form-field>
+              <mat-label>{{ departmentOptionLabel }}</mat-label>
+              <mat-select formControlName="selectedDepartment">
+                <mat-option *ngFor="let department of departmentsList" [value]="department">{{department.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="1 1 calc(4em)" *ngIf="isCoverageGraph">
+            <mat-form-field>
+              <mat-label>选择项目</mat-label>
+              <mat-select formControlName="selectedProgram">
+                <mat-option *ngFor="let program of programs" [value]="program">{{program.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
+        <p class="text-danger" *ngIf="selectedGraph.errors?.timeValidator">请选择正确的起止年份</p>
       </div>
     </div>
+  </div>
   <div fxFlex.lg="1 1 calc(1em)"></div>
 </div>
