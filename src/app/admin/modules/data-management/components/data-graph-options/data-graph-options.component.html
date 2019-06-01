@@ -26,25 +26,26 @@
             </div>
 
             <div fxFlex="1 1 calc(4em)">
-              <mat-form-field>
-                <mat-label>输入起始年份</mat-label>
-                <mat-select  formControlName="selectedStartYear" required>
-                  <mat-option>--</mat-option>
-                  <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="selectedGraph.get('selectedStartYear').hasError('required')">您必须选择一个开始年份</mat-error>
-              </mat-form-field>
-            </div>
-            <div fxFlex="1 1 calc(4em)">
-              <mat-form-field>
-                <mat-label>输入终止年份</mat-label>
-                <mat-select formControlName="selectedEndYear" required>
-                  <mat-option>--</mat-option>
-                  <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="selectedGraph.get('selectedEndYear').hasError('required')">您必须选择一个结束年份</mat-error>
-              </mat-form-field>
-            </div>
+                <mat-form-field>
+                  <mat-label>输入起始时间</mat-label>
+                  <input matInput [min]="minDate" formControlName="startTime" matInput [matDatepicker]="startPicker" placeholder="请选择开始年份时间"
+                    i18n-placeholder>
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #startPicker disabled="false"></mat-datepicker>
+                  <mat-error *ngIf="selectedGraph.get('startTime').hasError('required')">您必须选择一个开始时间</mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex="1 1 calc(4em)">
+                <mat-form-field>
+                  <mat-label>输入终止时间</mat-label>
+                  <input formControlName="endTime"  matInput [matDatepicker]="endPicker" placeholder="请选择终止年份时间"
+                  i18n-placeholder>
+                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #endPicker disabled="false"></mat-datepicker>
+                  <mat-error *ngIf="selectedGraph.get('endTime').hasError('required')">您必须选择一个结束时间</mat-error>
+                </mat-form-field>
+              </div>
+
             <div fxFlex="1 1 calc(4em)" *ngIf="showDepartmentSelector">
               <mat-form-field>
                 <mat-label>{{ departmentOptionLabel }}</mat-label>

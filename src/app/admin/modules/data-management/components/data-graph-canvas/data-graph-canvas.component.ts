@@ -18,12 +18,13 @@ export class DataGraphCanvasComponent implements OnInit {
     @Input() isCoverageGraph: boolean;
     @Input() set graphOptions(val: DataGraphConfiguration) {
         if (!(val && Object.keys(val))) return;
-        const titleYear = val.selectedStartYear === val.selectedEndYear ?
-            `${val.selectedStartYear}` : `${val.selectedStartYear}~${val.selectedEndYear}`;
-        let title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
+        let titleYear = new Date().getFullYear().toString();
+        let title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
         // 教师统计标题不需要时间信息
-        if (val.selectedStartYear === undefined && val.selectedEndYear === undefined) {
-            title = `${val.selectedDepartment.name}-${this.graphTypeName}`;
+        if (val.startTime !== undefined || val.endTime !== undefined) {
+            titleYear = val.startTime.getFullYear() === val.endTime.getFullYear() ?
+            `${val.startTime.getFullYear()}` : `${val.startTime.getFullYear()}~${val.endTime.getFullYear()}`;
+            title = `${titleYear}-${val.selectedDepartment.name}-${this.graphTypeName}`;
         }
         // 覆盖率统计标题包含项目信息
         if (this.isCoverageGraph) {
