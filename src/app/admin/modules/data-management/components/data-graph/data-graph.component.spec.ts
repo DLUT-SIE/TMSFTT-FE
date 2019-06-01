@@ -1,17 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatInputModule } from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { DataGraphComponent } from './data-graph.component';
-import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
-import { DataGraphOptionsComponent } from '../data-graph-options/data-graph-options.component';
 import { DataGraphOption } from 'src/app/shared/interfaces/data-graph-option';
 import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-configuration';
-import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
-
+import { AppDataGraphOptionsStub} from 'src/testing/app-data-graph-options-stub';
+import { AppDataGraphCanvasStub} from 'src/testing/app-data-graph-canvas-stub';
 describe('DataGraphComponent', () => {
   let component: DataGraphComponent;
   let fixture: ComponentFixture<DataGraphComponent>;
@@ -20,9 +19,8 @@ describe('DataGraphComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         DataGraphComponent,
-        DataGraphCanvasComponent,
-        DataGraphOptionsComponent,
-        DataGraphEchartsComponent
+        AppDataGraphOptionsStub,
+        AppDataGraphCanvasStub
       ],
       imports: [
         MatFormFieldModule,
@@ -30,7 +28,10 @@ describe('DataGraphComponent', () => {
         ReactiveFormsModule,
         NgxEchartsModule,
         BrowserAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatInputModule
       ]
     })
     .compileComponents();

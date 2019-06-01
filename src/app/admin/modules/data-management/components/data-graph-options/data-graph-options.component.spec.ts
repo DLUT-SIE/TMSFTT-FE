@@ -1,14 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ValidationErrors, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatNativeDateModule, MatDatepickerModule, MatInputModule } from '@angular/material';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
 
 import { DataGraphOptionsComponent, timeValidator } from './data-graph-options.component';
-import { DataGraphCanvasComponent } from '../data-graph-canvas/data-graph-canvas.component';
-import { DataGraphEchartsComponent } from '../data-graph-echarts/data-graph-echarts.component';
 import { CanvasService } from 'src/app/shared/services/data/canvas.service';
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { DepartmentService } from 'src/app/shared/services/department.service';
@@ -64,8 +62,6 @@ describe('DataGraphOptionsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         DataGraphOptionsComponent,
-        DataGraphCanvasComponent,
-        DataGraphEchartsComponent
       ],
       imports: [
         MatFormFieldModule,
@@ -73,7 +69,10 @@ describe('DataGraphOptionsComponent', () => {
         ReactiveFormsModule,
         NgxEchartsModule,
         BrowserAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatNativeDateModule
       ],
       providers: [
         {
@@ -124,25 +123,25 @@ describe('DataGraphOptionsComponent', () => {
       const testFormGroup = component.selectedGraph;
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({selectedStartYear: null, selectedEndYear: 1});
+      testFormGroup.patchValue({startTime: null, endTime: new Date()});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: null});
+      testFormGroup.patchValue({startTime: new Date(), endTime: null});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: 1});
+      testFormGroup.patchValue({startTime: new Date(), endTime: new Date()});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.patchValue({selectedStartYear: 1, selectedEndYear: 3});
+      testFormGroup.patchValue({startTime: new Date(), endTime: new Date()});
       expect(timeValidator(testFormGroup)).toBe(null);
 
-      testFormGroup.get('selectedStartYear').disable();
-      testFormGroup.get('selectedEndYear').disable();
+      testFormGroup.get('startTime').disable();
+      testFormGroup.get('endTime').disable();
       expect(timeValidator(testFormGroup)).toBe(null);
   });
 
   it('should get a FormGroup ValidationErrors', () => {
-    component.selectedGraph.patchValue({selectedStartYear: 3, selectedEndYear: 1});
+    component.selectedGraph.patchValue({startTime: new Date().setFullYear(2019), endTime: new Date().setFullYear(2016)});
     expect(timeValidator(component.selectedGraph)).toEqual({ timeValidator: true } as ValidationErrors);
   });
 
@@ -182,11 +181,11 @@ describe('DataGraphOptionsComponent', () => {
     getOptions$.next(options);
     getGroupPrograms$.next(programsOption);
     component.selectedGraph.patchValue({selectedStatisticsType: 0});
-    expect(component.selectedGraph.get('selectedStartYear').disabled).toBeTruthy();
-    expect(component.selectedGraph.get('selectedEndYear').disabled).toBeTruthy();
+    expect(component.selectedGraph.get('startTime').disabled).toBeTruthy();
+    expect(component.selectedGraph.get('endTime').disabled).toBeTruthy();
     component.selectedGraph.patchValue({selectedStatisticsType: 1});
-    expect(component.selectedGraph.get('selectedStartYear').enabled).toBeTruthy();
-    expect(component.selectedGraph.get('selectedEndYear').enabled).toBeTruthy();
+    expect(component.selectedGraph.get('startTime').enabled).toBeTruthy();
+    expect(component.selectedGraph.get('endTime').enabled).toBeTruthy();
   });
 
   it('should get isCoverageGraph', () => {

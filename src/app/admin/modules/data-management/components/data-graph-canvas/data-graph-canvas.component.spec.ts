@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { DataGraphCanvasComponent } from './data-graph-canvas.component';
 import { AppDataGraphEchartsStub } from 'src/testing/app-data-graph-echarts-stub';
@@ -46,6 +47,7 @@ describe('DataGraphCanvasComponent', () => {
         NgxEchartsModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
+        MatDatepickerModule,
       ],
       providers: [
         {
@@ -79,8 +81,8 @@ describe('DataGraphCanvasComponent', () => {
     const graphOptions: DataGraphConfiguration = {
       selectedStatisticsType: 2,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
-      selectedStartYear: 2019,
-      selectedEndYear: 2019,
+      startTime: new Date(),
+      endTime: new Date(),
       selectedGroupType: 2,
       selectedProgram: {id: 1, name: '名师讲堂'} as Program
     };
@@ -93,8 +95,8 @@ describe('DataGraphCanvasComponent', () => {
     const graphOptionsUndefined: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
-      selectedStartYear: undefined,
-      selectedEndYear: undefined,
+      startTime: undefined,
+      endTime: undefined,
       selectedGroupType: 2,
       selectedProgram: {id: 0, name: '全部项目'} as Program
     };
@@ -105,8 +107,8 @@ describe('DataGraphCanvasComponent', () => {
     const graphOptions2: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
-      selectedStartYear: 2015,
-      selectedEndYear: 2019,
+      startTime: new Date(),
+      endTime: new Date(),
       selectedGroupType: 2
     };
     component.isCoverageGraph = false;
@@ -122,8 +124,8 @@ describe('DataGraphCanvasComponent', () => {
     const graphOptions3: DataGraphConfiguration = {
       selectedStatisticsType: 2,
       selectedDepartment: {id: 1, name: '大连理工大学'} as Department,
-      selectedStartYear: 2019,
-      selectedEndYear: 2019,
+      startTime: new Date(),
+      endTime: new Date(),
       selectedGroupType: 2,
       selectedProgram: {id: 0, name: '全部项目'} as Program
     };
