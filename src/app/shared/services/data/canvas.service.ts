@@ -34,7 +34,7 @@ export class CanvasService {
     const params = new Map();
     const startTime = null ? options.startTime == null : options.startTime;
     const endTime = null ? options.endTime == null : options.endTime;
-  
+
     params.set('method_name', (this.cachedOptions[
       options.selectedStatisticsType].key).toLowerCase() || '');
     params.set('group_by', options.selectedGroupType || 0);
