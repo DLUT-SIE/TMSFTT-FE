@@ -42,8 +42,9 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown" fxLayout="column"
                     fxLayoutAlign="start stretch">
-                    <a class="dropdown-item" *ngIf="authService.firstName;let name">用户: {{name | truncate:5 }}</a>
-                    <a class="dropdown-item" *ngIf="authService.departmentName; let name">院系: {{ name | truncate:11 }} </a>
+                    <a class="dropdown-item" *ngIf="authService.firstName;let name">姓名：{{ name }}</a>
+                    <a class="dropdown-item" *ngIf="authService.username;let username">工号：{{ username }}</a>
+                    <a class="dropdown-item" *ngIf="authService.administrativeDepartmentName; let name">院系：{{ name }} </a>
                     <app-theme-picker></app-theme-picker>
                     <a class="dropdown-item" (click)="logOut()">登出</a>
                 </div>

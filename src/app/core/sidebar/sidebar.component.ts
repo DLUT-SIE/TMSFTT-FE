@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
     superAdminRouteItems = SUPERADMIN_ROUTE_ITEMS;
     departmentAdminRouteItems = DEPARTMENT_ADMIN_ROUTE_ITEMS;
     regularUserRouteItems = REGULAR_USER_ROUTE_ITEMS;
+    personalRecordsStr = '个人培训记录';
 
     constructor(
         readonly platformService: PlatformService,
