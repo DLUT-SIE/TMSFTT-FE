@@ -1,0 +1,40 @@
+<detail-section>
+  <detail-item>
+    <detail-item-title>活动名称</detail-item-title>
+    <detail-item-content>{{ record.campus_event.name }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>活动时间</detail-item-title>
+    <detail-item-content>{{ record.campus_event.time | date:'medium' }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>活动地点</detail-item-title>
+    <detail-item-content>{{ record.campus_event.location }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>主办单位</detail-item-title>
+    <detail-item-content>{{ record.campus_event.program_detail.department }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>活动类型</detail-item-title>
+    <detail-item-content>{{ record.campus_event.program_detail.category_str }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>活动学时</detail-item-title>
+    <detail-item-content>{{ record.campus_event.num_hours | number:"1.1-1" }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>参加身份</detail-item-title>
+    <detail-item-content>{{ record.role_str }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>培训记录状态</detail-item-title>
+    <detail-item-content>{{ record.status_str }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>培训记录状态日志</detail-item-title>
+    <detail-item-content>
+      <app-record-status-change-logs-section [record]="record"></app-record-status-change-logs-section>
+    </detail-item-content>
+  </detail-item>
+</detail-section>

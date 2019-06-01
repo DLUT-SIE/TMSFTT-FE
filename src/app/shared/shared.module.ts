@@ -40,6 +40,9 @@ import { DetailItemTitleComponent } from './components/detail-item-title/detail-
 import { DetailItemContentComponent } from './components/detail-item-content/detail-item-content.component';
 import { DetailSectionActionsComponent } from './components/detail-section-actions/detail-section-actions.component';
 import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
+import { CampusRecordDetailComponent } from './components/campus-record-detail/campus-record-detail.component';
+import { RecordStatusChangeLogsSectionComponent } from './components/record-status-change-logs-section/record-status-change-logs-section.component';
+import { OffCampusRecordReviewNotesSectionComponent } from './components/off-campus-record-review-notes-section/off-campus-record-review-notes-section.component';
 
 
 @NgModule({
@@ -55,6 +58,9 @@ import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
     DetailItemContentComponent,
     DetailSectionActionsComponent,
     AsSecuredPathPipe,
+    CampusRecordDetailComponent,
+    RecordStatusChangeLogsSectionComponent,
+    OffCampusRecordReviewNotesSectionComponent,
   ],
   imports: [
     CommonModule,
@@ -116,6 +122,7 @@ import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
     MatSnackBarModule,
     MatTooltipModule,
 
+    CampusRecordDetailComponent,
     OffCampusRecordDetailComponent,
     SharedRecordListComponent,
     SharedCampusEventDetailComponent,
@@ -125,6 +132,8 @@ import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
     DetailItemTitleComponent,
     DetailItemContentComponent,
     DetailSectionActionsComponent,
+    RecordStatusChangeLogsSectionComponent,
+    OffCampusRecordReviewNotesSectionComponent,
 
     NgxEchartsModule,
     CKEditorModule,

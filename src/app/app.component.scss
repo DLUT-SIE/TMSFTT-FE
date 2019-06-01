@@ -43,6 +43,9 @@
       .color-#{$colorName} {
           color: mat-color($color, 400) !important;
       }
+      .background-color-#{$colorName} {
+          background-color: mat-color($color, 400);
+      }
       .mat-raised-button.mat-#{$colorName} {
           background-color: mat-color($color, 400);
       }

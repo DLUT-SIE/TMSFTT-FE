@@ -21,6 +21,7 @@ import { DetailItemContentComponent } from '../detail-item-content/detail-item-c
 import { DetailSectionActionsComponent } from '../detail-section-actions/detail-section-actions.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WindowService } from 'src/app/shared/services/window.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SharedCampusEventDetailComponent', () => {
   let component: SharedCampusEventDetailComponent;
@@ -54,6 +55,7 @@ describe('SharedCampusEventDetailComponent', () => {
         MatIconModule,
         MatInputModule,
         MatDividerModule,
+        NoopAnimationsModule,
       ],
       providers: [
         {

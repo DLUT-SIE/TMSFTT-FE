@@ -28,6 +28,7 @@ import { DetailItemTitleComponent } from 'src/app/shared/components/detail-item-
 import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-section-actions/detail-section-actions.component';
 import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 import { AppOffCampusRecordDetailStub } from 'src/testing/app-shared-off-campus-record-detail-stub.';
+import { AppCampusRecordDetailStub } from 'src/testing/app-campus-record-detail-stub';
 
 describe('RecordDetailComponent', () => {
   let component: RecordDetailComponent;
@@ -52,6 +53,7 @@ describe('RecordDetailComponent', () => {
       declarations: [
         RecordDetailComponent,
         AppOffCampusRecordDetailStub,
+        AppCampusRecordDetailStub,
         DetailSectionComponent,
         DetailItemComponent,
         DetailItemTitleComponent,
