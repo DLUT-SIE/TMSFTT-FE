@@ -7,7 +7,6 @@ import { Subject, merge } from 'rxjs';
 import { startWith, map, switchMap } from 'rxjs/operators';
 
 import { Record } from 'src/app/shared/interfaces/record';
-import { environment } from 'src/environments/environment';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
 
@@ -22,7 +21,7 @@ export class OffCampusRecordReviewNotesSectionComponent implements OnInit {
   reviewNotes: ReviewNote[] = [];
   reviewNotesLength = 0;
   isLoadingReviewNotes = true;
-  readonly pageSize = environment.PAGINATION_SIZE;
+  readonly pageSize = 5;
 
   private forceRefresh$ = new Subject<PageEvent>();
 
@@ -75,8 +74,8 @@ export class OffCampusRecordReviewNotesSectionComponent implements OnInit {
         return event.pageIndex;
       }),
       switchMap(page => {
-        const offset = page * environment.PAGINATION_SIZE;
-        return this.getReviewNotes(offset, environment.PAGINATION_SIZE);
+        const offset = page * this.pageSize;
+        return this.getReviewNotes(offset, this.pageSize);
       }),
       map(data => {
         this.reviewNotesLength = data.count;

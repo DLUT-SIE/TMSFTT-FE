@@ -2,4 +2,10 @@ p {
   word-break: break-all;
   word-wrap: break-word;
 }
-  
+
+div.card {
+    margin-top: 0;
+}
+div.card {
+    margin-bottom: 5px;
+}

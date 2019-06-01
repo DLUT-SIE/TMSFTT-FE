@@ -2,23 +2,17 @@
   <detail-item-title>培训记录状态日志</detail-item-title>
   <detail-item-content>
     <p *ngIf="statusChangeLogs.length === 0">暂无相关记录</p>
-    <div fxLayout="column" *ngFor="let log of statusChangeLogs">
-      <div class="text-background"
-           fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px"
-           fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+    <div class="card" *ngFor="let log of statusChangeLogs">
+      <div class="card-body">
         <span>
           培训记录状态由
           <span class="color-primary">{{ log.pre_status_str }}</span>
           变为
           <span class="color-primary">{{ log.post_status_str }}</span>
         </span>
-        <span fxLayout="column" >
-          <span>
-            操作人：{{ log.user }}
-          </span>
-          <span>
-            操作时间：{{ log.time | date:'medium' }}
-          </span>
+        <span fxLayout="row" fxLayoutAlign="end start">
+          由&nbsp;<span class="color-accent">{{ log.user }}</span>&nbsp;
+          处理于&nbsp;<span class="color-accent">{{ log.time | date:'medium' }}</span>
         </span>
       </div>
     </div>

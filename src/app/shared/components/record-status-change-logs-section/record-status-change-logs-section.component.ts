@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatSnackBar, PageEvent, MatPaginator } from '@angular/material';
 import { merge, Subject } from 'rxjs';
 import { startWith, map, switchMap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/shared/services/records/record.service';
@@ -16,13 +15,13 @@ import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
   styleUrls: ['./record-status-change-logs-section.component.css']
 })
 export class RecordStatusChangeLogsSectionComponent implements OnInit {
-  readonly pageSize = environment.PAGINATION_SIZE;
   readonly recordStatus = RecordStatus;
   @Input() record: Record;
 
   statusChangeLogs: StatusChangeLog[] = [];
   totalLength = 0;
   isLoadingResults = true;
+  readonly pageSize = 5;
 
   private forceRefresh$ = new Subject<PageEvent>();
 
@@ -49,8 +48,8 @@ export class RecordStatusChangeLogsSectionComponent implements OnInit {
         return event.pageIndex;
       }),
       switchMap(page => {
-        const offset = page * environment.PAGINATION_SIZE;
-        return this.getStatusChangeLogs(offset, environment.PAGINATION_SIZE);
+        const offset = page * this.pageSize;
+        return this.getStatusChangeLogs(offset, this.pageSize);
       }),
       map(data => {
         this.totalLength = data.count;

@@ -1,13 +1,16 @@
 <detail-item>
   <detail-item-title>审核提示</detail-item-title>
   <detail-item-content>
-    <div class="text-background" *ngFor="let reviewNote of reviewNotes" fxLayout="column">
-      <span>
-        {{ reviewNote.content }}
-      </span>
-      <span fxLayout="row" fxLayoutAlign="end start">
-        由 {{ reviewNote.user_name }} 生成于 {{ reviewNote.create_time | date:'medium' }}
-      </span>
+    <div class="card" *ngFor="let reviewNote of reviewNotes">
+      <div class="card-body">
+        <span>
+          {{ reviewNote.content }}
+        </span>
+        <span fxLayout="row" fxLayoutAlign="end start">
+          由&nbsp;<span class="color-accent">{{ reviewNote.user_name }}</span>&nbsp;
+          生成于&nbsp;<span class="color-accent">{{ reviewNote.create_time | date:'medium' }}</span>
+        </span>
+      </div>
     </div>
     <mat-paginator [style.visibility]="reviewNotes.length === 0 ? 'hidden': 'visible'"
       [style.height]="reviewNotes.length === 0 ? 0 : 'auto'" [length]="reviewNotesLength" [pageSize]="pageSize"
