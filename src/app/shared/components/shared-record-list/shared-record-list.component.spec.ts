@@ -102,7 +102,7 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecords).toHaveBeenCalledWith('records', {offset, limit, extraParams});
+    expect(getRecords).toHaveBeenCalledWith('records/list-records-for-review', {offset, limit, extraParams});
   });
 
   it('should get all records if recordListType is undefined.', () => {
