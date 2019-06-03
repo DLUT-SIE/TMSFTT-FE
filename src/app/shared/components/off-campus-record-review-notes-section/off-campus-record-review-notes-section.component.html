@@ -1,0 +1,29 @@
+<detail-item>
+  <detail-item-title>审核提示</detail-item-title>
+  <detail-item-content>
+    <div class="card" *ngFor="let reviewNote of reviewNotes">
+      <div class="card-body">
+        <span>
+          {{ reviewNote.content }}
+        </span>
+        <span fxLayout="row" fxLayoutAlign="end start">
+          由&nbsp;<span class="color-accent">{{ reviewNote.user_name }}</span>&nbsp;
+          生成于&nbsp;<span class="color-accent">{{ reviewNote.create_time | date:'medium' }}</span>
+        </span>
+      </div>
+    </div>
+    <mat-paginator [style.visibility]="reviewNotes.length === 0 ? 'hidden': 'visible'"
+      [style.height]="reviewNotes.length === 0 ? 0 : 'auto'" [length]="reviewNotesLength" [pageSize]="pageSize"
+      [disabled]="isLoadingReviewNotes">
+    </mat-paginator>
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="space-between center">
+      <mat-form-field fxFlex="1 1 80%" fxLayoutAlign="center" appearance="outline">
+        <mat-icon matPrefix>assignment</mat-icon>
+        <mat-label i18n>审核提示</mat-label>
+        <input matInput [(ngModel)]="reviewNoteContent" placeholder="您可以通过该对话框与记录提交者或负责审核的管理员交流" i18n-placeholder>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="onSubmit()">提交</button>
+    </div>
+  </detail-item-content>
+</detail-item>

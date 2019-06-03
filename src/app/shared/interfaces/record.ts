@@ -1,7 +1,6 @@
 import { RecordContent } from './record-content';
 import { RecordAttachment } from './record-attachment';
 import { OffCampusEvent, CampusEvent } from './event';
-import { PaginatedResponse } from './paginated-response';
 
 /** RESTful reponse interface for Record. */
 export interface Record {
@@ -14,9 +13,9 @@ export interface Record {
   status?: number;
   status_str?: string;
   feedback?: number;
-  attachments?: number[] | File[] | RecordAttachment[] | PaginatedResponse<RecordAttachment>;
-  contents?: number[] | RecordContent[] | PaginatedResponse<RecordContent>;
-  role: number;
+  attachments?: number[] | File[] | RecordAttachment[];
+  contents?: number[] | RecordContent[];
+  role?: number;
   role_str?: string;
   allow_actions_from_user?: boolean;
   allow_actions_from_admin?: boolean;

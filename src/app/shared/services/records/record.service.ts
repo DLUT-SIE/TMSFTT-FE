@@ -15,6 +15,7 @@ import { RecordContentService } from 'src/app/shared/services/records/record-con
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { StatusChangeLog } from '../../interfaces/status-change-log';
 
 /** Provide services for Record. */
 @Injectable({
@@ -138,5 +139,9 @@ export class RecordService extends GenericListService {
 
   exportRecords(url: string) {
     return this.http.get(url);
+  }
+
+  getStatusChangeLogs(req: ListRequest) {
+    return this.list<PaginatedResponse<StatusChangeLog>>('status-change-logs', req);
   }
 }

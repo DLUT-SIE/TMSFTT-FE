@@ -35,41 +35,14 @@
     </detail-item-title>
     <detail-item-content>{{ con.content }}</detail-item-content>
   </detail-item>
-  <ng-container *ngIf="record.attachments.length !== 0">
-    <detail-item>
-      <detail-item-title>附加文件</detail-item-title>
-      <detail-item-content>
-        <p *ngFor="let att of record.attachments">
-          <a [href]="(att.path | asSecuredPath).url">{{ att.path.name }}</a>
-        </p>
-      </detail-item-content>
-    </detail-item>
-  </ng-container>
-  <detail-item>
-    <detail-item-title>审核提示</detail-item-title>
+  <detail-item *ngIf="record.attachments.length !== 0">
+    <detail-item-title>附加文件</detail-item-title>
     <detail-item-content>
-      <div class="review-note" *ngFor="let reviewNote of reviewNotes"
-           fxLayout="column">
-        <span>
-          {{ reviewNote.content }}
-        </span>
-        <span fxLayout="row" fxLayoutAlign="end start">
-          由 {{ reviewNote.user_name }} 生成于 {{ reviewNote.create_time | date:'medium' }}
-        </span>
-      </div>
-      <mat-paginator [style.visibility]="reviewNotes.length === 0 ? 'hidden': 'visible'"
-        [style.height]="reviewNotes.length === 0 ? 0 : 'auto'" [length]="reviewNotesLength" [pageSize]="pageSize"
-        [disabled]="isLoadingReviewNotes">
-      </mat-paginator>
-      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayout.gt-sm="row"
-        fxLayoutAlign.gt-sm="space-between center">
-        <mat-form-field fxFlex="1 1 80%" fxLayoutAlign="center" appearance="outline">
-          <mat-icon matPrefix>assignment</mat-icon>
-          <mat-label i18n>审核提示</mat-label>
-          <input matInput [(ngModel)]="reviewNoteContent" placeholder="您可以通过该对话框与记录提交者或负责审核的管理员交流" i18n-placeholder>
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="onSubmit()">提交</button>
-      </div>
+      <p *ngFor="let att of record.attachments">
+        <a [href]="(att.path | asSecuredPath).url">{{ att.path.name }}</a>
+      </p>
     </detail-item-content>
   </detail-item>
+  <app-record-status-change-logs-section [record]="record"></app-record-status-change-logs-section>
+  <app-off-campus-record-review-notes-section [record]="record"></app-off-campus-record-review-notes-section>
 </detail-section>

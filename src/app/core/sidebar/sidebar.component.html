@@ -32,7 +32,17 @@
                     <i class="material-icons">person</i>
                     <p>
                         <span class="d-lg-none d-md-block" *ngIf="authService.firstName; let name">
-                            {{ name | truncate:5 }}
+                            姓名：{{ name | truncate:9 }}
+                        </span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="material-icons">group</i>
+                    <p>
+                        <span class="d-lg-none d-md-block" *ngIf="authService.username; let username">
+                            工号：{{ username }}
                         </span>
                     </p>
                 </a>
@@ -41,8 +51,8 @@
                 <a class="nav-link">
                     <i class="material-icons">business</i>
                     <p>
-                        <span class="d-lg-none d-md-block" *ngIf="authService.departmentName; let name">
-                            {{ name | truncate:11 }}
+                        <span class="d-lg-none d-md-block" *ngIf="authService.administrativeDepartmentName; let name">
+                            院系：{{ name | truncate:11 }}
                         </span>
                     </p>
                 </a>
@@ -60,7 +70,7 @@
             class="{{ menuItem.class }} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
                 <ng-container
-                    *ngIf="menuItem.title === '个人培训记录' && recordService.numberOfRecordsWithoutFeedback !== 0; else itemWithoutBadge">
+                    *ngIf="menuItem.title === personalRecordsStr && recordService.numberOfRecordsWithoutFeedback !== 0; else itemWithoutBadge">
                     <i [matBadge]="recordService.numberOfRecordsWithoutFeedback" matBadgeColor="warn"
                         class="material-icons">{{ menuItem.icon }}</i>
                 </ng-container>

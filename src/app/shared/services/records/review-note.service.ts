@@ -6,7 +6,7 @@ import { Record } from 'src/app/shared/interfaces/record';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { GenericListService } from 'src/app/shared/generics/generic-list-service/generic-list-service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { PaginatedResponse } from '../../interfaces/paginated-response';
+import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 
 /** Provide services for Review Note. */
 @Injectable({

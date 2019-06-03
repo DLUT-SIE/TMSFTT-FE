@@ -7,7 +7,6 @@ export interface User {
     email?: string;
     is_active?: boolean;
     date_joined?: string;
-    user_permissions?: number[];
     is_teacher?: boolean;
     is_department_admin?: boolean;
     is_school_admin?: boolean;
