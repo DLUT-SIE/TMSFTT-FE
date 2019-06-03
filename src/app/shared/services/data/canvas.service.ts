@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 import { OptionType } from 'src/app/shared/interfaces/option-type';
 import { CanvasData } from 'src/app/shared/interfaces/canvas-data';
@@ -14,7 +15,7 @@ import { DataGraphConfiguration } from 'src/app/shared/interfaces/data-graph-con
 export class CanvasService {
 
   private cachedOptions: OptionType[] = [];
-
+  readonly datePipe: DatePipe = new DatePipe('zh-Hans');
   constructor(
     protected readonly http: HttpClient,
   ) { }
@@ -31,11 +32,14 @@ export class CanvasService {
   getCanvasData(options: DataGraphConfiguration) {
     const resourceURL = 'aggregate-data/data';
     const params = new Map();
+    const startTime = null ? options.startTime == null : options.startTime;
+    const endTime = null ? options.endTime == null : options.endTime;
+
     params.set('method_name', (this.cachedOptions[
       options.selectedStatisticsType].key).toLowerCase() || '');
     params.set('group_by', options.selectedGroupType || 0);
-    params.set('start_year', options.selectedStartYear || 2016);
-    params.set('end_year', options.selectedEndYear || 2016);
+    params.set('start_time', (this.datePipe.transform(startTime, 'yyy-MM-dd')) || new Date('2016-01-01'));
+    params.set('end_time', (this.datePipe.transform(endTime, 'yyy-MM-dd')) || new Date());
     params.set('department_id', options.selectedDepartment.id || 0);
     if (options.selectedProgram) {
       params.set('program_id', options.selectedProgram.id);
@@ -47,7 +51,6 @@ export class CanvasService {
     const url = `/${resourceURL}/?${queryParams}`;
     return this.http.get<CanvasData>(url);
   }
-
   getGroupPrograms() {
     return this.http.get<ProgramsOption[]>('/programs/group-programs/');
   }
