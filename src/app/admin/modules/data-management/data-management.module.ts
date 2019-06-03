@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableExportComponent } from './components/table-export/table-export.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
 import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-graph-echarts.component';
+import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-
     DataGraphCanvasComponent,
     DataGraphComponent,
     DataGraphEchartsComponent,
+    AdminCampusEventReviewListComponent,
   ],
   imports: [
     SharedModule,
