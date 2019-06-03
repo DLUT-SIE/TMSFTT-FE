@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { RecordService } from '../../../../../shared/services/records/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
@@ -57,6 +58,7 @@ export class RecordFormComponent implements OnInit {
   submitDisabled = false;
 
   constructor(
+    readonly urlLocation: Location,
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly route: ActivatedRoute,

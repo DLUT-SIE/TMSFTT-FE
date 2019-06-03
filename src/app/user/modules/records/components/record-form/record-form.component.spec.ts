@@ -19,6 +19,7 @@ import {
 import { By } from '@angular/platform-browser';
 import { of as observableOf, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { RecordFormComponent } from './record-form.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
@@ -164,6 +165,10 @@ describe('RecordFormComponent', () => {
           useValue: {
             userID: 1,
           },
+        },
+        {
+          provide: Location,
+          useValue: {},
         },
         {
           provide: Router,
