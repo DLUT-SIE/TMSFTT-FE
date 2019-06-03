@@ -10,6 +10,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-servic
 import { WindowService } from 'src/app/shared/services/window.service';
 import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { errorProcess } from '../../utils/error-process';
 
 @Component({
   selector: 'app-shared-campus-event-detail',
@@ -73,13 +74,7 @@ export class SharedCampusEventDetailComponent {
       },
       (error: HttpErrorResponse) => {
           this.loggerService.log(error);
-          let message = error.message;
-          if (error.error) {
-            message = '';
-            for (const key of Object.keys(error.error)) {
-              message += error.error[key].join(',');
-            }
-          }
+          const message = errorProcess(error);
           this.snackBar.open(message, '关闭');
       });
   }

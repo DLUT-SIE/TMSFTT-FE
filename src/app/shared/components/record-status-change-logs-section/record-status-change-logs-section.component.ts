@@ -8,6 +8,7 @@ import { RecordService } from 'src/app/shared/services/records/record.service';
 import { StatusChangeLog } from 'src/app/shared/interfaces/status-change-log';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RecordStatus } from 'src/app/shared/enums/record-status.enum';
+import { errorProcess } from '../../utils/error-process';
 
 @Component({
   selector: 'app-record-status-change-logs-section',
@@ -60,13 +61,7 @@ export class RecordStatusChangeLogsSectionComponent implements OnInit {
       this.isLoadingResults = false;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
-        }
+        const message = errorProcess(error);
         this.isLoadingResults = false;
         this.snackBar.open(message, '关闭');
       });

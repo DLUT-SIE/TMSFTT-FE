@@ -9,6 +9,7 @@ import { startWith, map, switchMap } from 'rxjs/operators';
 import { Record } from 'src/app/shared/interfaces/record';
 import { ReviewNote } from 'src/app/shared/interfaces/review-note';
 import { ReviewNoteService } from 'src/app/shared/services/records/review-note.service';
+import { errorProcess } from '../../utils/error-process';
 
 @Component({
   selector: 'app-off-campus-record-review-notes-section',
@@ -52,13 +53,7 @@ export class OffCampusRecordReviewNotesSectionComponent implements OnInit {
       this.forceRefresh();
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',');
-          }
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       }
     );
@@ -86,13 +81,7 @@ export class OffCampusRecordReviewNotesSectionComponent implements OnInit {
       this.isLoadingReviewNotes = false;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
-        }
+        const message = errorProcess(error);
         this.isLoadingReviewNotes = false;
         this.snackBar.open(message, '关闭');
       });

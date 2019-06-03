@@ -167,7 +167,7 @@ describe('DataExportComponent', () => {
     exportRecordsSubject$.error({
       error: {detail: ['Raw error message']},
     } as HttpErrorResponse);
-    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message。', '关闭');
     expect(buildUrl).toHaveBeenCalled();
   });
 

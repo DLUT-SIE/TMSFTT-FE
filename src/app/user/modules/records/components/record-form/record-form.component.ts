@@ -18,6 +18,7 @@ import { EventService } from 'src/app/shared/services/events/event.service';
 import { RecordAttachment, SecuredPath } from 'src/app/shared/interfaces/record-attachment';
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -99,10 +100,7 @@ export class RecordFormComponent implements OnInit {
           this.setRecordValue(record);
         },
         (error: HttpErrorResponse) => {
-          let message = error.message;
-          if (error.error) {
-            message = error.error['detail'] + '。';
-          }
+          const message = errorProcess(error);
           this.snackBar.open(message, '关闭');
         });
     }
@@ -279,13 +277,7 @@ export class RecordFormComponent implements OnInit {
         this.submitDisabled = false;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
         this.submitDisabled = false;
       });

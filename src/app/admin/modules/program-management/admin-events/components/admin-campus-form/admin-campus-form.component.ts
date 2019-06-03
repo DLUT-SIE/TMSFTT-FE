@@ -16,6 +16,7 @@ import { UploadAdapter } from 'src/app/shared/services/upload-adapter';
 import { AppInjector } from 'src/app/app.module';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 import { RecordService } from 'src/app/shared/services/records/record.service';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -93,10 +94,7 @@ export class AdminCampusFormComponent implements OnInit {
           this.setEventValue(event);
         },
         (error: HttpErrorResponse) => {
-          let message = error.message;
-          if (error.error) {
-            message = error.error['detail'] + '。';
-          }
+          const message = errorProcess(error);
           this.snackBar.open(message, '关闭');
         });
     } else {
@@ -214,13 +212,7 @@ export class AdminCampusFormComponent implements OnInit {
         this.router.navigate(['admin/programs', this.programId, 'events', event.id]);
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       });
   }

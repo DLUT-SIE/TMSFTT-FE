@@ -170,7 +170,7 @@ describe('AdminProgramFormComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Invalid number of attachments。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
     expect(navigate).not.toHaveBeenCalled();
   });
 

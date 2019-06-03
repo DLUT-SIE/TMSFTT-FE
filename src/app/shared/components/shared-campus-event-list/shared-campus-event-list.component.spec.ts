@@ -198,7 +198,7 @@ describe('SharedCampusEventListComponent', () => {
       program: 1,
     };
     component.enrollEvent(event);
-    expect(snackBarOpen).toHaveBeenCalledWith('报名失败！', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
   });
 
   it('should display raw errors when updation failed.', () => {
