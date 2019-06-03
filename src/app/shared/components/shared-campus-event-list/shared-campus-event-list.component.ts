@@ -9,6 +9,7 @@ import { EventListType } from '../../enums/event-list-type.enum';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
+import { errorProcess } from '../../utils/error-process';
 
 
 @Component({
@@ -59,10 +60,7 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
       this.forceRefresh();
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '报名失败！';
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       });
  }

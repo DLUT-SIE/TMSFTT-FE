@@ -10,6 +10,7 @@ import { ProgramCategory } from 'src/app/shared/interfaces/program-category';
 import { ProgramService} from 'src/app/shared/services/programs/program.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { Observable } from 'rxjs';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 /* Create or update a admin-program-form**/
 @Component({
@@ -80,13 +81,7 @@ export class AdminProgramFormComponent implements OnInit {
         this.router.navigate(['/admin/programs/', program.id]);
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '';
-          for (const key of Object.keys(error.error)) {
-            message += error.error[key].join(',') + '。';
-          }
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       });
   }
