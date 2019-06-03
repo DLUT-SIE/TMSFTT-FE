@@ -8,6 +8,10 @@ import { RecordDetailResolverService } from 'src/app/shared/services/records/rec
 import { BatchSubmitComponent } from './components/batch-submit/batch-submit.component';
 import { DataGraphComponent } from './components/data-graph/data-graph.component';
 import { TableExportComponent } from './components/table-export/table-export.component';
+import { SchoolAdminGuard } from 'src/app/shared/guards/school-admin.guard';
+import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
+import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
+import { AdminCampusEventDetailComponent } from '../program-management/admin-events/components/admin-campus-event-detail/admin-campus-event-detail.component';
 
 const routes: Routes = [
   {
@@ -15,19 +19,41 @@ const routes: Routes = [
     component: DataManagementComponent,
     children: [
       {
-        path: 'records',
+        path: 'review',
         children: [
           {
-            path: ':id',
-            resolve: {
-              record: RecordDetailResolverService,
-            },
-            component: DataReviewComponent,
+            path: 'records',
+            children: [
+              {
+                path: ':id',
+                resolve: {
+                  record: RecordDetailResolverService,
+                },
+                component: DataReviewComponent,
+              },
+              {
+                path: '',
+                component: OffCampusRecordListComponent,
+              }
+            ]
           },
           {
-            path: '',
-            component: OffCampusRecordListComponent,
-          }
+            path: 'events',
+            canActivate: [SchoolAdminGuard],
+            children: [
+              {
+                path: ':id',
+                resolve: {
+                  event: CampusEventDetailResolverService,
+                },
+                component: AdminCampusEventDetailComponent,
+              },
+              {
+                path: '',
+                component: AdminCampusEventReviewListComponent,
+              }
+            ]
+          },
         ]
       },
       {

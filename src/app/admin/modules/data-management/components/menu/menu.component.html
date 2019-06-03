@@ -1,4 +1,4 @@
-<a routerLink="./records">
+<a routerLink="./review/records">
   <div class="card card-plain">
     <div class="card-header card-header-primary">
       <h4 class="card-title">培训记录审核</h4>
@@ -6,7 +6,7 @@
     </div>
   </div>
 </a>
-<a routerLink="/admin/events/review" *ngIf="authService.isSchoolAdmin">
+<a routerLink="./review/events" *ngIf="authService.isSchoolAdmin">
   <div class="card card-plain">
     <div class="card-header card-header-primary">
       <h4 class="card-title">院系培训活动审核</h4>
