@@ -4,11 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export function errorProcess(error: HttpErrorResponse) {
     let message = error.message;
     if (error.error) {
-        if (error.error.detail) {
-            message = error.error['detail'] + '。';
-        } else {
-            message = '请求失败。';
-        }
+        message = error.error.detail ? error.error.detail : '请求失败';
+        message += '。';
     }
     return message;
 }
