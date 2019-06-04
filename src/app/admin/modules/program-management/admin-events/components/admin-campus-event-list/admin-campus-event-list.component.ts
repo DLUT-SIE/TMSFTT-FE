@@ -22,9 +22,9 @@ export class AdminCampusEventListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.pipe(
-      switchMap(queryParams => {
-        this.programId = queryParams.program_id;
+    this.route.params.pipe(
+      switchMap(param => {
+        this.programId = param['id'];
         return this.programService.getProgram(Number(this.programId));
       })
     ).subscribe(program => {

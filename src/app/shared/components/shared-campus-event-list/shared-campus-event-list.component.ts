@@ -47,7 +47,7 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
   }
 
   navigateToProgramDetail() {
-    this.router.navigate(['../../programs', this.program.id], {relativeTo: this.route});
+    this.router.navigate(['/admin/programs', this.program.id]);
   }
 
   navigateToCreateForm() {

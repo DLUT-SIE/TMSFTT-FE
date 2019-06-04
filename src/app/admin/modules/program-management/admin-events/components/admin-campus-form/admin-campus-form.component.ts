@@ -210,7 +210,8 @@ export class AdminCampusFormComponent implements OnInit {
                                              this.eventService.createCampusEvent(req);
     targetEvent.subscribe(
       event => {
-        this.router.navigate(['/admin/events/', event.id]);
+        console.log(this.programId);
+        this.router.navigate(['admin/programs', this.programId, 'events', event.id]);
       },
       (error: HttpErrorResponse) => {
         let message = error.message;

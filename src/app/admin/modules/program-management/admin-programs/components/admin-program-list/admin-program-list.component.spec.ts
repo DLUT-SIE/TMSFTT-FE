@@ -138,7 +138,7 @@ describe('AdminProgramListComponent', () => {
     component.navigateToRelatedEvents(dummyProgram);
 
     expect(navigate).toHaveBeenCalledWith(
-      ['../../events'], { queryParams: { program_id: dummyProgram.id }, relativeTo: {} });
+      ['../', 1, 'events'], { relativeTo: {} });
   });
 });
 
