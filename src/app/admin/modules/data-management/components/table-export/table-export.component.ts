@@ -10,7 +10,6 @@ import { Program } from 'src/app/shared/interfaces/program';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
-import { DatePipe } from '@angular/common';
 import { errorProcess } from 'src/app/shared/utils/error-process';
 
 // Config for Various Table.
@@ -62,6 +61,13 @@ export const timeValidator: ValidatorFn = (control: FormGroup): ValidationErrors
            { timeValidator: true } : null;
 };
 
+export const programRequiredValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    if (control.get('selectedProgram').disable) {
+        return null;
+    }
+    return control.get('selectedProgram').value == null ? {programRequiredValidator: true} : null;
+};
+
 const falseValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     return { falseValidator: true};
 };
@@ -73,12 +79,11 @@ const falseValidator: ValidatorFn = (control: FormGroup): ValidationErrors | nul
 })
 export class TableExportComponent implements OnInit {
     readonly tables: Table[] = [
-        {id: 1, name: '教职工表', subOptionsConfig: 0b1011, validators: [falseValidator]},
-        {id: 2, name: '专任教师表', subOptionsConfig: 0b1111, validators: [falseValidator]},
-        {id: 3, name: '培训总体情况表', subOptionsConfig: 0b1111, validators: [falseValidator]},
+        {id: 2, name: '专任教师表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+        {id: 3, name: '培训总体情况表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 4, name: '专任教师培训覆盖率表', subOptionsConfig: 0b1111, validators: [timeValidator]},
-        {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [falseValidator]},
-        {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b0100, validators: [falseValidator]}
+        {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [timeValidator]},
+        {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]}
     ];
 
     departmentsData: Department[] = [{id: 1, name: '大连理工大学'} as Department];
@@ -105,6 +110,8 @@ export class TableExportComponent implements OnInit {
     subOptionsConfig = new SubOptionsConfig(0b0000);
     exportReady = false;
 
+    queryParams = null;
+
     constructor(
         private fb: FormBuilder,
         private readonly tableExportService: TableExportService,
@@ -115,6 +122,8 @@ export class TableExportComponent implements OnInit {
         private readonly programService: ProgramService) {
 
     }
+
+    controlNames = ['selectedTable', 'selectedDepartment', 'selectedProgram', 'startTime', 'endTime'];
 
     initEventListening() {
         this.exportTableOptions.get('selectedTable').valueChanges.subscribe((table: Table) => {
@@ -165,9 +174,9 @@ export class TableExportComponent implements OnInit {
         this.exportTableOptions = this.fb.group(
             {
             selectedTable: [null, Validators.required],
-            selectedProgram: [null],
-            startTime: [null],
-            endTime: [null],
+            selectedProgram: [],
+            startTime: [],
+            endTime: [],
             selectedDepartment: [this.departmentsData[0]]
         },
         {
@@ -190,25 +199,26 @@ export class TableExportComponent implements OnInit {
     }
 
     buildUrl(): string {
-        let url = `/aggregate-data/table-export/?table_type=${this.choosedTable.id}`;
-        switch (this.choosedTable.id) {
-            case 4:
-            if (this.choosedDepartment && this.choosedProgram.id !== -1) {
-                url += `&program_id=${this.choosedProgram.id}`;
-            }
-            const startDate = null ? this.exportTableOptions.get('startTime') == null : 
-            this.exportTableOptions.get('startTime').value as Date;
-            const endDate = null ? this.exportTableOptions.get('endTime') == null : this.exportTableOptions.get('endTime').value as Date;
-            const datePipe = new DatePipe('en-US');
-            if (startDate != null) {
-                url += `&start_time=${datePipe.transform(startDate, 'yyyy-MM-dd')}`;
-            }
-            if (endDate != null) {
-                url += `&end_time=${datePipe.transform(endDate, 'yyyy-MM-dd')}`;
-            }
-            break;
-            default:
+        let url = `/aggregate-data/table-export/?table_type=${this.choosedTable.id}&table_name=${this.choosedTable.name}`;
+        const controlValues = this.exportTableOptions.value;
+        var params = '';
+        if (this.subOptionsConfig.departmenShow && controlValues.selectedDepartment !== null) {
+            params += `&department_id=${controlValues.selectedDepartment.id}`;
         }
+        if (this.subOptionsConfig.programShow && controlValues.selectedProgram !== null) {
+            if (controlValues.selectedProgram.id != -1) {
+                params += `&program_id=${controlValues.selectedProgram.id}`;
+            }
+        }
+        if (this.subOptionsConfig.startTimeShow && controlValues.startTime !== null) {
+            const startDate = controlValues.startTime as Date;
+            params += `&start_time=${startDate.toISOString()}`;
+        }
+        if (this.subOptionsConfig.endTimeShow && controlValues.endTime !== null) {
+            const endDate = controlValues.endTime as Date;
+            params += `&end_time=${endDate.toISOString()}`;
+        }
+        url += params;
         return url;
     }
 }
