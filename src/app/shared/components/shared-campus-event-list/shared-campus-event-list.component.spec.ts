@@ -30,7 +30,7 @@ describe('SharedCampusEventListComponent', () => {
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
   const route = {
-    queryParams: observableOf({ program_id: 1 }),
+    queryParams: observableOf({program_id: 1}),
     snapshot: {
       queryParamMap: {
         get: () => '1',
@@ -144,14 +144,14 @@ describe('SharedCampusEventListComponent', () => {
     component.navigateToProgramDetail();
 
     expect(navigate).toHaveBeenCalledWith(
-      ['../../programs', component.program.id], { relativeTo: route });
+      ['/admin/programs', component.program.id]);
   });
 
   it('should navigate to create form', () => {
     component.navigateToCreateForm();
 
     expect(navigate).toHaveBeenCalledWith(
-      ['./form'], { queryParams: { program_id: component.program.id} , relativeTo: route });
+      ['./form'], { queryParams: { program_id: component.program.id } , relativeTo: route });
   });
 
   it('should enroll event.', () => {

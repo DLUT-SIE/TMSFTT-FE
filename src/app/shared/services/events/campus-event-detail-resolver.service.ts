@@ -17,7 +17,7 @@ export class CampusEventDetailResolverService implements Resolve<CampusEvent> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CampusEvent > {
-    const id = +route.paramMap.get('id');
+    const id = +route.paramMap.get('event_id');
     return this.eventService.getEvent(id);
   }
 }

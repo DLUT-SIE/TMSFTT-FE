@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SharedCampusEventDetailComponent } from './shared-campus-event-detail.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from '../../enums/event-detail-type.enum';
@@ -72,6 +72,10 @@ describe('SharedCampusEventDetailComponent', () => {
         },
         {
           provide: Location,
+          useValue: {},
+        },
+        {
+          provide: ActivatedRoute,
           useValue: {},
         },
         {

@@ -196,7 +196,7 @@ describe('AdminCampusFormComponent', () => {
     component.onSubmit();
     createEventForm$.next({ id: 1 } as CampusEvent);
 
-    expect(navigate).toHaveBeenCalledWith(['/admin/events/', 1]);
+    expect(navigate).toHaveBeenCalledWith(['admin/programs', 1, 'events', 1]);
   });
 
   it('should navigate when updation succeed.', () => {
@@ -207,7 +207,7 @@ describe('AdminCampusFormComponent', () => {
     component.onSubmit();
     updateEventForm$.next({ id: 1 } as CampusEvent);
 
-    expect(navigate).toHaveBeenCalledWith(['/admin/events/', 1]);
+    expect(navigate).toHaveBeenCalledWith(['admin/programs', 1, 'events', 1]);
   });
 
   it('should display errors when creation failed.', () => {

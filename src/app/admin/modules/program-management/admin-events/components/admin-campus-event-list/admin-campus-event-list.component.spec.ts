@@ -15,12 +15,7 @@ describe('AdminCampusEventListComponent', () => {
   let getProgram: jasmine.Spy;
 
   const route = {
-    queryParams: observableOf({ program_id: 1 }),
-    snapshot: {
-      queryParamMap: {
-        get: () => '1',
-      },
-    }
+    params: observableOf({ id: 1 })
   };
 
   const dummyProgram: Program = {
