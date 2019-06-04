@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Record } from 'src/app/shared/interfaces/record';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 /** Display a record review page in detail. */
 @Component({
@@ -36,10 +37,7 @@ export class DataReviewComponent implements OnInit {
       this.adminAllowed = false;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '操作失败！';
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       }
     );
@@ -52,10 +50,7 @@ export class DataReviewComponent implements OnInit {
       this.adminAllowed = false;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = '操作失败！';
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       }
     );

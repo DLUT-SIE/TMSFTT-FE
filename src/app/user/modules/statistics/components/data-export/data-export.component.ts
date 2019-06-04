@@ -9,6 +9,7 @@ import { WindowService } from 'src/app/shared/services/window.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 /** TODO(youchen): Fix broken component. */
 @Component({
@@ -85,13 +86,7 @@ export class DataExportComponent extends GenericListComponent<Record> {
       },
       (error: HttpErrorResponse) => {
           this.loggerService.log(error);
-          let message = error.message;
-          if (error.error) {
-            message = '';
-            for (const key of Object.keys(error.error)) {
-              message += error.error[key].join(',');
-            }
-          }
+          const message = errorProcess(error);
           this.snackBar.open(message, '关闭');
       });
   }

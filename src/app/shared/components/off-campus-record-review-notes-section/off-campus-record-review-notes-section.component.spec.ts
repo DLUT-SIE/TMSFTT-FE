@@ -187,7 +187,7 @@ describe('OffCampusRecordReviewNotesSectionComponent', () => {
 
     component.onSubmit();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Invalid content', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
   });
 
   it('should display raw errors when creation failed.', () => {
@@ -223,7 +223,7 @@ describe('OffCampusRecordReviewNotesSectionComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Rejected。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
   });
 
   it('should display raw errors when getting reviewnotes failed.', () => {

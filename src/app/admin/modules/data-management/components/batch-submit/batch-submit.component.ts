@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -37,10 +38,7 @@ export class BatchSubmitComponent {
         this.flag = true;
       },
       (error: HttpErrorResponse) => {
-        let message = error.message;
-        if (error.error) {
-          message = error.error['detail'] + '。';
-        }
+        const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       });
   }

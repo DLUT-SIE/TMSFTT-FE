@@ -11,6 +11,7 @@ import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { DatePipe } from '@angular/common';
+import { errorProcess } from 'src/app/shared/utils/error-process';
 
 // Config for Various Table.
 /* tslint:disable */
@@ -183,7 +184,8 @@ export class TableExportComponent implements OnInit {
             },
             (error: HttpErrorResponse) => {
                 this.loggerService.log(error);
-                this.snackBar.open(error.error['detail'], '关闭');
+                const message = errorProcess(error);
+                this.snackBar.open(message, '关闭');
             });
     }
 
