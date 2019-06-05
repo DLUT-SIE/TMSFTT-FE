@@ -42,7 +42,7 @@ const routes: Routes = [
             canActivate: [SchoolAdminGuard],
             children: [
               {
-                path: ':id',
+                path: ':event_id',
                 resolve: {
                   event: CampusEventDetailResolverService,
                 },
