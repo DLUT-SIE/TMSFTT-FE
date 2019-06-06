@@ -395,5 +395,17 @@ describe('RecordFormComponent', () => {
     deleteRecordAttachment$.next({});
 
     expect(component.originalAttachments.length).toEqual(0);
+    expect(snackBarOpen).toHaveBeenCalledWith('删除成功。', '关闭');
+  });
+
+  it('should display errors when failed to delete attachment.', () => {
+    component.originalAttachments = [{id: 1, path: {name: 'sdsdj', url: '1433223'}}];
+    component.deleteAttachment({id: 1, path: {name: 'sdsdj', url: '1433223'}});
+    deleteRecordAttachment$.error({
+      message: 'Raw error message',
+    });
+
+    expect(component.originalAttachments.length).toEqual(1);
+    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message', '关闭');
   });
 });
