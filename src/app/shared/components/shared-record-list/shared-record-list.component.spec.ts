@@ -102,7 +102,16 @@ describe('SharedRecordListComponent', () => {
 
     component.getResults(offset, limit);
 
-    expect(getRecords).toHaveBeenCalledWith('records/list-records-for-review/', {offset, limit, extraParams});
+    expect(getRecords).toHaveBeenCalledWith('records/', {offset, limit, extraParams});
+  });
+
+  it('should get records for review with detail.', () => {
+    component.recordListType = RecordListType.RECORDS_FOR_REVIEW;
+    const limit = 0;
+    const offset = 10;
+
+    component.getResults(offset, limit);
+    expect(getRecords).toHaveBeenCalledWith('records/list-records-for-review/', {offset, limit});
   });
 
   it('should get all records if recordListType is undefined.', () => {
