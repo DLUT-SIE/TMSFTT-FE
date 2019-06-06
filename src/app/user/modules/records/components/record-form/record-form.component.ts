@@ -292,6 +292,11 @@ export class RecordFormComponent implements OnInit {
     return this.recordAttachmentService.deleteRecordAttachment(attachment.id).subscribe(
       () => {
         this.originalAttachments = this.originalAttachments.filter(item => item.id !== attachment.id);
+        this.snackBar.open('删除成功。', '关闭');
+      },
+      (error: HttpErrorResponse) => {
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭');
       }
     );
   }
