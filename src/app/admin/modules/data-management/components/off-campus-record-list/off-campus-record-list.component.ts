@@ -10,6 +10,6 @@ import { RecordListType } from 'src/app/shared/enums/record-list-type.enum';
 })
 
 export class OffCampusRecordListComponent {
-  recordListType: RecordListType = RecordListType.OFF_CAMPUS_EVENT_RECORDS;
+  recordListType: RecordListType = RecordListType.RECORDS_FOR_REVIEW;
   constructor() { }
 }
