@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
@@ -17,6 +17,8 @@ import { AppInjector } from 'src/app/app.module';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { errorProcess } from 'src/app/shared/utils/error-process';
+import { DateTimePickerDialogComponent } from 'src/app/shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
+import { PlatformService } from 'src/app/shared/services/platform.service';
 
 @Component({
   selector: 'app-admin-campus-form',
@@ -73,7 +75,9 @@ export class AdminCampusFormComponent implements OnInit {
     private readonly eventService: EventService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly recordService: RecordService
+    private readonly recordService: RecordService,
+    private readonly platformService: PlatformService,
+    private readonly dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -208,12 +212,25 @@ export class AdminCampusFormComponent implements OnInit {
                                              this.eventService.createCampusEvent(req);
     targetEvent.subscribe(
       event => {
-        console.log(this.programId);
         this.router.navigate(['admin/programs', this.programId, 'events', event.id]);
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
       });
+  }
+
+  selectDateTimeForControl(control: AbstractControl): void {
+    const dialogRef = this.dialog.open(DateTimePickerDialogComponent, {
+      width: this.platformService.isMobile ? '100%' : '500px',
+      panelClass: 'full-width-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      control.setValue(result);
+    });
   }
 }

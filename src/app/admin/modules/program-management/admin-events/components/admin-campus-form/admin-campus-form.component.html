@@ -23,10 +23,11 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>calendar_today</mat-icon>
           <mat-label i18n>活动时间</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="请提供校内培训活动的时间" formControlName="time" i18n-placeholder
+          <input matInput placeholder="请提供校内培训活动的时间" formControlName="time" i18n-placeholder
             required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+          <button matSuffix type="button" mat-icon-button (click)="selectDateTimeForControl(time)">
+            <mat-icon>date_range</mat-icon>
+          </button>
           <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
             <span *ngIf="!!time.errors.required" i18n>
               您需要提供校内培训活动的时间。
@@ -73,10 +74,11 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>calendar_today</mat-icon>
           <mat-label i18n>报名截止时间</mat-label>
-          <input matInput [matDatepicker]="pickerDeadline" placeholder="请提供校内培训活动的报名截止时间" formControlName="deadline"
+          <input matInput placeholder="请提供校内培训活动的报名截止时间" formControlName="deadline"
             i18n-placeholder required>
-          <mat-datepicker-toggle matSuffix [for]="pickerDeadline"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #pickerDeadline disabled="false"></mat-datepicker>
+          <button matSuffix type="button" mat-icon-button (click)="selectDateTimeForControl(deadline)">
+            <mat-icon>date_range</mat-icon>
+          </button>
           <mat-error *ngIf="deadline.invalid && (deadline.dirty || deadline.touched)">
             <span *ngIf="!!deadline.errors.required" i18n>
               您需要提供校内培训活动的报名截止时间。

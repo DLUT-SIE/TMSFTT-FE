@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -7,7 +7,7 @@ import { RecordService } from '../../../../../shared/services/records/record.ser
 import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { OffCampusEvent } from 'src/app/shared/interfaces/event';
 import { Record } from 'src/app/shared/interfaces/record';
-import { MatSnackBar, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
+import { MatSnackBar, MatAutocompleteSelectedEvent, MatAutocomplete, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
@@ -19,6 +19,8 @@ import { RecordAttachment, SecuredPath } from 'src/app/shared/interfaces/record-
 import { RecordAttachmentService } from 'src/app/shared/services/records/record-attachment.service';
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 import { errorProcess } from 'src/app/shared/utils/error-process';
+import { DateTimePickerDialogComponent } from 'src/app/shared/components/date-time-picker-dialog/date-time-picker-dialog.component';
+import { PlatformService } from 'src/app/shared/services/platform.service';
 
 interface FileChangeEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -68,6 +70,8 @@ export class RecordFormComponent implements OnInit {
     private readonly recordService: RecordService,
     private readonly eventService: EventService,
     private readonly recordAttachmentService: RecordAttachmentService,
+    private readonly platformService: PlatformService,
+    private readonly dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -300,5 +304,20 @@ export class RecordFormComponent implements OnInit {
       }
     );
   }
+
+  selectDateTimeForControl(control: AbstractControl): void {
+    const dialogRef = this.dialog.open(DateTimePickerDialogComponent, {
+      width: this.platformService.isMobile ? '100%' : '500px',
+      panelClass: 'full-width-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      control.setValue(result);
+    });
+  }
+
 
 }

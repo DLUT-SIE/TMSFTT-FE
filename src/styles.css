@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
 
 .watermark {
     position: fixed;
@@ -121,4 +122,8 @@ div.text-background {
   background: rgba(224, 224, 224, 0.3);
   padding: 0.5em;
   margin-bottom: 3px;
+}
+
+.full-width-dialog {
+  max-width: 100vw !important;
 }

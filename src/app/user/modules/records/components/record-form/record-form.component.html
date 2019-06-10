@@ -31,11 +31,11 @@
         <mat-form-field appearance="outline">
           <mat-icon matPrefix>calendar_today</mat-icon>
           <mat-label i18n>参加时间</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="请告诉我们您所参加培训的时间" formControlName="time" i18n-placeholder
+          <input matInput placeholder="请告诉我们您所参加培训的时间" formControlName="time" i18n-placeholder
             required>
-          <mat-hint align="end">您可以使用日期选择器快速选择一个日期 ^</mat-hint>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+          <button matSuffix type="button" mat-icon-button (click)="selectDateTimeForControl(time)">
+            <mat-icon>date_range</mat-icon>
+          </button>
           <mat-error *ngIf="time.invalid && (time.dirty || time.touched)">
             <span *ngIf="!!time.errors.required" i18n>
               您需要提供您所参加培训的时间。

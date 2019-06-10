@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { DlDateTimePickerModule, DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 import { OffCampusRecordDetailComponent } from './components/off-campus-record-detail/off-campus-record-detail.component';
 import { SharedRecordListComponent } from './components/shared-record-list/shared-record-list.component';
@@ -43,6 +44,7 @@ import { AsSecuredPathPipe } from './pipes/as-secured-path.pipe';
 import { CampusRecordDetailComponent } from './components/campus-record-detail/campus-record-detail.component';
 import { RecordStatusChangeLogsSectionComponent } from './components/record-status-change-logs-section/record-status-change-logs-section.component';
 import { OffCampusRecordReviewNotesSectionComponent } from './components/off-campus-record-review-notes-section/off-campus-record-review-notes-section.component';
+import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
 
 
 @NgModule({
@@ -61,6 +63,7 @@ import { OffCampusRecordReviewNotesSectionComponent } from './components/off-cam
     CampusRecordDetailComponent,
     RecordStatusChangeLogsSectionComponent,
     OffCampusRecordReviewNotesSectionComponent,
+    DateTimePickerDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -92,6 +95,8 @@ import { OffCampusRecordReviewNotesSectionComponent } from './components/off-cam
 
     NgxEchartsModule,
     CKEditorModule,
+    DlDateTimePickerModule,
+    DlDateTimePickerDateModule,
   ],
   exports: [
     CommonModule,
@@ -134,12 +139,18 @@ import { OffCampusRecordReviewNotesSectionComponent } from './components/off-cam
     DetailSectionActionsComponent,
     RecordStatusChangeLogsSectionComponent,
     OffCampusRecordReviewNotesSectionComponent,
+    DateTimePickerDialogComponent,
 
     NgxEchartsModule,
     CKEditorModule,
+    DlDateTimePickerModule,
+    DlDateTimePickerDateModule,
 
     TruncatePipe,
     AsSecuredPathPipe,
   ],
+  entryComponents: [
+    DateTimePickerDialogComponent,
+  ]
 })
 export class SharedModule { }
