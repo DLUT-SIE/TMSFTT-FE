@@ -109,7 +109,7 @@ describe('LoginComponent', () => {
     verifyJWT$.next(false);
 
     expect(component.loginStatus).toBe(component.LoginStatus.VERIFYING_CAS_TICKET);
-    expect(retrieveJWT).toHaveBeenCalledWith('ticket', '/service/url/?next=/abc/efg');
+    expect(retrieveJWT).toHaveBeenCalledWith('ticket');
   });
 
   it('should not proceed if ticket is invalid', () => {

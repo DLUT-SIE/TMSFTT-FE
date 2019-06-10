@@ -98,7 +98,7 @@ describe('HTTPAuthService', () => {
   it('should return true when retriveJWT succeed', fakeAsync(() => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
 
-    service.retrieveJWT('ticket', 'service').subscribe((isAuthenticated: boolean) => {
+    service.retrieveJWT('ticket').subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeTruthy();
       expect(service.isAuthenticated).toBeTruthy();
       expect(setItem).toHaveBeenCalled();
@@ -114,7 +114,7 @@ describe('HTTPAuthService', () => {
   it('should return false when retriveJWT failed', fakeAsync(() => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
 
-    service.retrieveJWT('ticket', 'service').subscribe((isAuthenticated: boolean) => {
+    service.retrieveJWT('ticket').subscribe((isAuthenticated: boolean) => {
       expect(isAuthenticated).toBeFalsy();
       expect(service.isAuthenticated).toBeFalsy();
       expect(setItem).not.toHaveBeenCalled();

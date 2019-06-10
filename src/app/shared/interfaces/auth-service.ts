@@ -41,7 +41,7 @@ export interface AuthService {
      * Retrieve JWT by ticket, return an Observable of True and False to
      * indicate the validity of the JWT.
      */
-    retrieveJWT(ticket: string, serviceURL: string): Observable<boolean>;
+    retrieveJWT(ticket: string): Observable<boolean>;
     /**
      * Verify the existing JWT. This method will try to load JWT from Storage
      * and request server to verify it. return and Observable of True and False

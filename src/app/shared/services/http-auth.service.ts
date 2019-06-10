@@ -85,8 +85,8 @@ export class HTTPAuthService implements AuthService {
   }
 
   /** Retrieve the JWT given ticket and service. */
-  retrieveJWT(ticket: string, service: string): Observable<boolean> {
-    const payload = { ticket, service };
+  retrieveJWT(ticket: string): Observable<boolean> {
+    const payload = { ticket, service: environment.SERVICE_URL };
     return this.http.post<JWTResponse>(
       `/login/`, payload).pipe(
       map(response => {

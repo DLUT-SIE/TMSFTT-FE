@@ -54,36 +54,26 @@ export class LoginComponent implements OnInit {
       map(() => {
         const snapshot = this.activatedRoute.snapshot;
         const ticket = snapshot.queryParamMap.get('ticket');
-        const service = snapshot.queryParamMap.get('service');
-        if (!ticket || !service) {
+        if (!ticket) {
           this.loginStatus = LoginStatus.REDIRECTING_TO_CAS;
           this.authService.login(this.nextURL);
           return {
             shouldContinue: false,
             ticket: '',
-            service: '',
           };
-        }
-        const nextKey = 'next=';
-        const nextParamPos = service.indexOf(nextKey);
-        // If we found next=/xxx in service url, we use it.
-        if (nextParamPos !== -1) {
-          this.nextURL = service.slice(nextParamPos + nextKey.length);
         }
         return {
           shouldContinue: true,
           ticket,
-          service,
         };
       }),
-      // If no ticket or serviceURL, then user will be redirect and no need to proceed.
+      // If no ticket, then user will be redirect and no need to proceed.
       filter(data => data.shouldContinue),
       // Send request to server to retrieve a JWT.
       switchMap(data => {
         this.loginStatus = LoginStatus.VERIFYING_CAS_TICKET;
         const ticket = data.ticket;
-        const service = data.service;
-        return this.authService.retrieveJWT(ticket, service);
+        return this.authService.retrieveJWT(ticket);
       })
     ).subscribe(isAuthenticated => {
       if (!isAuthenticated) {
