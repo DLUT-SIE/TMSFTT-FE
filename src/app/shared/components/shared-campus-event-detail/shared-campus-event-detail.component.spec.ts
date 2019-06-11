@@ -9,6 +9,7 @@ import {
   MatInputModule,
   MatSnackBar,
   MatDividerModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
  import { EventService } from 'src/app/shared/services/events/event.service';
  import { Enrollment } from 'src/app/shared/interfaces/enrollment';
@@ -55,6 +56,7 @@ describe('SharedCampusEventDetailComponent', () => {
         MatIconModule,
         MatInputModule,
         MatDividerModule,
+        MatProgressSpinnerModule,
         NoopAnimationsModule,
       ],
       providers: [
@@ -76,7 +78,11 @@ describe('SharedCampusEventDetailComponent', () => {
         },
         {
           provide: ActivatedRoute,
-          useValue: {},
+          useValue: {
+            snapshot: {
+              url: [''],
+            }
+          },
         },
         {
           provide: Router,
@@ -201,7 +207,8 @@ describe('SharedCampusEventDetailComponent', () => {
     component.deleteEnrollment();
     deleteEventEnrollment$.next();
     expect(snackBarOpen).toHaveBeenCalledWith('取消报名成功', '关闭');
-    expect(navigate).toHaveBeenCalled();
+    expect(component.event.enrolled).toBeFalsy();
+    expect(component.event.enrollment_id).toBeNull();
   });
 
   it('should review campus event', () => {
