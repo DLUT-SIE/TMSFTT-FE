@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
   <div fxFlex="8 8 calc(8em)" class="card">
@@ -90,6 +93,9 @@
         <detail-section-actions>
           <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
             <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
+          </ng-container>
+          <ng-container *ngIf="!event.enrolled && eventDetailType === EventDetailType.USER">
+            <button mat-raised-button color="primary" (click)="enrollEvent()">报名</button>
           </ng-container>
           <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
             <button mat-raised-button color="primary" *ngIf="!event.reviewed && authService.isSchoolAdmin"

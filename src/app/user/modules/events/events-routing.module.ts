@@ -11,6 +11,13 @@ const routes: Routes = [
     component: EventsComponent,
     children: [
       {
+        path: ':event_id/enroll',
+        resolve: {
+          event: CampusEventDetailResolverService,
+        },
+        component: CampusEventDetailComponent,
+      },
+      {
         path: ':event_id',
         resolve: {
           event: CampusEventDetailResolverService,

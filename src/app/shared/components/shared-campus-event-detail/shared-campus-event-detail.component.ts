@@ -1,4 +1,4 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,8 +17,10 @@ import { errorProcess } from '../../utils/error-process';
   templateUrl: './shared-campus-event-detail.component.html',
   styleUrls: ['./shared-campus-event-detail.component.css']
 })
-export class SharedCampusEventDetailComponent {
+export class SharedCampusEventDetailComponent implements OnInit {
   EventDetailType = EventDetailType;
+  isLoading = false;
+
   @Input() eventDetailType: EventDetailType;
   @Input() event: CampusEvent;
 
@@ -34,8 +36,15 @@ export class SharedCampusEventDetailComponent {
     private readonly loggerService: LoggerService,
   ) { }
 
+  ngOnInit() {
+    const url = this.route.snapshot.url;
+    if (this.eventDetailType === EventDetailType.USER && url[url.length - 1].path === 'enroll') {
+      this.enrollEvent();
+    }
+  }
+
   navigateToChangeEvent() {
-    this.router.navigate(['../form'], { queryParams: { program_id: this.event.program, event_id: this.event.id }, relativeTo: this.route});
+    this.router.navigate(['../form'], { queryParams: { program_id: this.event.program, event_id: this.event.id }, relativeTo: this.route });
   }
 
   get description() {
@@ -44,38 +53,64 @@ export class SharedCampusEventDetailComponent {
   }
 
   deleteEnrollment() {
-    this.eventService.deleteEventEnrollment(this.event.enrollment_id).subscribe(() => {
-      this.snackBar.open('取消报名成功', '关闭');
-      this.router.navigate(['/user/events/']);
-    });
+    this.isLoading = true;
+    this.eventService.deleteEventEnrollment(this.event.enrollment_id).subscribe(
+      () => {
+        this.snackBar.open('取消报名成功', '关闭');
+        this.event.enrolled = false;
+        this.event.enrollment_id = null;
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭');
+        this.isLoading = false;
+      },
+    );
   }
 
   reviewCampusEvent() {
     this.eventService.reviewCampusEvent(this.event).subscribe(
       () => {
-        this.snackBar.open('已审核通过该培训活动', '关闭', {duration: 3000});
+        this.snackBar.open('已审核通过该培训活动', '关闭', { duration: 3000 });
         this.event.reviewed = true;
       },
       () => {
-        this.snackBar.open('审核失败，请尝试重新审核', '关闭', {duration: 3000});
+        this.snackBar.open('审核失败，请尝试重新审核', '关闭', { duration: 3000 });
       }
     );
   }
 
   buildUrl(eventId: number): string {
-    return  `/aggregate-data/table-export/?table_type=9&event_id=${eventId}`;
+    return `/aggregate-data/table-export/?table_type=9&event_id=${eventId}`;
   }
 
   doResultsExport(eventId: number) {
     this.eventService.exportAttendanceSheet(this.buildUrl(eventId)).subscribe(
       data => {
-          this.windowService.open(data['url']);
-          this.snackBar.open('导出成功', '确定', {duration: 3000});
+        this.windowService.open(data['url']);
+        this.snackBar.open('导出成功', '确定', { duration: 3000 });
       },
       (error: HttpErrorResponse) => {
-          this.loggerService.log(error);
-          const message = errorProcess(error);
-          this.snackBar.open(message, '关闭');
+        this.loggerService.log(error);
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭');
+      });
+  }
+
+  enrollEvent() {
+    this.isLoading = true;
+    this.eventService.enrollCampusEvent(this.event).subscribe(
+      (data) => {
+        this.snackBar.open('报名成功!', '关闭');
+        this.event.enrollment_id = data.id;
+        this.event.enrolled = true;
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭');
+        this.isLoading = false;
       });
   }
 }
