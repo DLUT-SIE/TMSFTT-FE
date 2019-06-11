@@ -32,9 +32,9 @@
                 </span>
               </th>
               <td class="text-justify">
-                {{ notification.content | slice:0:30 }}...
+                {{ notification.content | truncate: 40 }}
               </td>
-              <td>{{ notification.sender }}</td>
+              <td>{{ notification.sender | truncate: 10 }}</td>
               <td>{{ notification.time | date:'medium' }}</td>
             </tr>
           </tbody>
