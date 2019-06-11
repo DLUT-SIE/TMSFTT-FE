@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>我们检测到您正在通过IE浏览器访问</h1>
+<div mat-dialog-content fxLayout="column" fxLayoutAlign="start start">
+  <p>由于官方已经不再对IE浏览器提供支持，我们无法保证您能获得最佳的浏览体验。</p>
+  <p>如果您正在使用旧版本的IE浏览器，请考虑升级至<a href="https://www.google.cn/intl/zh-CN/chrome/">Google Chrome浏览器</a>以获得最佳的浏览体验。</p>
+  <p>如果您正在使用360浏览器、QQ浏览器等浏览器，请选择启用<strong>极速模式</strong>而非兼容模式。</p>
+  <img src="./assets/img/360-browser-mode.png">
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+  <button mat-raised-button color="primary" (click)="close()">关闭</button>
+</div>

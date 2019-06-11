@@ -10,6 +10,9 @@ import { WindowService } from './shared/services/window.service';
 import { StyleManager } from './shared/services/style-manager.service';
 import { SiteTheme } from './shared/interfaces/theme';
 import { SwUpdate } from '@angular/service-worker';
+import { detectIE } from 'src/app/shared/utils/detect-ie';
+import { MatDialog } from '@angular/material';
+import { IEWarningDialogComponent } from './core/iewarning-dialog/iewarning-dialog.component';
 
 /** Root component. */
 @Component({
@@ -31,6 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly location: Location,
     private readonly platformService: PlatformService,
     private readonly router: Router,
+    private readonly dialog: MatDialog,
     private readonly windowService: WindowService,
     private readonly updates: SwUpdate,
     @Inject(DOCUMENT) private readonly document: Document,
@@ -41,6 +45,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.updates.activateUpdate().then(() => this.document.location.reload());
       }
     });
+    if (detectIE() !== false) {
+      this.dialog.open(IEWarningDialogComponent, {
+        width: this.platformService.isMobile ? '100%' : undefined,
+      });
+    }
   }
 
   ngOnInit() {
@@ -90,6 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         elemMainPanel.scrollTop = 0;
         elemSidebar.scrollTop = 0;
       });
+
   }
 
   ngAfterViewInit() {

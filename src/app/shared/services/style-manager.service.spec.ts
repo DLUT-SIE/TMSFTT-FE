@@ -21,7 +21,7 @@ describe('StyleManager', () => {
     // Container
     const div = document.createElement('div');
     div.setAttribute('id', 'themeContainer');
-    document.body.append(div);
+    document.body.appendChild(div);
 
     // Stylesheet
     const style = document.createElement('style');
@@ -32,7 +32,7 @@ describe('StyleManager', () => {
     .color-accent-2 {color: rgb(0, 128, 0)} \
     .color-warn {color: rgb(0, 0, 255)} \
     .color-warn-2 {color: rgb(0, 0, 128)}';
-    document.head.append(style);
+    document.head.appendChild(style);
 
     styleManager = TestBed.get(StyleManager);
     styleManager.setTheme('indigo-pink');

@@ -12,6 +12,7 @@ import { NotificationDetailComponent } from './notification-detail/notification-
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
+import { IEWarningDialogComponent } from './iewarning-dialog/iewarning-dialog.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
     NotificationListComponent,
     NotificationComponent,
     ThemePickerComponent,
+    IEWarningDialogComponent,
   ],
   exports: [
     FooterComponent,
@@ -39,6 +41,9 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
     NotificationDetailComponent,
     NotificationListComponent,
     NotificationComponent,
+  ],
+  entryComponents: [
+    IEWarningDialogComponent,
   ]
 })
 export class CoreModule { }

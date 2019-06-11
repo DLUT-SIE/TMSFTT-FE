@@ -14,7 +14,7 @@ import { WindowService } from './shared/services/window.service';
 import { PlatformType } from './shared/enums/platform-type.enum';
 import { StyleManager } from './shared/services/style-manager.service';
 import { SwUpdate } from '@angular/service-worker';
-import { MatProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 
 @Component({
   selector: 'app-sidebar',
@@ -67,6 +67,7 @@ describe('AppComponent(Windows)', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         MatProgressSpinnerModule,
+        MatDialogModule,
       ],
       declarations: [
         TestAppRootComponent,

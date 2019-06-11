@@ -76,7 +76,7 @@ export class StyleManager {
       const div = this.document.createElement('div');
       div.setAttribute('id', id);
       div.setAttribute('class', `hidden color-${colorName}`);
-      container.append(div);
+      container.appendChild(div);
       this.divsMap.set(colorName, this.document.getElementById(id) as HTMLDivElement);
     }
     return this.divsMap.get(colorName);
