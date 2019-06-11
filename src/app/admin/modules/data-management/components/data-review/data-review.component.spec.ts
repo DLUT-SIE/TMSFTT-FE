@@ -161,7 +161,7 @@ describe('DataReviewComponent', () => {
 
     component.changeStatus(true);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('changestatus_data: Invalid content', '关闭');
   });
 
   it('should display raw errors when updation failed.', () => {
@@ -192,7 +192,7 @@ describe('DataReviewComponent', () => {
 
     component.closeRecord();
 
-    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('closerecord_data: Invalid content', '关闭');
   });
 
   it('should display raw errors when close failed.', () => {

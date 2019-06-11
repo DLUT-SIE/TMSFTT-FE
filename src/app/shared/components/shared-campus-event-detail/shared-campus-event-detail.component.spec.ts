@@ -265,7 +265,7 @@ describe('SharedCampusEventDetailComponent', () => {
     exportAttendanceSheet$.error({
       error: {detail: ['Raw error message']},
     } as HttpErrorResponse);
-    expect(snackBarOpen).toHaveBeenCalledWith('Raw error message。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭');
     expect(buildUrl).toHaveBeenCalled();
   });
 

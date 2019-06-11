@@ -245,7 +245,7 @@ describe('RecordFormComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('can\'t find record。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： can\'t find record', '关闭');
   });
 
   it('should add new FormControl to FormArray.', () => {
@@ -334,7 +334,7 @@ describe('RecordFormComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('attachments_data: Invalid number of attachments', '关闭');
     expect(navigate).not.toHaveBeenCalled();
   });
 

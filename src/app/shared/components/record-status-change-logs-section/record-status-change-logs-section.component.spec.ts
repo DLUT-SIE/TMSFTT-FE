@@ -128,7 +128,7 @@ describe('RecordStatusChangeLogsSectionComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(open).toHaveBeenCalledWith('请求失败。', '关闭');
+    expect(open).toHaveBeenCalledWith('err: Rejected', '关闭');
   });
 
   it('should display raw errors when getting status change logs failed.', () => {
