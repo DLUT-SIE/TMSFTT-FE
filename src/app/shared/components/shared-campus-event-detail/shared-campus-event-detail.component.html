@@ -91,16 +91,17 @@
             </detail-item>
         </ng-container>
         <detail-section-actions>
-          <ng-container *ngIf="event.enrolled && eventDetailType === EventDetailType.USER">
-            <button mat-raised-button color="primary" (click)="deleteEnrollment()">取消报名</button>
-          </ng-container>
-          <ng-container *ngIf="!event.enrolled && eventDetailType === EventDetailType.USER">
-            <button mat-raised-button color="primary" (click)="enrollEvent()">报名</button>
+          <ng-container *ngIf="eventDetailType === EventDetailType.USER">
+            <button mat-raised-button color="primary" *ngIf="event.enrolled; else enrollButton" (click)="deleteEnrollment()">取消报名</button>
+            <ng-template #enrollButton>
+              <button mat-raised-button color="primary" *ngIf="!event.expired" (click)="enrollEvent()">报名</button>
+            </ng-template>
           </ng-container>
           <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
             <button mat-raised-button color="primary" *ngIf="!event.reviewed && authService.isSchoolAdmin"
               (click)="reviewCampusEvent()">审核通过</button>
             <button mat-raised-button color="primary" (click)="doResultsExport(event.id)">导出签到表</button>
+            <button mat-raised-button color="primary" *ngIf="!event.expired" (click)="copyEnrollLink()">复制报名链接</button>
             <button mat-raised-button color="primary" (click)="navigateToChangeEvent()">修改</button>
           </ng-container>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>

@@ -11,6 +11,7 @@ import { WindowService } from 'src/app/shared/services/window.service';
 import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorProcess } from '../../utils/error-process';
+import { copyToClipboard } from '../../utils/copy-to-clipboard';
 
 @Component({
   selector: 'app-shared-campus-event-detail',
@@ -26,12 +27,12 @@ export class SharedCampusEventDetailComponent implements OnInit {
 
   constructor(
     @Inject(AUTH_SERVICE) readonly authService: AuthService,
+    readonly location: Location,
+    protected readonly snackBar: MatSnackBar,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly eventService: EventService,
-    protected readonly snackBar: MatSnackBar,
-    readonly location: Location,
     private readonly windowService: WindowService,
     private readonly loggerService: LoggerService,
   ) { }
@@ -94,7 +95,7 @@ export class SharedCampusEventDetailComponent implements OnInit {
       (error: HttpErrorResponse) => {
         this.loggerService.log(error);
         const message = errorProcess(error);
-        this.snackBar.open(message, '关闭');
+        this.snackBar.open(message, '关闭', { duration: 3000 });
       });
   }
 
@@ -102,15 +103,24 @@ export class SharedCampusEventDetailComponent implements OnInit {
     this.isLoading = true;
     this.eventService.enrollCampusEvent(this.event).subscribe(
       (data) => {
-        this.snackBar.open('报名成功!', '关闭');
+        this.snackBar.open('报名成功!', '关闭', {duration: 3000});
         this.event.enrollment_id = data.id;
         this.event.enrolled = true;
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
-        this.snackBar.open(message, '关闭');
+        this.snackBar.open(message, '关闭', {duration: 3000});
         this.isLoading = false;
       });
+  }
+
+  copyEnrollLink() {
+    const path = this.router.createUrlTree(
+      ['user', 'events', this.event.id, 'enroll']
+    ).toString();
+    const url = `${this.windowService.host}${path}`;
+    copyToClipboard(url);
+    this.snackBar.open('已将报名链接复制到剪贴板', '关闭', {duration: 3000});
   }
 }

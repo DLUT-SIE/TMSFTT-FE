@@ -25,4 +25,13 @@ export class WindowService {
   get nativeWindow() {
     return window;
   }
+
+  get host() {
+    let hostUrl: string;
+    hostUrl = window.location.protocol + '//' + window.location.hostname;
+    if (window.location.port) {
+      hostUrl += ':' + window.location.port;
+    }
+    return hostUrl;
+  }
 }
