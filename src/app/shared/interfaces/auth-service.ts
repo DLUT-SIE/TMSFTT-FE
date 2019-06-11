@@ -36,7 +36,7 @@ export interface AuthService {
      * CAS authentication page.
      */
     login(nextURL?: string): void;
-    logout(): void;
+    logout(): Observable<{}>;
     /**
      * Retrieve JWT by ticket, return an Observable of True and False to
      * indicate the validity of the JWT.

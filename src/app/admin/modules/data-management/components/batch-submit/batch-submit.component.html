@@ -11,7 +11,7 @@
         <label *ngIf="count && flag">成功录入{{ count }}条记录！</label>
       </div>
       <div>
-        <input hidden type="file" #uploadFileInput (change)="onFileSlect($event)" accept=".xlsx" />
+        <input hidden type="file" #uploadFileInput (change)="onFileSlect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
         <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
           <button mat-raised-button color="primary" *ngIf="!file" (click)="uploadFileInput.click()" i18n>选择表格</button>
           <button mat-raised-button color="primary" *ngIf="file" (click)="uploadFileInput.click()" i18n>重新选择</button>

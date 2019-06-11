@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { timer, Observable, of as ObservableOf, ReplaySubject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from 'src/environments/environment';
@@ -54,7 +54,9 @@ export class HTTPAuthService implements AuthService {
   }
 
   logout() {
-    this.deauthenticate();
+    return this.http.get('/logout/').pipe(
+      tap(() => this.deauthenticate()),
+    );
   }
 
   /** Extract necessary information from data and set fields of service. */

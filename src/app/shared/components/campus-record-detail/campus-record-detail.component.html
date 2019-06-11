@@ -31,10 +31,5 @@
     <detail-item-title>培训记录状态</detail-item-title>
     <detail-item-content>{{ record.status_str }}</detail-item-content>
   </detail-item>
-  <detail-item>
-    <detail-item-title>培训记录状态日志</detail-item-title>
-    <detail-item-content>
-      <app-record-status-change-logs-section [record]="record"></app-record-status-change-logs-section>
-    </detail-item-content>
-  </detail-item>
+  <app-record-status-change-logs-section [record]="record"></app-record-status-change-logs-section>
 </detail-section>

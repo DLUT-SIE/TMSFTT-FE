@@ -262,7 +262,12 @@ describe('HTTPAuthService', () => {
   it('should logout', () => {
     const service: HTTPAuthService = TestBed.get(HTTPAuthService);
 
-    service.logout();
+    service.logout().subscribe();
+
+    const req = httpTestingController.expectOne('/logout/');
+
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
 
     expect(removeItem).toHaveBeenCalledWith(environment.JWT_KEY);
   });

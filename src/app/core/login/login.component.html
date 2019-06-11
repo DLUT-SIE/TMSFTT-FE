@@ -3,12 +3,16 @@
   <mat-card-content>
     <ng-container *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET; else unfinishedProgress">
       <mat-progress-bar color="warn" mode="determinate" value="100"></mat-progress-bar>
+      <p>原因：如果您成功地通过了统一认证服务认证，可能是您的帐号还没有同步至本系统中，请过一段时间再试</p>
     </ng-container>
     <ng-template #unfinishedProgress>
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </ng-template>
   </mat-card-content>
   <mat-card-actions fxLayoutAlign="center">
-    <button mat-raised-button color="warn" *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET" (click)="retryLogin()" i18n>尝试重新认证</button>
+    <ng-container *ngIf="loginStatus === LoginStatus.INVALID_CAS_TICKET">
+      <button mat-raised-button color="warn" (click)="retryLogin()" i18n>尝试重新认证</button>
+      <button mat-raised-button color="warn" (click)="logout()" i18n>注销统一认证</button>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

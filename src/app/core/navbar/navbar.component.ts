@@ -104,7 +104,9 @@ export class NavbarComponent implements OnInit {
 
     /** Logout user and redirect to home page. */
     logOut() {
-        this.authService.logout();
-        this.windowService.redirect('/');
+        this.authService.logout().subscribe(() => {
+            alert('注销成功，即将重新跳转到首页!');
+            this.windowService.redirect('/');
+        });
     }
 }

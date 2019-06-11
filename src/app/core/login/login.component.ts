@@ -88,4 +88,10 @@ export class LoginComponent implements OnInit {
   retryLogin() {
     this.windowService.redirect('/auth/login');
   }
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.windowService.redirect('/');
+    });
+  }
 }

@@ -31,12 +31,14 @@ describe('NavbarComponent', () => {
   let prepareExternalUrl: jasmine.Spy;
   let redirect: jasmine.Spy;
   const events$ = new Subject<void>();
+  const logout$ = new Subject<{}>();
   const authenticationSucceed$ = new Subject<void>();
 
   beforeEach(async(() => {
     closeAll = jasmine.createSpy();
     open = jasmine.createSpy();
     logout = jasmine.createSpy();
+    logout.and.returnValue(logout$);
     redirect = jasmine.createSpy();
     prepareExternalUrl = jasmine.createSpy();
     prepareExternalUrl.and.returnValue('url');
@@ -181,6 +183,7 @@ describe('NavbarComponent', () => {
 
   it('should logout user', () => {
     component.logOut();
+    logout$.next();
 
     expect(logout).toHaveBeenCalled();
     expect(redirect).toHaveBeenCalled();
