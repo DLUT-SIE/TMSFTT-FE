@@ -74,7 +74,7 @@ describe('BatchSubmitComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('Invalid number of attachments。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Invalid number of attachments', '关闭');
   });
 
   it('should display raw errors when creation failed.', () => {

@@ -13,7 +13,7 @@ export function errorProcess(error: HttpErrorResponse) {
                 message += '失败原因： ' + error.error[key];
                 continue;
             }
-            message += key + ': ' + error.error[key]; 
+            message += key + ': ' + error.error[key];
         }
     }
     return message;

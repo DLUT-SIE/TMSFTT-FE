@@ -188,7 +188,7 @@ describe('AdminCampusFormComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('can\'t find event。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： can\'t find event', '关闭');
   });
 
   it('should navigate when creation succeed.', () => {
@@ -220,7 +220,7 @@ describe('AdminCampusFormComponent', () => {
       },
     } as HttpErrorResponse);
 
-    expect(snackBarOpen).toHaveBeenCalledWith('请求失败。', '关闭');
+    expect(snackBarOpen).toHaveBeenCalledWith('attachments_data: Invalid number of attachments', '关闭');
     expect(navigate).not.toHaveBeenCalled();
   });
 
