@@ -183,7 +183,7 @@ describe('NavbarComponent', () => {
 
   it('should logout user', () => {
     component.logOut();
-    logout$.next();
+    logout$.next({url: 'abc'});
 
     expect(logout).toHaveBeenCalled();
     expect(redirect).toHaveBeenCalled();

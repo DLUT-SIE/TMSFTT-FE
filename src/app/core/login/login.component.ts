@@ -90,8 +90,8 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout().subscribe(() => {
-      this.windowService.redirect('/');
+    this.authService.logout().subscribe(data => {
+      this.windowService.redirect(data.url);
     });
   }
 }

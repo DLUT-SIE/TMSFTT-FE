@@ -54,7 +54,7 @@ export class HTTPAuthService implements AuthService {
   }
 
   logout() {
-    return this.http.get('/logout/').pipe(
+    return this.http.get<{url: string}>('/logout/').pipe(
       tap(() => this.deauthenticate()),
     );
   }
