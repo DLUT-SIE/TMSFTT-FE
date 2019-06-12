@@ -1,5 +1,5 @@
 import { Component, Input, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from 'src/app/shared/enums/event-detail-type.enum';
@@ -29,7 +29,6 @@ export class SharedCampusEventDetailComponent {
     @Inject(AUTH_SERVICE) readonly authService: AuthService,
     readonly location: Location,
     protected readonly snackBar: MatSnackBar,
-    private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly eventService: EventService,
@@ -38,7 +37,10 @@ export class SharedCampusEventDetailComponent {
   ) { }
 
   navigateToChangeEvent() {
-    this.router.navigate(['../form'], { queryParams: { program_id: this.event.program, event_id: this.event.id }, relativeTo: this.route });
+    this.router.navigate(['admin', 'programs', this.event.program, 'events', 'form'],
+                         {queryParams: {
+                           event_id: this.event.id,
+                         }});
   }
 
   get description() {
