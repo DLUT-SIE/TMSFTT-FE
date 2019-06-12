@@ -134,10 +134,12 @@ describe('SharedCampusEventListComponent', () => {
 
   it('should load event for EventListType.USER', () => {
     component.eventListType = EventListType.USER;
+    const extraParams = new Map();
+    extraParams.set('reviewed', true);
 
     component.getResults(0, 0);
 
-    expect(getCampusEvents).toHaveBeenCalledWith({limit: 0, offset: 0});
+    expect(getCampusEvents).toHaveBeenCalledWith({limit: 0, offset: 0, extraParams});
   });
 
   it('should navigate to program detail', () => {

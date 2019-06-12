@@ -35,7 +35,9 @@ export class SharedCampusEventListComponent extends GenericListComponent<CampusE
 
   getResults(offset: number, limit: number) {
     if (this.eventListType === EventListType.USER) {
-      return this.eventService.getCampusEvents({offset, limit});
+      const extraParams = new Map();
+      extraParams.set('reviewed', true);
+      return this.eventService.getCampusEvents({offset, limit, extraParams});
     } else if (this.eventListType === EventListType.TO_BE_REVIEWED) {
       const extraParams = new Map();
       extraParams.set('reviewed', false);
