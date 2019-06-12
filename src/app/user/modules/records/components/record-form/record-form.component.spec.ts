@@ -240,6 +240,7 @@ describe('RecordFormComponent', () => {
   it('should display errors when failed to get record.', () => {
     getRecordWithDetail$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         detail: ['can\'t find record'],
       },
@@ -329,6 +330,7 @@ describe('RecordFormComponent', () => {
     component.onSubmit();
     createOffCampusRecord$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         attachments_data: ['Invalid number of attachments'],
       },

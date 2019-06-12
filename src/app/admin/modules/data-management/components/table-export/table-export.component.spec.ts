@@ -70,6 +70,7 @@ describe('TableExportComponent', () => {
   it('should occure error', () => {
     component.doTableExport();
     exportTableSubject$.error({
+      status: 400,
       error: {detail: 'Raw error message'},
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭');

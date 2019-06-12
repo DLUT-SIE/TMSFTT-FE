@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { isString } from 'util';
 
+/* tslint:disable-next-line:no-any */
 function extractMessageFromJSON(obj: any) {
     if (isString(obj)) {
         return obj;

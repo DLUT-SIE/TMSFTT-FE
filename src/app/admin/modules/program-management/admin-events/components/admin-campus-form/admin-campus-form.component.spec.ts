@@ -188,6 +188,7 @@ describe('AdminCampusFormComponent', () => {
     expect(component.roundChoices).toEqual([dummyRoundChoice, dummyRoundChoice]);
     getEvent$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         detail: ['can\'t find event'],
       },
@@ -220,6 +221,7 @@ describe('AdminCampusFormComponent', () => {
     component.onSubmit();
     createEventForm$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         attachments_data: ['Invalid number of attachments'],
       },

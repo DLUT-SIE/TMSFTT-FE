@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { 
+import {
   MatSnackBar,
   MatProgressSpinnerModule,
 } from '@angular/material';
@@ -73,6 +73,7 @@ describe('BatchSubmitComponent', () => {
     component.uploadFile();
     batchSubmitRecord$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         detail: 'Invalid number of attachments',
       },
