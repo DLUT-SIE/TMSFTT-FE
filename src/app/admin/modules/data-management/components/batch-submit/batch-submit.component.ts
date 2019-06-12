@@ -41,9 +41,9 @@ export class BatchSubmitComponent {
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
+        this.isLoading = false;
         const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
-        this.isLoading = false;
       });
   }
 }

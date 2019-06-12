@@ -1,11 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { isString } from 'util';
 
 function extractMessageFromJSON(obj: any) {
+    if (isString(obj)) {
+        return obj;
+    }
     if (Array.isArray(obj)) {
         return obj[0];
     }
     let message = '';
     for (const key of Object.keys(obj)) {
+        if (message !== '') {
+            message += '\n';
+        }
         if (key === 'detail' || key === 'non_field_errors') {
             message += '失败原因： ' + extractMessageFromJSON(obj[key]);
             continue;
