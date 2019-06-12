@@ -123,6 +123,7 @@ describe('RecordStatusChangeLogsSectionComponent', () => {
   it('should display errors when getting status change logs failed.', () => {
     getStatusChangeLogs$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         err: ['Rejected'],
       },

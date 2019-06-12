@@ -180,6 +180,7 @@ describe('OffCampusRecordReviewNotesSectionComponent', () => {
     component.reviewNoteContent = 'abc';
     createReviewNote$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         reviewnotecontent_data: ['Invalid content'],
       },
@@ -218,6 +219,7 @@ describe('OffCampusRecordReviewNotesSectionComponent', () => {
   it('should display errors when getting reviewnotes failed.', () => {
     getReviewNotes$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         reviewnotes_data: ['Rejected'],
       },

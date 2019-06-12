@@ -165,6 +165,7 @@ describe('AdminProgramFormComponent', () => {
     component.onSubmit();
     createProgramForm$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         attachments_data: ['Invalid number of attachments'],
       },

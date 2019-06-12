@@ -10,6 +10,7 @@ import { NotificationListComponent } from './notification-list.component';
 import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 import { PaginatedResponse } from 'src/app/shared/interfaces/paginated-response';
 import { Location } from '@angular/common';
+import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
 
 describe('NotificationListComponent', () => {
   let component: NotificationListComponent;
@@ -38,6 +39,7 @@ describe('NotificationListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         NotificationListComponent,
+        TruncatePipe,
       ],
       imports: [
         MatIconModule,

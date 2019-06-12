@@ -270,6 +270,7 @@ describe('SharedCampusEventDetailComponent', () => {
     buildUrl.and.returnValue('123');
     component.doResultsExport(1);
     exportAttendanceSheet$.error({
+      status: 400,
       error: {detail: ['Raw error message']},
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭', {duration: 3000});

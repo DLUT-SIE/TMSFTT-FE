@@ -165,6 +165,7 @@ describe('DataExportComponent', () => {
     buildUrl.and.returnValue('123');
     component.doResultsExport();
     exportRecordsSubject$.error({
+      status: 400,
       error: {detail: ['Raw error message']},
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭');

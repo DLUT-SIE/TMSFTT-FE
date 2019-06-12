@@ -154,6 +154,7 @@ describe('DataReviewComponent', () => {
   it('should display errors when updation failed.', () => {
     updateRecordStatus$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         changestatus_data: ['Invalid content'],
       },
@@ -185,6 +186,7 @@ describe('DataReviewComponent', () => {
   it('should display errors when close failed.', () => {
     closeRecord$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         closerecord_data: ['Invalid content'],
       },

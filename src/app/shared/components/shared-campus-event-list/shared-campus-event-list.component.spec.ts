@@ -184,6 +184,7 @@ describe('SharedCampusEventListComponent', () => {
   it('should display errors when enroll failed.', () => {
     enrollCampusEvent$.error({
       message: 'Raw error message',
+      status: 400,
       error: {
         enrollCampusEvent_data: ['Invalid content'],
       },
