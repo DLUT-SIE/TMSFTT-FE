@@ -18,7 +18,8 @@ export class BatchSubmitComponent {
 
   file: File;
   count: number;
-  flag: boolean;
+  hasCreateSucceed: boolean;
+  isLoading = false;
 
   constructor(
     private readonly recordService: RecordService,
@@ -28,18 +29,21 @@ export class BatchSubmitComponent {
   /** Append file to attachments when encountered a change event. */
   onFileSlect(event: FileChangeEvent) {
     this.file = event.target.files[0];
-    this.flag = false;
+    this.hasCreateSucceed = false;
   }
 
   uploadFile() {
+    this.isLoading = true;
     this.recordService.batchSubmitRecord(this.file).subscribe(
       response => {
         this.count = response.count;
-        this.flag = true;
+        this.hasCreateSucceed = true;
+        this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
+        this.isLoading = false;
       });
   }
 }

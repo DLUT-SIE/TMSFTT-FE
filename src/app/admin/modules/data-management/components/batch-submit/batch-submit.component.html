@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
   <div fxFlex="8 8 calc(8em)" class="card">
@@ -8,14 +11,14 @@
     <div class="card-body">
       <div *ngIf="file">
         <p>文件名:{{ file.name }}</p>
-        <label *ngIf="count && flag">成功录入{{ count }}条记录！</label>
+        <label *ngIf="count && hasCreateSucceed">成功录入{{ count }}条记录！</label>
       </div>
       <div>
         <input hidden type="file" #uploadFileInput (change)="onFileSlect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
         <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
           <button mat-raised-button color="primary" *ngIf="!file" (click)="uploadFileInput.click()" i18n>选择表格</button>
           <button mat-raised-button color="primary" *ngIf="file" (click)="uploadFileInput.click()" i18n>重新选择</button>
-          <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!file" i18n>上传表格</button>
+          <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!file && isLoading" i18n>上传表格</button>
         </div>
       </div>
     </div>
