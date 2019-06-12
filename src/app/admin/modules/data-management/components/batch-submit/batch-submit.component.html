@@ -1,5 +1,6 @@
-<div class="loading-shade" *ngIf="isLoading">
+<div fxLayout="column" class="loading-shade" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
+  <span>正在录入培训记录...</span>
 </div>
 <div fxLayout="row">
   <div fxFlex.lg="1 1 calc(1em)"></div>
@@ -18,7 +19,7 @@
         <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
           <button mat-raised-button color="primary" *ngIf="!file" (click)="uploadFileInput.click()" i18n>选择表格</button>
           <button mat-raised-button color="primary" *ngIf="file" (click)="uploadFileInput.click()" i18n>重新选择</button>
-          <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!file && isLoading" i18n>上传表格</button>
+          <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!file || isLoading" i18n>上传表格</button>
         </div>
       </div>
     </div>
