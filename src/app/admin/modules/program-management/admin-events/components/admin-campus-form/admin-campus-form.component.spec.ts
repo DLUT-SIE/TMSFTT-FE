@@ -336,6 +336,10 @@ describe('AdminCampusFormComponent', () => {
           },
         },
         {
+          provide: Location,
+          useValue: {},
+        },
+        {
           provide: RecordService,
           useValue: {
             getRoleChoices: () => getRoleChoices$,
