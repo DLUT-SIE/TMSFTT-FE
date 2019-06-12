@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatSnackBar } from '@angular/material';
+import { 
+  MatSnackBar,
+  MatProgressSpinnerModule,
+} from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -23,6 +26,7 @@ describe('BatchSubmitComponent', () => {
       declarations: [ BatchSubmitComponent ],
       imports: [
         HttpClientTestingModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         {
@@ -62,7 +66,7 @@ describe('BatchSubmitComponent', () => {
     });
 
     expect(component.file).toBe(tmpfile);
-    expect(component.flag).toBeFalsy();
+    expect(component.hasCreateSucceed).toBeFalsy();
   });
 
   it('should display errors when creation failed.', () => {
@@ -93,6 +97,6 @@ describe('BatchSubmitComponent', () => {
     } as {'count': number});
 
     expect(component.count).toBe(4);
-    expect(component.flag).toBeTruthy();
+    expect(component.hasCreateSucceed).toBeTruthy();
   });
 });
