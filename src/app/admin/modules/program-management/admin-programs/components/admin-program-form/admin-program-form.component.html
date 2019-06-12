@@ -35,7 +35,7 @@
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
           <button mat-raised-button (click)="onSubmit()" color="primary" [disabled]="programForm.invalid" i18n>提交</button>
-          <button mat-raised-button color="primary" (click)="location.back()">返回</button>
+          <button type="button" mat-raised-button color="primary" (click)="location.back()">返回</button>
         </div>
       </form>
     </div>
