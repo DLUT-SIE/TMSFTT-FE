@@ -13,6 +13,7 @@ import {
 } from '@angular/material';
 import { of as observableOf, Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { AdminCampusFormComponent } from './admin-campus-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -138,6 +139,10 @@ describe('AdminCampusFormComponent', () => {
           useValue: {
             open: snackBarOpen,
           },
+        },
+        {
+          provide: Location,
+          useValue: {},
         },
         {
           provide: RecordService,
