@@ -205,7 +205,7 @@ export class AdminCampusFormComponent implements OnInit {
       num_participants: this.eventForm.value.numParticipants,
       deadline: this.eventForm.value.deadline,
       description: this.eventForm.value.description,
-      coefficients: this.eventForm.value.coefficients,
+      coefficients: this.isUpdateMode ? undefined : this.eventForm.value.coefficients,
     };
     const targetEvent: Observable<CampusEvent> = this.isUpdateMode ?
                                              this.eventService.updateCampusEvent(req) :
