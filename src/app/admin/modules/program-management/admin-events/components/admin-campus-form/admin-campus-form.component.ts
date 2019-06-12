@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn';
+import { Location } from '@angular/common';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 import { CampusEvent } from 'src/app/shared/interfaces/event';
@@ -70,6 +71,7 @@ export class AdminCampusFormComponent implements OnInit {
 
 
   constructor(
+    readonly urlLocation: Location,
     private readonly fb: FormBuilder,
     private readonly snackBar: MatSnackBar,
     private readonly eventService: EventService,
