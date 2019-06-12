@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit } from '@angular/core';
+import { Component, Input, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,7 +18,7 @@ import { copyToClipboard } from '../../utils/copy-to-clipboard';
   templateUrl: './shared-campus-event-detail.component.html',
   styleUrls: ['./shared-campus-event-detail.component.css']
 })
-export class SharedCampusEventDetailComponent implements OnInit {
+export class SharedCampusEventDetailComponent {
   EventDetailType = EventDetailType;
   isLoading = false;
 
@@ -36,13 +36,6 @@ export class SharedCampusEventDetailComponent implements OnInit {
     private readonly windowService: WindowService,
     private readonly loggerService: LoggerService,
   ) { }
-
-  ngOnInit() {
-    const url = this.route.snapshot.url;
-    if (this.eventDetailType === EventDetailType.USER && url[url.length - 1].path === 'enroll') {
-      this.enrollEvent();
-    }
-  }
 
   navigateToChangeEvent() {
     this.router.navigate(['../form'], { queryParams: { program_id: this.event.program, event_id: this.event.id }, relativeTo: this.route });
@@ -117,7 +110,7 @@ export class SharedCampusEventDetailComponent implements OnInit {
 
   copyEnrollLink() {
     const path = this.router.createUrlTree(
-      ['user', 'events', this.event.id, 'enroll']
+      ['user', 'events', this.event.id]
     ).toString();
     const url = `${this.windowService.host}${path}`;
     copyToClipboard(url);
