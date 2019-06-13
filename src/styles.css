@@ -127,3 +127,7 @@ div.text-background {
 .full-width-dialog {
   max-width: 100vw !important;
 }
+
+detail-section-actions button {
+    margin-bottom: 5px !important;
+}

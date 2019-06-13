@@ -5,13 +5,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from 'src/app/shared/enums/event-detail-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from 'src/app/shared/services/events/event.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorProcess } from '../../utils/error-process';
 import { copyToClipboard } from '../../utils/copy-to-clipboard';
+import { Enrollment } from '../../interfaces/enrollment';
+import { EnrollmentListDialogComponent } from '../enrollment-list-dialog/enrollment-list-dialog.component';
 
 @Component({
   selector: 'app-shared-campus-event-detail',
@@ -30,6 +32,7 @@ export class SharedCampusEventDetailComponent {
     readonly location: Location,
     protected readonly snackBar: MatSnackBar,
     private readonly router: Router,
+    private readonly dialog: MatDialog,
     private readonly sanitizer: DomSanitizer,
     private readonly eventService: EventService,
     private readonly windowService: WindowService,
@@ -81,8 +84,8 @@ export class SharedCampusEventDetailComponent {
     return `/aggregate-data/table-export/?table_type=9&event_id=${eventId}`;
   }
 
-  doResultsExport(eventId: number) {
-    this.eventService.exportAttendanceSheet(this.buildUrl(eventId)).subscribe(
+  doResultsExport() {
+    this.eventService.exportAttendanceSheet(this.buildUrl(this.event.id)).subscribe(
       data => {
         this.windowService.open(data['url']);
         this.snackBar.open('导出成功', '确定', { duration: 3000 });
@@ -117,5 +120,25 @@ export class SharedCampusEventDetailComponent {
     const url = `${this.windowService.host}${path}`;
     copyToClipboard(url);
     this.snackBar.open('已将报名链接复制到剪贴板', '关闭', {duration: 3000});
+  }
+
+  displayEnrollments() {
+    this.isLoading = true;
+    this.eventService.getEnrollments(this.event).subscribe(
+      (data: Enrollment[]) => {
+        this.dialog.open(EnrollmentListDialogComponent, {
+          data: {
+            enrollments: data,
+            event: this.event
+          }
+        });
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭', {duration: 3000});
+        this.isLoading = false;
+      }
+    )
   }
 }

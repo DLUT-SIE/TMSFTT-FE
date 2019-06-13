@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-hover text-center">
+    <thead class="hidden text-primary">
+      <tr>
+        <th scope="col">序号</th>
+        <th scope="col">院系</th>
+        <th scope="col">工号</th>
+        <th scope="col">姓名</th>
+        <th scope="col">电话</th>
+        <th scope="col">邮箱</th>
+        <th scope="col">职称</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let enrollment of data.enrollments; let i = index">
+        <td scope="col">{{ i + 1 }}</td>
+        <td scope="col">{{ asUser(enrollment.user).department_str }}</td>
+        <td scope="col">{{ asUser(enrollment.user).username }}</td>
+        <td scope="col">{{ asUser(enrollment.user).first_name }}</td>
+        <td scope="col">{{ asUser(enrollment.user).cell_phone_number }}</td>
+        <td scope="col">{{ asUser(enrollment.user).email }}</td>
+        <td scope="col">{{ asUser(enrollment.user).technical_title }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

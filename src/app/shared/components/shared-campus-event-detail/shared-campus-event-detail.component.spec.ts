@@ -10,6 +10,7 @@ import {
   MatSnackBar,
   MatDividerModule,
   MatProgressSpinnerModule,
+  MatDialogModule,
 } from '@angular/material';
  import { EventService } from 'src/app/shared/services/events/event.service';
  import { Enrollment } from 'src/app/shared/interfaces/enrollment';
@@ -57,6 +58,7 @@ describe('SharedCampusEventDetailComponent', () => {
         MatInputModule,
         MatDividerModule,
         MatProgressSpinnerModule,
+        MatDialogModule,
         NoopAnimationsModule,
       ],
       providers: [
@@ -256,7 +258,8 @@ describe('SharedCampusEventDetailComponent', () => {
   it('should load data', () => {
     const buildUrl = spyOn(component, 'buildUrl');
     buildUrl.and.returnValue('123');
-    component.doResultsExport(1);
+    component.event = {id: 1};
+    component.doResultsExport();
     exportAttendanceSheet$.next({
       url: '/path/to/file',
     } as {url: string});
@@ -268,7 +271,8 @@ describe('SharedCampusEventDetailComponent', () => {
   it('should occure error', () => {
     const buildUrl = spyOn(component, 'buildUrl');
     buildUrl.and.returnValue('123');
-    component.doResultsExport(1);
+    component.event = {id: 1};
+    component.doResultsExport();
     exportAttendanceSheet$.error({
       status: 400,
       error: {detail: ['Raw error message']},

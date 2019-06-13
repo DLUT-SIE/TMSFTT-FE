@@ -88,6 +88,12 @@ export class EventService extends GenericListService {
     return this.http.delete(`/enrollments/${id}/`);
   }
 
+  getEnrollments(event: CampusEvent) {
+    const extraParams = new Map();
+    extraParams.set('campus_event', event.id);
+    return this.list<Enrollment[]>('/enrollments/event-enrollments/', {limit: -1, extraParams});
+  }
+
   /** Get round choices. */
   getRoundChoices() {
     if (this.cachedRoundChoices.length !== 0) {
