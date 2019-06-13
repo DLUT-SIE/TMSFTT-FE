@@ -2,9 +2,9 @@
 <div mat-dialog-content>
     <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" [(ngModel)]="selectedDate">
     </dl-date-time-picker>
-    <span>当前选择：{{ selectedDate | date:'medium' }}</span>
+    <span>当前选择：{{ selectedDate | date:'yyyy年MM月dd日 HH:mm:ss' }}</span>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
   <button mat-raised-button (click)="dialogRef.close()">取消</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="selectedDate" cdkFocusInitial>确定</button>
+  <button mat-raised-button color="primary" (click)="closeWithDate()" cdkFocusInitial>确定</button>
 </div>

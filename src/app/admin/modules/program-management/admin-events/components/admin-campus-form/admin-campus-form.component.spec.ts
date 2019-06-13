@@ -11,7 +11,7 @@ import {
   MatNativeDateModule,
   MatDividerModule,
 } from '@angular/material';
-import { of as observableOf, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -110,10 +110,12 @@ describe('AdminCampusFormComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: observableOf({program_id: 1}),
             snapshot: {
               queryParamMap: {
                 get: () => '1',
+              },
+              params: {
+                id: 1,
               },
               queryParams: {
                 event_id: '1',
@@ -308,10 +310,12 @@ describe('AdminCampusFormComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: observableOf({program_id: 1}),
             snapshot: {
               queryParamMap: {
                 get: () => '1',
+              },
+              params: {
+                id: 1,
               },
               queryParams: {
               },

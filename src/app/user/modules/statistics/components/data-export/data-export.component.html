@@ -65,7 +65,7 @@
               <div *ngIf="record.off_campus_event; then offCampusEventBlock else campusEventBlock"></div>
               <ng-template #offCampusEventBlock>
                 <td>{{ record.off_campus_event.name | truncate:11}}</td>
-                <td>{{ record.off_campus_event.time | date:'medium' }}</td>
+                <td>{{ record.off_campus_event.time }}</td>
                 <td>{{ record.off_campus_event.location | truncate:8}}</td>
                 <td>{{ record.off_campus_event.num_hours }}</td>
                 <td>{{ record.off_campus_event.num_participants }}</td>
@@ -73,7 +73,7 @@
               </ng-template>
               <ng-template #campusEventBlock>
                 <td>{{ record.campus_event.name | truncate:11}}</td>
-                <td>{{ record.campus_event.time | date:'medium' }}</td>
+                <td>{{ record.campus_event.time }}</td>
                 <td>{{ record.campus_event.location | truncate:8}}</td>
                 <td>{{ record.campus_event.num_hours }}</td>
                 <td>{{ record.campus_event.num_participants }}</td>

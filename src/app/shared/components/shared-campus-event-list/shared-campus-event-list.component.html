@@ -27,7 +27,7 @@
     <tbody>
       <tr *ngFor="let item of results; let i = index">
           <td scope="col" (click)="navigateToDetail(item)">{{ item.name | truncate:11 }}</td>
-          <td scope="col" (click)="navigateToDetail(item)">{{ item.time | date:'medium' }}</td>
+          <td scope="col" (click)="navigateToDetail(item)">{{ item.time }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.location | truncate:11 }}</td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_hours | number:"0.1-1" }} </td>
           <td scope="col" (click)="navigateToDetail(item)">{{ item.num_enrolled }} / {{ item.num_participants }}</td>

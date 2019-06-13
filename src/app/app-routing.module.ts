@@ -74,6 +74,8 @@ const routes: Routes = [
       {
         enableTracing: false,  // TODO(youchen): Debug ONLY
         preloadingStrategy: PreloadAllModules,
+        paramsInheritanceStrategy: 'always',
+        onSameUrlNavigation: 'reload',
       },
     ),
   ],

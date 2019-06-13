@@ -83,9 +83,7 @@ export class AdminCampusFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(queryParams => {
-      this.programId = queryParams.program_id;
-    });
+    this.programId = this.route.snapshot.params.id;
 
     if (this.route.snapshot.queryParams.event_id !== undefined) {
       this.isUpdateMode = true;

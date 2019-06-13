@@ -14,7 +14,7 @@
             i18n-placeholder required>
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              <span>培训：{{ option.name }} | 时间：{{ option.time | date:'medium' }} |
+              <span>培训：{{ option.name }} | 时间：{{ option.time }} |
                 地点：{{ option.location }}</span>
             </mat-option>
           </mat-autocomplete>
