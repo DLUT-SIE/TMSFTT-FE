@@ -4,7 +4,8 @@ import {
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatIconModule,
-  MatSnackBar
+  MatSnackBar,
+  MatTooltipModule
  } from '@angular/material';
  import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -55,6 +56,7 @@ describe('SharedCampusEventListComponent', () => {
         MatIconModule,
         MatProgressSpinnerModule,
         MatPaginatorModule,
+        MatTooltipModule,
         NoopAnimationsModule
       ],
       providers: [
