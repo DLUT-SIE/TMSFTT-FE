@@ -58,6 +58,7 @@ export class AdminCampusFormComponent implements OnInit {
   programId: number;
   isUpdateMode = false;
   event: CampusEvent;
+  submitDisabled = false;
   eventForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     time: ['', [Validators.required, Validators.maxLength(30)]],
@@ -195,6 +196,7 @@ export class AdminCampusFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitDisabled = true;
     const req: CampusEvent = {
       id: this.isUpdateMode ? this.event.id : undefined,
       program: this.programId,
@@ -213,10 +215,12 @@ export class AdminCampusFormComponent implements OnInit {
     targetEvent.subscribe(
       event => {
         this.router.navigate(['admin/programs', this.programId, 'events', event.id]);
+        this.submitDisabled = false;
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
+        this.submitDisabled = false;
       });
   }
 
