@@ -133,7 +133,7 @@
         </ng-container>
         <mat-divider></mat-divider>
         <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="5px">
-          <button mat-raised-button type="submit" color="primary" [disabled]="eventForm.invalid" i18n>提交</button>
+          <button mat-raised-button type="submit" color="primary" [disabled]="eventForm.invalid || submitDisabled" i18n>提交</button>
           <button type="button" mat-raised-button color="primary" (click)="urlLocation.back()">返回</button>
         </div>
       </form>
