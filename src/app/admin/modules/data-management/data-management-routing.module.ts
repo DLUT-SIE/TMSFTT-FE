@@ -12,6 +12,7 @@ import { SchoolAdminGuard } from 'src/app/shared/guards/school-admin.guard';
 import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
 import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { AdminCampusEventDetailComponent } from '../program-management/admin-events/components/admin-campus-event-detail/admin-campus-event-detail.component';
+import { RecordExportComponent } from './components/record-export/record-export.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
       {
         path: 'data-graph',
         component: DataGraphComponent,
+      },
+      {
+        path: 'record-export',
+        component: RecordExportComponent,
       },
       {
         path: 'table-export',

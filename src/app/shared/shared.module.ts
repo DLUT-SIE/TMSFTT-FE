@@ -46,6 +46,7 @@ import { RecordStatusChangeLogsSectionComponent } from './components/record-stat
 import { OffCampusRecordReviewNotesSectionComponent } from './components/off-campus-record-review-notes-section/off-campus-record-review-notes-section.component';
 import { DateTimePickerDialogComponent } from './components/date-time-picker-dialog/date-time-picker-dialog.component';
 import { EnrollmentListDialogComponent } from './components/enrollment-list-dialog/enrollment-list-dialog.component';
+import { SharedRecordExportComponent } from './components/shared-record-export/shared-record-export.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { EnrollmentListDialogComponent } from './components/enrollment-list-dial
     OffCampusRecordReviewNotesSectionComponent,
     DateTimePickerDialogComponent,
     EnrollmentListDialogComponent,
+    SharedRecordExportComponent,
   ],
   imports: [
     CommonModule,
@@ -134,6 +136,7 @@ import { EnrollmentListDialogComponent } from './components/enrollment-list-dial
     SharedRecordListComponent,
     SharedCampusEventDetailComponent,
     SharedCampusEventListComponent,
+    SharedRecordExportComponent,
     DetailSectionComponent,
     DetailItemComponent,
     DetailItemTitleComponent,
