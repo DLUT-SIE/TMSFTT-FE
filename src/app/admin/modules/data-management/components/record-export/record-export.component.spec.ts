@@ -2,18 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { DataExportComponent } from './data-export.component';
+import { RecordExportComponent } from './record-export.component';
 import { AppSharedRecordExportDirectiveStub } from 'src/testing/app-shared-record-export-stub';
 
-
-describe('DataExportComponent', () => {
-  let component: DataExportComponent;
-  let fixture: ComponentFixture<DataExportComponent>;
+describe('RecordExportComponent', () => {
+  let component: RecordExportComponent;
+  let fixture: ComponentFixture<RecordExportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        DataExportComponent,
+        RecordExportComponent,
         AppSharedRecordExportDirectiveStub,
       ],
       providers: [
@@ -37,11 +36,11 @@ describe('DataExportComponent', () => {
         },
       ],
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataExportComponent);
+    fixture = TestBed.createComponent(RecordExportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -49,5 +48,4 @@ describe('DataExportComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });
