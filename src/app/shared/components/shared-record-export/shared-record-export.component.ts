@@ -11,7 +11,6 @@ import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorProcess } from 'src/app/shared/utils/error-process';
 import { RecordExportType } from 'src/app/shared/enums/record-export-type.enum';
-import { of as observableOf } from 'rxjs';
 
 @Component({
   selector: 'app-shared-record-export',
@@ -101,15 +100,6 @@ export class SharedRecordExportComponent extends GenericListComponent<Record> {
           const message = errorProcess(error);
           this.snackBar.open(message, '关闭');
       });
-  }
-
-  performActionsAfterResultsRetrieved(error: HttpErrorResponse) {
-    if (error) {
-      this.loggerService.log(error);
-      const message = errorProcess(error);
-      this.snackBar.open(message, '关闭');
-    } 
-    return observableOf(null);
   }
 
 }
