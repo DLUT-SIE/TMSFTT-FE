@@ -10,6 +10,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatDividerModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -105,6 +106,7 @@ describe('AdminCampusFormComponent', () => {
         MatDatepickerModule,
         MatNativeDateModule,
         MatDividerModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         {
@@ -305,6 +307,7 @@ describe('AdminCampusFormComponent', () => {
         MatDatepickerModule,
         MatNativeDateModule,
         MatDividerModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         {
