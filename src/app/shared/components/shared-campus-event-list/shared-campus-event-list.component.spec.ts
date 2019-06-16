@@ -26,8 +26,9 @@ describe('SharedCampusEventListComponent', () => {
   let fixture: ComponentFixture<SharedCampusEventListComponent>;
   let getCampusEvents$: Subject<PaginatedResponse<CampusEvent>>;
   let getCampusEvents: jasmine.Spy;
+  let replaceState: jasmine.Spy;
   let enrollCampusEvent$: Subject<Enrollment>;
-
+  let go: jasmine.Spy;
   let navigate: jasmine.Spy;
   let snackBarOpen: jasmine.Spy;
   const route = {
@@ -41,6 +42,8 @@ describe('SharedCampusEventListComponent', () => {
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
+    go = jasmine.createSpy();
+    replaceState = jasmine.createSpy();
     getCampusEvents$ = new Subject<PaginatedResponse<CampusEvent>>();
     getCampusEvents = jasmine.createSpy();
     getCampusEvents.and.returnValue(getCampusEvents$);
@@ -66,12 +69,15 @@ describe('SharedCampusEventListComponent', () => {
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go, replaceState,
+          },
         },
         {
           provide: Router,
           useValue: {
             navigate,
+            createUrlTree: () => 'abc',
           }
         },
         {

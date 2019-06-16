@@ -34,6 +34,7 @@ describe('DepartmentGroupUserComponent', () => {
 
   let getUsersByGroupId: jasmine.Spy;
   let getUsersByGroupId$: Subject<PaginatedResponse<User>>;
+
   beforeEach(async(() => {
     open = jasmine.createSpy();
     dialogRef = jasmine.createSpyObj('', ['afterClosed']);
@@ -73,11 +74,16 @@ describe('DepartmentGroupUserComponent', () => {
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go: () => null,
+            replaceState: () => null,
+          },
         },
         {
           provide: Router,
-          useValue: {},
+          useValue: {
+            createUrlTree: () => 'abc',
+          },
         },
         {
           provide: GroupService,

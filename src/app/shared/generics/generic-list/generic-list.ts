@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 
 /** Implement generic logic for displaying list of objects. */
-export abstract class GenericListComponent<T extends {id?: number}> implements OnInit {
+export abstract class GenericListComponent<T extends { id?: number }> implements OnInit {
   /** The data to be displayed */
   results: T[] = [];
   /** The total number of results. */
@@ -80,15 +80,15 @@ export abstract class GenericListComponent<T extends {id?: number}> implements O
       }),
       switchMap(page => {
         const offset = page * environment.PAGINATION_SIZE;
-        return this.getResults(offset, environment.PAGINATION_SIZE);
-      }),
-      map(data => {
-        this.resultsLength = data.count;
-        this.results = data.results;
-        return null;
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return observableOf(err);
+        return this.getResults(offset, environment.PAGINATION_SIZE).pipe(
+          map(data => {
+            this.resultsLength = data.count;
+            this.results = data.results;
+            return null;
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return observableOf(err);
+          }));
       }),
       switchMap(err => this.performActionsAfterResultsRetrieved(err)),
     ).subscribe(() => this.isLoadingResults = false);

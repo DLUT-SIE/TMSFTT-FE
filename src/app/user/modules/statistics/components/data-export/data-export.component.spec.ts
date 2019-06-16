@@ -29,11 +29,16 @@ describe('DataExportComponent', () => {
         },
         {
           provide: Router,
-          useValue: {},
+          useValue: {
+            createUrlTree: () => 'abc',
+          },
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go: () => null,
+            replaceState: () => null,
+          },
         },
       ],
     })

@@ -8,14 +8,20 @@ import { SharedRecordListComponent } from './shared-record-list.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { RecordListType } from '../../enums/record-list-type.enum';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { of as observableOf } from 'rxjs';
 
 describe('SharedRecordListComponent', () => {
   let component: SharedRecordListComponent;
   let fixture: ComponentFixture<SharedRecordListComponent>;
   let getRecords: jasmine.Spy;
+  let replaceState: jasmine.Spy;
+  let go: jasmine.Spy;
 
   beforeEach(async(() => {
     getRecords = jasmine.createSpy();
+    getRecords.and.returnValue(observableOf({count: 0, results: []}));
+    replaceState = jasmine.createSpy();
+    go = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [
         SharedRecordListComponent,
@@ -41,7 +47,9 @@ describe('SharedRecordListComponent', () => {
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go, replaceState,
+          },
         },
         {
           provide: Router,

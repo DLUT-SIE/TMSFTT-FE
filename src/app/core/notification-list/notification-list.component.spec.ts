@@ -80,7 +80,10 @@ describe('NotificationListComponent', () => {
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go: () => null,
+            replaceState: () => null,
+          },
         },
         {
           provide: HAMMER_LOADER,
