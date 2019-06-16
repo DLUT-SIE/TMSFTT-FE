@@ -35,12 +35,16 @@ describe('SharedRecordExportComponent', () => {
   let getRecords$: Subject<PaginatedResponse<Record>>;
   let snackBarOpen: jasmine.Spy;
   let windowOpen: jasmine.Spy;
+  let replaceState: jasmine.Spy;
+  let go: jasmine.Spy;
 
   beforeEach(async(() => {
     getRecords$ = new Subject();
     getRecords = jasmine.createSpy().and.returnValue(getRecords$);
     snackBarOpen = jasmine.createSpy();
     windowOpen = jasmine.createSpy();
+    replaceState = jasmine.createSpy();
+    go = jasmine.createSpy();
     exportRecordsSubject$ = new Subject<{'url': string}>();
     TestBed.configureTestingModule({
       declarations: [
@@ -72,7 +76,9 @@ describe('SharedRecordExportComponent', () => {
         },
         {
           provide: Router,
-          useValue: {},
+          useValue: {
+            createUrlTree: () => 'abc',
+          },
         },
         {
           provide: RecordService,
@@ -83,7 +89,9 @@ describe('SharedRecordExportComponent', () => {
         },
         {
           provide: Location,
-          useValue: {},
+          useValue: {
+            go, replaceState,
+          },
         },
         {
           provide: HAMMER_LOADER,
