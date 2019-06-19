@@ -14,7 +14,7 @@ import { errorProcess } from 'src/app/shared/utils/error-process';
 
 // Config for Various Table.
 /* tslint:disable */
-class SubOptionsConfig {
+export class SubOptionsConfig {
     private readonly mask = 0b1000
     private readonly departmentMask = this.mask;
     private readonly programMask = this.mask >>> 1;

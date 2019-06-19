@@ -32,14 +32,14 @@ export class CanvasService {
   getCanvasData(options: DataGraphConfiguration) {
     const resourceURL = 'aggregate-data/data';
     const params = new Map();
-    const startTime = null ? options.startTime == null : options.startTime;
-    const endTime = null ? options.endTime == null : options.endTime;
+    const startTime = options.startTime || new Date('2016-01-01');
+    const endTime = options.endTime || new Date();
 
     params.set('method_name', (this.cachedOptions[
       options.selectedStatisticsType].key).toLowerCase() || '');
     params.set('group_by', options.selectedGroupType || 0);
-    params.set('start_time', (this.datePipe.transform(startTime, 'yyy-MM-dd')) || new Date('2016-01-01'));
-    params.set('end_time', (this.datePipe.transform(endTime, 'yyy-MM-dd')) || new Date());
+    params.set('start_time', this.datePipe.transform(startTime, 'yyy-MM-dd'));
+    params.set('end_time', this.datePipe.transform(endTime, 'yyy-MM-dd'));
     params.set('department_id', options.selectedDepartment.id || 0);
     if (options.selectedProgram) {
       params.set('program_id', options.selectedProgram.id);
