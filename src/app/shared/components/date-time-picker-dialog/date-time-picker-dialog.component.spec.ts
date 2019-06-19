@@ -8,8 +8,10 @@ import { FormsModule } from '@angular/forms';
 describe('DateTimePickerDialogComponent', () => {
   let component: DateTimePickerDialogComponent;
   let fixture: ComponentFixture<DateTimePickerDialogComponent>;
+  let dialogRefClose: jasmine.Spy;
 
   beforeEach(async(() => {
+    dialogRefClose = jasmine.createSpy();
     TestBed.configureTestingModule({
       imports: [
         DlDateTimePickerDateModule,
@@ -21,7 +23,9 @@ describe('DateTimePickerDialogComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: {
+            close: dialogRefClose,
+          },
         },
         {
           provide: MAT_DIALOG_DATA,
@@ -40,5 +44,23 @@ describe('DateTimePickerDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should colse with date if no selected', () => {
+    component.selectedDate = '';
+
+    component.closeWithDate();
+
+    expect(dialogRefClose).toHaveBeenCalledWith();
+  });
+
+  it('should close with date', () => {
+    component.selectedDate = '123';
+    spyOn(component.datePipe, 'transform').and.returnValue('abc');
+
+    component.closeWithDate();
+
+    expect(dialogRefClose).toHaveBeenCalledWith('abc');
+
   });
 });

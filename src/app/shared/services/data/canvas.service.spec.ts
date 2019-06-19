@@ -9,6 +9,7 @@ import { OptionType } from '../../interfaces/option-type';
 import { Department } from 'src/app/shared/interfaces/department';
 import { Program } from 'src/app/shared/interfaces/programs-option';
 
+
 describe('CanvasService', () => {
   let httpTestingController: HttpTestingController;
   beforeEach(() => {
@@ -53,6 +54,7 @@ describe('CanvasService', () => {
     service.getCanvasOptions().subscribe((data: OptionType[]) => {
       expect(data.length).toEqual(2);
     });
+
     const options: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       startTime: new Date('2016-01-01'),
@@ -64,6 +66,7 @@ describe('CanvasService', () => {
     service.getCanvasData(options).subscribe();
     let canvasReq = httpTestingController.expectOne(canvasUrl);
     expect(canvasReq.request.method).toBeTruthy('GET');
+
     const options1: DataGraphConfiguration = {
       selectedStatisticsType: 0,
       startTime: new Date('2016-01-01'),
@@ -76,7 +79,9 @@ describe('CanvasService', () => {
     service.getCanvasData(options1).subscribe();
     canvasReq = httpTestingController.expectOne(canvasUrl);
     expect(canvasReq.request.method).toBeTruthy('GET');
+
   });
+
   it('should get group programs', () => {
     const service: CanvasService = TestBed.get(CanvasService);
     const url = '/programs/group-programs/';

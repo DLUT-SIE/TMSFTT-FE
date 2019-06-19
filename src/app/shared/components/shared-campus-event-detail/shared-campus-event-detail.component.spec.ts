@@ -8,6 +8,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatSnackBar,
+  MatDialog,
   MatDividerModule,
   MatProgressSpinnerModule,
   MatDialogModule,
@@ -25,6 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+
 describe('SharedCampusEventDetailComponent', () => {
   let component: SharedCampusEventDetailComponent;
   let fixture: ComponentFixture<SharedCampusEventDetailComponent>;
@@ -35,15 +37,21 @@ describe('SharedCampusEventDetailComponent', () => {
   let deleteEventEnrollment$: Subject<Enrollment>;
   let windowOpen: jasmine.Spy;
   let exportAttendanceSheet$ = new Subject<{'url': string}>();
+  let enrollCampusEvent$: Subject<Enrollment>;
+  let getEnrollments$: Subject<Enrollment[]>;
+  let dialogOpen: jasmine.Spy;
 
   beforeEach(async(() => {
     navigate = jasmine.createSpy();
     deleteEventEnrollment$ = new Subject();
     snackBarOpen = jasmine.createSpy();
+    dialogOpen = jasmine.createSpy();
     reviewCampusEvent = jasmine.createSpy();
     bypassSecurityTrustHtml = jasmine.createSpy().and.returnValue('abc');
     exportAttendanceSheet$ = new Subject<{'url': string}>();
+    enrollCampusEvent$ = new Subject();
     windowOpen = jasmine.createSpy();
+    getEnrollments$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [
         SharedCampusEventDetailComponent,
@@ -98,6 +106,8 @@ describe('SharedCampusEventDetailComponent', () => {
           useValue: {
             deleteEventEnrollment: (id: number) => deleteEventEnrollment$,
             exportAttendanceSheet: () => exportAttendanceSheet$,
+            enrollCampusEvent: () => enrollCampusEvent$,
+            getEnrollments: ({}) => getEnrollments$,
             reviewCampusEvent,
           }
         },
@@ -105,6 +115,12 @@ describe('SharedCampusEventDetailComponent', () => {
           provide: MatSnackBar,
           useValue: {
             open: snackBarOpen,
+          },
+        },
+        {
+          provide: MatDialog,
+          useValue: {
+            open: dialogOpen,
           },
         },
         {
@@ -211,6 +227,14 @@ describe('SharedCampusEventDetailComponent', () => {
     expect(snackBarOpen).toHaveBeenCalledWith('取消报名成功', '关闭');
     expect(component.event.enrolled).toBeFalsy();
     expect(component.event.enrollment_id).toBeNull();
+
+    component.deleteEnrollment();
+    deleteEventEnrollment$.error({
+      status: 400,
+      error: {detail: ['Raw error message']},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭');
+
   });
 
   it('should review campus event', () => {
@@ -279,6 +303,39 @@ describe('SharedCampusEventDetailComponent', () => {
     } as HttpErrorResponse);
     expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭', {duration: 3000});
     expect(buildUrl).toHaveBeenCalled();
+  });
+
+  it('should enroll event', () => {
+    component.enrollEvent();
+    enrollCampusEvent$.next({id: 1});
+    expect(snackBarOpen).toHaveBeenCalledWith('报名成功!', '关闭', {duration: 3000});
+    expect(component.event.enrolled).toBeTruthy();
+    expect(component.event.enrollment_id).toBe(1);
+
+    component.enrollEvent();
+    enrollCampusEvent$.error({
+      status: 400,
+      error: {detail: ['Raw error message']},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭', {duration: 3000});
+  });
+
+  it('should copy enroll link', () => {
+    component.copyEnrollLink();
+    expect(snackBarOpen).toHaveBeenCalledWith('已将报名链接复制到剪贴板', '关闭', {duration: 3000});
+  });
+
+  it('should display enrollments', () => {
+    component.displayEnrollments();
+    getEnrollments$.next([]);
+    expect(dialogOpen).toHaveBeenCalled();
+
+    component.displayEnrollments();
+    getEnrollments$.error({
+      status: 400,
+      error: {detail: ['Raw error message']},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭', {duration: 3000});
   });
 
 });

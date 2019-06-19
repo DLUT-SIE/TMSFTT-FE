@@ -26,6 +26,7 @@ import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WindowService } from 'src/app/shared/services/window.service';
 import { TruncatePipe } from 'src/app/shared/pipes/truncate.pipe';
+import { RecordExportType } from '../../enums/record-export-type.enum';
 
 describe('SharedRecordExportComponent', () => {
   let component: SharedRecordExportComponent;
@@ -200,6 +201,7 @@ describe('SharedRecordExportComponent', () => {
   });
 
   it('should build url', () => {
+    component.recordExportType = RecordExportType.EXPORT_FOR_ADMIN;
     component.valueToExport = {
       userName: '111',
       eventName: '111',
@@ -212,6 +214,6 @@ describe('SharedRecordExportComponent', () => {
     const url: string = component.buildUrl();
 
     expect(url).toEqual(
-      `/aggregate-data/table-export/?table_type=8&event_name=111&event_location=222&start_time=abc&end_time=abc`);
+      `/aggregate-data/table-export/?table_type=8&user__username=111&event_name=111&event_location=222&start_time=abc&end_time=abc`);
   });
 });
