@@ -10,6 +10,8 @@ import {
   MatProgressSpinnerModule,
   MatNativeDateModule,
   MatInputModule,
+  MatChipsModule,
+  MatTooltipModule,
   MatSnackBar,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -63,6 +65,8 @@ describe('SharedRecordExportComponent', () => {
         MatNativeDateModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
+        MatChipsModule,
+        MatTooltipModule,
       ],
       providers: [
         {
