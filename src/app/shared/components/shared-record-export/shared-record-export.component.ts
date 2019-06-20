@@ -21,7 +21,8 @@ import { RecordStatus } from '../../enums/record-status.enum';
 export class SharedRecordExportComponent extends GenericListComponent<Record> {
   readonly RecordExportType = RecordExportType;
 
-  @Input() recordExportType?: RecordExportType;warnStatus: Set<RecordStatus> = new Set([
+  @Input() recordExportType?: RecordExportType;
+  warnStatus: Set<RecordStatus> = new Set([
     RecordStatus.STATUS_FEEDBACK_REQUIRED,
     RecordStatus.STATUS_SCHOOL_ADMIN_REJECTED,
     RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED,
