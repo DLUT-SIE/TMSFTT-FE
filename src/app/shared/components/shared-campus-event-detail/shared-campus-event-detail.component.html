@@ -100,6 +100,7 @@
           <ng-container *ngIf="eventDetailType === EventDetailType.ADMIN">
             <button mat-raised-button color="primary" *ngIf="!event.reviewed && authService.isSchoolAdmin"
               (click)="reviewCampusEvent()">审核通过</button>
+            <button mat-raised-button color="primary" *ngIf="!event.expired"(click)="addEnrollmentUser()">添加报名用户</button>
             <button mat-raised-button color="primary" (click)="displayEnrollments()">查看报名信息</button>
             <button mat-raised-button color="primary" (click)="doResultsExport()">导出签到表</button>
             <button mat-raised-button color="primary" *ngIf="!event.expired" (click)="copyEnrollLink()">复制报名链接</button>

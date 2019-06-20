@@ -83,6 +83,12 @@ export class EventService extends GenericListService {
       `/enrollments/`, {campus_event: event.id});
   }
 
+  /**Enroll campus event by user */
+  enrollCampusEventByUser(event_id: number, user_id: number):Observable<Enrollment> {
+    return this.http.post<Enrollment>(
+      `/enrollments/`, {campus_event: event_id, user: user_id});
+  }
+
   /** Delete campus event enrollment. */
   deleteEventEnrollment(id: number) {
     return this.http.delete(`/enrollments/${id}/`);

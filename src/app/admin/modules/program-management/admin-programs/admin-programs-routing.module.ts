@@ -7,6 +7,7 @@ import { AdminCampusEventListComponent } from '../admin-events/components/admin-
 
 import { AdminCampusEventDetailComponent } from '../admin-events/components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { AdminCampusFormComponent } from '../admin-events/components/admin-campus-form/admin-campus-form.component';
+import { AdminEnrollEventComponent } from '../admin-events/components/admin-enroll-event/admin-enroll-event.component';
 import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { AdminEventsComponent } from '../admin-events/admin-events.component';
 
@@ -35,6 +36,10 @@ const routes: Routes = [
               {
                 path: 'form',
                 component: AdminCampusFormComponent,
+              },
+              {
+                path: 'enroll',
+                component: AdminEnrollEventComponent,
               },
               {
                 path: ':event_id',
