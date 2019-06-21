@@ -136,13 +136,13 @@ export class SharedCampusEventDetailComponent {
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
-        this.snackBar.open(message, '关闭', {duration: 3000});4
+        this.snackBar.open(message, '关闭', {duration: 3000});
         this.isLoading = false;
       }
     );
   }
 
-  addEnrollmentUser(){
+  addEnrollmentUser() {
     this.router.navigate(['admin', 'programs', this.event.program, 'events', 'enroll'],
                           {queryParams: {
                             event_id: this.event.id,
