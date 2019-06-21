@@ -11,6 +11,7 @@ import { LoggerService } from 'src/app/shared/services/logger.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { errorProcess } from 'src/app/shared/utils/error-process';
 import { RecordExportType } from 'src/app/shared/enums/record-export-type.enum';
+import { RecordStatus } from '../../enums/record-status.enum';
 
 @Component({
   selector: 'app-shared-record-export',
@@ -21,6 +22,22 @@ export class SharedRecordExportComponent extends GenericListComponent<Record> {
   readonly RecordExportType = RecordExportType;
 
   @Input() recordExportType?: RecordExportType;
+  warnStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_FEEDBACK_REQUIRED,
+    RecordStatus.STATUS_SCHOOL_ADMIN_REJECTED,
+    RecordStatus.STATUS_DEPARTMENT_ADMIN_REJECTED,
+  ]);
+  primaryStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_FACULTY_ADMIN_REVIEWED,
+    RecordStatus.STATUS_FEEDBACK_SUBMITED,
+    RecordStatus.STATUS_SUBMITTED,
+    RecordStatus.STATUS_PRESUBMIT,
+  ]);
+  disabledStatus: Set<RecordStatus> = new Set([
+    RecordStatus.STATUS_SCHOOL_ADMIN_REVIEWED,
+    RecordStatus.STATUS_CLOSED,
+  ]);
+
 
   filterForm = this.fb.group({
     userName: [''],

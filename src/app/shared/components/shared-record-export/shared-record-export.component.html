@@ -74,12 +74,11 @@
             <tr *ngFor="let record of results">
               <div *ngIf="record.off_campus_event; then offCampusEventBlock else campusEventBlock"></div>
               <ng-template #offCampusEventBlock>
-                <td>{{ record.off_campus_event.name | truncate:11}}</td>
+                <td [matTooltip]="record.off_campus_event.name">{{ record.off_campus_event.name | truncate:11}}</td>
                 <td>{{ record.off_campus_event.time }}</td>
-                <td>{{ record.off_campus_event.location | truncate:8}}</td>
+                <td [matTooltip]="record.off_campus_event.location">{{ record.off_campus_event.location | truncate:8}}</td>
                 <td>{{ record.off_campus_event.num_hours }}</td>
                 <td>{{ record.off_campus_event.num_participants }}</td>
-                <td>{{ record.status }}</td>
               </ng-template>
               <ng-template #campusEventBlock>
                 <td>{{ record.campus_event.name | truncate:11}}</td>
@@ -87,8 +86,14 @@
                 <td>{{ record.campus_event.location | truncate:8}}</td>
                 <td>{{ record.campus_event.num_hours }}</td>
                 <td>{{ record.campus_event.num_participants }}</td>
-                <td>{{ record.status }}</td>
               </ng-template>
+              <td>
+                <mat-chip-list class="d-flex justify-content-center align-items-center">
+                 <mat-chip color="warn" *ngIf="warnStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+                 <mat-chip color="primary" *ngIf="primaryStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+                 <mat-chip color="disabled" *ngIf="disabledStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+               </mat-chip-list>
+              </td>
             </tr>
           </tbody>
         </table>
