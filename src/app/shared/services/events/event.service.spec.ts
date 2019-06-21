@@ -188,6 +188,26 @@ describe('EventService', () => {
     req.flush({});
   });
 
+  it('should enroll campusevent by user', () => {
+    const service: EventService = TestBed.get(EventService);
+    const event: CampusEvent = {
+      id: 1,
+      name: 'test',
+      time: 'time',
+      location: 'location',
+      num_hours: 12,
+      num_participants: 1,
+      deadline: 'deadline',
+      description: '666',
+      program: 1,
+    };
+    service.enrollCampusEventByUser(event.id, 5).subscribe();
+
+    const req = httpTestingController.expectOne(`/enrollments/`);
+    expect(req.request.method).toBe('POST');
+    req.flush({});
+  });
+
   it('shoule delete enrollment.', () => {
     const service: EventService = TestBed.get(EventService);
     const id = 1;

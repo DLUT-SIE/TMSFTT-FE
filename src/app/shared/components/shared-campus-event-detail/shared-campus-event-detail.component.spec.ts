@@ -13,9 +13,9 @@ import {
   MatProgressSpinnerModule,
   MatDialogModule,
 } from '@angular/material';
- import { EventService } from 'src/app/shared/services/events/event.service';
- import { Enrollment } from 'src/app/shared/interfaces/enrollment';
- import { Subject } from 'rxjs';
+import { EventService } from 'src/app/shared/services/events/event.service';
+import { Enrollment } from 'src/app/shared/interfaces/enrollment';
+import { Subject } from 'rxjs';
 import { AUTH_SERVICE } from '../../interfaces/auth-service';
 import { DetailSectionComponent } from '../detail-section/detail-section.component';
 import { DetailItemComponent } from '../detail-item/detail-item.component';
@@ -177,6 +177,12 @@ describe('SharedCampusEventDetailComponent', () => {
   it('should navigate to event form by admin', () => {
     component.eventDetailType = EventDetailType.ADMIN;
     component.navigateToChangeEvent();
+
+    expect(navigate).toHaveBeenCalled();
+  });
+
+  it('should navigate to add enroll user', () => {
+    component.addEnrollmentUser();
 
     expect(navigate).toHaveBeenCalled();
   });
