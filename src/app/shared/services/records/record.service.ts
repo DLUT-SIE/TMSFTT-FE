@@ -117,11 +117,11 @@ export class RecordService extends GenericListService {
     return this.http.post(`/campus-event-feedbacks/`, data);
   }
 
-  updateRecordStatus(recordId: number, isApproved: boolean, isDepartmentAdmin: boolean) {
-    if (isDepartmentAdmin) {
-      return this.http.post(`/records/${recordId}/department-admin-review/`, {isApproved});
+  updateRecordStatus(recordId: number, isApproved: boolean, isSchoolAdmin: boolean) {
+    if (isSchoolAdmin) {
+      return this.http.post(`/records/${recordId}/school-admin-review/`, {isApproved});
     }
-    return this.http.post(`/records/${recordId}/school-admin-review/`, {isApproved});
+    return this.http.post(`/records/${recordId}/department-admin-review/`, {isApproved});
   }
 
   closeRecord(recordId: number) {

@@ -274,7 +274,7 @@ describe('RecordService', () => {
   it('should update record status if admin approved', () => {
     const service: RecordService = TestBed.get(RecordService);
 
-    service.updateRecordStatus(1, true, true).subscribe();
+    service.updateRecordStatus(1, true, false).subscribe();
 
     const url1 = `/records/1/department-admin-review/`;
 
@@ -282,7 +282,7 @@ describe('RecordService', () => {
     expect(req1.request.method).toEqual('POST');
     req1.flush({});
 
-    service.updateRecordStatus(1, true, false).subscribe();
+    service.updateRecordStatus(1, true, true).subscribe();
 
     const url2 = `/records/1/school-admin-review/`;
 
