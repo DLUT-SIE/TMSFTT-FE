@@ -30,8 +30,8 @@ export class DataReviewComponent implements OnInit {
   ) { }
 
   changeStatus(isApproved: boolean) {
-    const isDepartmentAdmin = this.authService.isDepartmentAdmin;
-    this.recordService.updateRecordStatus(this.record.id, isApproved, isDepartmentAdmin)
+    const isSchoolAdmin = this.authService.isSchoolAdmin;
+    this.recordService.updateRecordStatus(this.record.id, isApproved, isSchoolAdmin)
     .subscribe(() => {
       this.snackBar.open('操作成功！', '关闭');
       this.adminAllowed = false;
