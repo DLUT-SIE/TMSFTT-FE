@@ -100,6 +100,13 @@ export class RecordService extends GenericListService {
     return this.list<PaginatedResponse<Record>>(url, req);
   }
 
+  getRecordsByEvent(eventID: number) {
+    const extraParams = new Map<string, string>();
+    extraParams.set('campus_event', eventID.toString());
+    const limit = -1;
+    return this.list<Record[]>('records/list-records-by-event', {limit, extraParams});
+  }
+
   getNumberOfRecordsWithoutFeedback() {
     return this.http.get<{'count': number}>(`/records/no-feedback-records-count/`);
   }
