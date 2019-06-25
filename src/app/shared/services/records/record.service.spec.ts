@@ -315,6 +315,18 @@ describe('RecordService', () => {
     req.flush({});
   });
 
+  it('should  force close campus record', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.forceCloseRecord(1, 2).subscribe();
+
+    const url = `/records/force-close/`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush({});
+  });
+
   it('should get role-choices.', () => {
     const service: RecordService = TestBed.get(RecordService);
 
