@@ -14,7 +14,9 @@ import {
   MatDialogModule,
 } from '@angular/material';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Enrollment } from 'src/app/shared/interfaces/enrollment';
+import { Record } from 'src/app/shared/interfaces/record';
 import { Subject } from 'rxjs';
 import { AUTH_SERVICE } from '../../interfaces/auth-service';
 import { DetailSectionComponent } from '../detail-section/detail-section.component';
@@ -39,6 +41,7 @@ describe('SharedCampusEventDetailComponent', () => {
   let exportAttendanceSheet$ = new Subject<{'url': string}>();
   let enrollCampusEvent$: Subject<Enrollment>;
   let getEnrollments$: Subject<Enrollment[]>;
+  let getRecordsByEvent$: Subject<Record[]>;
   let dialogOpen: jasmine.Spy;
 
   beforeEach(async(() => {
@@ -52,6 +55,7 @@ describe('SharedCampusEventDetailComponent', () => {
     enrollCampusEvent$ = new Subject();
     windowOpen = jasmine.createSpy();
     getEnrollments$ = new Subject();
+    getRecordsByEvent$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [
         SharedCampusEventDetailComponent,
@@ -109,6 +113,12 @@ describe('SharedCampusEventDetailComponent', () => {
             enrollCampusEvent: () => enrollCampusEvent$,
             getEnrollments: ({}) => getEnrollments$,
             reviewCampusEvent,
+          }
+        },
+        {
+          provide: RecordService,
+          useValue: {
+            getRecordsByEvent: ({}) => getRecordsByEvent$,
           }
         },
         {
@@ -338,6 +348,19 @@ describe('SharedCampusEventDetailComponent', () => {
 
     component.displayEnrollments();
     getEnrollments$.error({
+      status: 400,
+      error: {detail: ['Raw error message']},
+    } as HttpErrorResponse);
+    expect(snackBarOpen).toHaveBeenCalledWith('失败原因： Raw error message', '关闭', {duration: 3000});
+  });
+
+  it('should display records', () => {
+    component.displayRecords();
+    getRecordsByEvent$.next([]);
+    expect(dialogOpen).toHaveBeenCalled();
+
+    component.displayRecords();
+    getRecordsByEvent$.error({
       status: 400,
       error: {detail: ['Raw error message']},
     } as HttpErrorResponse);

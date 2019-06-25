@@ -1,0 +1,25 @@
+<!-- 参与人员名字 参与方式  -->
+<div class="table-responsive">
+  <table class="table table-hover text-center">
+    <thead class="hidden text-primary">
+      <tr>
+        <th scope="col">序号</th>
+        <th scope="col">院系</th>
+        <th scope="col">工号</th>
+        <th scope="col">姓名</th>
+        <th scope="col">职称</th>
+        <th scope="col">参与形式</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of data.records; let i = index">
+        <td scope="col">{{ i + 1 }}</td>
+        <td scope="col">{{ asUser(record.user).department_str }}</td>
+        <td scope="col">{{ asUser(record.user).username }}</td>
+        <td scope="col">{{ asUser(record.user).first_name }}</td>
+        <td scope="col">{{ asUser(record.user).technical_title }}</td>
+        <td scope="col">{{ record.role_str}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
