@@ -1,6 +1,7 @@
 import { RecordContent } from './record-content';
 import { RecordAttachment } from './record-attachment';
 import { OffCampusEvent, CampusEvent } from './event';
+import { User } from './user';
 
 /** RESTful reponse interface for Record. */
 export interface Record {
@@ -9,7 +10,7 @@ export interface Record {
   update_time?: string;
   campus_event?: CampusEvent;
   off_campus_event?: OffCampusEvent;
-  user?: number;
+  user?: number | User;
   status?: number;
   status_str?: string;
   feedback?: number;

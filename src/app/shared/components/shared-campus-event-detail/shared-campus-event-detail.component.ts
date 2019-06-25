@@ -5,6 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { EventDetailType } from 'src/app/shared/enums/event-detail-type.enum';
 import { CampusEvent } from 'src/app/shared/interfaces/event';
 import { EventService } from 'src/app/shared/services/events/event.service';
+import { RecordService } from 'src/app/shared/services/records/record.service';
+import { Record } from 'src/app/shared/interfaces/record';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 import { WindowService } from 'src/app/shared/services/window.service';
@@ -14,6 +16,7 @@ import { errorProcess } from '../../utils/error-process';
 import { copyToClipboard } from '../../utils/copy-to-clipboard';
 import { Enrollment } from '../../interfaces/enrollment';
 import { EnrollmentListDialogComponent } from '../enrollment-list-dialog/enrollment-list-dialog.component';
+import { RecordsListDialogComponent } from '../records-list-dialog/records-list-dialog.component';
 
 @Component({
   selector: 'app-shared-campus-event-detail',
@@ -35,6 +38,7 @@ export class SharedCampusEventDetailComponent {
     private readonly dialog: MatDialog,
     private readonly sanitizer: DomSanitizer,
     private readonly eventService: EventService,
+    private readonly recordService: RecordService,
     private readonly windowService: WindowService,
     private readonly loggerService: LoggerService,
   ) { }
@@ -129,6 +133,26 @@ export class SharedCampusEventDetailComponent {
         this.dialog.open(EnrollmentListDialogComponent, {
           data: {
             enrollments: data,
+            event: this.event
+          }
+        });
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        const message = errorProcess(error);
+        this.snackBar.open(message, '关闭', {duration: 3000});
+        this.isLoading = false;
+      }
+    );
+  }
+
+  displayRecords() {
+    this.isLoading = true;
+    this.recordService.getRecordsByEvent(this.event.id).subscribe(
+      (data: Record[]) => {
+        this.dialog.open(RecordsListDialogComponent, {
+          data: {
+            records: data,
             event: this.event
           }
         });
