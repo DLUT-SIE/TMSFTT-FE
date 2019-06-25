@@ -151,6 +151,18 @@ describe('RecordService', () => {
     req.flush({ count: 2 });
   });
 
+  it('should get records by event', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    service.getRecordsByEvent(2).subscribe();
+
+    const url = `/records/list-records-by-event/?campus_event=2&limit=-1&offset=0`;
+
+    const req = httpTestingController.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush({});
+  });
+
   it('should get record', () => {
     const service: RecordService = TestBed.get(RecordService);
     const id = 1;
