@@ -135,6 +135,13 @@ export class RecordService extends GenericListService {
     return this.http.post(`/records/${recordId}/close/`, {});
   }
 
+  forceCloseRecord(eventID: number, userID: number) {
+    const data = new FormData();
+    data.set('campus_event', eventID.toString());
+    data.set('user_id', userID.toString());
+    return this.http.post(`/records/force-close/`, data);
+  }
+
   getRoleChoices() {
     if (this.cachedRoleChoices.length !== 0) {
       return observableOf(this.cachedRoleChoices);
