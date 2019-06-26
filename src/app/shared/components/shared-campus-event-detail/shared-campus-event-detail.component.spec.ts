@@ -197,6 +197,12 @@ describe('SharedCampusEventDetailComponent', () => {
     expect(navigate).toHaveBeenCalled();
   });
 
+  it('should navigate to close specific record', () => {
+    component.closeSpecifiedRecord();
+
+    expect(navigate).toHaveBeenCalled();
+  });
+
   it('should bypass sanitizing.', () => {
     const description = '<p class="abc">abc</p>';
     component.event.description = description;
