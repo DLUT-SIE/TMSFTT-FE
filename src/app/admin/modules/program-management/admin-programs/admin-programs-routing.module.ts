@@ -13,6 +13,7 @@ import { AdminEventsComponent } from '../admin-events/admin-events.component';
 
 import { AdminProgramsComponent } from './admin-programs.component';
 import { ProgramDetailResolverService } from 'src/app/shared/services/programs/program-detail-resolver.service';
+import { AdminCloseRecordsComponent } from '../admin-events/components/admin-close-records/admin-close-records.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
               {
                 path: 'enroll',
                 component: AdminEnrollEventComponent,
+              },
+              {
+                path: 'close-record',
+                component: AdminCloseRecordsComponent,
               },
               {
                 path: ':event_id',

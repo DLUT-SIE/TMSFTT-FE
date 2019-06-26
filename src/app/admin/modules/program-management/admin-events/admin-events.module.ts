@@ -6,6 +6,7 @@ import { AdminCampusEventDetailComponent } from './components/admin-campus-event
 import { AdminCampusFormComponent } from './components/admin-campus-form/admin-campus-form.component';
 import { AdminEventsComponent } from './admin-events.component';
 import { AdminEnrollEventComponent } from './components/admin-enroll-event/admin-enroll-event.component';
+import { AdminCloseRecordsComponent } from './components/admin-close-records/admin-close-records.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AdminEnrollEventComponent } from './components/admin-enroll-event/admin
     AdminCampusEventListComponent,
     AdminCampusFormComponent,
     AdminEnrollEventComponent,
+    AdminCloseRecordsComponent,
   ],
   imports: [
     SharedModule,

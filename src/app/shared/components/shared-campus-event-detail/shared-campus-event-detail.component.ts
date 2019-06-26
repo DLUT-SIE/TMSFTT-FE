@@ -172,4 +172,11 @@ export class SharedCampusEventDetailComponent {
                             event_id: this.event.id,
                           }});
   }
+
+  closeSpecifiedRecord() {
+    this.router.navigate(['admin', 'programs', this.event.program, 'events', 'close-record'],
+                          {queryParams: {
+                            event_id: this.event.id,
+                          }});
+  }
 }
