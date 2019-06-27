@@ -105,7 +105,7 @@
             <button mat-raised-button color="primary" (click)="displayEnrollments()">查看报名信息</button>
             <button mat-raised-button color="primary" (click)="doResultsExport()">导出签到表</button>
             <button mat-raised-button color="primary" *ngIf="!event.expired" (click)="copyEnrollLink()">复制报名链接</button>
-            <button mat-raised-button color="primary" *ngIf="authService.isSchoolAdmin" (click)="closeSpecifiedRecord()">关闭指定记录</button>
+            <button mat-raised-button color="primary" *ngIf="event.expired && authService.isSchoolAdmin" (click)="closeSpecifiedRecord()">关闭指定记录</button>
             <button mat-raised-button color="primary" *ngIf="authService.isSchoolAdmin || !event.reviewed" (click)="navigateToChangeEvent()">修改</button>
           </ng-container>
           <button mat-raised-button color="primary" (click)="location.back()">返回</button>
