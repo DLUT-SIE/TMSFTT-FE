@@ -228,6 +228,6 @@ describe('SharedRecordExportComponent', () => {
     component.recordExportType = RecordExportType.EXPORT_FOR_ADMIN;
 
     component.navigateToDetail({campus_event: {id: 1, program_detail: {id: 1}}});
-    expect(navigate).toHaveBeenCalledWith(['admin', 'programs', 1, 'events', 1])
-  })
+    expect(navigate).toHaveBeenCalledWith(['admin', 'programs', 1, 'events', 1]);
+  });
 });
