@@ -355,4 +355,16 @@ describe('RecordService', () => {
 
     expect(req.request.method).toEqual('GET');
   });
+
+  it('should get events which have records.', () => {
+    const service: RecordService = TestBed.get(RecordService);
+
+    const url = `/records/recent-events/`;
+    service.getRecentEventsHaveRecords().subscribe();
+
+    const req = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toEqual('GET');
+  });
+
 });
