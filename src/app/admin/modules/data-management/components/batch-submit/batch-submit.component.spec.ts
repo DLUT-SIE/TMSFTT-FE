@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 
 import { BatchSubmitComponent } from './batch-submit.component';
 import { RecordService } from 'src/app/shared/services/records/record.service';
+import { CampusEvent } from 'src/app/shared/interfaces/event';
 
 
 describe('BatchSubmitComponent', () => {
@@ -17,11 +18,13 @@ describe('BatchSubmitComponent', () => {
   let fixture: ComponentFixture<BatchSubmitComponent>;
   let batchSubmitRecord$: Subject<{'count': number}>;
   let snackBarOpen: jasmine.Spy;
+  let getRecentEventsHaveRecords$: Subject<CampusEvent[]>;
   const tmpfile = new File([], 'a.xlsx');
 
   beforeEach(async(() => {
     snackBarOpen = jasmine.createSpy();
     batchSubmitRecord$ = new Subject();
+    getRecentEventsHaveRecords$ = new Subject();
     TestBed.configureTestingModule({
       declarations: [ BatchSubmitComponent ],
       imports: [
@@ -39,6 +42,7 @@ describe('BatchSubmitComponent', () => {
           provide: RecordService,
           useValue: {
             batchSubmitRecord: () => batchSubmitRecord$,
+            getRecentEventsHaveRecords: () => getRecentEventsHaveRecords$,
           },
         },
       ]

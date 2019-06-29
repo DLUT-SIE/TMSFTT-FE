@@ -14,6 +14,9 @@
         <p>文件名:{{ file.name }}</p>
         <label *ngIf="count && hasCreateSucceed">成功录入{{ count }}条记录！</label>
       </div>
+      <div *ngFor="let event of events">
+        <label>今日已录入{{ event.name }}活动的记录！</label>
+      </div>
       <div>
         <input hidden type="file" #uploadFileInput (change)="onFileSlect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
         <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
