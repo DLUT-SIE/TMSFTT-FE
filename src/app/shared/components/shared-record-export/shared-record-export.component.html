@@ -81,11 +81,11 @@
                 <td>{{ record.off_campus_event.num_participants }}</td>
               </ng-template>
               <ng-template #campusEventBlock>
-                <td>{{ record.campus_event.name | truncate:11}}</td>
-                <td>{{ record.campus_event.time }}</td>
-                <td>{{ record.campus_event.location | truncate:8}}</td>
-                <td>{{ record.campus_event.num_hours }}</td>
-                <td>{{ record.campus_event.num_participants }}</td>
+                <td (click)="navigateToDetail(record)" [matTooltip]="record.campus_event.name">{{ record.campus_event.name | truncate:11}}</td>
+                <td (click)="navigateToDetail(record)">{{ record.campus_event.time }}</td>
+                <td (click)="navigateToDetail(record)" [matTooltip]="record.campus_event.location">{{ record.campus_event.location | truncate:8}}</td>
+                <td (click)="navigateToDetail(record)">{{ record.campus_event.num_hours }}</td>
+                <td (click)="navigateToDetail(record)">{{ record.campus_event.num_participants }}</td>
               </ng-template>
               <td>
                 <mat-chip-list class="d-flex justify-content-center align-items-center">
