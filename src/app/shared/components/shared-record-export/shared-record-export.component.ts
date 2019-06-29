@@ -119,4 +119,11 @@ export class SharedRecordExportComponent extends GenericListComponent<Record> {
       });
   }
 
+  navigateToDetail(record: Record){
+    if (this.recordExportType === RecordExportType.EXPORT_FOR_ADMIN) {
+      this.router.navigate(['admin', 'programs', record.campus_event.program_detail.id, 'events', record.campus_event.id]);
+    }
+    
+  }
+
 }

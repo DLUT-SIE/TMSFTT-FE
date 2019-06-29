@@ -34,6 +34,7 @@ describe('SharedRecordExportComponent', () => {
   let component: SharedRecordExportComponent;
   let fixture: ComponentFixture<SharedRecordExportComponent>;
   let getRecords: jasmine.Spy;
+  let navigate: jasmine.Spy;
   let exportRecordsSubject$ = new Subject<{'url': string}>();
   let getRecords$: Subject<PaginatedResponse<Record>>;
   let snackBarOpen: jasmine.Spy;
@@ -47,6 +48,7 @@ describe('SharedRecordExportComponent', () => {
     snackBarOpen = jasmine.createSpy();
     windowOpen = jasmine.createSpy();
     replaceState = jasmine.createSpy();
+    navigate = jasmine.createSpy();
     go = jasmine.createSpy();
     exportRecordsSubject$ = new Subject<{'url': string}>();
     TestBed.configureTestingModule({
@@ -82,6 +84,7 @@ describe('SharedRecordExportComponent', () => {
         {
           provide: Router,
           useValue: {
+            navigate,
             createUrlTree: () => 'abc',
           },
         },
@@ -220,4 +223,11 @@ describe('SharedRecordExportComponent', () => {
     expect(url).toEqual(
       `/aggregate-data/table-export/?table_type=8&user__username=111&event_name=111&event_location=222&start_time=abc&end_time=abc`);
   });
+
+  it('should navigate to  event detail', () => {
+    component.recordExportType = RecordExportType.EXPORT_FOR_ADMIN;
+
+    component.navigateToDetail({campus_event: {id: 1, program_detail: {id: 1}}});
+    expect(navigate).toHaveBeenCalledWith(['admin', 'programs', 1, 'events', 1])
+  })
 });
