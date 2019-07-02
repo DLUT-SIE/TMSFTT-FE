@@ -14,6 +14,7 @@ import {
   MatNativeDateModule,
   MatSelectModule,
   MatSnackBar,
+  MatProgressSpinnerModule,
   MatAutocompleteSelectedEvent,
 } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -97,6 +98,7 @@ describe('RecordFormComponent', () => {
         MatFormFieldModule,
         MatNativeDateModule,
         MatSelectModule,
+        MatProgressSpinnerModule,
       ],
       providers: [
         {
