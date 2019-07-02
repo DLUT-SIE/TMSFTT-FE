@@ -58,7 +58,7 @@ export class RecordFormComponent implements OnInit {
   originalAttachments: Array<{id: number, path: SecuredPath}> = [];
   hasOriginalAttachments = false;
   isUpdateMode: boolean;
-  submitDisabled = false;
+  isLoading = false;
 
   constructor(
     readonly urlLocation: Location,
@@ -270,7 +270,7 @@ export class RecordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitDisabled = true;
+    this.isLoading = true;
     const req: Record = this.buildRequest();
     const targetRecord: Observable<Record> = this.isUpdateMode ?
                                            this.recordService.updateOffCampusRecord(req) :
@@ -278,12 +278,12 @@ export class RecordFormComponent implements OnInit {
     targetRecord.subscribe(
       record => {
         this.router.navigate(['user/off-campus-event-records/', record.id]);
-        this.submitDisabled = false;
+        this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
         const message = errorProcess(error);
         this.snackBar.open(message, '关闭');
-        this.submitDisabled = false;
+        this.isLoading = false;
       });
   }
 
