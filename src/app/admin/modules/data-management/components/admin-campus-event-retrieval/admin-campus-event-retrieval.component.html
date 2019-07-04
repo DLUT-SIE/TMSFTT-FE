@@ -1,0 +1,54 @@
+<div fxLayout="row">
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+  <div fxFlex="8 8 calc(8em)" class="card">
+    <div class="card-header card-header-primary" >
+      <h4 class="card-title">培训活动检索</h4>
+      <p class="card-category">您可以检索所有培训活动</p>
+    </div>
+    <div class="card-body">
+      <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner></mat-spinner>
+      </div>
+      <form class="form-container" [formGroup]="filterForm">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between stretch"
+             fxLayout.xs="column">
+
+          <mat-form-field appearance="outline">
+            <mat-icon matPrefix>event</mat-icon>
+            <mat-label i18n>活动名称</mat-label>
+            <input matInput placeholder="" formControlName="eventName" i18n-placeholder>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
+            <button mat-raised-button type="button" color="primary" (click)="forceRefresh()">检索</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive">
+        <table class="table table-hover text-center">
+          <thead class="text-primary">
+            <tr>
+              <th scope="col">活动名称</th>
+              <th scope="col">活动时间</th>
+              <th scope="col">活动地点</th>
+              <th scope="col">活动时长</th>
+              <th scope="col">报名人数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let event of results">
+                <td (click)="navigateToDetail(event)"  [matTooltip]="event.name">{{ event.name | truncate:11}}</td>
+                <td (click)="navigateToDetail(event)">{{ event.time }}</td>
+                <td (click)="navigateToDetail(event)" [matTooltip]="event.location">{{ event.location | truncate:8}}</td>
+                <td (click)="navigateToDetail(event)">{{ event.num_hours  | number:"0.1-1"}}</td>
+                <td (click)="navigateToDetail(event)">{{ event.num_enrolled }} / {{ event.num_participants }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [disabled]="isLoadingResults"></mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div fxFlex.lg="1 1 calc(1em)"></div>
+</div>

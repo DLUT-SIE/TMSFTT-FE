@@ -1,3 +1,11 @@
+<a routerLink="./event-retrieval" *ngIf="authService.isSchoolAdmin">
+  <div class="card card-plain">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">培训活动检索</h4>
+      <p class="card-category">检索培训活动。</p>
+    </div>
+  </div>
+</a>
 <a routerLink="./review/records">
   <div class="card card-plain">
     <div class="card-header card-header-primary">

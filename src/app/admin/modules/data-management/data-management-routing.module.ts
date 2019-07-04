@@ -13,12 +13,17 @@ import { AdminCampusEventReviewListComponent } from './components/admin-campus-e
 import { CampusEventDetailResolverService } from 'src/app/shared/services/events/campus-event-detail-resolver.service';
 import { AdminCampusEventDetailComponent } from '../program-management/admin-events/components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { RecordExportComponent } from './components/record-export/record-export.component';
+import { AdminCampusEventRetrievalComponent } from './components/admin-campus-event-retrieval/admin-campus-event-retrieval.component';
 
 const routes: Routes = [
   {
     path: 'data',
     component: DataManagementComponent,
     children: [
+      {
+        path: 'event-retrieval',
+        component: AdminCampusEventRetrievalComponent,
+      },
       {
         path: 'review',
         children: [
@@ -76,7 +81,7 @@ const routes: Routes = [
       {
         path: '',
         component: MenuComponent,
-      }
+      },
     ]
   }
 ];
