@@ -15,6 +15,7 @@ import { DataGraphComponent } from './components/data-graph/data-graph.component
 import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-graph-echarts.component';
 import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
 import { RecordExportComponent } from './components/record-export/record-export.component';
+import { AdminCampusEventRetrievalComponent } from './components/admin-campus-event-retrieval/admin-campus-event-retrieval.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { RecordExportComponent } from './components/record-export/record-export.
     DataGraphEchartsComponent,
     AdminCampusEventReviewListComponent,
     RecordExportComponent,
+    AdminCampusEventRetrievalComponent,
   ],
   imports: [
     SharedModule,
