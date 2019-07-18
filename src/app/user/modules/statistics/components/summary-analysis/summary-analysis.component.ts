@@ -56,6 +56,10 @@ export class SummaryAnalysisComponent implements OnInit {
     timestamp: string,
     ranking: string,
   };
+  personalWorkload: {
+    timestamp: string,
+    workload: number,
+  };
 
   programsPieChart: echarts.ECharts;
   programsPieChartOption: EChartOption = {
@@ -160,6 +164,7 @@ export class SummaryAnalysisComponent implements OnInit {
       this.monthlyAddedRecords = data['monthly_added_records'];
       this.rankingInDepartment = data['ranking_in_department'];
       this.rankingInSchool = data['ranking_in_school'];
+      this.personalWorkload = data['personal_workload'];
       (this.programsPieChartOption.legend as {data: string[]}).data = this.programsStatistics.programs;
       (this.programsPieChartOption.series[0] as {data: Array<{}>}).data = this.programsStatistics.data;
       const barChartOption = this.monthlyAddedRecordsBarChartOption;

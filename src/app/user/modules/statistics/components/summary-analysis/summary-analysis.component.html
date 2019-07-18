@@ -101,7 +101,7 @@
     </div>
   </div>
   <div fxLayout="column wrap" fxLayoutAlign="space-around start" fxLayoutGap="10px" fxLayout.gt-sm="row">
-    <div fxFlex="auto" class="card card-stats">
+    <div class="card card-stats">
       <div class="card-header card-header-primary card-header-icon">
         <div class="card-icon">
           <i class="material-icons">domain</i>
@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <div fxFlex="auto" class="card card-stats">
+    <div class="card card-stats">
       <div class="card-header card-header-info card-header-icon">
         <div class="card-icon">
           <i class="material-icons">domain</i>
@@ -131,7 +131,21 @@
         </div>
       </div>
     </div>
-    <div fxFlex="auto" fxFlexFill></div>
+    <div class="card card-stats">
+      <div class="card-header card-header-info card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">domain</i>
+        </div>
+        <p class="card-category">本月个人工作量统计</p>
+        <h3 class="card-title">{{ personalWorkload?.workload }} 学时</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i>
+          最后更新：{{ personalWorkload?.timestamp | date:'yyyy年MM月dd日 HH:mm:ss' }}
+        </div>
+      </div>
+    </div>
   </div>
   <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" fxLayout.gt-sm="row">
     <div class="card card-chart" *ngIf="programsStatistics?.data.length !== 0">
