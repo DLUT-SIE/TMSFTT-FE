@@ -32,9 +32,9 @@
         </ng-template>
         <td>
          <mat-chip-list class="d-flex justify-content-center align-items-center">
-          <mat-chip color="warn" *ngIf="warnStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
-          <mat-chip color="primary" *ngIf="primaryStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
-          <mat-chip color="disabled" *ngIf="disabledStatus.has(record.status)" selected>{{ record.status_str }}</mat-chip>
+          <mat-chip color="warn" *ngIf="warnStatus.has(record.status)" selected (click)="navigateToDetail(record)">{{ record.status_str }}</mat-chip>
+          <mat-chip color="primary" *ngIf="primaryStatus.has(record.status)" selected (click)="navigateToDetail(record)">{{ record.status_str }}</mat-chip>
+          <mat-chip color="disabled" *ngIf="disabledStatus.has(record.status)" selected (click)="navigateToDetail(record)">{{ record.status_str }}</mat-chip>
         </mat-chip-list>
         </td>
      </tr>
