@@ -40,7 +40,7 @@ export class RecordDetailComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(FeedbackDialogComponent, {
-      width: '250px',
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
