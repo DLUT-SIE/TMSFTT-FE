@@ -1,10 +1,11 @@
 <h1 mat-dialog-title>请填写您的反馈内容</h1>
 <div mat-dialog-content>
-    <mat-form-field>
-      <input matInput [(ngModel)]="data">
+    <mat-form-field appearance="outline">
+      <textarea matInput [(ngModel)]="data" rows="10"></textarea>
     </mat-form-field>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end center"
+  fxLayoutGap="15px" fxLayoutAlign.xs="start start">
   <button mat-button (click)="onNoClick()">取消</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>确定</button>
 </div>
