@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { RecordsRoutingModule } from './records-routing.module';
-import { EntryModeComponent } from './components/entry-mode/entry-mode.component';
 import { RecordFormComponent } from './components/record-form/record-form.component';
 import { RecordsComponent } from './records.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
@@ -13,7 +12,6 @@ import { FeedbackDialogComponent } from './components/feedback-dialog/feedback-d
 @NgModule({
   declarations: [
     RecordsComponent,
-    EntryModeComponent,
     RecordFormComponent,
     RecordListComponent,
     RecordDetailComponent,
