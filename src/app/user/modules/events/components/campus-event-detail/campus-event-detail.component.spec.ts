@@ -62,4 +62,5 @@ describe('CampusEventDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
