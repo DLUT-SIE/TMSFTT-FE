@@ -91,7 +91,6 @@ export class SharedCampusEventDetailComponent {
   doResultsExport() {
     this.eventService.exportAttendanceSheet(this.buildUrl(this.event.id)).subscribe(
       data => {
-        alert(data['url']);
         this.windowService.open(data['url']);
         this.snackBar.open('导出成功', '确定', { duration: 3000 });
       },
