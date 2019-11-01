@@ -71,7 +71,10 @@ describe('OffCampusRecordDetailComponent', () => {
         },
       contents: [],
       attachments: [],
-      user: 1,
+      user: {
+        first_name: '1',
+        department_str: '11'
+      },
       status: 1,
       role: 1,
       role_str: '1433223',
