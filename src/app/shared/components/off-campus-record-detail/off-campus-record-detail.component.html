@@ -1,4 +1,12 @@
-<detail-section>
+<detail-section> 
+  <detail-item>
+    <detail-item-title>教师姓名</detail-item-title>
+    <detail-item-content>{{ record.user.first_name }}</detail-item-content>
+  </detail-item>
+  <detail-item>
+    <detail-item-title>所属院系</detail-item-title>
+    <detail-item-content>{{ record.user.department_str }}</detail-item-content>
+  </detail-item>
   <detail-item>
     <detail-item-title>活动名称</detail-item-title>
     <detail-item-content>{{ record.off_campus_event.name }}</detail-item-content>
