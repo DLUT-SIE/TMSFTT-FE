@@ -6,6 +6,7 @@
         <th scope="col">院系</th>
         <th scope="col">工号</th>
         <th scope="col">姓名</th>
+        <th scope="col">电话</th>
         <th scope="col">职称</th>
         <th scope="col">参与形式</th>
       </tr>
@@ -16,6 +17,7 @@
         <td scope="col">{{ asUser(record.user).department_str }}</td>
         <td scope="col">{{ asUser(record.user).username }}</td>
         <td scope="col">{{ asUser(record.user).first_name }}</td>
+        <td scope="col">{{ asUser(record.user).cell_phone_number }}</td>
         <td scope="col">{{ asUser(record.user).technical_title }}</td>
         <td scope="col">{{ record.role_str}}</td>
       </tr>
