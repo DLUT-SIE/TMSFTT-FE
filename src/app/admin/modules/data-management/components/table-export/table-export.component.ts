@@ -83,7 +83,8 @@ export class TableExportComponent implements OnInit {
         {id: 3, name: '培训总体情况表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 4, name: '专任教师培训覆盖率表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [timeValidator]},
-        {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]}
+        {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]},
+        {id: 10, name: '培训活动出席表', subOptionsConfig: 0b1111, validators: [timeValidator]},
     ];
 
     departmentsData: Department[] = [{id: 1, name: '大连理工大学'} as Department];
@@ -99,7 +100,7 @@ export class TableExportComponent implements OnInit {
 
     readonly defaultProgram = {id: -1, name: '全部'} as Program;
 
-    programsData: Program[] = [...this.programsList];
+    programsData: Program[] = this.programsList;
 
     exportTableOptions: FormGroup;
 
