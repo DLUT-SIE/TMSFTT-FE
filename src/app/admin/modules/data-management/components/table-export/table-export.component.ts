@@ -85,6 +85,7 @@ export class TableExportComponent implements OnInit {
         {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [timeValidator]},
         {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]},
         {id: 10, name: '培训活动出席表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+        {id: 7, name: '工作量计算表', subOptionsConfig: 0b0011, validators: [timeValidator]},
     ];
 
     departmentsData: Department[] = [{id: 1, name: '大连理工大学'} as Department];
