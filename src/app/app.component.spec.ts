@@ -64,7 +64,7 @@ describe('AppComponent(Windows)', () => {
   const onTimeout$ = new Subject<void>();
   const onIdleStart$ = new Subject<void>();
 
-  
+
 
   beforeEach(async(() => {
     events$ = new Subject<{}>();
