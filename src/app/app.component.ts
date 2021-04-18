@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     idle.onIdleStart.subscribe(() => {
       this.dialog.open(IdleWarningDialogComponent, {
         width: this.platformService.isMobile ? '100%' : undefined,
-      })
+      });
     });
 
     this.keepalive.interval(15);
