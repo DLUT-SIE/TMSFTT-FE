@@ -13,6 +13,11 @@ import { SwUpdate } from '@angular/service-worker';
 import { detectIE } from 'src/app/shared/utils/detect-ie';
 import { MatDialog } from '@angular/material';
 import { IEWarningDialogComponent } from './core/iewarning-dialog/iewarning-dialog.component';
+import { IdleWarningDialogComponent } from './core/idlewarning-dialog/idlewarning-dialog.component';
+import { AuthService, AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
+
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 /** Root component. */
 @Component({
@@ -29,6 +34,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   private yScrollStack: number[] = [];
   private asyncLoadingCount = 0;
 
+  // private idleState: string = 'Not started.';
+  // private timedOut: boolean = false;
+
   constructor(
     readonly styleManager: StyleManager,
     private readonly location: Location,
@@ -38,6 +46,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly windowService: WindowService,
     private readonly updates: SwUpdate,
     @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(AUTH_SERVICE) private readonly authService: AuthService,
+
+    private readonly idle: Idle,
+    private readonly keepalive: Keepalive,
   ) {
     this.updates.available.subscribe(event => {
       if (confirm('检测到您正在使用过期的页面，点击确定以更新至最新版本')) {
@@ -50,6 +62,32 @@ export class AppComponent implements OnInit, AfterViewInit {
         width: this.platformService.isMobile ? '100%' : undefined,
       });
     }
+
+    /* sets an idle timeout of 5 seconds, for testing purposes. */
+    idle.setIdle(60 * 15);
+    /* sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out. */
+    idle.setTimeout(5);
+    /* sets the default interrupts, in this case, things like clicks, scrolls, touches to the document. */
+    idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    idle.onIdleEnd.subscribe(() => {
+      this.reset();
+    });
+
+    idle.onTimeout.subscribe(() => {
+      this.logOut();
+    });
+
+    idle.onIdleStart.subscribe(() => {
+      this.dialog.open(IdleWarningDialogComponent, {
+        width: this.platformService.isMobile ? '100%' : undefined,
+      })
+    });
+
+    this.keepalive.interval(15);
+    this.authService.authenticationSucceed.subscribe(() => {
+      this.reset();
+    });
   }
 
   ngOnInit() {
@@ -113,5 +151,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   get isLoading() {
     return this.asyncLoadingCount !== 0;
+  }
+
+  reset() {
+    this.idle.watch();
+  }
+
+  logOut() {
+    this.authService.logout().subscribe(data => {
+        this.windowService.redirect(data.url);
+    });
   }
 }
