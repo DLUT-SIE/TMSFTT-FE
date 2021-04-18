@@ -15,6 +15,8 @@ import { PlatformType } from './shared/enums/platform-type.enum';
 import { StyleManager } from './shared/services/style-manager.service';
 import { SwUpdate } from '@angular/service-worker';
 import { MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
+import { Idle } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 @Component({
   selector: 'app-sidebar',
@@ -48,6 +50,7 @@ describe('AppComponent(Windows)', () => {
   let fixture: ComponentFixture<TestAppRootComponent>;
   let scrollTo: jasmine.Spy;
   let matchMedia: jasmine.Spy;
+  let logout: jasmine.Spy;
   let available$: Subject<{}>;
   let events$: Subject<{}>;
   let platformService: {
@@ -55,6 +58,13 @@ describe('AppComponent(Windows)', () => {
     platformType: PlatformType,
   };
   const location$ = new Subject<{}>();
+  const logout$ = new Subject<{}>();
+  const authenticationSucceed$ = new Subject<void>();
+  const onIdleEnd$ = new Subject<void>();
+  const onTimeout$ = new Subject<void>();
+  const onIdleStart$ = new Subject<void>();
+
+  
 
   beforeEach(async(() => {
     events$ = new Subject<{}>();
@@ -62,6 +72,8 @@ describe('AppComponent(Windows)', () => {
     scrollTo = jasmine.createSpy();
     matchMedia = jasmine.createSpy();
     matchMedia.and.returnValue({ matches: true });
+    logout = jasmine.createSpy();
+    logout.and.returnValue(logout$);
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
@@ -89,6 +101,7 @@ describe('AppComponent(Windows)', () => {
           provide: AUTH_SERVICE,
           useValue: {
             isAuthenticated: false,
+            authenticationSucceed: authenticationSucceed$,
           },
         },
         {
@@ -121,6 +134,24 @@ describe('AppComponent(Windows)', () => {
           provide: Router,
           useValue: {
             events: events$,
+          }
+        },
+        {
+          provide: Idle,
+          useValue: {
+            onIdleEnd: onIdleEnd$,
+            onIdleStart: onIdleStart$,
+            onTimeout: onTimeout$,
+            setIdle: () => null,
+            setInterrupts: () => null,
+            setTimeout: () => null,
+            watch: () => null,
+          }
+        },
+        {
+          provide: Keepalive,
+          useValue: {
+            interval: () => null,
           }
         }
       ],

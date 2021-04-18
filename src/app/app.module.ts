@@ -22,6 +22,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APIHostInterceptor } from './core/api-host-interceptor/apihost-interceptor.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'angular2-moment';
+
 registerLocaleData(localeZhHans, 'zh-Hans');
 
 /** How do we get JWT. */
@@ -52,6 +55,9 @@ export let AppInjector: Injector;
     CoreModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
   ],
   providers: [
     {
