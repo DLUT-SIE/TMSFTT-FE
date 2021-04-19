@@ -54,3 +54,11 @@
     </div>
   </div>
 </a>
+<a routerLink="./log-perform" *ngIf="authService.isSchoolAdmin">
+  <div class="card card-plain">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">系统日志</h4>
+      <p class="card-category">系统日志展示。</p>
+    </div>
+  </div>
+</a>
