@@ -16,6 +16,7 @@ import { DataGraphEchartsComponent } from './components/data-graph-echarts/data-
 import { AdminCampusEventReviewListComponent } from './components/admin-campus-event-review-list/admin-campus-event-review-list.component';
 import { RecordExportComponent } from './components/record-export/record-export.component';
 import { AdminCampusEventRetrievalComponent } from './components/admin-campus-event-retrieval/admin-campus-event-retrieval.component';
+import { LogPerformComponent } from './components/log-perform/log-perform.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AdminCampusEventRetrievalComponent } from './components/admin-campus-ev
     AdminCampusEventReviewListComponent,
     RecordExportComponent,
     AdminCampusEventRetrievalComponent,
+    LogPerformComponent,
   ],
   imports: [
     SharedModule,

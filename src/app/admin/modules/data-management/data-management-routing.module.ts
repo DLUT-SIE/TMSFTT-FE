@@ -14,6 +14,7 @@ import { CampusEventDetailResolverService } from 'src/app/shared/services/events
 import { AdminCampusEventDetailComponent } from '../program-management/admin-events/components/admin-campus-event-detail/admin-campus-event-detail.component';
 import { RecordExportComponent } from './components/record-export/record-export.component';
 import { AdminCampusEventRetrievalComponent } from './components/admin-campus-event-retrieval/admin-campus-event-retrieval.component';
+import { LogPerformComponent } from './components/log-perform/log-perform.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
       {
         path: 'table-export',
         component: TableExportComponent,
+      },
+      {
+        path: 'log-perform',
+        component: LogPerformComponent,
       },
       {
         path: '',
