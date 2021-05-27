@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { RecordService } from 'src/app/shared/services/records/record.service';
 import { Record } from 'src/app/shared/interfaces/record';
 import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
+import { CampusEventFeedback } from 'src/app/shared/interfaces/campus-event-feedback';
 
 /** Display a record in detail. */
 @Component({
@@ -44,8 +45,9 @@ export class RecordDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.recordService.createFeedback(this.record.id, result).subscribe(() => {
+      if (result && this.validate(result)) {
+        result.record = this.record.id;
+        this.recordService.createFeedback(result).subscribe(() => {
           this.hasFeedbackSent = true;
         });
       }
@@ -54,6 +56,23 @@ export class RecordDetailComponent implements OnInit {
 
   navigateToForm() {
     this.router.navigate(['/user/off-campus-event-records/form'], { queryParams: { record_id: this.record.id } });
+  }
+
+  validate(data: CampusEventFeedback): boolean {
+    if (data.inspiring_level === null ||
+        data.profits === [] ||
+        data.content === null ||
+        data.willingness_level === null ||
+        data.content === '') {
+          return false;
+    }
+    if (data.inspiring_level === 2 && (data.inspiring_less_reason === '' || data.inspiring_less_reason === null)) {
+      return false;
+    }
+    if (data.profits.includes(5) && (data.profit_other === '' || data.profit_other === null)) {
+      return false;
+    }
+    return true;
   }
 
 }

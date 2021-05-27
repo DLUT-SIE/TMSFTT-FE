@@ -17,6 +17,7 @@ import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-servic
 import { RoleChoice } from 'src/app/shared/interfaces/event-role-choices';
 import { StatusChangeLog } from '../../interfaces/status-change-log';
 import { CampusEvent } from '../../interfaces/event';
+import {  CampusEventFeedback } from 'src/app/shared/interfaces/campus-event-feedback';
 
 /** Provide services for Record. */
 @Injectable({
@@ -118,10 +119,20 @@ export class RecordService extends GenericListService {
     return this.http.post<{'count': number}>(`/records/batch-submit/`, data);
   }
 
-  createFeedback(recordID: number, feedbackData: string) {
+  createFeedback(feedbackData: CampusEventFeedback) {
     const data = new FormData();
-    data.set('record', recordID.toString());
-    data.set('content', feedbackData);
+    data.set('record', feedbackData.record.toString());
+    data.set('content', feedbackData.content);
+    data.set('inspiring_level', feedbackData.inspiring_level.toString());
+    data.set('willingness_level', feedbackData.willingness_level.toString());
+    data.set('profits', feedbackData.profits.join('-'));
+    if (feedbackData.inspiring_less_reason !== null) {
+      data.set('inspiring_less_reason', feedbackData.inspiring_less_reason);
+    }
+    if (feedbackData.profit_other !== null) {
+      data.set('profit_other', feedbackData.profit_other);
+    }
+
     return this.http.post(`/campus-event-feedbacks/`, data);
   }
 

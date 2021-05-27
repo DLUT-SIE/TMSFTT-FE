@@ -1,7 +1,40 @@
 <h1 mat-dialog-title>请填写您的反馈内容</h1>
 <div mat-dialog-content>
     <mat-form-field appearance="outline">
-      <textarea matInput [(ngModel)]="data" rows="10"></textarea>
+      <mat-label i18n>参加本次活动的交流研讨，对您是否有启发和帮助</mat-label>
+      <mat-select [(ngModel)]="data.inspiring_level" required>
+        <mat-option *ngFor="let level of inspiringLevels" [value]="level.level">
+          {{ level.level_str }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="data.inspiring_level==2">
+      <mat-label i18n>对您启发帮助不大的原因</mat-label>
+      <textarea matInput [(ngModel)]="data.inspiring_less_reason" rows="3" required="data.inspiring_level==2"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label i18n>参加本期活动，您觉得有哪些收益</mat-label>
+      <mat-select [(ngModel)]="data.profits" required multiple>
+        <mat-option *ngFor="let profit of profits" [value]="profit.profit">
+          {{ profit.profit_str }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="data.profits.includes(5)">
+      <mat-label i18n>其他收益</mat-label>
+      <textarea matInput [(ngModel)]="data.profit_other" rows="3" required="data.profits.includes(5)"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label i18n>以后的午间教学沙龙活动，您是否愿意继续参加</mat-label>
+      <mat-select [(ngModel)]="data.willingness_level" required>
+        <mat-option *ngFor="let level of willingnessLevels" [value]="level.level">
+          {{ level.level_str }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label i18n>请留下您对活动的建议和意见，或者您感兴趣的教学话题</mat-label>
+      <textarea matInput [(ngModel)]="data.content" rows="3" required></textarea>
     </mat-form-field>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end center"

@@ -15,6 +15,7 @@ import { RecordAttachment } from '../../interfaces/record-attachment';
 import { RecordContent } from '../../interfaces/record-content';
 import { CampusEvent, OffCampusEvent } from '../../interfaces/event';
 import { RoleChoice } from '../../interfaces/event-role-choices';
+import { CampusEventFeedback } from '../../interfaces/campus-event-feedback';
 
 describe('RecordService', () => {
   let httpTestingController: HttpTestingController;
@@ -273,8 +274,15 @@ describe('RecordService', () => {
 
   it('should feed back', () => {
     const service: RecordService = TestBed.get(RecordService);
+    const data: CampusEventFeedback = {
+      record: 1,
+      content: 'haha',
+      inspiring_level: 1,
+      willingness_level: 1,
+      profits: [2, 3],
+    };
 
-    service.createFeedback(1, '').subscribe();
+    service.createFeedback(data).subscribe();
 
     const url = `/campus-event-feedbacks/`;
 

@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA,
          MatInputModule,
          MatFormFieldModule,
          MatButtonModule,
+         MatSelectModule,
         } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +27,7 @@ describe('FeedbackDialogComponent', () => {
         NoopAnimationsModule,
         MatButtonModule,
         FormsModule,
+        MatSelectModule,
       ],
       providers: [
         {

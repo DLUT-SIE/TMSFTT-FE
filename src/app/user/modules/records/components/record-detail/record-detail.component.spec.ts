@@ -29,12 +29,13 @@ import { DetailSectionActionsComponent } from 'src/app/shared/components/detail-
 import { DetailSectionComponent } from 'src/app/shared/components/detail-section/detail-section.component';
 import { AppOffCampusRecordDetailStub } from 'src/testing/app-shared-off-campus-record-detail-stub.';
 import { AppCampusRecordDetailStub } from 'src/testing/app-campus-record-detail-stub';
+import { CampusEventFeedback } from 'src/app/shared/interfaces/campus-event-feedback';
 
 describe('RecordDetailComponent', () => {
   let component: RecordDetailComponent;
   let fixture: ComponentFixture<RecordDetailComponent>;
   let feedBack$: Subject<{}>;
-  let afterClosed$: Subject<string>;
+  let afterClosed$: Subject<{}>;
   let dialogRef: jasmine.SpyObj<MatDialogRef<FeedbackDialogComponent>>;
   let createFeedback: jasmine.Spy;
   let open: jasmine.Spy;
@@ -154,11 +155,17 @@ describe('RecordDetailComponent', () => {
     createFeedback.and.returnValue(feedBack$);
 
     component.openDialog();
-
-    afterClosed$.next('123');
+    const data: CampusEventFeedback = {
+      inspiring_level: 1,
+      content: '123',
+      willingness_level: 3,
+      profits: [2, 4],
+    };
+    afterClosed$.next(data);
     feedBack$.next({});
     expect(open).toHaveBeenCalled();
-    expect(createFeedback).toHaveBeenCalledWith(component.record.id, '123');
+    data.record = 1;
+    expect(createFeedback).toHaveBeenCalledWith(data);
     expect(component.hasFeedbackSent).toBeTruthy();
   });
 
