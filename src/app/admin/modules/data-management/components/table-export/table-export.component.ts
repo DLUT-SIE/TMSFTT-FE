@@ -1,4 +1,4 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, Inject } from '@angular/core';
 import { TableExportService } from 'src/app/shared/services/data/table-export.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,6 +11,7 @@ import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { ListRequest } from 'src/app/shared/interfaces/list-request';
 import { errorProcess } from 'src/app/shared/utils/error-process';
+import { AUTH_SERVICE, AuthService } from 'src/app/shared/interfaces/auth-service';
 
 // Config for Various Table.
 /* tslint:disable */
@@ -82,11 +83,19 @@ export class TableExportComponent implements OnInit {
         {id: 2, name: '专任教师表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 3, name: '培训总体情况表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 4, name: '专任教师培训覆盖率表', subOptionsConfig: 0b1111, validators: [timeValidator]},
-        {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [timeValidator]},
         {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]},
         {id: 10, name: '培训活动出席表', subOptionsConfig: 0b1111, validators: [timeValidator]},
         {id: 7, name: '工作量计算表', subOptionsConfig: 0b0011, validators: [timeValidator]},
     ];
+    readonly tablesForSchoolAdmin: Table[] = [
+      {id: 2, name: '专任教师表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+      {id: 3, name: '培训总体情况表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+      {id: 4, name: '专任教师培训覆盖率表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+      {id: 5, name: '培训学时与工作量表', subOptionsConfig: 0b0011, validators: [timeValidator]},
+      {id: 6, name: '培训项目反馈表', subOptionsConfig: 0b1100, validators: [timeValidator, programRequiredValidator]},
+      {id: 10, name: '培训活动出席表', subOptionsConfig: 0b1111, validators: [timeValidator]},
+      {id: 7, name: '工作量计算表', subOptionsConfig: 0b0011, validators: [timeValidator]},
+  ];
 
     departmentsData: Department[] = [{id: 1, name: '大连理工大学'} as Department];
     selectedDepartment: Department;
@@ -115,6 +124,7 @@ export class TableExportComponent implements OnInit {
     queryParams = null;
 
     constructor(
+        @Inject(AUTH_SERVICE) readonly authService: AuthService,
         private fb: FormBuilder,
         private readonly tableExportService: TableExportService,
         private readonly snackBar: MatSnackBar,
@@ -143,7 +153,7 @@ export class TableExportComponent implements OnInit {
             if (this.subOptionsConfig.programShow) {
                 const programData = this.programsData;
                 if (this.choosedDepartment.id !== 1) {
-                    this.programsList = programData.filter(p => p.department === this.choosedDepartment.id);
+                    this.programsList = programData.filter(p => p.department === this.choosedDepartment.name);
                 } else {
                     this.programsList = programData;
                 }

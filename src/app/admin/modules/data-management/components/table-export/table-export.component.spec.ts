@@ -13,6 +13,7 @@ import { Department } from 'src/app/shared/interfaces/department';
 import { DepartmentService } from 'src/app/shared/services/department.service';
 import { ProgramService } from 'src/app/shared/services/programs/program.service';
 import { Program } from 'src/app/shared/interfaces/program';
+import { AUTH_SERVICE } from 'src/app/shared/interfaces/auth-service';
 
 describe('TableExportComponent', () => {
   let component: TableExportComponent;
@@ -69,6 +70,12 @@ describe('TableExportComponent', () => {
           provide: WindowService,
           useValue: {
             open: windowOpen,
+          }
+        },
+        {
+          provide: AUTH_SERVICE,
+          useValue: {
+            isSchoolAdmin: true,
           }
         }
       ]

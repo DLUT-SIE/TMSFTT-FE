@@ -12,7 +12,10 @@
             <div fxFlex="1 1 calc(4em)">
               <mat-form-field>
                 <mat-label>选择需要导出的表格</mat-label>
-                <mat-select formControlName="selectedTable" [(value)]='choosedTable'>
+                <mat-select *ngIf="authService.isSchoolAdmin" formControlName="selectedTable" [(value)]='choosedTable'>
+                  <mat-option *ngFor="let table of tablesForSchoolAdmin" [value]="table">{{table.name}}</mat-option>
+                </mat-select>
+                <mat-select *ngIf="!authService.isSchoolAdmin" formControlName="selectedTable" [(value)]='choosedTable'>
                   <mat-option *ngFor="let table of tables" [value]="table">{{table.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
